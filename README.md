@@ -8,7 +8,7 @@ Members:
 		
 		Tianyi Liu Id# 40093667 
 		
-		Natheepan Ganeshamoothy Id# 29335838
+		Natheepan Ganeshamoorthy Id# 29335838
 		
 GENERAL DESCRIPTION
 
