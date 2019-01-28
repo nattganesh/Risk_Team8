@@ -23,6 +23,7 @@ public class Run {
     public static void main(String[] args)
     {
         ArrayList<Continent> continents = new ArrayList<>();
+        ArrayList<Country> countries = new ArrayList<>();
         try
         {
             Scanner input = new Scanner(new File("src/com/risk/run/inputtext/input.txt"));
@@ -30,28 +31,59 @@ public class Run {
             while (input.hasNextLine())
             {
                 String text = input.nextLine();
-                String nameOfContinent = text.substring(0, text.indexOf(","));
-                String nameOfCountry = text.substring(text.indexOf(",") + 1, text.length());
-                System.out.println(nameOfContinent + " " + nameOfCountry);
-
-                boolean continentExists = false;
-
-                for (Continent cont : continents)
+                if (text.equalsIgnoreCase("SET NEIGHBORS"))
                 {
-                    if (cont.getName().equalsIgnoreCase(nameOfContinent))
+                    while (input.hasNextLine())
                     {
-                        continentExists = true;
-                        cont.getCountries().add(new Country(nameOfCountry, false, null));
+                        text = input.nextLine();
+                        String nameOfCountry1 = text.substring(0, text.indexOf(","));
+                        String nameOfCountry2 = text.substring(text.indexOf(",") + 1, text.length());
+
+                        for (Country c : countries)
+                        {
+
+                            if (c.getName().equalsIgnoreCase(nameOfCountry1))
+                            {
+                                for (Country c2 : countries)
+                                {
+                                    if (c2.getName().equalsIgnoreCase(nameOfCountry2))
+                                    {
+                                        c.getConnectedCountries().add(c2);
+                                        c2.getConnectedCountries().add(c);
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
-
-                if (!continentExists)
+                else
                 {
-                    continents.add(new Continent(nameOfContinent, 10));
-                    continents.get(continents.size() - 1).getCountries().add(new Country(nameOfCountry, false, null));
-                }
+                    String nameOfContinent = text.substring(0, text.indexOf(","));
+                    String nameOfCountry = text.substring(text.indexOf(",") + 1, text.length());
+                    System.out.println(nameOfContinent + " " + nameOfCountry);
 
-                totalNumberOfCountries++;
+                    boolean continentExists = false;
+
+                    Country c = new Country(nameOfCountry, false, null);
+                    countries.add(c);
+
+                    for (Continent cont : continents)
+                    {
+                        if (cont.getName().equalsIgnoreCase(nameOfContinent))
+                        {
+                            continentExists = true;
+                            cont.getCountries().add(c);
+                        }
+                    }
+
+                    if (!continentExists)
+                    {
+                        continents.add(new Continent(nameOfContinent, 10));
+                        continents.get(continents.size() - 1).getCountries().add(c);
+                    }
+
+                    totalNumberOfCountries++;
+                }
             }
             System.out.println(totalNumberOfCountries);
         }
@@ -60,11 +92,22 @@ public class Run {
             Logger.getLogger(Run.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        int i = 1;
+        for (Country country : countries)
+        {
+            country.setName(i + " " + country.getName());
+            i++;
+        }
+        int y = 0;
         for (Continent cont : continents)
         {
             for (Country country : cont.getCountries())
             {
-                System.out.println(cont.getName() + " " + country.getName() + " " + country.isIsOccupied());
+                for (Country c : country.getConnectedCountries())
+                {
+                    y++;
+                    System.out.println(y + " For Continent " + cont.getName() + " The country: " + country.getName() + " is neighbored by: " + c.getName());
+                }
             }
         }
 
