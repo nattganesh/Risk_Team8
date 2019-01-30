@@ -60,7 +60,7 @@ public class Run {
                 {
                     String nameOfContinent = text.substring(0, text.indexOf(","));
                     String nameOfCountry = text.substring(text.indexOf(",") + 1, text.length());
-                    System.out.println(nameOfContinent + " " + nameOfCountry);
+//                    System.out.println(nameOfContinent + " " + nameOfCountry);
 
                     boolean continentExists = false;
 
