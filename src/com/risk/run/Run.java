@@ -5,6 +5,9 @@
  */
 package com.risk.run;
 
+import com.risk.exceptions.CannotFindException;
+import com.risk.exceptions.CountLimitException;
+import com.risk.exceptions.DuplicatesException;
 import com.risk.map.Continent;
 import com.risk.map.Country;
 import java.io.File;
@@ -27,7 +30,6 @@ public class Run {
         try
         {
             Scanner input = new Scanner(new File("src/com/risk/run/inputtext/input.txt"));
-            int totalNumberOfCountries = 0;
             while (input.hasNextLine())
             {
                 String text = input.nextLine();
@@ -41,8 +43,7 @@ public class Run {
 
                         for (Country c : countries)
                         {
-
-                            if (c.getName().equalsIgnoreCase(nameOfCountry1)) // we should use a hasmhmap to reduce the run time
+                            if (c.getName().equalsIgnoreCase(nameOfCountry1))
                             {
                                 for (Country c2 : countries)
                                 {
@@ -61,60 +62,120 @@ public class Run {
                     String nameOfContinent = text.substring(0, text.indexOf(","));
                     String nameOfCountry = text.substring(text.indexOf(",") + 1, text.length());
 //                    System.out.println(nameOfContinent + " " + nameOfCountry);
-
-                    boolean continentExists = false;
-
-                    Country c = new Country(nameOfCountry, false, null);
-                    countries.add(c);
-                    //here are you are assuming that:
-                    			// 1. number of country is fixed - it is but test case might be different
-                    			// 2. doesn't account for duplicate countries
-                    			// 3. alasaka is not always beside kambatcha say, this information can be grabbed from the polygon object
-                    			// 4. this leads be to believe that i should create the map
-
-                    for (Continent cont : continents)
+                    boolean countryExists = false;
+                    for (Country country : countries)
                     {
-                        if (cont.getName().equalsIgnoreCase(nameOfContinent))
+                        if (country.getName().equalsIgnoreCase(nameOfCountry))
                         {
-                            continentExists = true;
-                            cont.getCountries().add(c);
+                            countryExists = true;
                         }
                     }
-
-                    if (!continentExists)
+                    if (!countryExists)
                     {
-                        continents.add(new Continent(nameOfContinent, 10));
-                        continents.get(continents.size() - 1).getCountries().add(c);
-                    }
+                        boolean continentExists = false;
 
-                    totalNumberOfCountries++;
+                        Country c = new Country(nameOfCountry);
+                        countries.add(c);
+                        //here are you are assuming that:
+                        // 1. number of country is fixed - it is but test case might be different
+                        // 2. doesn't account for duplicate countries
+                        // 3. alasaka is not always beside kambatcha say, this information can be grabbed from the polygon object
+                        // 4. this leads be to believe that i should create the map
+
+                        for (Continent cont : continents)
+                        {
+                            if (cont.getName().equalsIgnoreCase(nameOfContinent))
+                            {
+                                continentExists = true;
+                                cont.getCountries().add(c);
+                            }
+                        }
+
+                        if (!continentExists)
+                        {
+                            continents.add(new Continent(nameOfContinent, 10));
+                            continents.get(continents.size() - 1).getCountries().add(c);
+                        }
+                    }
+                    else
+                    {
+                        DuplicatesException ex1 = new DuplicatesException("Country: " + nameOfCountry);
+                        throw ex1;
+                    }
                 }
             }
-            System.out.println(totalNumberOfCountries);
+            for (Continent cont : continents)
+            {
+                int count = cont.getCountries().size();
+                int maxCount = 0;
+
+                switch (cont.getName())
+                {
+                    case "North America":
+                        maxCount = Continent.MAX_NUMBER_OF_COUNTRIES_IN_NORTH_AMERICA;
+                        break;
+                    case "South America":
+                        maxCount = Continent.MAX_NUMBER_OF_COUNTRIES_IN_SOUTH_AMERICA;
+                        break;
+                    case "Europe":
+                        maxCount = Continent.MAX_NUMBER_OF_COUNTRIES_IN_EUROPE;
+                        break;
+                    case "Asia":
+                        maxCount = Continent.MAX_NUMBER_OF_COUNTRIES_IN_ASIA;
+                        break;
+                    case "Africa":
+                        maxCount = Continent.MAX_NUMBER_OF_COUNTRIES_IN_AFRICA;
+                        break;
+                    case "Australia":
+                        maxCount = Continent.MAX_NUMBER_OF_COUNTRIES_IN_AUSTRALIA;
+                        break;
+                    default:
+                        CannotFindException ex2 = new CannotFindException(cont.getName() + " is not predefined. Size of continent is not known. Please resolve this issue.");
+                        throw ex2;
+                }
+
+                if (maxCount != count)
+                {
+                    CountLimitException ex3 = new CountLimitException(cont.getName(), count, maxCount);
+                    throw ex3;
+                }
+            }
+
+            System.out.println(countries.size());
+            int i = 1;
+            for (Country country : countries)
+            {
+                country.setName(i + " " + country.getName());
+                i++;
+            }
+            int y = 0;
+            for (Continent cont : continents)
+            {
+                for (Country country : cont.getCountries())
+                {
+                    for (Country c : country.getConnectedCountries())
+                    {
+                        y++;
+                        System.out.println(y + " For Continent " + cont.getName() + " The country: " + country.getName() + " is neighbored by: " + c.getName());
+                    }
+                }
+            }
         }
         catch (FileNotFoundException ex)
         {
             Logger.getLogger(Run.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        int i = 1;
-        for (Country country : countries)
+        catch (DuplicatesException ex)
         {
-            country.setName(i + " " + country.getName());
-            i++;
+            Logger.getLogger(Run.class.getName()).log(Level.SEVERE, null, ex);
         }
-        int y = 0;
-        for (Continent cont : continents)
+        catch (CountLimitException ex)
         {
-            for (Country country : cont.getCountries())
-            {
-                for (Country c : country.getConnectedCountries())
-                {
-                    y++;
-                    System.out.println(y + " For Continent " + cont.getName() + " The country: " + country.getName() + " is neighbored by: " + c.getName());
-                }
-            }
+            Logger.getLogger(Run.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        catch (CannotFindException ex)
+        {
+            Logger.getLogger(Run.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

@@ -13,6 +13,12 @@ import java.util.ArrayList;
  */
 public class Continent {
 
+    public static final int MAX_NUMBER_OF_COUNTRIES_IN_NORTH_AMERICA = 9;
+    public static final int MAX_NUMBER_OF_COUNTRIES_IN_SOUTH_AMERICA = 4;
+    public static final int MAX_NUMBER_OF_COUNTRIES_IN_AFRICA = 6;
+    public static final int MAX_NUMBER_OF_COUNTRIES_IN_EUROPE = 7;
+    public static final int MAX_NUMBER_OF_COUNTRIES_IN_ASIA = 12;
+    public static final int MAX_NUMBER_OF_COUNTRIES_IN_AUSTRALIA = 4;
     private String name;
     private ArrayList<Country> countries = new ArrayList<>();
     private int pointsWhenFullyOccupied;

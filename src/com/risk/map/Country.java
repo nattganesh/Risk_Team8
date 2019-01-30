@@ -14,16 +14,22 @@ import java.util.ArrayList;
  */
 public class Country {
 
+    public static final int MAX_NUMBER_OF_COUNTRIES = Continent.MAX_NUMBER_OF_COUNTRIES_IN_NORTH_AMERICA + 
+                                                      Continent.MAX_NUMBER_OF_COUNTRIES_IN_SOUTH_AMERICA + 
+                                                      Continent.MAX_NUMBER_OF_COUNTRIES_IN_EUROPE + 
+                                                      Continent.MAX_NUMBER_OF_COUNTRIES_IN_AFRICA + 
+                                                      Continent.MAX_NUMBER_OF_COUNTRIES_IN_ASIA + 
+                                                      Continent.MAX_NUMBER_OF_COUNTRIES_IN_AUSTRALIA;
     private String name;
     private boolean isOccupied;
     private Player ruler;
     private ArrayList<Country> connectedCountries = new ArrayList<>();
 
-    public Country(String name, boolean isOccupied, Player ruler)
+    public Country(String name)
     {
         this.name = name;
-        this.isOccupied = isOccupied;
-        this.ruler = ruler;
+        this.isOccupied = false;
+        this.ruler = null;
     }
 
     public String getName()
