@@ -42,7 +42,7 @@ public class Run {
                         for (Country c : countries)
                         {
 
-                            if (c.getName().equalsIgnoreCase(nameOfCountry1))
+                            if (c.getName().equalsIgnoreCase(nameOfCountry1)) // we should use a hasmhmap to reduce the run time
                             {
                                 for (Country c2 : countries)
                                 {
@@ -66,6 +66,11 @@ public class Run {
 
                     Country c = new Country(nameOfCountry, false, null);
                     countries.add(c);
+                    //here are you are assuming that:
+                    			// 1. number of country is fixed - it is but test case might be different
+                    			// 2. doesn't account for duplicate countries
+                    			// 3. alasaka is not always beside kambatcha say, this information can be grabbed from the polygon object
+                    			// 4. this leads be to believe that i should create the map
 
                     for (Continent cont : continents)
                     {
