@@ -24,10 +24,12 @@ public class Country {
     private boolean isOccupied;
     private Player ruler;
     private ArrayList<Country> connectedCountries = new ArrayList<>();
+    private String continentName;
 
-    public Country(String name)
+    public Country(String name, String continentName)
     {
         this.name = name;
+        this.continentName = continentName;
         this.isOccupied = false;
         this.ruler = null;
     }
@@ -37,9 +39,9 @@ public class Country {
         return name;
     }
 
-    public void setName(String name)
+    public String getContinentName()
     {
-        this.name = name;
+        return continentName;
     }
 
     public boolean isIsOccupied()

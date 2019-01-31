@@ -34,11 +34,6 @@ public class Continent {
         return name;
     }
 
-    public void setName(String name)
-    {
-        this.name = name;
-    }
-
     public ArrayList<Country> getCountries()
     {
         return countries;

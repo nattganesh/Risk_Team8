@@ -74,13 +74,8 @@ public class Run {
                     {
                         boolean continentExists = false;
 
-                        Country c = new Country(nameOfCountry);
+                        Country c = new Country(nameOfCountry, nameOfContinent);
                         countries.add(c);
-                        //here are you are assuming that:
-                        // 1. number of country is fixed - it is but test case might be different
-                        // 2. doesn't account for duplicate countries
-                        // 3. alasaka is not always beside kambatcha say, this information can be grabbed from the polygon object
-                        // 4. this leads be to believe that i should create the map
 
                         for (Continent cont : continents)
                         {
@@ -141,13 +136,6 @@ public class Run {
                 }
             }
 
-            System.out.println(countries.size());
-            int i = 1;
-            for (Country country : countries)
-            {
-                country.setName(i + " " + country.getName());
-                i++;
-            }
             int y = 0;
             for (Continent cont : continents)
             {
