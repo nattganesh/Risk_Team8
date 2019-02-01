@@ -24,81 +24,131 @@ import java.util.logging.Logger;
  */
 public class Run {
 
+    public static ArrayList<Continent> continents = new ArrayList<>();
+    public static ArrayList<Country> countries = new ArrayList<>();
+    public static ArrayList<Player> players = new ArrayList<>();
+
     public static void main(String[] args)
     {
-        ArrayList<Continent> continents = new ArrayList<>();
-        ArrayList<Country> countries = new ArrayList<>();
+        String text = "";
         try
         {
             Scanner input = new Scanner(new File("src/com/risk/run/inputtext/input.txt"));
-            while (input.hasNextLine())
+            if (input.hasNextInt())
             {
-                String text = input.nextLine();
-                if (text.equalsIgnoreCase("SET NEIGHBORS"))
+                int numberOfPlayers = input.nextInt();
+                if (numberOfPlayers < 2 || numberOfPlayers > 6)
                 {
-                    while (input.hasNextLine())
+                    CountLimitException ex = new CountLimitException("Players", numberOfPlayers, 2, 6);
+                    throw ex;
+                }
+                else
+                {
+                    int a = 0;
+                    input.nextLine();
+                    while (a != numberOfPlayers)
                     {
-                        text = input.nextLine();
-                        String nameOfCountry1 = text.substring(0, text.indexOf(","));
-                        String nameOfCountry2 = text.substring(text.indexOf(",") + 1, text.length());
-
-                        for (Country c : countries)
+                        players.add(new Player(input.nextLine()));
+                        a++;
+                    }
+                }
+            }
+            else
+            {
+                CannotFindException ex = new CannotFindException("The first line of Input Text Document is reserved for the number of players playing the game. This is undefined. This number should be between 2 and 6. Please resolve this issue.");
+                throw ex;
+            }
+            if (input.hasNextLine())
+            {
+                text = input.nextLine();
+                if (text.equalsIgnoreCase("SET COUNTRIES IN CONTINENTS") && input.hasNextLine())
+                {
+                    text = input.nextLine();
+                    int b = 1;
+                    while (input.hasNextLine() && b <= Country.MAX_NUMBER_OF_COUNTRIES)
+                    {
+                        b++;
+                        String nameOfContinent = text.substring(0, text.indexOf(","));
+                        String nameOfCountry = text.substring(text.indexOf(",") + 1, text.length());
+                        boolean countryExists = false;
+                        for (Country country : countries)
                         {
-                            if (c.getName().equalsIgnoreCase(nameOfCountry1))
+                            if (country.getName().equalsIgnoreCase(nameOfCountry))
                             {
-                                for (Country c2 : countries)
+                                countryExists = true;
+                            }
+                        }
+                        if (!countryExists)
+                        {
+                            boolean continentExists = false;
+
+                            Country c = new Country(nameOfCountry, nameOfContinent);
+                            countries.add(c);
+
+                            for (Continent cont : continents)
+                            {
+                                if (cont.getName().equalsIgnoreCase(nameOfContinent))
                                 {
-                                    if (c2.getName().equalsIgnoreCase(nameOfCountry2))
-                                    {
-                                        c.getConnectedCountries().add(c2);
-                                        c2.getConnectedCountries().add(c);
-                                    }
+                                    continentExists = true;
+                                    cont.getCountries().add(c);
+                                }
+                            }
+
+                            if (!continentExists)
+                            {
+                                continents.add(new Continent(nameOfContinent, 10));
+                                continents.get(continents.size() - 1).getCountries().add(c);
+                            }
+                        }
+                        else
+                        {
+                            DuplicatesException ex1 = new DuplicatesException("Country: " + nameOfCountry);
+                            throw ex1;
+                        }
+                        text = input.nextLine();
+                    }
+                }
+                else
+                {
+                    CannotFindException ex = new CannotFindException("The tag 'SET COUNTRIES IN CONTINENTS' is not set. Please follow the Input Text Format Please resolve this issue.");
+                    throw ex;
+                }
+
+            }
+            else
+            {
+                CannotFindException ex = new CannotFindException("Please follow the Input Text Format Please resolve this issue.");
+                    throw ex;
+            }
+            if (input.hasNextLine() && text.equalsIgnoreCase("SET NEIGHBORS"))
+            {
+                while (input.hasNextLine())
+                {
+                    text = input.nextLine();
+                    String nameOfCountry1 = text.substring(0, text.indexOf(","));
+                    String nameOfCountry2 = text.substring(text.indexOf(",") + 1, text.length());
+
+                    for (Country c : countries)
+                    {
+                        if (c.getName().equalsIgnoreCase(nameOfCountry1))
+                        {
+                            for (Country c2 : countries)
+                            {
+                                if (c2.getName().equalsIgnoreCase(nameOfCountry2))
+                                {
+                                    c.getConnectedCountries().add(c2);
+                                    c2.getConnectedCountries().add(c);
                                 }
                             }
                         }
                     }
                 }
-                else
-                {
-                    String nameOfContinent = text.substring(0, text.indexOf(","));
-                    String nameOfCountry = text.substring(text.indexOf(",") + 1, text.length());
-//                    System.out.println(nameOfContinent + " " + nameOfCountry);
-                    boolean countryExists = false;
-                    for (Country country : countries)
-                    {
-                        if (country.getName().equalsIgnoreCase(nameOfCountry))
-                        {
-                            countryExists = true;
-                        }
-                    }
-                    if (!countryExists)
-                    {
-                        boolean continentExists = false;
 
-                        Country c = new Country(nameOfCountry, nameOfContinent);
-                        countries.add(c);
-
-                        for (Continent cont : continents)
-                        {
-                            if (cont.getName().equalsIgnoreCase(nameOfContinent))
-                            {
-                                continentExists = true;
-                                cont.getCountries().add(c);
-                            }
-                        }
-
-                        if (!continentExists)
-                        {
-                            continents.add(new Continent(nameOfContinent, 10));
-                            continents.get(continents.size() - 1).getCountries().add(c);
-                        }
-                    }
-                    else
-                    {
-                        DuplicatesException ex1 = new DuplicatesException("Country: " + nameOfCountry);
-                        throw ex1;
-                    }
-                }
+            }
+            else
+            {
+            CannotFindException ex = new CannotFindException("The tag 'SET NEIGHBORS' is not set. Please follow the Input Text Format Please resolve this issue.");
+                    throw ex;
             }
             for (Continent cont : continents)
             {
@@ -137,7 +187,7 @@ public class Run {
                 }
             }
 
-            // FOR DEBUGGING PURPOSE -------------------------------------------------------------------------------------
+// FOR DEBUGGING PURPOSE -------------------------------------------------------------------------------------
 //            int y = 0;
 //            for (Continent cont : continents)
 //            {
@@ -150,17 +200,16 @@ public class Run {
 //                    }
 //                }
 //            }
-            //-------------------------------------------------------------------------------------------------------------
-            ArrayList<Player> players = new ArrayList<>();
-            players.add(new Player("Red"));
-            players.add(new Player("Blue"));
-            players.add(new Player("Green"));
-            players.add(new Player("Yellow"));
-            players.add(new Player("Orange"));
-            players.add(new Player("Purple"));
-            
+//-------------------------------------------------------------------------------------------------------------
+//            ArrayList<Player> players = new ArrayList<>();
+//            players.add(new Player("Red"));
+//            players.add(new Player("Blue"));
+//            players.add(new Player("Green"));
+//            players.add(new Player("Yellow"));
+//            players.add(new Player("Orange"));
+//            players.add(new Player("Purple"));
             Player.setStartingPoints(players.size());
-            
+
             boolean[] countryOccupied = new boolean[Country.MAX_NUMBER_OF_COUNTRIES];
             int i = 0;
             while (i < Country.MAX_NUMBER_OF_COUNTRIES)
@@ -182,69 +231,82 @@ public class Run {
                         countryOccupied[random] = true;
                         p.getOccupiedCountries().add(countries.get(random));
                     }
-                    if(i>= Country.MAX_NUMBER_OF_COUNTRIES) break;
+                    if (i >= Country.MAX_NUMBER_OF_COUNTRIES)
+                    {
+                        break;
+                    }
                 }
             }
-            
+
             boolean[] armiesRemaining = new boolean[players.size()];
             boolean done = false;
             while (!done)
             {
                 for (int ii = 0; ii < players.size(); ii++)
                 {
-                    if(players.get(ii).playersLeft()>0){
-                    int random = (int) (Math.random() * players.get(ii).getOccupiedCountries().size());
-                    players.get(ii).getOccupiedCountries().get(random).setArmyCount(1);}
-                    else armiesRemaining[ii] = true;
+                    if (players.get(ii).playersLeft() > 0)
+                    {
+                        int random = (int) (Math.random() * players.get(ii).getOccupiedCountries().size());
+                        players.get(ii).getOccupiedCountries().get(random).setArmyCount(1);
+                    }
+                    else
+                    {
+                        armiesRemaining[ii] = true;
+                    }
                 }
                 int countP = 0;
-                for(boolean d: armiesRemaining)
+                for (boolean d : armiesRemaining)
                 {
-                    if(d) countP++;
+                    if (d)
+                    {
+                        countP++;
+                    }
                 }
-                if(countP==players.size()) done = true;
+                if (countP == players.size())
+                {
+                    done = true;
+                }
             }
-            // FOR DEBUGGING PURPOSE -------------------------------------------------------------------------------------
+// FOR DEBUGGING PURPOSE -------------------------------------------------------------------------------------
 
-            int totalArmy = 0;
+//            int totalArmy = 0;
             for (Player p : players)
             {
                 int s = 0;
                 for (Country t : p.getOccupiedCountries())
                 {
-                    totalArmy += t.getArmyCount();
+//                    totalArmy += t.getArmyCount();
                     s += t.getArmyCount();
                 }
                 System.out.println(p.getName() + " has " + s);
             }
-            int z = 0;
+
             for (Player p : players)
             {
                 System.out.println(p.getName() + " " + p.getOccupiedCountries().size());
             }
             for (Player p : players)
             {
-                System.out.printf("%-3s The Player %-6s %-42s", z, p.getName(), " has occupied the following countries: ");
+                System.out.printf("The Player %-6s %-42s", p.getName(), " has occupied the following countries: ");
                 for (Country country : p.getOccupiedCountries())
                 {
-                    z++;
                     System.out.print(country.getName() + " , ");
                 }
                 System.out.println();
             }
-            //-------------------------------------------------------------------------------------------------------------
-            // FOR DEBUGGING PURPOSE -------------------------------------------------------------------------------------
-            int q = 0;
-            for (Continent cont : continents)
-            {
-                for (Country country : cont.getCountries())
-                {
-                    q++;
-                    System.out.printf("%-3s For Continent %-13s %s%-21s is occupied by: %s has an army of %d%n", q, cont.getName(), "The country: ", country.getName(), country.getRuler().getName(), country.getArmyCount());
-                }
-            }
-            //-------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------
 
+// FOR DEBUGGING PURPOSE -------------------------------------------------------------------------------------
+//            int q = 0;
+//            for (Continent cont : continents)
+//            {
+//                for (Country country : cont.getCountries())
+//                {
+//                    q++;
+//                    System.out.printf("%-3s For Continent %-13s %s%-21s is occupied by: %s has an army of %d%n", q, cont.getName(), "The country: ", country.getName(), country.getRuler().getName(), country.getArmyCount());
+//                }
+//            }
+//-------------------------------------------------------------------------------------------------------------
         }
         catch (FileNotFoundException ex)
         {

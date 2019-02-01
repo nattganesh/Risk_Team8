@@ -1,3 +1,11 @@
+6
+Red
+Blue
+Green
+Yellow
+Orange
+Purple
+SET COUNTRIES IN CONTINENTS
 North America,Alaska
 North America,Northwest Territory
 North America,Greenland
