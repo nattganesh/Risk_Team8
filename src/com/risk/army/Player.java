@@ -18,6 +18,7 @@ public class Player {
     private String name;
     private ArrayList<Country> occupiedCountries = new ArrayList<>();
     private ArrayList<Card> cards = new ArrayList<>();
+    private static int startingPoints;
 
     public Player(String name)
     {
@@ -47,6 +48,44 @@ public class Player {
     public void setCards(ArrayList<Card> cards)
     {
         this.cards = cards;
+    }
+
+    public static int getStartingPoints()
+    {
+        return startingPoints;
+    }
+
+    public static void setStartingPoints(int numberOfPlayers)
+    {
+        switch (numberOfPlayers)
+        {
+            case 2:
+                Player.startingPoints = 40;
+                break;
+            case 3:
+                Player.startingPoints = 35;
+                break;
+            case 4:
+                Player.startingPoints = 30;
+                break;
+            case 5:
+                Player.startingPoints = 25;
+                break;
+            case 6:
+                Player.startingPoints = 20;
+                break;
+        }
+    }
+
+    public int playersLeft()
+    {
+        int sum = 0;
+        for (Country country : this.occupiedCountries)
+        {
+            sum += country.getArmyCount();
+        }
+
+        return startingPoints - sum;
     }
 
 }

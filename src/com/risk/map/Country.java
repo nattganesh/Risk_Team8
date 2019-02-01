@@ -25,6 +25,7 @@ public class Country {
     private Player ruler;
     private ArrayList<Country> connectedCountries = new ArrayList<>();
     private String continentName;
+    private int armyCount = 0;
 
     public Country(String name, String continentName)
     {
@@ -42,6 +43,16 @@ public class Country {
     public String getContinentName()
     {
         return continentName;
+    }
+
+    public int getArmyCount()
+    {
+        return armyCount;
+    }
+
+    public void setArmyCount(int armyCount)
+    {
+        this.armyCount += armyCount;
     }
 
     public boolean isIsOccupied()

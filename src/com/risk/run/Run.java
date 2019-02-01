@@ -5,6 +5,7 @@
  */
 package com.risk.run;
 
+import com.risk.army.Player;
 import com.risk.exceptions.CannotFindException;
 import com.risk.exceptions.CountLimitException;
 import com.risk.exceptions.DuplicatesException;
@@ -136,18 +137,114 @@ public class Run {
                 }
             }
 
-            int y = 0;
+            // FOR DEBUGGING PURPOSE -------------------------------------------------------------------------------------
+//            int y = 0;
+//            for (Continent cont : continents)
+//            {
+//                for (Country country : cont.getCountries())
+//                {
+//                    for (Country c : country.getConnectedCountries())
+//                    {
+//                        y++;
+//                        System.out.printf("%-3s For Continent %-13s %s%-21s is neighbored by: %s%n", y, cont.getName(), "The country: ", country.getName(), c.getName());
+//                    }
+//                }
+//            }
+            //-------------------------------------------------------------------------------------------------------------
+            ArrayList<Player> players = new ArrayList<>();
+            players.add(new Player("Red"));
+            players.add(new Player("Blue"));
+            players.add(new Player("Green"));
+            players.add(new Player("Yellow"));
+            players.add(new Player("Orange"));
+            players.add(new Player("Purple"));
+            
+            Player.setStartingPoints(players.size());
+            
+            boolean[] countryOccupied = new boolean[Country.MAX_NUMBER_OF_COUNTRIES];
+            int i = 0;
+            while (i < Country.MAX_NUMBER_OF_COUNTRIES)
+            {
+                for (Player p : players)
+                {
+                    int random = (int) (Math.random() * Country.MAX_NUMBER_OF_COUNTRIES);
+                    while (countryOccupied[random])
+                    {
+                        random = (int) (Math.random() * Country.MAX_NUMBER_OF_COUNTRIES);
+                    }
+                    if (!countryOccupied[random])
+                    {
+                        countries.get(random).setRuler(p);
+                        countries.get(random).setIsOccupied(true);
+                        i++;
+                        countries.get(random).setArmyCount(1);
+
+                        countryOccupied[random] = true;
+                        p.getOccupiedCountries().add(countries.get(random));
+                    }
+                    if(i>= Country.MAX_NUMBER_OF_COUNTRIES) break;
+                }
+            }
+            
+            boolean[] armiesRemaining = new boolean[players.size()];
+            boolean done = false;
+            while (!done)
+            {
+                for (int ii = 0; ii < players.size(); ii++)
+                {
+                    if(players.get(ii).playersLeft()>0){
+                    int random = (int) (Math.random() * players.get(ii).getOccupiedCountries().size());
+                    players.get(ii).getOccupiedCountries().get(random).setArmyCount(1);}
+                    else armiesRemaining[ii] = true;
+                }
+                int countP = 0;
+                for(boolean d: armiesRemaining)
+                {
+                    if(d) countP++;
+                }
+                if(countP==players.size()) done = true;
+            }
+            // FOR DEBUGGING PURPOSE -------------------------------------------------------------------------------------
+
+            int totalArmy = 0;
+            for (Player p : players)
+            {
+                int s = 0;
+                for (Country t : p.getOccupiedCountries())
+                {
+                    totalArmy += t.getArmyCount();
+                    s += t.getArmyCount();
+                }
+                System.out.println(p.getName() + " has " + s);
+            }
+            int z = 0;
+            for (Player p : players)
+            {
+                System.out.println(p.getName() + " " + p.getOccupiedCountries().size());
+            }
+            for (Player p : players)
+            {
+                System.out.printf("%-3s The Player %-6s %-42s", z, p.getName(), " has occupied the following countries: ");
+                for (Country country : p.getOccupiedCountries())
+                {
+                    z++;
+                    System.out.print(country.getName() + " , ");
+                }
+                System.out.println();
+            }
+            //-------------------------------------------------------------------------------------------------------------
+            // FOR DEBUGGING PURPOSE -------------------------------------------------------------------------------------
+            int q = 0;
             for (Continent cont : continents)
             {
                 for (Country country : cont.getCountries())
                 {
-                    for (Country c : country.getConnectedCountries())
-                    {
-                        y++;
-                        System.out.println(y + " For Continent " + cont.getName() + " The country: " + country.getName() + " is neighbored by: " + c.getName());
-                    }
+                    q++;
+                    System.out.printf("%-3s For Continent %-13s %s%-21s is occupied by: %s has an army of %d%n", q, cont.getName(), "The country: ", country.getName(), country.getRuler().getName(), country.getArmyCount());
                 }
             }
+            //-------------------------------------------------------------------------------------------------------------
+
         }
         catch (FileNotFoundException ex)
         {
