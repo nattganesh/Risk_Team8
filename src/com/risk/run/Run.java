@@ -197,7 +197,7 @@ public class Run {
         }
     }
 
-    public static void playersStartingOrder()
+    public static void determinePlayersStartingOrder()
     {
 //        Roll the dice to determine who goes first. 
 //        The player who rolls the highest number starts the game. 
@@ -227,11 +227,11 @@ public class Run {
         }
         if (tieBreakingNeeded)
         {
-            playersStartingOrder();
+            determinePlayersStartingOrder();
         }
         else
         {
-            System.out.println("\n---------------------------------------------");
+//            System.out.println("\n---------------------------------------------");
             System.out.println("The Dice Roll Results are as follows");
             for (int i = 0; i < diceRolls.length; i++)
             {
@@ -256,10 +256,6 @@ public class Run {
 
     public static void assignCountriesToPlayers()
     {
-        Player.setStartingPoints(players.size());
-
-        playersStartingOrder();
-
         boolean[] countryOccupied = new boolean[Country.MAX_NUMBER_OF_COUNTRIES];
         int i = 0;
         while (i < Country.MAX_NUMBER_OF_COUNTRIES)
@@ -319,17 +315,76 @@ public class Run {
         }
     }
 
+    public static void printPlayerInfo()
+    {
+        for (Player p : players)
+        {
+            int s = 0;
+            for (Country t : p.getOccupiedCountries())
+            {
+                s += t.getArmyCount();
+            }
+            System.out.println(p.getName() + " has a total of " + s + " armies.");
+        }
+        System.out.println("\n---------------------------------------------");
+        for (Player p : players)
+        {
+            System.out.println(p.getName() + " has occupied " + p.getOccupiedCountries().size() + " countries.");
+        }
+        System.out.println("\n---------------------------------------------");
+        for (Player p : players)
+        {
+            System.out.printf("The Player %-6s %-42s", p.getName(), " has occupied the following countries: ");
+            for (Country country : p.getOccupiedCountries())
+            {
+                System.out.print(country.getName() + " , ");
+            }
+            System.out.println();
+        }
+//        System.out.println("\n---------------------------------------------");
+    }
+
     public static void main(String[] args)
     {
 
         try
         {
             Scanner input = new Scanner(new File("src/com/risk/run/inputtext/input.txt"));
+            System.out.println("\n---------------------------------------------");
+            System.out.println("                START-UP PHASE                ");
+            System.out.println("---------------------------------------------\n");
             setPlayers(input);
             setCountriesInContinents(input);
             setNeighboringCountries(input);
             continentChecks();
+            Player.setStartingPoints(players.size());
+            determinePlayersStartingOrder();
             assignCountriesToPlayers();
+            printPlayerInfo();
+            System.out.println("\n---------------------------------------------");
+            System.out.println("           LET'S START PLAYING             ");
+            System.out.println("---------------------------------------------\n");
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
 
 // FOR DEBUGGING PURPOSE -------------------------------------------------------------------------------------
 //            int y = 0;
@@ -345,41 +400,6 @@ public class Run {
 //                }
 //            }
 //-------------------------------------------------------------------------------------------------------------
-//            ArrayList<Player> players = new ArrayList<>();
-//            players.add(new Player("Red"));
-//            players.add(new Player("Blue"));
-//            players.add(new Player("Green"));
-//            players.add(new Player("Yellow"));
-//            players.add(new Player("Orange"));
-//            players.add(new Player("Purple"));
-// FOR DEBUGGING PURPOSE -------------------------------------------------------------------------------------
-//            int totalArmy = 0;
-            for (Player p : players)
-            {
-                int s = 0;
-                for (Country t : p.getOccupiedCountries())
-                {
-//                    totalArmy += t.getArmyCount();
-                    s += t.getArmyCount();
-                }
-                System.out.println(p.getName() + " has " + s);
-            }
-
-            for (Player p : players)
-            {
-                System.out.println(p.getName() + " " + p.getOccupiedCountries().size());
-            }
-            for (Player p : players)
-            {
-                System.out.printf("The Player %-6s %-42s", p.getName(), " has occupied the following countries: ");
-                for (Country country : p.getOccupiedCountries())
-                {
-                    System.out.print(country.getName() + " , ");
-                }
-                System.out.println();
-            }
-//-------------------------------------------------------------------------------------------------------------
-
 // FOR DEBUGGING PURPOSE -------------------------------------------------------------------------------------
 //            int q = 0;
 //            for (Continent cont : continents)
