@@ -12,9 +12,13 @@ Members:
 		
 GENERAL DESCRIPTION
 
-The project consists in building a simple ‚ÄúRisk‚Äù computer game. A Risk game consists of a connected graph map representing a world map, where each node is a country and each
+The project consists in building a simple ìRiskî computer game. A Risk game consists of a connected graph map representing a world map, where each node is a country and each
 edge represents adjacency between countries. Two or more players can play by placing armies on
 countries they own, from which they can attack adjacent countries to conquer them. The objective of the
-game is to conquer all countries on the map.
+game is to conquer all countries on the map.[1]
+
+[1] Source: Amin RanjBar Concordia University
+
+More Info @ https://bitbucket.org/nattganesh/soen6441_riskgame/src/master/projectdescription/Project%20Description.pdf
 
 */
