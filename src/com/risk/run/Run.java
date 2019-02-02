@@ -6,6 +6,7 @@
 package com.risk.run;
 
 import com.risk.army.Player;
+import com.risk.dice.Dice;
 import com.risk.exceptions.CannotFindException;
 import com.risk.exceptions.CountLimitException;
 import com.risk.exceptions.DuplicatesException;
@@ -196,9 +197,68 @@ public class Run {
         }
     }
 
+    public static void playersStartingOrder()
+    {
+//        Roll the dice to determine who goes first. 
+//        The player who rolls the highest number starts the game. 
+//        Then the play order goes clockwise from the starting player. 
+//        The game starts after the order of play has been determined.
+        int[] diceRolls = new int[players.size()];
+
+        for (int i = 0; i < diceRolls.length; i++)
+        {
+            diceRolls[i] = Dice.roll();
+        }
+        int maxRollIndex = 0;
+        for (int i = 1; i < diceRolls.length; i++)
+        {
+            if (diceRolls[maxRollIndex] < diceRolls[i])
+            {
+                maxRollIndex = i;
+            }
+        }
+        boolean tieBreakingNeeded = false;
+        for (int i = 1; i < diceRolls.length; i++)
+        {
+            if (diceRolls[maxRollIndex] == diceRolls[i] && maxRollIndex != i)
+            {
+                tieBreakingNeeded = true;
+            }
+        }
+        if (tieBreakingNeeded)
+        {
+            playersStartingOrder();
+        }
+        else
+        {
+            System.out.println("\n---------------------------------------------");
+            System.out.println("The Dice Roll Results are as follows");
+            for (int i = 0; i < diceRolls.length; i++)
+            {
+                System.out.println(players.get(i).getName() + " --> " + diceRolls[i]);
+            }
+            System.out.println();
+            System.out.println("The player: " + players.get(maxRollIndex).getName() + " has won the dice roll with a roll of " + diceRolls[maxRollIndex] + ".\nHe/She will start first, and the play order goes clockwise from the starting player.");
+            System.out.println("\n---------------------------------------------");
+            for (int i = 0; i < maxRollIndex; i++)
+            {
+                Player temp = players.remove(0);
+                players.add(temp);
+            }
+            System.out.println("The Play Order is as follows:");
+            for (int i = 0; i < diceRolls.length; i++)
+            {
+                System.out.println(players.get(i).getName());
+            }
+            System.out.println("\n---------------------------------------------");
+        }
+    }
+
     public static void assignCountriesToPlayers()
     {
         Player.setStartingPoints(players.size());
+
+        playersStartingOrder();
 
         boolean[] countryOccupied = new boolean[Country.MAX_NUMBER_OF_COUNTRIES];
         int i = 0;
