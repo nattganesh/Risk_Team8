@@ -364,27 +364,85 @@ public class Run {
             System.out.println("\n---------------------------------------------");
             System.out.println("           LET'S START PLAYING             ");
             System.out.println("---------------------------------------------\n");
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+            boolean gameWon = false;
+            Scanner key = new Scanner(System.in);
+            while (!gameWon)
+            {
+                for (Player p : players)
+                {
+                    if (p.isPlayerLost())
+                    {
+                        continue;
+                    }
+                    if (p.getOccupiedCountries().size() == Country.MAX_NUMBER_OF_COUNTRIES)
+                    {
+                        gameWon = true;
+                        System.out.println("\n---------------------------------------------");
+                        System.out.println("Congradulations Player: " + p.getName() + " you have WON!!!");
+                        System.out.println("---------------------------------------------\n");
+                        break;
+                    }
+
+                    //For every three countries, the player gets one army. 
+                    //For example, if you had 11 countries, you would receive 3 armies; 
+                    //if you had 22 countries, you would receive 7 armies.
+                    int availableArmies = 3 * p.getOccupiedCountries().size() % 3;
+                    if (availableArmies < 3)
+                    {
+                        availableArmies = 3;
+                    }
+
+                    System.out.println(p.getName() + " You have " + availableArmies + " armies to place, where would you like to place. (CountryName,NumberOfArmies)");
+                    String text = key.nextLine();
+//                    key.nextLine();
+                    String name = text.substring(0, text.indexOf(","));
+                    String num = text.substring(text.indexOf(",") + 1, text.length());
+                    int number = Integer.parseInt(num);
+
+                    Country additionalResources = null;
+                    while (additionalResources == null || number > availableArmies || availableArmies != 0)
+                    {
+                        for (Country c : p.getOccupiedCountries())
+                        {
+                            if (c.getName().equalsIgnoreCase(name))
+                            {
+                                additionalResources = c;
+                                break;
+                            }
+                        }
+                        if (additionalResources == null)
+                        {
+                            System.out.println("Invalid Country!!! Please Enter a country you occupy.");
+//                            key.nextLine();
+                            name = key.nextLine();
+
+                        }
+                        else if (number > availableArmies)
+                        {
+                            System.out.println("Invalid Number!!! Please Enter a number between 1 and " + availableArmies);
+                            number = key.nextInt();
+                            key.nextLine();
+                        }
+                        else
+                        {
+                            additionalResources.setArmyCount(number);
+                            availableArmies -= number;
+                            number = 0;
+
+                            if (availableArmies != 0)
+                            {
+                                System.out.println(p.getName() + " You have " + availableArmies + " armies to place, where would you like to place. (CountryName,NumberOfArmies)");
+                                text = key.nextLine();
+//                    key.nextLine();
+                                name = text.substring(0, text.indexOf(","));
+                                num = text.substring(text.indexOf(",") + 1, text.length());
+                                number = Integer.parseInt(num);
+                                additionalResources = null;
+                            }
+                        }
+                    }
+                }
+            }
 
 // FOR DEBUGGING PURPOSE -------------------------------------------------------------------------------------
 //            int y = 0;
@@ -428,5 +486,17 @@ public class Run {
         {
             Logger.getLogger(Run.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public static void printMenu()
+    {
+        System.out.println("\n---------------------------------------------");
+        System.out.println("Option 1 --> ");
+        System.out.println("Option 2 --> ");
+        System.out.println("Option 3 --> ");
+        System.out.println("Option 4 --> ");
+        System.out.println("Option 5 --> ");
+        System.out.println("Option 6 --> ");
+        System.out.println("---------------------------------------------\n");
     }
 }

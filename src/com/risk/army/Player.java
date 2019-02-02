@@ -19,6 +19,7 @@ public class Player {
     private ArrayList<Country> occupiedCountries = new ArrayList<>();
     private ArrayList<Card> cards = new ArrayList<>();
     private static int startingPoints;
+    private boolean playerLost = false;
 
     public Player(String name)
     {
@@ -53,6 +54,16 @@ public class Player {
     public static int getStartingPoints()
     {
         return startingPoints;
+    }
+
+    public boolean isPlayerLost()
+    {
+        return playerLost;
+    }
+
+    public void setPlayerLost(boolean playerLost)
+    {
+        this.playerLost = playerLost;
     }
 
     public static void setStartingPoints(int numberOfPlayers)
