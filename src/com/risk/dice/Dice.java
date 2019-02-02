@@ -11,7 +11,7 @@ package com.risk.dice;
  */
 public class Dice {
     
-    public static int roll(int num)
+    public static int roll()
     {
         return (int) (Math.random() * 6) + 1;
     }
