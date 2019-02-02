@@ -12,31 +12,33 @@ import java.util.Random;
  * @author Natheepan
  */
 public class Card {
-	public String catagory;
-	public String owner;
 
-	public Card(String catagory, String owner){
-		this.catagory = catagory;
-		this.owner = owner;
-	}
-	
-	 public String toString()
-	    {
-		 return catagory + " " + owner;
-	    }
-	 
-	 public String getCatagory(){
-		 return catagory;
-	 }
-	 
-	 
-	 public String getOwner(){
-		 return owner;
-	 }
-	 
-	 public void setOwner(String owner){
-		 this.owner = owner;
-	 }
+    public String catagory;
+    public String owner;
+
+    public Card(String catagory, String owner)
+    {
+        this.catagory = catagory;
+        this.owner = owner;
+    }
+
+    public String toString()
+    {
+        return catagory + " " + owner;
+    }
+
+    public String getCatagory()
+    {
+        return catagory;
+    }
+
+    public String getOwner()
+    {
+        return owner;
+    }
+
+    public void setOwner(String owner)
+    {
+        this.owner = owner;
+    }
 }
-
-

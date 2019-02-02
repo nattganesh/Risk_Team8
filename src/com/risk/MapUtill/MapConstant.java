@@ -1,4 +1,4 @@
-package mapUtil;
+package com.risk.MapUtill;
 
 import java.awt.Point;
 
