@@ -441,6 +441,12 @@ public class Run {
                             }
                         }
                     }
+
+                    System.out.println("\n---------------------------------------------");
+                    System.out.println("Time To Attack");
+                    System.out.println("---------------------------------------------\n");
+                    
+                    
                 }
             }
 
