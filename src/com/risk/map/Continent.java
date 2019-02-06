@@ -54,4 +54,15 @@ public class Continent {
         this.pointsWhenFullyOccupied = pointsWhenFullyOccupied;
     }
 
+    public Country getCountry(String name)
+    {
+        for (Country country : countries)
+        {
+            if (country.getName().equals(name))
+            {
+                return country;
+            }
+        }
+        return null;
+    }
 }

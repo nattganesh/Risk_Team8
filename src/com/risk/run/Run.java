@@ -30,6 +30,18 @@ public class Run {
     public static ArrayList<Player> players = new ArrayList<>();
     private static String text = "";
 
+    public static Country getCountry(String name)
+    {
+        for (Country country : countries)
+        {
+            if (country.getName().equals(name))
+            {
+                return country;
+            }
+        }
+        return null;
+    }
+    
     public static void setPlayers(Scanner input) throws CountLimitException, CannotFindException
     {
         if (input.hasNextInt())

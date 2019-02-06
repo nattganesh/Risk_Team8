@@ -84,5 +84,17 @@ public class Country {
     {
         this.connectedCountries = connectedCountries;
     }
+    
+    public Country getConnectedCountry(String name)
+    {
+        for (Country country : connectedCountries)
+        {
+            if (country.getName().equals(name))
+            {
+                return country;
+            }
+        }
+        return null;
+    }
 
 }
