@@ -41,7 +41,31 @@ public class Run {
         }
         return null;
     }
-    
+
+    public static Player getPlayer(String name)
+    {
+        for (Player player : players)
+        {
+            if (player.getName().equals(name))
+            {
+                return player;
+            }
+        }
+        return null;
+    }
+
+    public static Continent getContinent(String name)
+    {
+        for (Continent continent : continents)
+        {
+            if (continent.getName().equals(name))
+            {
+                return continent;
+            }
+        }
+        return null;
+    }
+
     public static void setPlayers(Scanner input) throws CountLimitException, CannotFindException
     {
         if (input.hasNextInt())
@@ -457,8 +481,7 @@ public class Run {
                     System.out.println("\n---------------------------------------------");
                     System.out.println("Time To Attack");
                     System.out.println("---------------------------------------------\n");
-                    
-                    
+
                 }
             }
 
