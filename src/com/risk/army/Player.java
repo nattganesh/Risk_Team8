@@ -9,6 +9,7 @@ import com.risk.card.Card;
 import com.risk.map.Country;
 import java.util.ArrayList;
 import com.risk.card.*;
+
 /**
  *
  * @author Natheepan
@@ -39,6 +40,18 @@ public class Player {
     public void setOccupiedCountries(ArrayList<Country> occupiedCountries)
     {
         this.occupiedCountries = occupiedCountries;
+    }
+
+    public Country getCountry(String name)
+    {
+        for (Country country : occupiedCountries)
+        {
+            if (country.getName().equals(name))
+            {
+                return country;
+            }
+        }
+        return null;
     }
 
     public ArrayList<Card> getCards()
