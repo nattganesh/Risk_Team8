@@ -32,8 +32,10 @@ public class Run {
 	private static String text = "";
 
 	public static Country getCountry(String name) {
-		for (Country country : countries) {
-			if (country.getName().equals(name)) {
+		for (Country country : countries) 
+		{
+			if (country.getName().equals(name)) 
+			{
 				return country;
 			}
 		}
@@ -41,8 +43,10 @@ public class Run {
 	}
 
 	public static Player getPlayer(String name) {
-		for (Player player : players) {
-			if (player.getName().equals(name)) {
+		for (Player player : players) 
+		{
+			if (player.getName().equals(name)) 
+			{
 				return player;
 			}
 		}
@@ -50,8 +54,10 @@ public class Run {
 	}
 
 	public static Continent getContinent(String name) {
-		for (Continent continent : continents) {
-			if (continent.getName().equals(name)) {
+		for (Continent continent : continents) 
+		{
+			if (continent.getName().equals(name)) 
+			{
 				return continent;
 			}
 		}
@@ -59,20 +65,25 @@ public class Run {
 	}
 
 	public static void setPlayers(Scanner input) throws CountLimitException, CannotFindException {
-		if (input.hasNextInt()) {
+		if (input.hasNextInt()) 
+		{
 			int numberOfPlayers = input.nextInt();
-			if (numberOfPlayers < 2 || numberOfPlayers > 6) {
+			if (numberOfPlayers < 2 || numberOfPlayers > 6) 
+			{
 				CountLimitException ex = new CountLimitException("Players", numberOfPlayers, 2, 6);
 				throw ex;
-			} else {
+			} else 
+			{
 				int a = 0;
 				input.nextLine();
-				while (a != numberOfPlayers) {
+				while (a != numberOfPlayers) 
+				{
 					players.add(new Player(input.nextLine()));
 					a++;
 				}
 			}
-		} else {
+		} else 
+		{
 			CannotFindException ex = new CannotFindException(
 					"The first line of Input Text Document is reserved for the number of players playing the game. This is undefined. This number should be between 2 and 6. Please resolve this issue.");
 			throw ex;
@@ -80,50 +91,62 @@ public class Run {
 	}
 
 	public static void setCountriesInContinents(Scanner input) throws CannotFindException, DuplicatesException {
-		if (input.hasNextLine()) {
+		if (input.hasNextLine()) 
+		{
 			text = input.nextLine();
-			if (text.equalsIgnoreCase("SET COUNTRIES IN CONTINENTS") && input.hasNextLine()) {
+			if (text.equalsIgnoreCase("SET COUNTRIES IN CONTINENTS") && input.hasNextLine()) 
+			{
 				text = input.nextLine();
 				int b = 1;
-				while (input.hasNextLine() && b <= Country.MAX_NUMBER_OF_COUNTRIES) {
+				while (input.hasNextLine() && b <= Country.MAX_NUMBER_OF_COUNTRIES) 
+				{
 					b++;
 					String nameOfContinent = text.substring(0, text.indexOf(","));
 					String nameOfCountry = text.substring(text.indexOf(",") + 1, text.length());
 					boolean countryExists = false;
-					for (Country country : countries) {
-						if (country.getName().equalsIgnoreCase(nameOfCountry)) {
+					for (Country country : countries) 
+					{
+						if (country.getName().equalsIgnoreCase(nameOfCountry)) 
+						{
 							countryExists = true;
 						}
 					}
-					if (!countryExists) {
+					if (!countryExists) 
+					{
 						boolean continentExists = false;
 
 						Country c = new Country(nameOfCountry, nameOfContinent);
 						countries.add(c);
 
-						for (Continent cont : continents) {
-							if (cont.getName().equalsIgnoreCase(nameOfContinent)) {
+						for (Continent cont : continents) 
+						{
+							if (cont.getName().equalsIgnoreCase(nameOfContinent)) 
+							{
 								continentExists = true;
 								cont.getCountries().add(c);
 							}
 						}
 
-						if (!continentExists) {
+						if (!continentExists) 
+						{
 							continents.add(new Continent(nameOfContinent, 10));
 							continents.get(continents.size() - 1).getCountries().add(c);
 						}
-					} else {
+					} else 
+					{
 						DuplicatesException ex1 = new DuplicatesException("Country: " + nameOfCountry);
 						throw ex1;
 					}
 					text = input.nextLine();
 				}
-			} else {
+			} else 
+			{
 				CannotFindException ex = new CannotFindException(
 						"The tag 'SET COUNTRIES IN CONTINENTS' is not set. Please follow the Input Text Format Please resolve this issue.");
 				throw ex;
 			}
-		} else {
+		} else 
+		{
 			CannotFindException ex = new CannotFindException(
 					"Please follow the Input Text Format Please resolve this issue.");
 			throw ex;
@@ -131,16 +154,22 @@ public class Run {
 	}
 
 	public static void setNeighboringCountries(Scanner input) throws CannotFindException {
-		if (input.hasNextLine() && text.equalsIgnoreCase("SET NEIGHBORS")) {
-			while (input.hasNextLine()) {
+		if (input.hasNextLine() && text.equalsIgnoreCase("SET NEIGHBORS")) 
+		{
+			while (input.hasNextLine()) 
+			{
 				text = input.nextLine();
 				String nameOfCountry1 = text.substring(0, text.indexOf(","));
 				String nameOfCountry2 = text.substring(text.indexOf(",") + 1, text.length());
 
-				for (Country c : countries) {
-					if (c.getName().equalsIgnoreCase(nameOfCountry1)) {
-						for (Country c2 : countries) {
-							if (c2.getName().equalsIgnoreCase(nameOfCountry2)) {
+				for (Country c : countries) 
+				{
+					if (c.getName().equalsIgnoreCase(nameOfCountry1)) 
+					{
+						for (Country c2 : countries) 
+						{
+							if (c2.getName().equalsIgnoreCase(nameOfCountry2)) 
+							{
 								c.getConnectedCountries().add(c2);
 								c2.getConnectedCountries().add(c);
 							}
@@ -149,7 +178,8 @@ public class Run {
 				}
 			}
 
-		} else {
+		} else 
+		{
 			CannotFindException ex = new CannotFindException(
 					"The tag 'SET NEIGHBORS' is not set. Please follow the Input Text Format Please resolve this issue.");
 			throw ex;
@@ -157,7 +187,8 @@ public class Run {
 	}
 
 	public static void continentChecks() throws CannotFindException, CountLimitException {
-		for (Continent cont : continents) {
+		for (Continent cont : continents) 
+		{
 			int count = cont.getCountries().size();
 			int maxCount = 0;
 
@@ -186,7 +217,8 @@ public class Run {
 				throw ex2;
 			}
 
-			if (maxCount != count) {
+			if (maxCount != count) 
+			{
 				CountLimitException ex3 = new CountLimitException(cont.getName(), count, maxCount);
 				throw ex3;
 			}
@@ -200,27 +232,35 @@ public class Run {
 //        The game starts after the order of play has been determined.
 		int[] diceRolls = new int[players.size()];
 
-		for (int i = 0; i < diceRolls.length; i++) {
+		for (int i = 0; i < diceRolls.length; i++) 
+		{
 			diceRolls[i] = Dice.roll();
 		}
 		int maxRollIndex = 0;
-		for (int i = 1; i < diceRolls.length; i++) {
-			if (diceRolls[maxRollIndex] < diceRolls[i]) {
+		for (int i = 1; i < diceRolls.length; i++) 
+		{
+			if (diceRolls[maxRollIndex] < diceRolls[i]) 
+			{
 				maxRollIndex = i;
 			}
 		}
 		boolean tieBreakingNeeded = false;
-		for (int i = 1; i < diceRolls.length; i++) {
-			if (diceRolls[maxRollIndex] == diceRolls[i] && maxRollIndex != i) {
+		for (int i = 1; i < diceRolls.length; i++) 
+		{
+			if (diceRolls[maxRollIndex] == diceRolls[i] && maxRollIndex != i) 
+			{
 				tieBreakingNeeded = true;
 			}
 		}
-		if (tieBreakingNeeded) {
+		if (tieBreakingNeeded) 
+		{
 			determinePlayersStartingOrder();
-		} else {
+		} else 
+		{
 //            System.out.println("\n---------------------------------------------");
 			System.out.println("The Dice Roll Results are as follows");
-			for (int i = 0; i < diceRolls.length; i++) {
+			for (int i = 0; i < diceRolls.length; i++) 
+			{
 				System.out.println(players.get(i).getName() + " --> " + diceRolls[i]);
 			}
 			System.out.println();
@@ -228,12 +268,14 @@ public class Run {
 					+ " has won the dice roll with a roll of " + diceRolls[maxRollIndex]
 					+ ".\nHe/She will start first, and the play order goes clockwise from the starting player.");
 			System.out.println("\n---------------------------------------------");
-			for (int i = 0; i < maxRollIndex; i++) {
+			for (int i = 0; i < maxRollIndex; i++) 
+			{
 				Player temp = players.remove(0);
 				players.add(temp);
 			}
 			System.out.println("The Play Order is as follows:");
-			for (int i = 0; i < diceRolls.length; i++) {
+			for (int i = 0; i < diceRolls.length; i++) 
+			{
 				System.out.println(players.get(i).getName());
 			}
 			System.out.println("\n---------------------------------------------");
@@ -243,13 +285,17 @@ public class Run {
 	public static void assignCountriesToPlayers() {
 		boolean[] countryOccupied = new boolean[Country.MAX_NUMBER_OF_COUNTRIES];
 		int i = 0;
-		while (i < Country.MAX_NUMBER_OF_COUNTRIES) {
-			for (Player p : players) {
+		while (i < Country.MAX_NUMBER_OF_COUNTRIES) 
+		{
+			for (Player p : players) 
+			{
 				int random = (int) (Math.random() * Country.MAX_NUMBER_OF_COUNTRIES);
-				while (countryOccupied[random]) {
+				while (countryOccupied[random]) 
+				{
 					random = (int) (Math.random() * Country.MAX_NUMBER_OF_COUNTRIES);
 				}
-				if (!countryOccupied[random]) {
+				if (!countryOccupied[random]) 
+				{
 					countries.get(random).setRuler(p);
 					countries.get(random).setIsOccupied(true);
 					i++;
@@ -258,7 +304,8 @@ public class Run {
 					countryOccupied[random] = true;
 					p.getOccupiedCountries().add(countries.get(random));
 				}
-				if (i >= Country.MAX_NUMBER_OF_COUNTRIES) {
+				if (i >= Country.MAX_NUMBER_OF_COUNTRIES) 
+				{
 					break;
 				}
 			}
@@ -266,43 +313,55 @@ public class Run {
 
 		boolean[] armiesRemaining = new boolean[players.size()];
 		boolean done = false;
-		while (!done) {
-			for (int ii = 0; ii < players.size(); ii++) {
-				if (players.get(ii).playersLeft() > 0) {
+		while (!done) 
+		{
+			for (int ii = 0; ii < players.size(); ii++) 
+			{
+				if (players.get(ii).playersLeft() > 0) 
+				{
 					int random = (int) (Math.random() * players.get(ii).getOccupiedCountries().size());
 					players.get(ii).getOccupiedCountries().get(random).setArmyCount(1);
-				} else {
+				} else 
+				{
 					armiesRemaining[ii] = true;
 				}
 			}
 			int countP = 0;
-			for (boolean d : armiesRemaining) {
-				if (d) {
+			for (boolean d : armiesRemaining) 
+			{
+				if (d) 
+				{
 					countP++;
 				}
 			}
-			if (countP == players.size()) {
+			if (countP == players.size()) 
+			{
 				done = true;
 			}
 		}
 	}
 
 	public static void printPlayerInfo() {
-		for (Player p : players) {
+		for (Player p : players) 
+		{
 			int s = 0;
-			for (Country t : p.getOccupiedCountries()) {
+			for (Country t : p.getOccupiedCountries()) 
+			{
 				s += t.getArmyCount();
 			}
 			System.out.println(p.getName() + " has a total of " + s + " armies.");
 		}
 		System.out.println("\n---------------------------------------------");
-		for (Player p : players) {
+		for (Player p : players) 
+		{
 			System.out.println(p.getName() + " has occupied " + p.getOccupiedCountries().size() + " countries.");
 		}
 		System.out.println("\n---------------------------------------------");
-		for (Player p : players) {
+		for (Player p : players) 
+		{
 			System.out.printf("The Player %-6s %-42s", p.getName(), " has occupied the following countries: ");
-			for (Country country : p.getOccupiedCountries()) {
+			for (Country country : p.getOccupiedCountries()) 
+			{
 				System.out.print(country.getName() + " , ");
 			}
 			System.out.println();
@@ -330,12 +389,16 @@ public class Run {
 			System.out.println("---------------------------------------------\n");
 			boolean gameWon = false;
 			Scanner key = new Scanner(System.in);
-			while (!gameWon) {
-				for (Player p : players) {
-					if (p.isPlayerLost()) {
+			while (!gameWon) 
+			{
+				for (Player p : players) 
+				{
+					if (p.isPlayerLost()) 
+					{
 						continue;
 					}
-					if (p.getOccupiedCountries().size() == Country.MAX_NUMBER_OF_COUNTRIES) {
+					if (p.getOccupiedCountries().size() == Country.MAX_NUMBER_OF_COUNTRIES) 
+					{
 						gameWon = true;
 						System.out.println("\n---------------------------------------------");
 						System.out.println("Congradulations Player: " + p.getName() + " you have WON!!!");
@@ -347,7 +410,8 @@ public class Run {
 					// For example, if you had 11 countries, you would receive 3 armies;
 					// if you had 22 countries, you would receive 7 armies.
 					int availableArmies = 3 * p.getOccupiedCountries().size() % 3;
-					if (availableArmies < 3) {
+					if (availableArmies < 3) 
+					{
 						availableArmies = 3;
 					}
 
@@ -360,29 +424,36 @@ public class Run {
 					int number = Integer.parseInt(num);
 
 					Country additionalResources = null;
-					while (additionalResources == null || number > availableArmies || availableArmies != 0) {
-						for (Country c : p.getOccupiedCountries()) {
-							if (c.getName().equalsIgnoreCase(name)) {
+					while (additionalResources == null || number > availableArmies || availableArmies != 0) 
+					{
+						for (Country c : p.getOccupiedCountries()) 
+						{
+							if (c.getName().equalsIgnoreCase(name)) 
+							{
 								additionalResources = c;
 								break;
 							}
 						}
-						if (additionalResources == null) {
+						if (additionalResources == null) 
+						{
 							System.out.println("Invalid Country!!! Please Enter a country you occupy.");
 //                            key.nextLine();
 							name = key.nextLine();
 
-						} else if (number > availableArmies) {
+						} else if (number > availableArmies) 
+						{
 							System.out.println(
 									"Invalid Number!!! Please Enter a number between 1 and " + availableArmies);
 							number = key.nextInt();
 							key.nextLine();
-						} else {
+						} else 
+						{
 							additionalResources.setArmyCount(number);
 							availableArmies -= number;
 							number = 0;
 
-							if (availableArmies != 0) {
+							if (availableArmies != 0) 
+							{
 								System.out.println(p.getName() + " You have " + availableArmies
 										+ " armies to place, where would you like to place. (CountryName,NumberOfArmies)");
 								text = key.nextLine();
@@ -408,57 +479,76 @@ public class Run {
 					int diceattack;
 					int dicedefend;
 					int rolltime;
-					while (true) {
+					while (true) 
+					{
 						System.out.println("Do you want to invoke an attak? Y/N");
 						String answer = key.nextLine();
-						if (answer.equalsIgnoreCase("Y")) {
-							while (true) {
-								for (Country c : p.getOccupiedCountries()) {
+						if (answer.equalsIgnoreCase("Y")) 
+						{
+							while (true) 
+							{
+								for (Country c : p.getOccupiedCountries()) 
+								{
 									System.out.println(c.getArmyCount());
 								}
 								System.out.println("Please input the name of the attacker:");
 								attacker = key.nextLine();
-								for (Country c : p.getOccupiedCountries()) {
-									if (c.getName().equalsIgnoreCase(attacker)) {
+								for (Country c : p.getOccupiedCountries()) 
+								{
+									if (c.getName().equalsIgnoreCase(attacker)) 
+									{
 										attack = c;
 										break;
 									}
 								}
-								if (attack == null) {
+								if (attack == null) 
+								{
 									System.out.println("This country does not belong to you! Please input again!");
 									continue;
-								} else {
-									if (attack.getArmyCount() < 2) {
+								} else 
+								{
+									if (attack.getArmyCount() < 2) 
+									{
 										System.out.println(
 												"You don't have enough armies in this country! Please input again!");
 										continue;
-									} else {
-										while (true) {
+									} else 
+									{
+										while (true) 
+										{
 											System.out.println("Please input the name of the defender:");
 											defender = key.nextLine();
 											Country tmp = null;
-											for (Country c : p.getOccupiedCountries()) {
-												if (c.getName().equalsIgnoreCase(defender)) {
+											for (Country c : p.getOccupiedCountries()) 
+											{
+												if (c.getName().equalsIgnoreCase(defender)) 
+												{
 													tmp = c;
 													break;
 												}
 											}
-											if (tmp != null) {
+											if (tmp != null) 
+											{
 												System.out.println(
 														"You can't attack your own country! Please input again!");
 												continue;
-											} else {
-												for (Country c : attack.getConnectedCountries()) {
-													if (c.getName().equalsIgnoreCase(defender)) {
+											} else 
+											{
+												for (Country c : attack.getConnectedCountries()) 
+												{
+													if (c.getName().equalsIgnoreCase(defender)) 
+													{
 														defend = c;
 														break;
 													}
 												}
-												if (defend == null) {
+												if (defend == null) 
+												{
 													System.out.println(
 															"The defender you input is not connected to your attacker. Please try again!");
 													continue;
-												} else {
+												} else 
+												{
 													System.out.println("The attacker and the defender are determined!");
 													break;
 												}
@@ -470,56 +560,72 @@ public class Run {
 								}
 							}
 
-							if ((attack.getArmyCount() - 1) > 3) {
+							if ((attack.getArmyCount() - 1) > 3) 
+							{
 								dicerange_attack = 3;
-							} else {
+							} else 
+							{
 								dicerange_attack = attack.getArmyCount() - 1;
 							}
-							if (defend.getArmyCount() >= 2) {
+							if (defend.getArmyCount() >= 2) 
+							{
 								dicerange_defend = 2;
-							} else {
+							} else 
+							{
 								dicerange_defend = 1;
 							}
 
-							while (true) {
+							while (true) 
+							{
 								System.out.println(
 										"Attacker: Please input the number of dice you want to roll. It should be at most "
 												+ dicerange_attack + " :");
 								diceattack = key.nextInt();
-								if (diceattack > dicerange_attack) {
+								if (diceattack > dicerange_attack) 
+								{
 									System.out.println("The number you input is unavailable. Please input again!");
 									continue;
-								} else {
+								} else 
+								{
 									System.out.println("Attacker army:"+attack.getArmyCount());
 									System.out.println("defender army:"+defend.getArmyCount());
 									System.out.println(
 											"Defender: Please input the number of dice you want to roll. It should be at most "
 													+ dicerange_defend + " :");
 									dicedefend = key.nextInt();
-									if (dicedefend > dicerange_defend) {
+									if (dicedefend > dicerange_defend) 
+									{
 										System.out.println("The number you input is unavailable. Please input again!");
 										continue;
-									} else {
+									} else 
+									{
 										int[] dattack = new int[diceattack];
 								    	int[] ddefend = new int[dicedefend];
-								    	for(int i=0; i<diceattack; i++) {
+								    	for(int i=0; i<diceattack; i++) 
+								    	{
 								    		dattack[i] = Dice.roll();
 								    	}
-								    	for(int i=0; i<dicedefend; i++) {
+								    	for(int i=0; i<dicedefend; i++) 
+								    	{
 								    		ddefend[i] = Dice.roll();
 								    	}
 								    	Arrays.sort(dattack);
 								    	Arrays.sort(ddefend);
-								    	if(diceattack>=dicedefend) {
+								    	if(diceattack>=dicedefend) 
+								    	{
 								    		rolltime=dicedefend;
 								    	}
-								    	else {
+								    	else 
+								    	{
 								    		rolltime=diceattack;
 								    	}
-								    	for(int i = 0; i<rolltime; i++) {
-								    		if(dattack[diceattack-1-i]>ddefend[dicedefend-1-i]) {
+								    	for(int i = 0; i<rolltime; i++) 
+								    	{
+								    		if(dattack[diceattack-1-i]>ddefend[dicedefend-1-i]) 
+								    		{
 								    			defend.reduceArmyCount();
-								    		}else {
+								    		}else 
+								    		{
 								    			attack.reduceArmyCount();
 								    		}
 								    	}
@@ -529,7 +635,8 @@ public class Run {
 									}
 								}
 							}
-						} else {
+						} else 
+						{
 							break;
 						}
 
