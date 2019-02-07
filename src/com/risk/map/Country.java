@@ -6,6 +6,8 @@
 package com.risk.map;
 
 import com.risk.army.Player;
+
+
 import java.util.ArrayList;
 
 /**
@@ -53,6 +55,11 @@ public class Country {
     public void setArmyCount(int armyCount)
     {
         this.armyCount += armyCount;
+    }
+    
+    public void reduceArmyCount()
+    {
+        this.armyCount = armyCount-1;
     }
 
     public boolean isIsOccupied()

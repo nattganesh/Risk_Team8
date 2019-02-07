@@ -5,6 +5,9 @@
  */
 package com.risk.dice;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  *
  * @author Natheepan
@@ -15,5 +18,6 @@ public class Dice {
     {
         return (int) (Math.random() * 6) + 1;
     }
+    
     
 }
