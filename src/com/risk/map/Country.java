@@ -7,7 +7,6 @@ package com.risk.map;
 
 import com.risk.army.Player;
 
-
 import java.util.ArrayList;
 
 /**
@@ -56,10 +55,10 @@ public class Country {
     {
         this.armyCount += armyCount;
     }
-    
+
     public void reduceArmyCount()
     {
-        this.armyCount = armyCount-1;
+        this.armyCount = armyCount - 1;
     }
 
     public boolean isIsOccupied()
@@ -91,7 +90,7 @@ public class Country {
     {
         this.connectedCountries = connectedCountries;
     }
-    
+
     public Country getConnectedCountry(String name)
     {
         for (Country country : connectedCountries)

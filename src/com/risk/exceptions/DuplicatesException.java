@@ -9,11 +9,11 @@ package com.risk.exceptions;
  *
  * @author Natheepan
  */
-public class DuplicatesException extends Exception{
+public class DuplicatesException extends Exception {
 
     public DuplicatesException(String duplicateName)
     {
         super(duplicateName + " exists in more than one instance. Please resolve this issue, and try again.");
     }
-   
+
 }

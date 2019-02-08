@@ -9,12 +9,11 @@ package com.risk.exceptions;
  *
  * @author Natheepan
  */
-public class CannotFindException extends Exception{
+public class CannotFindException extends Exception {
 
     public CannotFindException(String msg)
     {
         super(msg);
     }
-   
-    
+
 }
