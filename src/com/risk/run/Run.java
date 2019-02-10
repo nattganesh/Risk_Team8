@@ -417,10 +417,10 @@ public class Run {
 			{
 				if (dattack[diceattack - 1 - i] > ddefend[dicedefend - 1 - i]) 
 				{
-					defend.reduceArmyCount();
+					defend.reduceArmyCount(1);
 				} else 
 				{
-					attack.reduceArmyCount();
+					attack.reduceArmyCount(1);
 				}
 			} else 
 			{
@@ -485,7 +485,7 @@ public class Run {
 	}
 	
 	
-	public static String[] isAttackerCorrect(String c, Player p) 
+	public static String[] isCountryBelongtoPlayer(String c, Player p) 
 	{
 		String countryNeedtoCheck = c;
 		String[] result = new String[2];
@@ -500,8 +500,68 @@ public class Run {
 			result[1] = "You don't have enough armies in this country! Please input again!";
 		}
 		result[0] = "1";
-		result[1] = "The attacker is determined!";
 		return result;
+	}
+	
+	public static ArrayList<Country> getCountriesArrivedbyPath(Country country, Country firstCountry,ArrayList<Country> countries)
+	{
+		Player p = country.getRuler();
+		for(Country c: country.getConnectedCountries()) 
+		{
+			Player player =c.getRuler();
+			if(player.getName().equals(p.getName())) 
+			{
+				if(isCountryDuplicated(c,firstCountry, countries)) 
+				{
+					countries.add(c);
+					countries = getCountriesArrivedbyPath(c,firstCountry, countries);
+				}
+			}
+		}
+		return countries;
+	}
+	
+	public static boolean isCountryDuplicated(Country country, Country firstCountry, ArrayList<Country> countries) 
+	{
+		int i = 0;
+		if (country.getName().equals(firstCountry.getName())) 
+		{
+			i = 1;
+		} else 
+		{
+			for (Country c : countries) 
+			{
+				if (c.getName().equalsIgnoreCase(country.getName())) 
+				{
+					i = 1;
+				}
+			}
+		}
+		if (i == 0) 
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	public static boolean isCountryBelongedtoAccessibleCountries(String secondcountry, ArrayList<Country> countries) 
+	{
+		int i=0;
+		for(Country c: countries) 
+		{
+			if(c.getName().equalsIgnoreCase(secondcountry)) 
+			{
+				i=1;
+			}
+		}
+		if(i==1) 
+		{
+			return true;
+		}
+		else 
+		{
+			return false;
+		}
 	}
 	
 	public static String[] isDefenderCorrect(String c, Country attack) 
@@ -649,8 +709,7 @@ public class Run {
 							{
 								System.out.println("Please input the name of the attacker:");
 								attacker = key.nextLine();
-								String[] attackCheck = isAttackerCorrect(attacker, p);
-								System.out.println(attackCheck[1]);
+								String[] attackCheck = isCountryBelongtoPlayer(attacker, p);
 								if (attackCheck[0]=="0") 
 								{
 									continue;
@@ -682,12 +741,11 @@ public class Run {
 								}
 							}
 
-							int result[] = setRollLimt(attack, defend);
-							dicerange_attack = result[0];
-							dicerange_defend = result[1];
-
 							while (true) 
 							{
+								int result[] = setRollLimt(attack, defend);
+								dicerange_attack = result[0];
+								dicerange_defend = result[1];
 								System.out.println("Attacker army:" + attack.getArmyCount());
 								System.out.println("defender army:" + defend.getArmyCount());
 								System.out.println(
@@ -724,7 +782,7 @@ public class Run {
 									{
 										System.out.println("Do you want to continue attacking this country? Y/N");
 										String continueornot;
-										continueornot = key.next();
+										continueornot = key.nextLine();
 										if (continueornot.equalsIgnoreCase("Y")) 
 										{
 											continue;
@@ -746,9 +804,72 @@ public class Run {
                     System.out.println("\n---------------------------------------------");
                     System.out.println("Time To Fortification");
                     System.out.println("---------------------------------------------\n");
-
-                }
-            }
+                    String firstcountry="";
+                    String secondcountry="";
+                    Country country1;
+                    Country country2;
+                    int armiesformove;
+                    ArrayList<Country> CountriesArrivedbyPath = new ArrayList<>();
+					while (true) 
+					{
+						System.out.println("Please input the name of the first country:");
+						firstcountry = key.nextLine();
+						String[] result = new String[2];
+						result = isCountryBelongtoPlayer(firstcountry,p);
+						if(result[0]=="0") 
+						{
+							System.out.println(result[1]);
+							continue;
+						}
+						country1 = p.getCountry(firstcountry);
+						CountriesArrivedbyPath = getCountriesArrivedbyPath(country1, country1, CountriesArrivedbyPath);
+						if(CountriesArrivedbyPath.isEmpty()) 
+						{
+							System.out.println("There is no accessible country to the first country!");
+							continue;
+						}
+						System.out.println("There are accessible countries to the first country:");
+						for(Country c: CountriesArrivedbyPath) 
+						{
+							System.out.println(c.getName());
+						}
+						break;
+					}
+					System.out.println("Please input the name of the second country:");
+					while(true) 
+					{
+						secondcountry = key.nextLine();
+						if(isCountryBelongedtoAccessibleCountries(secondcountry, CountriesArrivedbyPath)) 
+						{
+							System.out.println("The first and second countries are determined!");
+							break;
+						}
+						System.out.println("The second country you input is unaccessible. Please input again:");
+						continue;
+					}
+					country2 = p.getCountry(secondcountry);
+					System.out.println("Number of armies on the first country: " + country1.getArmyCount());
+					System.out.println("Number of armies on the second country: " + country2.getArmyCount());
+					System.out.println("Please input the number of armies you want to move. It should be less at most "+ (country1.getArmyCount()-1) +":");
+					while (true) 
+					{
+						armiesformove = key.nextInt();
+						key.nextLine();
+						if ((armiesformove < 1)||(armiesformove > (country1.getArmyCount()-1))) 
+						{
+							System.out.println("The number is invalid. Please input again:");
+							continue;
+						}
+						break;
+					}
+					country1.reduceArmyCount(armiesformove);
+					country2.setArmyCount(armiesformove);
+					System.out.println("Move successfully");
+					System.out.println("\n---------------------------------------------");
+                    System.out.println("Next Round");
+                    System.out.println("---------------------------------------------\n");
+				}
+			}
 
 // FOR DEBUGGING PURPOSE -------------------------------------------------------------------------------------
 //            int y = 0;

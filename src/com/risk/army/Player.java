@@ -46,7 +46,7 @@ public class Player {
     {
         for (Country country : occupiedCountries)
         {
-            if (country.getName().equals(name))
+            if (country.getName().equalsIgnoreCase(name))
             {
                 return country;
             }

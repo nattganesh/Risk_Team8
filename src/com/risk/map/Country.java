@@ -56,9 +56,9 @@ public class Country {
         this.armyCount += armyCount;
     }
 
-    public void reduceArmyCount()
+    public void reduceArmyCount(int armyCount)
     {
-        this.armyCount = armyCount - 1;
+        this.armyCount -= armyCount;
     }
 
     public boolean isIsOccupied()
