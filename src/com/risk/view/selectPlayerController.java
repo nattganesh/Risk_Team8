@@ -1,5 +1,10 @@
 /**
+ * This class is the Controller for SelectPlayer.fxml, where users can select number of players.
  * 
+ * 
+ * @author DKM
+ * @version 1.0
+ * @see javafx.fxml.Initializable
  */
 package com.risk.view;
 
@@ -32,10 +37,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
-/**
- * @author DKM
- *
- */
 public class selectPlayerController implements Initializable {
 
 	private ArrayList<Country> countryButton;
@@ -52,8 +53,8 @@ public class selectPlayerController implements Initializable {
 		model = m;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Add 2-6 player in ComboBox component
 	 * 
 	 * @see javafx.fxml.Initializable#initialize(java.net.URL,
 	 * java.util.ResourceBundle)
@@ -62,21 +63,36 @@ public class selectPlayerController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		playerDropDown.getItems().addAll("2", "3", "4", "5",
 				"6");
-
 	}
-
+	/**
+	 * 
+	 * @return model gets the model that is passed to this controller
+	 */
 	public Model getModel() {
 		return model;
 	}
+	/**
+	 * sets the number of players
+	 * 
+	 * @param numberOfPlayer the number of player
+	 */
 	public void setPlayers(int numberOfPlayer) {
 		while (numberOfPlayer > 0) {
 			getModel().addPlayer(new Player(Player.PLAYERCOLOR[numberOfPlayer])); 
 			numberOfPlayer--;
 		}
 	}
+	/**
+	 * Sets the number of player, assign countries to each player and calculate round robin, then load the Reinforcement scene
+	 * 
+	 * @param eventlistener for button clicked event
+	 * @throws IOException the exception thrown for when .fxml not found
+	 * @see javafx.event.ActionEvent
+	 */
 	public void StartGame(ActionEvent event) throws IOException {
 		PlayerController pController = new PlayerController(getModel());
 		if (playerDropDown.getSelectionModel().getSelectedItem() != null){
+			
 			pController.setPlayers(Integer.parseInt(playerDropDown.getSelectionModel().getSelectedItem()));
 			pController.setStartingPoints();
 			pController.assignCountriesToPlayers();
@@ -90,6 +106,7 @@ public class selectPlayerController implements Initializable {
 			Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			window.setScene(ReinforcementScene);
 			window.show();
+			
 		}
 	}
 
