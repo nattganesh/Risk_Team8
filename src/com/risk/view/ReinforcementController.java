@@ -69,7 +69,6 @@ public class ReinforcementController implements Initializable {
 	@FXML
 	Label inputArmyError;
 	
-
 	/**
 	 * This is the constructor for the reinforcement controller
 	 * 

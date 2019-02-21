@@ -55,7 +55,8 @@ public class Player {
 	 */
     public int getReinforcement()
     {
-        int numbArmies = numbOccupied() % 3;
+        int numbArmies = (int) Math.floor(numbOccupied() / 3);
+        System.out.println(numbArmies);
         if (numbArmies < 3)
         {
             availableReinforcement = 3;
