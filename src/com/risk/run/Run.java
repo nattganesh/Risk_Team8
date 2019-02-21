@@ -15,13 +15,16 @@ import com.risk.exceptions.DuplicatesException;
 import com.risk.map.Country;
 import com.risk.run.Model;
 import com.risk.view.ReinforcementController;
+import com.risk.view.selectPlayerController;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
@@ -230,20 +233,21 @@ public class Run extends Application {
 
         try
         {
-            Model model = new Model();
-            RiskMapParser riskMapParser = new RiskMapParser(model);
-            riskMapParser.setUp();
-            PlayerController pController = new PlayerController(model);
-            pController.setStartingPoints();
-            pController.assignCountriesToPlayers();
-            pController.determinePlayersStartingOrder();
-            ReinforcementController rController = new ReinforcementController(model);
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/risk/view/Reinforcement.fxml"));
-            loader.setController(rController);
-            Parent root = loader.load();
-            primaryStage.setScene(new Scene(root, 300, 275));
-            primaryStage.show();
-            primaryStage.setFullScreen(true);
+			Model model = new Model();
+			RiskMapParser riskMapParser = new RiskMapParser(model);
+			riskMapParser.setUp();
+			selectPlayerController selectController = new selectPlayerController(model);
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/risk/view/SelectPlayer.fxml"));
+			loader.setController(selectController);
+			Parent root = loader.load();
+		    Screen screen = Screen.getPrimary();
+		    Rectangle2D bounds = screen.getVisualBounds();
+		    primaryStage.setX((bounds.getWidth() - primaryStage.getWidth()) / 2); 
+		    primaryStage.setY((bounds.getHeight() - primaryStage.getHeight()) / 2);  
+		    primaryStage.setWidth(bounds.getWidth() / 2);
+		    primaryStage.setHeight(bounds.getHeight() / 2);
+	        primaryStage.setScene(new Scene(root, 300, 275));
+	        primaryStage.show();
 
 //
 //                    System.out.println("\n---------------------------------------------");
