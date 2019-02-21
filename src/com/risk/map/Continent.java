@@ -39,10 +39,14 @@ public class Continent {
         return countries;
     }
 
-    public void setCountries(ArrayList<Country> countries)
+    public void setCountry(Country country)
     {
-        this.countries = countries;
+        countries.add(country);
     }
+//    public void setCountries(ArrayList<Country> countries)
+//    {
+//        this.countries = countries;
+//    }
 
     public int getPointsWhenFullyOccupied()
     {
