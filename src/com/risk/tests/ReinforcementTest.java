@@ -25,9 +25,6 @@ class ReinforcementTest {
 	 
 	public int ReinforcementHelper() {
 		int Expected = (int) Math.floor(occupiedCountries.size() / 3);
-		if (Expected / 3 < 3) {
-			Expected = 3;
-		} 
 		return Expected;
 	}
 	
@@ -37,8 +34,8 @@ class ReinforcementTest {
 		occupiedCountries = new ArrayList<>();
 		
 	}
-	
-	@Test public void testGetReinforcement1() {
+	// testing reinforcement from number occupied
+	@Test public void testReinforcementNumbOccupied1() {
 		
 		occupiedCountries.add(new Country("dummy country","dummy continent"));
 		occupiedCountries.add(new Country("dummy country","dummy continent"));
@@ -49,18 +46,24 @@ class ReinforcementTest {
 		testPlayer.setOccupiedCountries(occupiedCountries);
 		
 	
-		assertEquals(ReinforcementHelper(), testPlayer.getReinforcement());
+		assertEquals(ReinforcementHelper(), testPlayer.getReinforcementOccupiedTerritory());
 	}
-	@Test public void testGetReinforcement2() {
+	@Test public void testReinforcementNumbOccupied2() {
 		
 		occupiedCountries.add(new Country("dummy country","dummy continent"));
 		testPlayer.setOccupiedCountries(occupiedCountries);
-		assertEquals(ReinforcementHelper(), testPlayer.getReinforcement());
+		assertEquals(ReinforcementHelper(), testPlayer.getReinforcementOccupiedTerritory());
 	}
 	
-	@Test public void testGetReinforcement3() {
+	@Test public void testReinforcementNumbOccupied3() {
 		
 		testPlayer.setOccupiedCountries(occupiedCountries);
-		assertEquals(ReinforcementHelper(), testPlayer.getReinforcement());
+		assertEquals(ReinforcementHelper(), testPlayer.getReinforcementOccupiedTerritory());
 	}
+	
+	// need to test reinforcement from continent control
+	
+	// need to test reinforcement from card traded in
+	
+
 }

@@ -53,10 +53,18 @@ public class Player {
 	 * 
 	 * @return availableReinforcement number of armies
 	 */
+    public int getReinforcementOccupiedTerritory() {
+    	return (int) Math.floor(numbOccupied() / 3);
+    }
+    public int getReinforcementContinentControl() {
+    	return 0;
+    }
+    public int getReinforcementTradeInCard() {
+    	return 0;
+    }
     public int getReinforcement()
     {
-        int numbArmies = (int) Math.floor(numbOccupied() / 3);
-        System.out.println(numbArmies);
+        int numbArmies = getReinforcementOccupiedTerritory() + getReinforcementContinentControl() + getReinforcementTradeInCard();
         if (numbArmies < 3)
         {
             availableReinforcement = 3;
