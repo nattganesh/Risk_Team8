@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 import com.risk.dice.Dice;
 import com.risk.map.Country;
-import com.risk.run.Model;
+import com.risk.model.Model;
 
 
 public class PlayerController {

@@ -4,7 +4,7 @@
  * @author Natheepan
  *
  */
-package com.risk.run;
+package com.risk.utilities;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -15,7 +15,7 @@ import com.risk.exceptions.CountLimitException;
 import com.risk.exceptions.DuplicatesException;
 import com.risk.map.Continent;
 import com.risk.map.Country;
-import com.risk.run.Model;
+import com.risk.model.Model;
 
 /**
  * @author DKM

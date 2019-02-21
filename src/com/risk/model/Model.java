@@ -5,7 +5,7 @@
  * @author Tianyi
  * @author DKM
  */
-package com.risk.run;
+package com.risk.model;
 
 import java.util.ArrayList;
 

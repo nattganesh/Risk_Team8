@@ -10,7 +10,6 @@ package com.risk.army;
 import com.risk.card.Card;
 import com.risk.map.Country;
 import java.util.ArrayList;
-import com.risk.card.*;
 
 /**
  *

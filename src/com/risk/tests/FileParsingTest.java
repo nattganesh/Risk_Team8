@@ -9,11 +9,11 @@ import java.io.FileNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.risk.MapUtill.RiskMapParser;
 import com.risk.exceptions.CannotFindException;
 import com.risk.exceptions.CountLimitException;
 import com.risk.exceptions.DuplicatesException;
-import com.risk.run.Model;
+import com.risk.model.Model;
+import com.risk.utilities.RiskMapParser;
 
 /**
  * @author DKM

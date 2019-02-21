@@ -1,13 +1,13 @@
 /**
  * 
  */
-package com.risk.view;
+package com.risk.controller;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.risk.run.Model;
+import com.risk.model.Model;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -28,9 +28,11 @@ public class AttackController implements Initializable {
 	public AttackController(Model m) {
 		model = m;
 	}
+	
 	/* (non-Javadoc)
 	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
 	 */
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		System.out.println(model.getPlayerSize());
@@ -38,7 +40,7 @@ public class AttackController implements Initializable {
 	public void goToFortificationPhase(ActionEvent event) throws IOException  {
 		
 			FortificationController fortificationController = new FortificationController(model);
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("Fortification.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/risk/view/Fortification.fxml"));
 			loader.setController(fortificationController);
 			Parent root = loader.load();
 			Scene ReinforcementScene = new Scene(root);

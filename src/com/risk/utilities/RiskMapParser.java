@@ -3,7 +3,7 @@
  * 
  * @author DKM
  */
-package com.risk.MapUtill;
+package com.risk.utilities;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,8 +14,7 @@ import javax.swing.JFrame;
 import com.risk.exceptions.CannotFindException;
 import com.risk.exceptions.CountLimitException;
 import com.risk.exceptions.DuplicatesException;
-import com.risk.run.FileParser;
-import com.risk.run.Model;
+import com.risk.model.Model;
 
 public class RiskMapParser {
 

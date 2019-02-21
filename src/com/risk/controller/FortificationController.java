@@ -1,13 +1,13 @@
 /**
  * 
  */
-package com.risk.view;
+package com.risk.controller;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.risk.run.Model;
+import com.risk.model.Model;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -39,7 +39,7 @@ public class FortificationController implements Initializable {
 		
 		model.IncrementPlayerIndex();
 		ReinforcementController rController = new ReinforcementController(model);
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("Reinforcement.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/risk/view/Reinforcement.fxml"));
 		loader.setController(rController);
 		Parent root = loader.load();
 		Scene ReinforcementScene = new Scene(root);

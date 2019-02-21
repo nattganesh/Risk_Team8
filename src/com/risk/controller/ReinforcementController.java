@@ -4,7 +4,7 @@
  * @author DKM
  * 
  */
-package com.risk.view;
+package com.risk.controller;
 
 import java.io.IOException;
 import java.net.URL;
@@ -14,7 +14,7 @@ import java.util.ResourceBundle;
 import com.risk.army.Player;
 import com.risk.army.PlayerController;
 import com.risk.map.Country;
-import com.risk.run.Model;
+import com.risk.model.Model;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -163,7 +163,7 @@ public class ReinforcementController implements Initializable {
 		} 
 		else {
 			AttackController attackController = new AttackController(model);
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("Attack.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/risk/view/Attack.fxml"));
 			loader.setController(attackController);
 			Parent root = loader.load();
 			Scene FortificationScene = new Scene(root);

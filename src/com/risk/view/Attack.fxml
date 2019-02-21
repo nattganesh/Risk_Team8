@@ -12,7 +12,6 @@
          <children>
             <Text layoutX="40.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="attack phase" />
            <Button fx:id="FortificationPhaseID" layoutX="29.0" layoutY="117.0" mnemonicParsing="false" onAction="#goToFortificationPhase" text="Fortification Phase" /> 
-          
          </children>
       </AnchorPane>
    </children>

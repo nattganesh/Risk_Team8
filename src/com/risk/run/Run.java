@@ -13,35 +13,25 @@
  */
 package com.risk.run;
 
-import com.risk.MapUtill.RiskMapParser;
-import com.risk.army.Player;
-import com.risk.army.PlayerController;
-import com.risk.dice.Dice;
+
+import com.risk.controller.selectPlayerController;
 import com.risk.exceptions.CannotFindException;
 import com.risk.exceptions.CountLimitException;
 import com.risk.exceptions.DuplicatesException;
-import com.risk.map.Country;
-import com.risk.run.Model;
-import com.risk.view.ReinforcementController;
-import com.risk.view.selectPlayerController;
+import com.risk.model.Model;
+import com.risk.utilities.RiskMapParser;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Application;
 
 public class Run extends Application {
 
