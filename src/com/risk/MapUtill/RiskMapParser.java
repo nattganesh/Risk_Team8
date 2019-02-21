@@ -1,3 +1,8 @@
+/**
+ * Necessary for calling file parser class for parsing risk map.
+ * 
+ * @author DKM
+ */
 package com.risk.MapUtill;
 
 import java.io.File;
@@ -16,24 +21,52 @@ public class RiskMapParser {
 
     private static Model model;
     static FileParser parser;
-    private String inputFile = "src/com/risk/run/inputtext/input.txt";
+    private String inputFile;
 
-    public RiskMapParser(Model m)
+	/**
+	 * This is the constructor for RiskMapParser. It initializes the model and instantiates the FileParser(model)
+	 * 
+	 * @param m takes in model of the game
+	 */
+    public RiskMapParser(Model m, String input)
     {
         model = m;
+        inputFile = input;
         parser = new FileParser(model);
     }
 
+	/**
+	 * This is a getter method for returning a scanner for a file
+	 * 
+	 * @return returns a new Scanner of the input file
+	 * @throws FileNotFoundException Exception thrown when input file does not exist
+	 */
     public FileParser getParser()
     {
         return parser;
     }
 
+	/**
+	 * This method calls class methods of parser to parse the file.
+	 * 
+	 * @param input	Scanner for input file
+	 * @throws CountLimitException 
+	 * @throws CannotFindException 
+	 * @throws DuplicatesException
+	 */
     public Scanner getFile() throws FileNotFoundException
     {
         return new Scanner(new File(inputFile));
     }
 
+	/**
+	 * This methods role is to call the parseInput method and give it the Scanner as an argument
+	 * 
+	 * @throws FileNotFoundException
+	 * @throws CountLimitException
+	 * @throws CannotFindException
+	 * @throws DuplicatesException
+	 */
     public void parseInputs(Scanner input) throws CountLimitException, CannotFindException, DuplicatesException
     {
        // parser.setPlayers(input);

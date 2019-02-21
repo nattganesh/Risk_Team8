@@ -1,5 +1,10 @@
-/**
+/** 
+ * This class is necessary for initializing the game play after number of player has been determined.
+ * It calculates round robin, assigns countries to players and determines the number of initial armies.
  *
+ * @author Natheepan
+ * @author Tianyi
+ * @version 1.0
  */
 package com.risk.army;
 
@@ -9,24 +14,36 @@ import com.risk.dice.Dice;
 import com.risk.map.Country;
 import com.risk.run.Model;
 
-/**
- *
- * @author Natheepan
- * @author Tianyi
- */
+
 public class PlayerController {
 
     private Model model;
-
+    
+	/**
+	 * This is the constructor of PlayerController. It initializes the model, containing parsed map file.
+	 * 
+	 * @param m this is the model of the game
+	 */
     public PlayerController(Model m)
     {
         this.model = m;
     }
-
+    
+	/**
+	 * This method gets the current player of the game.
+	 * 
+	 * @return returns the current player
+	 */
     public Player getCurrentPlayer()
     {
         return model.getCurrentPlayer();
     }
+    
+	/**
+	 * This method sets players with color based on number.
+	 *  
+	 * @param numberOfPlayer number of player
+	 */
     public void setPlayers(int numberOfPlayer) 
     {
 		int a = 0;
@@ -37,6 +54,13 @@ public class PlayerController {
 		}
 	}
 
+	/**
+	 * This method returns the next player of the game. 
+	 * But, if the next player has lost then it skips that player, or if that next player has won 
+	 * then it returns the winner.
+	 * 
+	 * @return player returns the next player of the game
+	 */
     public Player getNextPlayer()
     {
         Player player = model.getNextPlayer();
@@ -51,12 +75,17 @@ public class PlayerController {
         return player;
     }
 
+    
+
+	/**
+	 *  This method calculates the round robin.
+	 *  It first roll the dice to determine who goes first. 
+	 *  The player who rolls the highest number starts the game. 
+	 *  Then the play order goes clockwise from the starting player. 
+	 *  The game starts after the order of play has been determined.
+	 */
     public void determinePlayersStartingOrder()
     {
-//        Roll the dice to determine who goes first. 
-//        The player who rolls the highest number starts the game. 
-//        Then the play order goes clockwise from the starting player. 
-//        The game starts after the order of play has been determined.
         int[] diceRolls = new int[model.getPlayerSize()];
 
         for (int i = 0; i < diceRolls.length; i++)
@@ -112,6 +141,9 @@ public class PlayerController {
         }
     }
 
+	/**
+	 * This method assigns countries to players.
+	 */
     public void assignCountriesToPlayers()
     {
         boolean[] countryOccupied = new boolean[Country.MAX_NUMBER_OF_COUNTRIES];
@@ -173,6 +205,11 @@ public class PlayerController {
         }
     }
 
+	/**
+	 * This method returns the countries occupied by the current player
+	 * 
+	 * @return country ArrayList<Country> occupied by current player
+	 */
     public ArrayList<Country> getCurPlayerCountries()
     {
         ArrayList<Country> country = new ArrayList<Country>();
@@ -184,11 +221,17 @@ public class PlayerController {
         return country;
     }
 
+	/**
+	 * This method sets the observable list for the country occupied by current player.	 * 
+	 */
     public void initializeCurrentPlayer()
     {
         model.setCurrentPlayerCountryObs();
     }
 
+	/**
+	 * This method sets the starting armies during initialization based on number of players.
+	 */
     public void setStartingPoints()
     {
         for (Player player : model.getPlayers())
@@ -197,6 +240,14 @@ public class PlayerController {
         }
     }
 
+
+	/**
+	 * This is a helper method for setStartingPoints. Based on the number of players it returns 
+	 * inital army count.
+	 * 
+	 * @param getPlayerSize number of players
+	 * @return startingP initial army count
+	 */
     public int setStartingPointsHelper(int getPlayerSize)
     {
         int startingP = 0;

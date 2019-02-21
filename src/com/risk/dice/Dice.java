@@ -1,7 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Necessary to create a dice
+ * 
+ * @author Natheepan
+ * 
  */
 package com.risk.dice;
 
@@ -9,8 +10,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- *
- * @author Natheepan
+ * This method calculates the random number between 1-6 representing the dice roll
+ * 
+ * @return number of the dice roll between 1-6
  */
 public class Dice {
 

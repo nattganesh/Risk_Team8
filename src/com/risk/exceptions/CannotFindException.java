@@ -1,14 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package com.risk.exceptions;
-
-/**
+/** 
+ * Exception thrown when input.txt file formatting is different from standard format.
  *
  * @author Natheepan
  */
+package com.risk.exceptions;
+
 public class CannotFindException extends Exception {
 
     public CannotFindException(String msg)

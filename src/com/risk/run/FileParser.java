@@ -1,4 +1,7 @@
 /**
+ * Necessary for parsing the input text file
+ * 
+ * @author Natheepan
  *
  */
 package com.risk.run;
@@ -19,16 +22,26 @@ import com.risk.run.Model;
  *
  */
 public class FileParser {
-    // file parser
+
 
     Model model;
     private static String text = ""; // file parser
 
+	/** 
+	 * @param m this is the model of the game
+	 */
     public FileParser(Model m)
     {
         this.model = m;
     }
 
+	/**
+	 * This method sets the countries in the continents and checks for duplicate and wrong file format
+	 * 
+	 * @param input Scanner of the input.txt file
+	 * @throws CannotFindException Exception thrown when file format is different
+	 * @throws DuplicatesException Exception thrown when country appears twice in the map
+	 */
     public void setPlayers(Scanner input) throws CountLimitException, CannotFindException
     {
         if (input.hasNextInt())
@@ -58,6 +71,12 @@ public class FileParser {
         }
     }
 
+	/**
+	 * This method sets the neighbor for each country.
+	 * 
+	 * @param input Scanner of the input text file
+	 * @throws CannotFindException Exception thrown when file formatting is wrong
+	 */
     public void setCountriesInContinents(Scanner input) throws CannotFindException, DuplicatesException
     {
         if (input.hasNextLine())
@@ -126,6 +145,13 @@ public class FileParser {
         }
     }
 
+	/**
+	 * This method checks that each continent has predefined number of countries. Throws error if formatting of text file
+	 * is wrong or number of country in each continent does not equal predefined number.
+	 * 
+	 * @throws CannotFindException Exception thrown when formatting is wrong
+	 * @throws CountLimitException Exception thrown when number of country in each continent does not equal predefined number
+	 */
     public void setNeighboringCountries(Scanner input) throws CannotFindException
     {
         if (input.hasNextLine() && text.equalsIgnoreCase("SET NEIGHBORS"))

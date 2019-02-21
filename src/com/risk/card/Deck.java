@@ -1,3 +1,11 @@
+
+/**
+ * Necessary for creating deck owned by each player
+ *
+ * @author Tianyi
+ * 
+ */
+
 package com.risk.card;
 
 import java.util.Random;

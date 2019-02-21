@@ -1,14 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package com.risk.exceptions;
-
 /**
+ * Exception thrown when number of country in a continent is different from fixed number.
  *
  * @author Natheepan
  */
+package com.risk.exceptions;
+
+
 public class CountLimitException extends Exception {
 
     public CountLimitException(String name, int count, int maxCount)

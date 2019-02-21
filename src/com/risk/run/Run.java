@@ -1,7 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * This file is an entry point for JavaFX application. Necessary to parse the file,
+ * instantiate the only Model, a selectPlayerController (controller) and SelectPlayer.fxml (view) for the selecting number of players.
+ * 
+ * The Model will be passed around different controller and view during this application.
+ * 
+ * @author Natheepan
+ * @author Tianyi
+ * @author Dong Jae Kim
+ * @version 1.0
+ * @since 1.0
+ * 
  */
 package com.risk.run;
 
@@ -35,11 +43,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
 
-/**
- *
- * @author Natheepan
- * @author Tianyi
- */
 public class Run extends Application {
 
 //	  THIS IS ATTACK PHASE
@@ -218,23 +221,25 @@ public class Run extends Application {
 //	}
     public static void main(String[] args)
     {
+		/**
+		 * @see javafx.application.Application
+		 */
         launch(args);
     }
 
-    /*
-	 * (non-Javadoc)
+	/**
+	 * Start is called when JavaFX is ready to be initialized
 	 * 
-	 * @see javafx.application.Application#start(javafx.stage.Stage)
-     */
+	 * @see javafx.application.Application
+	 */
     @Override
     public void start(Stage primaryStage) throws Exception
     {
-        // TODO Auto-generated method stub
-
         try
         {
 			Model model = new Model();
-			RiskMapParser riskMapParser = new RiskMapParser(model);
+			String inputFile = "src/com/risk/run/inputtext/input.txt";
+			RiskMapParser riskMapParser = new RiskMapParser(model, inputFile);
 			riskMapParser.setUp();
 			selectPlayerController selectController = new selectPlayerController(model);
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/risk/view/SelectPlayer.fxml"));
@@ -476,6 +481,6 @@ public class Run extends Application {
         {
             Logger.getLogger(Run.class.getName()).log(Level.SEVERE, null, ex);
         }
-    } // main end
+    }
 
 }
