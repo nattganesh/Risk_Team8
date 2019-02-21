@@ -27,6 +27,15 @@ public class PlayerController {
     {
         return model.getCurrentPlayer();
     }
+    public void setPlayers(int numberOfPlayer) 
+    {
+		int a = 0;
+		while (a < numberOfPlayer) 
+        {
+			model.addPlayer(new Player(Player.PLAYERCOLOR[a])); 
+			a++;
+		}
+	}
 
     public Player getNextPlayer()
     {
