@@ -21,6 +21,7 @@ public class Player {
     private ArrayList<Card> cards = new ArrayList<>();
     private int startingPoints;
     private int availableReinforcement = 0;
+    public static final String[] PLAYERCOLOR = { "Red", "Blue", "Green", "Yellow", "Orange", "Purple" };
 
     private boolean playerLost = false;
 
