@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.risk.view;
 
@@ -30,101 +30,124 @@ import javafx.scene.layout.FlowPane;
  */
 public class ReinforcementController implements Initializable {
 
-	private ArrayList<Country> countryButton;
-	private PlayerController pController;
-	private final Model model;
+    private ArrayList<Country> countryButton;
+    private PlayerController pController;
+    private final Model model;
 
-	@FXML
-	FlowPane fPane;
+    @FXML
+    FlowPane fPane;
 
-	@FXML
-	Label armyAvailable;
+    @FXML
+    Label armyAvailable;
 
-	@FXML
-	TextField inputArmy;
+    @FXML
+    TextField inputArmy;
 
-	@FXML
-	Label playerId;
-	
-	@FXML
-	ListView<Country> countryId;
-	@FXML
-	Button nextPlayer;
-	
-	@FXML
-	Label inputArmyError;
+    @FXML
+    Label playerId;
 
-	public ReinforcementController(Model m) {
-		model = m;
-	}
-	/**
-	 * This is data binding
-	 */
-	@Override
-	public void initialize(URL url, ResourceBundle resourceBundle) {
-		playerId.setText(getName());
-		armyAvailable.setText("Army available => " + Integer.toString(model.getCurrentPlayer().getReinforcement()));
-		playerId.setPadding(new Insets(0, 0, 0, 5));
-		inputArmy.textProperty().addListener(new ChangeListener<String>() {
-			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				if (!newValue.matches("\\d*")) {
-					inputArmy.setText(newValue.replaceAll("[^\\d]", ""));
-				}
-			}
-		});
+    @FXML
+    ListView<Country> countryId;
+    @FXML
+    Button nextPlayer;
 
-		countryId.setItems(model.getCurrentPlayerCountryObs());
-		countryId.setCellFactory(param -> new ListCell<Country>() {
-			@Override
-			protected void updateItem(Country item, boolean empty) {
-				super.updateItem(item, empty);
-				if (empty || item == null || item.getName() == null) {
-					setText(null);
-				} else {
-					setText(item.getName() + " => Army: " + item.getArmyCount());
+    @FXML
+    Label inputArmyError;
 
-				}
-			}	
-		});
-	}
+    public ReinforcementController(Model m)
+    {
+        model = m;
+    }
 
-	public String getName() {
-		return "current Player: " + model.getCurrentPlayer().getName();
-	}
-	
-	public void setArmy() {
-		int Armyinput = Integer.parseInt(inputArmy.getText());
+    /**
+     * This is data binding
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle)
+    {
+        playerId.setText(getName());
+        armyAvailable.setText("Army available => " + Integer.toString(model.getCurrentPlayer().getReinforcement()));
+        playerId.setPadding(new Insets(0, 0, 0, 5));
+        inputArmy.textProperty().addListener(new ChangeListener<String>() {
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+            {
+                if (!newValue.matches("\\d*"))
+                {
+                    inputArmy.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
 
-		if (model.getCurrentPlayer().getAvailableReinforcement() == 0) {
-			inputArmyError.setText("0 available army");
-		} else if (countryId.getSelectionModel().getSelectedItem() == null
-				|| Armyinput > model.getCurrentPlayer().getAvailableReinforcement() || Armyinput <= 0) {
+        countryId.setItems(model.getCurrentPlayerCountryObs());
+        countryId.setCellFactory(param -> new ListCell<Country>() {
+            @Override
+            protected void updateItem(Country item, boolean empty)
+            {
+                super.updateItem(item, empty);
+                if (empty || item == null || item.getName() == null)
+                {
+                    setText(null);
+                }
+                else
+                {
+                    setText(item.getName() + " => Army: " + item.getArmyCount());
 
-			inputArmyError.setText("Invalid Entry");
-		} else {
-			for (Country c : model.getCurrentPlayer().getOccupiedCountries()) {
-				if (c.equals(countryId.getSelectionModel().getSelectedItem())) {
-					c.setArmyCount(Armyinput);
-					model.setView();
-					inputArmyError.setText("sucessful");
-					break;
+                }
+            }
+        });
+    }
 
-				}
-			}
-			model.getCurrentPlayer().setReinforcement(Armyinput);
-			armyAvailable.setText(
-					"Army available => " + Integer.toString(model.getCurrentPlayer().getAvailableReinforcement()));
-		}
-	}
-	public void onNextPlayer() {
-		if (model.getCurrentPlayer().getAvailableReinforcement() > 0) {
+    public String getName()
+    {
+        return "current Player: " + model.getCurrentPlayer().getName();
+    }
 
-		} else {
-			model.IncrementPlayerIndex();
-			armyAvailable.setText("Army available => " + Integer.toString(model.getCurrentPlayer().getReinforcement()));
-			inputArmyError.setText("");
-			playerId.setText(getName());
-		}
-	}
+    public void setArmy()
+    {
+        int Armyinput = Integer.parseInt(inputArmy.getText());
+
+        if (model.getCurrentPlayer().getAvailableReinforcement() == 0)
+        {
+            inputArmyError.setText("0 available army");
+        }
+        else if (countryId.getSelectionModel().getSelectedItem() == null
+                || Armyinput > model.getCurrentPlayer().getAvailableReinforcement() || Armyinput <= 0)
+        {
+
+            inputArmyError.setText("Invalid Entry");
+        }
+        else
+        {
+            for (Country c : model.getCurrentPlayer().getOccupiedCountries())
+            {
+                if (c.equals(countryId.getSelectionModel().getSelectedItem()))
+                {
+                    c.setArmyCount(Armyinput);
+                    model.setView();
+                    inputArmyError.setText("sucessful");
+                    break;
+
+                }
+            }
+            model.getCurrentPlayer().setReinforcement(Armyinput);
+            armyAvailable.setText(
+                    "Army available => " + Integer.toString(model.getCurrentPlayer().getAvailableReinforcement()));
+        }
+    }
+
+    public void onNextPlayer()
+    {
+        if (model.getCurrentPlayer().getAvailableReinforcement() > 0)
+        {
+
+        }
+        else
+        {
+            model.IncrementPlayerIndex();
+            armyAvailable.setText("Army available => " + Integer.toString(model.getCurrentPlayer().getReinforcement()));
+            inputArmyError.setText("");
+            playerId.setText(getName());
+        }
+    }
 
 }

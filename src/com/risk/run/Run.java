@@ -37,11 +37,9 @@ import javafx.application.Application;
  * @author Natheepan
  * @author Tianyi
  */
-
 public class Run extends Application {
 
 //	  THIS IS ATTACK PHASE
-	
 //    public static void rollDice(int diceattack, int dicedefend, Country attack, Country defend) 
 //    {
 //		int[] dattack = new int[diceattack];
@@ -215,36 +213,38 @@ public class Run extends Application {
 //		}
 //		return result;
 //	}
+    public static void main(String[] args)
+    {
+        launch(args);
+    }
 
-	public static void main(String[] args) {
-		launch(args);
-	}
-
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see javafx.application.Application#start(javafx.stage.Stage)
-	 */
-	@Override
-	public void start(Stage primaryStage) throws Exception {
-		// TODO Auto-generated method stub
+     */
+    @Override
+    public void start(Stage primaryStage) throws Exception
+    {
+        // TODO Auto-generated method stub
 
-		try {
-			Model model = new Model();
-			RiskMapParser riskMapParser = new RiskMapParser(model);
-			riskMapParser.setUp();
-			PlayerController pController = new PlayerController(model);
-			pController.setStartingPoints();
-			pController.assignCountriesToPlayers();
-			pController.determinePlayersStartingOrder();
-			ReinforcementController rController = new ReinforcementController(model);	
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/risk/view/Reinforcement.fxml"));
-			loader.setController(rController);
-			Parent root = loader.load();
-	        primaryStage.setScene(new Scene(root, 300, 275));
-	        primaryStage.show();
-	        primaryStage.setFullScreen(true);		
-	        
+        try
+        {
+            Model model = new Model();
+            RiskMapParser riskMapParser = new RiskMapParser(model);
+            riskMapParser.setUp();
+            PlayerController pController = new PlayerController(model);
+            pController.setStartingPoints();
+            pController.assignCountriesToPlayers();
+            pController.determinePlayersStartingOrder();
+            ReinforcementController rController = new ReinforcementController(model);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/risk/view/Reinforcement.fxml"));
+            loader.setController(rController);
+            Parent root = loader.load();
+            primaryStage.setScene(new Scene(root, 300, 275));
+            primaryStage.show();
+            primaryStage.setFullScreen(true);
+
 //
 //                    System.out.println("\n---------------------------------------------");
 //                    System.out.println("Time To Attack");
@@ -430,7 +430,6 @@ public class Run extends Application {
 //                    System.out.println("---------------------------------------------\n");
 //				}
 //			} END OF WHILE LOOP
-
 // FOR DEBUGGING PURPOSE -------------------------------------------------------------------------------------
 //            int y = 0;
 //            for (Continent cont : continents)
@@ -456,15 +455,23 @@ public class Run extends Application {
 //                }
 //            }
 //-------------------------------------------------------------------------------------------------------------
-		} catch (FileNotFoundException ex) {
-			Logger.getLogger(Run.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (DuplicatesException ex) {
-			Logger.getLogger(Run.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (CountLimitException ex) {
-			Logger.getLogger(Run.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (CannotFindException ex) {
-			Logger.getLogger(Run.class.getName()).log(Level.SEVERE, null, ex);
-		}
-	} // main end
+        }
+        catch (FileNotFoundException ex)
+        {
+            Logger.getLogger(Run.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (DuplicatesException ex)
+        {
+            Logger.getLogger(Run.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (CountLimitException ex)
+        {
+            Logger.getLogger(Run.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (CannotFindException ex)
+        {
+            Logger.getLogger(Run.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    } // main end
 
 }

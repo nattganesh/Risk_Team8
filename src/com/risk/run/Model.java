@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.risk.run;
 
@@ -17,101 +17,125 @@ import javafx.collections.ObservableList;
  *
  */
 public class Model {
-	private ArrayList<Continent> continentsModel = new ArrayList<>();
-	private ArrayList<Country> countriesModel = new ArrayList<>();
-	private ObservableList<Player> playersModel = FXCollections.observableArrayList();
-	private ObservableList<Country> currentPlayerCountry = FXCollections.observableArrayList();
 
-	private int currentPlayerIndex = 0;
-	private Player playerWins = null;
+    private ArrayList<Continent> continentsModel = new ArrayList<>();
+    private ArrayList<Country> countriesModel = new ArrayList<>();
+    private ObservableList<Player> playersModel = FXCollections.observableArrayList();
+    private ObservableList<Country> currentPlayerCountry = FXCollections.observableArrayList();
 
-	public Player setWinner(Player player) {
-		playerWins = player;
-		return playerWins;
-	}
+    private int currentPlayerIndex = 0;
+    private Player playerWins = null;
 
-	public void IncrementPlayerIndex() {
-		currentPlayerIndex = (currentPlayerIndex + 1) % getPlayerSize();
-		setView();
-	}
+    public Player setWinner(Player player)
+    {
+        playerWins = player;
+        return playerWins;
+    }
 
-	public void setView() {
-		currentPlayerCountry.clear();
-		currentPlayerCountry.addAll(getCurrentPlayer().getOccupiedCountries());
-	}
+    public void IncrementPlayerIndex()
+    {
+        currentPlayerIndex = (currentPlayerIndex + 1) % getPlayerSize();
+        setView();
+    }
 
-	public Player getNextPlayer() {
-		Player current = playersModel.get(currentPlayerIndex);
-		IncrementPlayerIndex();
-		return current;
-	}
+    public void setView()
+    {
+        currentPlayerCountry.clear();
+        currentPlayerCountry.addAll(getCurrentPlayer().getOccupiedCountries());
+    }
 
-	public void setCurrentPlayerCountryObs() {
-		currentPlayerCountry.addAll(getCurrentPlayer().getOccupiedCountries());
-	}
+    public Player getNextPlayer()
+    {
+        Player current = playersModel.get(currentPlayerIndex);
+        IncrementPlayerIndex();
+        return current;
+    }
 
-	public ObservableList<Country> getCurrentPlayerCountryObs() {
-		return currentPlayerCountry;
-	}
+    public void setCurrentPlayerCountryObs()
+    {
+        currentPlayerCountry.addAll(getCurrentPlayer().getOccupiedCountries());
+    }
 
-	public Player getCurrentPlayer() {
-		return playersModel.get(currentPlayerIndex);
-	}
+    public ObservableList<Country> getCurrentPlayerCountryObs()
+    {
+        return currentPlayerCountry;
+    }
 
-	public void addCountry(Country country) {
-		countriesModel.add(country);
-	}
+    public Player getCurrentPlayer()
+    {
+        return playersModel.get(currentPlayerIndex);
+    }
 
-	public void addContinent(Continent continent) {
-		continentsModel.add(continent);
-	}
+    public void addCountry(Country country)
+    {
+        countriesModel.add(country);
+    }
 
-	public void addPlayer(Player player) {
-		playersModel.add(player);
-		player.setStartingPoints(getPlayerSize());
-	}
+    public void addContinent(Continent continent)
+    {
+        continentsModel.add(continent);
+    }
 
-	public int getPlayerSize() {
-		return playersModel.size();
-	}
+    public void addPlayer(Player player)
+    {
+        playersModel.add(player);
+        player.setStartingPoints(getPlayerSize());
+    }
 
-	public ArrayList<Country> getCountries() {
-		return countriesModel;
-	}
+    public int getPlayerSize()
+    {
+        return playersModel.size();
+    }
 
-	public ArrayList<Continent> getContinents() {
-		return continentsModel;
-	}
+    public ArrayList<Country> getCountries()
+    {
+        return countriesModel;
+    }
 
-	public ObservableList<Player> getPlayers() {
-		return playersModel;
-	}
+    public ArrayList<Continent> getContinents()
+    {
+        return continentsModel;
+    }
 
-	public Country getCountry(String name) {
-		for (Country country : countriesModel) {
-			if (country.getName().equals(name)) {
-				return country;
-			}
-		}
-		return null;
-	}
+    public ObservableList<Player> getPlayers()
+    {
+        return playersModel;
+    }
 
-	public Player getPlayer(String name) {
-		for (Player player : playersModel) {
-			if (player.getName().equals(name)) {
-				return player;
-			}
-		}
-		return null;
-	}
+    public Country getCountry(String name)
+    {
+        for (Country country : countriesModel)
+        {
+            if (country.getName().equals(name))
+            {
+                return country;
+            }
+        }
+        return null;
+    }
 
-	public Continent getContinent(String name) {
-		for (Continent continent : continentsModel) {
-			if (continent.getName().equals(name)) {
-				return continent;
-			}
-		}
-		return null;
-	}
+    public Player getPlayer(String name)
+    {
+        for (Player player : playersModel)
+        {
+            if (player.getName().equals(name))
+            {
+                return player;
+            }
+        }
+        return null;
+    }
+
+    public Continent getContinent(String name)
+    {
+        for (Continent continent : continentsModel)
+        {
+            if (continent.getName().equals(name))
+            {
+                return continent;
+            }
+        }
+        return null;
+    }
 
 }
