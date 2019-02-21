@@ -36,7 +36,7 @@ public class RiskMapParser {
 
     public void parseInputs(Scanner input) throws CountLimitException, CannotFindException, DuplicatesException
     {
-        parser.setPlayers(input);
+       // parser.setPlayers(input);
         parser.setCountriesInContinents(input);
         parser.setNeighboringCountries(input);
         parser.continentChecks();
