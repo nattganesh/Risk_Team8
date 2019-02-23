@@ -34,6 +34,181 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Run extends Application {
+
+//	  THIS IS ATTACK PHASE
+//    public static void rollDice(int diceattack, int dicedefend, Country attack, Country defend) 
+//    {
+//		int[] dattack = new int[diceattack];
+//		int[] ddefend = new int[dicedefend];
+//		int rolltime;
+//		for (int i = 0; i < diceattack; i++) 
+//		{
+//			dattack[i] = Dice.roll();
+//		}
+//		for (int i = 0; i < dicedefend; i++)
+//		{
+//			ddefend[i] = Dice.roll();
+//		}
+//		Arrays.sort(dattack);
+//		Arrays.sort(ddefend);
+//		if (diceattack >= dicedefend)
+//		{
+//			rolltime = dicedefend;
+//		} else 
+//		{
+//			rolltime = diceattack;
+//		}
+//		for (int i = 0; i < rolltime; i++)
+//		{
+//			if (defend.getArmyCount() != 0) 
+//			{
+//				if (dattack[diceattack - 1 - i] > ddefend[dicedefend - 1 - i]) 
+//				{
+//					defend.reduceArmyCount(1);
+//				} else 
+//				{
+//					attack.reduceArmyCount(1);
+//				}
+//			} else 
+//			{
+//				System.out.println("You have already occupied this country!");
+//				break;
+//			}
+//		}
+//	}
+//	
+//	public static int[] setRollLimt(Country attack, Country defend)
+//	{
+//		int dicerange_attack;
+//		int dicerange_defend;
+//		int[] result = new int[2];
+//		if ((attack.getArmyCount() - 1) > 3) 
+//		{
+//			dicerange_attack = 3;
+//		} else 
+//		{
+//			dicerange_attack = attack.getArmyCount() - 1;
+//		}
+//		if (defend.getArmyCount() >= 2) 
+//		{
+//			dicerange_defend = 2;
+//		} else 
+//		{
+//			dicerange_defend = 1;
+//		}
+//		result[0] = dicerange_attack;
+//		result[1] = dicerange_defend;
+//		return result;
+//	}
+//	
+//	public static Country isCountryBelongedtoPlayer(String c, Player p) 
+//	{
+//		String countryNeedtoCheck = c;
+//		Country result = null;
+//		for (Country country : p.getOccupiedCountries()) 
+//		{
+//			if (country.getName().equalsIgnoreCase(countryNeedtoCheck)) 
+//			{
+//				result = country;
+//				break;
+//			}
+//		}
+//		return result;
+//	}
+//	
+//	public static Country isCountryConnectedtoAttacker(String c, Country attack) 
+//	{
+//		String countryNeedtoCheck = c;
+//		Country result = null;
+//		for (Country country : attack.getConnectedCountries()) 
+//		{
+//			if (country.getName().equalsIgnoreCase(countryNeedtoCheck)) 
+//			{
+//				result=country;
+//				break;
+//			}
+//		}
+//		return result;
+//	}
+//	
+//	
+//	public static String[] isCountryBelongtoPlayer(String c, Player p) 
+//	{
+//		String countryNeedtoCheck = c;
+//		String[] result = new String[2];
+//		Country attack = isCountryBelongedtoPlayer(countryNeedtoCheck, p);
+//		if (attack == null) 
+//		{
+//			result[0] = "0";
+//			result[1] = "This country does not belong to you! Please input again!";
+//		} else if (attack.getArmyCount() < 2) 
+//		{
+//			result[0] = "0";
+//			result[1] = "You don't have enough armies in this country! Please input again!";
+//		}
+//		result[0] = "1";
+//		return result;
+//	}
+//	
+//	public static ArrayList<Country> getCountriesArrivedbyPath(Country country, Country firstCountry,ArrayList<Country> countries)
+//	{
+//		Player p = country.getRuler();
+//		for(Country c: country.getConnectedCountries()) 
+//		{
+//			Player player = c.getRuler();
+//			if(player.getName().equals(p.getName())) 
+//			{
+//				if(isCountryDuplicated(c,firstCountry, countries)) 
+//				{
+//					countries.add(c);
+//					countries = getCountriesArrivedbyPath(c,firstCountry, countries);
+//				}
+//			}
+//		}
+//		return countries;
+//	}
+//	
+//	
+//	public static boolean isCountryBelongedtoAccessibleCountries(String secondcountry, ArrayList<Country> countries) 
+//	{
+//		int i=0;
+//		for(Country c: countries) 
+//		{
+//			if(c.getName().equalsIgnoreCase(secondcountry)) 
+//			{
+//				i=1;
+//			}
+//		}
+//		if(i==1) 
+//		{
+//			return true;
+//		}
+//		else 
+//		{
+//			return false;
+//		}
+//	}
+//	
+//	public static String[] isDefenderCorrect(String c, Country attack) 
+//	{
+//		String countryNeedtoCheck = c;
+//		Player p = attack.getRuler();
+//		String[] result = new String[2];
+//		if (isCountryBelongedtoPlayer(countryNeedtoCheck, p) != null) 
+//		{
+//			result[0] = "0";
+//			result[1] = "You can't attack your own country! Please input again!";
+//		} else if (isCountryConnectedtoAttacker(countryNeedtoCheck, attack)==null) 
+//		{
+//			result[0] = "0";
+//			result[1] = "The defender you input is not connected to your attacker. Please try again!";
+//		} else 
+//		{
+//			result[0] = "1";
+//			result[1] = "The attacker and the defender are determined!";
+//		}
+//		return result;
+//	}
     public static void main(String[] args)
     {
 		/**
