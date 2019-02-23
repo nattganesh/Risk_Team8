@@ -48,7 +48,7 @@ public class Model {
 	 */
     public void IncrementPlayerIndex()
     {
-        currentPlayerIndex = (currentPlayerIndex + 1) % getPlayerSize();
+        currentPlayerIndex = (currentPlayerIndex + 1) % getNumberOfPlayer();
         setView();
     }
 
@@ -129,7 +129,6 @@ public class Model {
     public void addPlayer(Player player)
     {
         playersModel.add(player);
-        player.setStartingPoints(getPlayerSize());
     }
 
 	/**
@@ -137,7 +136,7 @@ public class Model {
 	 * 
 	 * @return returns number of players
 	 */
-    public int getPlayerSize()
+    public int getNumberOfPlayer()
     {
         return playersModel.size();
     }
@@ -170,60 +169,6 @@ public class Model {
     public ObservableList<Player> getPlayers()
     {
         return playersModel;
-    }
-
-	/**
-	 * this method gets the country associated with the name of the country from the country model
-	 * 
-	 * @param name name of the country
-	 * @return country returns country object
-	 */
-    public Country getCountry(String name)
-    {
-        for (Country country : countriesModel)
-        {
-            if (country.getName().equals(name))
-            {
-                return country;
-            }
-        }
-        return null;
-    }
-
-	/**
-	 * this method returns the player associated with the name of the player from the player model
-	 * 
-	 * @param name name of the player
-	 * @return player returns player object
-	 */
-    public Player getPlayer(String name)
-    {
-        for (Player player : playersModel)
-        {
-            if (player.getName().equals(name))
-            {
-                return player;
-            }
-        }
-        return null;
-    }
-
-	/**
-	 * this method returns the continent associated with the name of the continent from the continent model
-	 * 
-	 * @param name name of the continent
-	 * @return continent returns continent object
-	 */
-    public Continent getContinent(String name)
-    {
-        for (Continent continent : continentsModel)
-        {
-            if (continent.getName().equals(name))
-            {
-                return continent;
-            }
-        }
-        return null;
     }
 
 }

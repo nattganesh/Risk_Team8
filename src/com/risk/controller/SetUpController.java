@@ -1,82 +1,97 @@
-/** 
- * This class is necessary for initializing the game play after number of player has been determined.
- * It calculates round robin, assigns countries to players and determines the number of initial armies.
- *
- * @author Natheepan
- * @author Tianyi
+/**
+ * This class is the Controller for SelectPlayer.fxml, where users can select number of players.
+ * 
+ * 
+ * @author DKM
  * @version 1.0
+ * @see javafx.fxml.Initializable
  */
-package com.risk.army;
+package com.risk.controller;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
+import com.risk.army.Player;
 import com.risk.dice.Dice;
 import com.risk.map.Country;
 import com.risk.model.Model;
 
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.stage.Stage;
 
-public class PlayerController {
+public class SetUpController implements Initializable {
 
-    private Model model;
-    
-	/**
-	 * This is the constructor of PlayerController. It initializes the model, containing parsed map file.
-	 * 
-	 * @param m this is the model of the game
-	 */
-    public PlayerController(Model m)
-    {
-        this.model = m;
-    }
-    
-	/**
-	 * This method gets the current player of the game.
-	 * 
-	 * @return returns the current player
-	 */
-    public Player getCurrentPlayer()
-    {
-        return model.getCurrentPlayer();
-    }
-    
-	/**
-	 * This method sets players with color based on number.
-	 *  
-	 * @param numberOfPlayer number of player
-	 */
-    public void setPlayers(int numberOfPlayer) 
-    {
-		int a = 0;
-		while (a < numberOfPlayer) 
-        {
-			model.addPlayer(new Player(Player.PLAYERCOLOR[a])); 
-			a++;
-		}
+	private Model model;
+
+	@FXML
+	ComboBox<String> playerDropDown;
+
+	@FXML
+	Button StartGame;
+
+	public SetUpController(Model m) {
+		model = m;
 	}
 
 	/**
-	 * This method returns the next player of the game. 
-	 * But, if the next player has lost then it skips that player, or if that next player has won 
-	 * then it returns the winner.
+	 * Add 2-6 player in ComboBox component
 	 * 
-	 * @return player returns the next player of the game
+	 * @see javafx.fxml.Initializable#initialize(java.net.URL,
+	 * java.util.ResourceBundle)
+	 */	
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		playerDropDown.getItems().addAll("2", "3", "4", "5",
+				"6");
+	}
+	/**
+	 * sets the number of players
+	 * 
+	 * @param numberOfPlayer the number of player
 	 */
-    public Player getNextPlayer()
-    {
-        Player player = model.getNextPlayer();
-        if (player.numbOccupied() == Country.MAX_NUMBER_OF_COUNTRIES)
-        {
-            return model.setWinner(player);
-        }
-        else if (player.isPlayerLost())
-        {
-            getNextPlayer();
-        }
-        return player;
-    }
-
-    
-
+	public void setPlayers(int numberOfPlayer) {
+		while (numberOfPlayer > 0) {
+			model.addPlayer(new Player(Player.PLAYERCOLOR[numberOfPlayer])); 
+			numberOfPlayer--;
+		}
+	}
+	/**
+	 * Sets the number of player, assign countries to each player and calculate round robin, then load the Reinforcement scene
+	 * 
+	 * @param eventlistener for button clicked event
+	 * @throws IOException the exception thrown for when .fxml not found
+	 * @see javafx.event.ActionEvent
+	 */
+	public void StartGame(ActionEvent event) throws IOException {
+		if (playerDropDown.getSelectionModel().getSelectedItem() != null){
+			
+			setPlayers(Integer.parseInt(playerDropDown.getSelectionModel().getSelectedItem()));
+			calcStartingArmies();
+			assignCountriesToPlayers();
+			determinePlayersStartingOrder();
+			
+			ReinforcementController rController = new ReinforcementController(model);
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/risk/view/Reinforcement.fxml"));
+			loader.setController(rController);
+			Parent root = loader.load();
+			Scene ReinforcementScene = new Scene(root);
+			Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			window.setScene(ReinforcementScene);
+			window.show();
+			
+		}
+	}
+	
 	/**
 	 *  This method calculates the round robin.
 	 *  It first roll the dice to determine who goes first. 
@@ -86,7 +101,7 @@ public class PlayerController {
 	 */
     public void determinePlayersStartingOrder()
     {
-        int[] diceRolls = new int[model.getPlayerSize()];
+        int[] diceRolls = new int[model.getNumberOfPlayer()];
 
         for (int i = 0; i < diceRolls.length; i++)
         {
@@ -114,7 +129,6 @@ public class PlayerController {
         }
         else
         {
-//            System.out.println("\n---------------------------------------------");
             System.out.println("The Dice Roll Results are as follows");
             for (int i = 0; i < diceRolls.length; i++)
             {
@@ -173,12 +187,12 @@ public class PlayerController {
                 }
             }
         }
-        boolean[] armiesRemaining = new boolean[model.getPlayerSize()];
+        boolean[] armiesRemaining = new boolean[model.getNumberOfPlayer()];
         boolean done = false;
         System.out.println("dfdf");
         while (!done)
         {
-            for (int ii = 0; ii < model.getPlayerSize(); ii++)
+            for (int ii = 0; ii < model.getNumberOfPlayer(); ii++)
             {
                 if (model.getPlayers().get(ii).armiesLeft() > 0)
                 {
@@ -198,29 +212,13 @@ public class PlayerController {
                     countP++;
                 }
             }
-            if (countP == model.getPlayerSize())
+            if (countP == model.getNumberOfPlayer())
             {
                 done = true;
             }
         }
     }
-
-	/**
-	 * This method returns the countries occupied by the current player
-	 * 
-	 * @return country ArrayList<Country> occupied by current player
-	 */
-    public ArrayList<Country> getCurPlayerCountries()
-    {
-        ArrayList<Country> country = new ArrayList<Country>();
-        Player player = model.getCurrentPlayer();
-        for (Country c : player.getOccupiedCountries())
-        {
-            country.add(c);
-        }
-        return country;
-    }
-
+    
 	/**
 	 * This method sets the observable list for the country occupied by current player.	 * 
 	 */
@@ -232,11 +230,11 @@ public class PlayerController {
 	/**
 	 * This method sets the starting armies during initialization based on number of players.
 	 */
-    public void setStartingPoints()
+    public void calcStartingArmies()
     {
         for (Player player : model.getPlayers())
         {
-            player.setStartingPoints(setStartingPointsHelper(model.getPlayerSize()));
+            player.setStartingPoints(calcStartingArmiesHelper(model.getNumberOfPlayer()));
         }
     }
 
@@ -248,7 +246,7 @@ public class PlayerController {
 	 * @param getPlayerSize number of players
 	 * @return startingP initial army count
 	 */
-    public int setStartingPointsHelper(int getPlayerSize)
+    public int calcStartingArmiesHelper(int getPlayerSize)
     {
         int startingP = 0;
         switch (getPlayerSize)
@@ -273,70 +271,4 @@ public class PlayerController {
 
     }
 
-    /**
-     * not required for functionality. For debugging purpose.
-     *
-     */
-    public void printCountry()
-    {
-        for (Player p : model.getPlayers())
-        {
-            System.out.printf("The Player %-6s %-42s", p.getName(), " has occupied the following countries: ");
-            for (Country country : p.getOccupiedCountries())
-            {
-                System.out.print(country.getName() + " , ");
-            }
-            System.out.println();
-        }
-    }
-
-    /**
-     * not required for functionality. For debugging purpose.
-     *
-     */
-    public void printArmy()
-    {
-        for (Player p : model.getPlayers())
-        {
-            int s = 0;
-            for (Country t : p.getOccupiedCountries())
-            {
-                s += t.getArmyCount();
-            }
-            System.out.println(p.getName() + " has a total of " + s + " armies.");
-        }
-        System.out.println("-------");
-    }
-
-    /**
-     * not required for functionality. For debugging purpose.
-     *
-     */
-    public void printPlayerInfo()
-    {
-        for (Player p : model.getPlayers())
-        {
-            int s = 0;
-            for (Country t : p.getOccupiedCountries())
-            {
-                s += t.getArmyCount();
-            }
-            System.out.println(p.getName() + " has a total of " + s + " armies.");
-        }
-        System.out.println("\n---------------------------------------------");
-        for (Player p : model.getPlayers())
-        {
-            System.out.println(p.getName() + " has occupied " + p.getOccupiedCountries().size() + " countries.");
-        }
-        System.out.println("\n---------------------------------------------");
-        for (Player p : model.getPlayers())
-        {
-            System.out.printf("The Player %-6s %-42s", p.getName(), " has occupied the following countries: ");
-            for (Country country : p.getOccupiedCountries())
-            {
-                System.out.print(country.getName() + " , ");
-            }
-            System.out.println();
-        }
-    }
 }

@@ -21,7 +21,7 @@ public class Player {
     private ArrayList<Country> occupiedCountries = new ArrayList<>();
     private ArrayList<Card> cards = new ArrayList<>();
     private int startingPoints;
-    private int availableReinforcement = 0;
+    private int reinforcement = 0;
     public static final String[] PLAYERCOLOR = { "Red", "Blue", "Green", "Yellow", "Orange", "Purple" };
 
     private boolean playerLost = false;
@@ -61,27 +61,28 @@ public class Player {
     public int getReinforcementTradeInCard() {
     	return 0;
     }
-    public int getReinforcement()
+    public int calculateReinforcement()
     {
         int numbArmies = getReinforcementOccupiedTerritory() + getReinforcementContinentControl() + getReinforcementTradeInCard();
         if (numbArmies < 3)
         {
-            availableReinforcement = 3;
-            return availableReinforcement;
+            reinforcement = 3;
+            return reinforcement;
         }
-        availableReinforcement = numbArmies;
-        System.out.println("asdf " + availableReinforcement);
-        return availableReinforcement;
+        reinforcement = numbArmies;
+
+        return reinforcement;
     }
 	/**
 	 * Gets the number of armies remaining 
 	 * 
 	 * @return availableReinforement number of armies
 	 */
-    public int getAvailableReinforcement()
+    public int getReinforcement()
     {
-        return availableReinforcement;
+        return reinforcement;
     }
+    
 	/**
 	 * Sets the number of armies during reinforcement.
 	 * 
@@ -90,11 +91,11 @@ public class Player {
 	 */
     public int setReinforcement(int assign)
     {
-        if (assign > getAvailableReinforcement())
+        if (assign > getReinforcement())
         {
             return -1;
         }
-        availableReinforcement -= assign;
+        reinforcement -= assign;
         return 1;
 
     }
@@ -169,15 +170,6 @@ public class Player {
     }
 	
 
-	/**
-	 * Gets the starting number of armies when the game first starts
-	 * 
-	 * @return startingPoints number of armies 
-	 */
-    public int getStartingPoints()
-    {
-        return startingPoints;
-    }
 	/**
 	 * gets the value representing the lost status of player.
 	 * 

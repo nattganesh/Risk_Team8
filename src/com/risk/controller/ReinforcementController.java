@@ -8,11 +8,8 @@ package com.risk.controller;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import com.risk.army.Player;
-import com.risk.army.PlayerController;
 import com.risk.map.Country;
 import com.risk.model.Model;
 
@@ -27,7 +24,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -42,8 +38,6 @@ import javafx.stage.Stage;
  */
 public class ReinforcementController implements Initializable {
 
-	private ArrayList<Country> countryButton;
-	private PlayerController pController;
 	private Model model;
 
 	/**
@@ -90,8 +84,9 @@ public class ReinforcementController implements Initializable {
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
 		playerId.setText(getName());
-		armyAvailable.setText("Army available => " + Integer.toString(model.getCurrentPlayer().getReinforcement()));
+		armyAvailable.setText("Army available => " + Integer.toString(model.getCurrentPlayer().calculateReinforcement()));
 		playerId.setPadding(new Insets(0, 0, 0, 5));
+		
 		inputArmy.textProperty().addListener(new ChangeListener<String>() {
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				if (!newValue.matches("\\d*")) {
@@ -99,7 +94,6 @@ public class ReinforcementController implements Initializable {
 				}
 			}
 		});
-
 		countryId.setItems(model.getCurrentPlayerCountryObs());
 		countryId.setCellFactory(param -> new ListCell<Country>() {
 			@Override
@@ -130,10 +124,10 @@ public class ReinforcementController implements Initializable {
 	public void setArmy() {
 		int Armyinput = Integer.parseInt(inputArmy.getText());
 
-		if (model.getCurrentPlayer().getAvailableReinforcement() == 0) {
+		if (model.getCurrentPlayer().getReinforcement() == 0) {
 			inputArmyError.setText("0 available army");
 		} else if (countryId.getSelectionModel().getSelectedItem() == null
-				|| Armyinput > model.getCurrentPlayer().getAvailableReinforcement() || Armyinput <= 0) {
+				|| Armyinput > model.getCurrentPlayer().getReinforcement() || Armyinput <= 0) {
 
 			inputArmyError.setText("Invalid Entry");
 		} else {
@@ -147,7 +141,7 @@ public class ReinforcementController implements Initializable {
 			}
 			model.getCurrentPlayer().setReinforcement(Armyinput);
 			armyAvailable.setText(
-					"Army available => " + Integer.toString(model.getCurrentPlayer().getAvailableReinforcement()));
+					"Army available => " + Integer.toString(model.getCurrentPlayer().getReinforcement()));
 		}
 	}
 	/**
@@ -158,7 +152,7 @@ public class ReinforcementController implements Initializable {
 	 * @throws IOException Exception thrown when view is not found
 	 */
 	public void goToAttackPhase(ActionEvent event) throws IOException  {
-		if (model.getCurrentPlayer().getAvailableReinforcement() > 0) {
+		if (model.getCurrentPlayer().getReinforcement() > 0) {
 
 		} 
 		else {

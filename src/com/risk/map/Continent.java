@@ -43,16 +43,10 @@ public class Continent {
     {
         countries.add(country);
     }
-//    public void setCountries(ArrayList<Country> countries)
-//    {
-//        this.countries = countries;
-//    }
-
     public int getPointsWhenFullyOccupied()
     {
         return pointsWhenFullyOccupied;
     }
-
     public void setPointsWhenFullyOccupied(int pointsWhenFullyOccupied)
     {
         this.pointsWhenFullyOccupied = pointsWhenFullyOccupied;
