@@ -24,7 +24,7 @@ import javafx.stage.Stage;
  * @author DKM
  *
  */
-public class FortificationController extends Observable implements Initializable {
+public class FortificationController implements Initializable {
 	
 	private PlayerModel players;
 	private MapModel maps;
@@ -34,6 +34,8 @@ public class FortificationController extends Observable implements Initializable
 		gamephase = game;
 		players = p;
 		maps = m;
+		
+		
 	}
 	/* (non-Javadoc)
 	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)

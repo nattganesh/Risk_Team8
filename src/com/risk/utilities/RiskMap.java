@@ -17,10 +17,11 @@ import com.risk.exceptions.DuplicatesException;
 import com.risk.model.MapModel;
 import com.risk.model.PlayerModel;
 
-public class RiskMapParser {
+public class RiskMap {
 
-    private MapModel model;
-    static FileParser parser;
+    private MapModel map;
+    Validate validator;
+    FileParser parser;
     private String inputFile;
 
 	/**
@@ -28,11 +29,12 @@ public class RiskMapParser {
 	 * 
 	 * @param maps takes in model of the game
 	 */
-    public RiskMapParser(MapModel maps, String input)
+    public RiskMap(MapModel maps, String input)
     {
-        model = maps;
+        map = maps;
         inputFile = input;
-        parser = new FileParser(model);
+        parser = new FileParser(map);
+        validator = new Validate(map);
     }
 
 	/**
@@ -46,18 +48,7 @@ public class RiskMapParser {
         return parser;
     }
 
-	/**
-	 * This method calls class methods of parser to parse the file.
-	 * 
-	 * @param input	Scanner for input file
-	 * @throws CountLimitException 
-	 * @throws CannotFindException 
-	 * @throws DuplicatesException
-	 */
-    public Scanner getFile() throws FileNotFoundException
-    {
-        return new Scanner(new File(inputFile));
-    }
+
 
 	/**
 	 * This methods role is to call the parseInput method and give it the Scanner as an argument
@@ -67,16 +58,18 @@ public class RiskMapParser {
 	 * @throws CannotFindException
 	 * @throws DuplicatesException
 	 */
-    public void parseInputs(Scanner input) throws CountLimitException, CannotFindException, DuplicatesException
+    public void parseFile() throws CountLimitException, CannotFindException, DuplicatesException, FileNotFoundException
     {
-       // parser.setPlayers(input);
+        Scanner input = new Scanner(new File(inputFile));
         parser.setCountriesInContinents(input);
         parser.setNeighboringCountries(input);
-        parser.continentChecks();
     }
-
+    public void validateMap() throws CannotFindException, CountLimitException {
+    	validator.continentChecks();
+    }
     public void setUp() throws FileNotFoundException, CountLimitException, CannotFindException, DuplicatesException
     {
-        parseInputs(getFile());
+        parseFile();
+        validateMap();
     }
 }

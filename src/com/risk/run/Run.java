@@ -22,7 +22,7 @@ import com.risk.exceptions.DuplicatesException;
 import com.risk.model.GamePhaseModel;
 import com.risk.model.MapModel;
 import com.risk.model.PlayerModel;
-import com.risk.utilities.RiskMapParser;
+import com.risk.utilities.RiskMap;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

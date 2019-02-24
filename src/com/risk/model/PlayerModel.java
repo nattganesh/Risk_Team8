@@ -9,9 +9,9 @@ package com.risk.model;
 
 import java.util.ArrayList;
 import java.util.Observable;
+import java.util.Observer;
 
 import com.risk.army.Player;
-import com.risk.map.Continent;
 import com.risk.map.Country;
 
 import javafx.collections.FXCollections;
@@ -21,13 +21,16 @@ import javafx.collections.ObservableList;
  * @author DKM
  *
  */
-public class PlayerModel extends Observable {
+public class PlayerModel extends Observable implements Observer {
 
-    private ObservableList<Player> playersModel = FXCollections.observableArrayList();
-    private ObservableList<Country> currentPlayerCountry = FXCollections.observableArrayList();
-
+    private ArrayList<Player> playersTurn = new ArrayList<Player>();
+    private ObservableList<Country> currentPlayerTerritory = FXCollections.observableArrayList();
+    public static final String[] PLAYERCOLOR = { "Red", "Blue", "Green", "Yellow", "Orange", "Purple" };
     private int currentPlayerIndex = 0;
     private Player playerWins = null;
+    
+    
+    
 
 	/**
 	 * Sets the winner of the game
@@ -48,18 +51,14 @@ public class PlayerModel extends Observable {
     public void IncrementPlayerIndex()
     {
         currentPlayerIndex = (currentPlayerIndex + 1) % getNumberOfPlayer();
-        setView();
+        updateCurrentTerritory();
+        
     }
-
-	/**
-	 * This method sets the observable list to countries occupied by currentPlayer
-	 */
-    public void setView()
-    {
-        currentPlayerCountry.clear();
-        currentPlayerCountry.addAll(getCurrentPlayer().getOccupiedCountries());
+    public void updateCurrentTerritory() {
+    	 currentPlayerTerritory.clear();
+         currentPlayerTerritory.addAll(getCurrentPlayer().getOccupiedCountries());
     }
-
+    
 	/**
 	 * This method gets the next player and increments the player index.
 	 * 
@@ -67,7 +66,7 @@ public class PlayerModel extends Observable {
 	 */
     public Player getNextPlayer()
     {
-        Player current = playersModel.get(currentPlayerIndex);
+        Player current = playersTurn.get(currentPlayerIndex);
         IncrementPlayerIndex();
         return current;
     }
@@ -77,7 +76,7 @@ public class PlayerModel extends Observable {
 	 */
     public void setCurrentPlayerCountryObs()
     {
-        currentPlayerCountry.addAll(getCurrentPlayer().getOccupiedCountries());
+        currentPlayerTerritory.addAll(getCurrentPlayer().getOccupiedCountries());
     }
 
 	/**
@@ -85,9 +84,9 @@ public class PlayerModel extends Observable {
 	 * 
 	 * @return currentPlayerCountry returns ObservableList<Country> of current player
 	 */
-    public ObservableList<Country> getCurrentPlayerCountryObs()
+    public ObservableList<Country> getTerritory()
     {
-        return currentPlayerCountry;
+        return currentPlayerTerritory;
     }
 
 	/** 
@@ -97,7 +96,7 @@ public class PlayerModel extends Observable {
 	 */
     public Player getCurrentPlayer()
     {
-        return playersModel.get(currentPlayerIndex);
+        return playersTurn.get(currentPlayerIndex);
     }
 
 
@@ -109,7 +108,7 @@ public class PlayerModel extends Observable {
 	 */
     public void addPlayer(Player player)
     {
-        playersModel.add(player);
+        playersTurn.add(player);
     }
 
 	/**
@@ -119,18 +118,27 @@ public class PlayerModel extends Observable {
 	 */
     public int getNumberOfPlayer()
     {
-        return playersModel.size();
+        return playersTurn.size();
     }
 
 
 	/**
-	 * this method gets the players in the player model
+	 * this method gets the players in the player models
 	 * 
 	 * @return playersModel returns the player model
 	 */
-    public ObservableList<Player> getPlayers()
+    public ArrayList<Player> getPlayers()
     {
-        return playersModel;
+        return playersTurn;
     }
+
+	/* (non-Javadoc)
+	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+	 */
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

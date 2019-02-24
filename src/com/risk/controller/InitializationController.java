@@ -79,7 +79,7 @@ public class InitializationController extends Observable implements Initializabl
 	 */
 	public void setPlayers(int numberOfPlayer) {
 		while (numberOfPlayer > 0) {
-			players.addPlayer(new Player(Player.PLAYERCOLOR[numberOfPlayer])); 
+			players.addPlayer(new Player(PlayerModel.PLAYERCOLOR[numberOfPlayer])); 
 			numberOfPlayer--;
 		}
 	}
@@ -197,7 +197,7 @@ public class InitializationController extends Observable implements Initializabl
         }
         boolean[] armiesRemaining = new boolean[players.getNumberOfPlayer()];
         boolean done = false;
-        System.out.println("dfdf");
+        
         while (!done)
         {
             for (int ii = 0; ii < players.getNumberOfPlayer(); ii++)

@@ -8,8 +8,6 @@ package com.risk.controller;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.ResourceBundle;
 
 import com.risk.map.Country;
@@ -21,26 +19,20 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
-import javafx.stage.Stage;
 
 /**
  * 
  * @see javafx.fxml.Initializable
  * 	
  */
-public class ReinforcementController extends Observable implements Initializable  {
+public class ReinforcementController implements Initializable {
 
 	private PlayerModel players;
 	private MapModel maps;
@@ -76,8 +68,7 @@ public class ReinforcementController extends Observable implements Initializable
 	public ReinforcementController(GamePhaseModel game, PlayerModel p, MapModel m) {
 		gamephase = game;
 		players = p;
-		maps = m;
-	
+		maps = m;		
 	}
 	/**
 	 * This method is data binding for connection between controller and UI. 
@@ -92,9 +83,13 @@ public class ReinforcementController extends Observable implements Initializable
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
 		playerId.setText(getName());
-		armyAvailable.setText("Army available => " + Integer.toString(players.getCurrentPlayer().calculateReinforcement()));
-		playerId.setPadding(new Insets(0, 0, 0, 5));
-		
+		armyAvailable.setText("Army: " + Integer.toString(getReinforcement()));
+		initializeTerritory();
+		initializeArmyField();
+	}
+	
+	
+	public void initializeArmyField() {
 		inputArmy.textProperty().addListener(new ChangeListener<String>() {
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				if (!newValue.matches("\\d*")) {
@@ -102,55 +97,58 @@ public class ReinforcementController extends Observable implements Initializable
 				}
 			}
 		});
-		countryId.setItems(players.getCurrentPlayerCountryObs());
+	}
+	
+	public void initializeTerritory() {
+		countryId.setItems(players.getTerritory());
 		countryId.setCellFactory(param -> new ListCell<Country>() {
 			@Override
-			protected void updateItem(Country item, boolean empty) {
-				super.updateItem(item, empty);
-				if (empty || item == null || item.getName() == null) {
+			protected void updateItem(Country country, boolean empty) {
+				super.updateItem(country, empty);
+				if (empty || country == null || country.getName() == null) {
 					setText(null);
 				} else {
-					setText(item.getName() + " => Army: " + item.getArmyCount());
-
+					setText(country.getName() + " (" + country.getArmyCount() + ")");
 				}
 			}	
 		});
-		
 	}
+	
+	public int getReinforcement() {
+		return players.getCurrentPlayer().calculateReinforcement();
+	}
+	
 	/**
 	 * gets the name of current player in the game
 	 * 
 	 * @return it returns name of current player
 	 */
 	public String getName() {
-		return "current Player: " + players.getCurrentPlayer().getName();
+		return players.getCurrentPlayer().getName();
 	}
 	
 	/**
 	 * sets the number of available army to your occupied country
 	 */
+	@FXML
 	public void setArmy() {
-		int Armyinput = Integer.parseInt(inputArmy.getText());
-
-		if (players.getCurrentPlayer().getReinforcement() == 0) {
-			inputArmyError.setText("0 available army");
-		} else if (countryId.getSelectionModel().getSelectedItem() == null
-				|| Armyinput > players.getCurrentPlayer().getReinforcement() || Armyinput <= 0) {
-
-			inputArmyError.setText("Invalid Entry");
-		} else {
-			for (Country c : players.getCurrentPlayer().getOccupiedCountries()) {
-				if (c.equals(countryId.getSelectionModel().getSelectedItem())) {
-					c.setArmyCount(Armyinput);
-					players.setView();
-					inputArmyError.setText("sucessful");
+		int Armyinput = 0;
+		if (!inputArmy.getText().equals("") && players.getCurrentPlayer().getReinforcement() != 0 && countryId.getSelectionModel().getSelectedItem() != null) {
+			
+			Armyinput  = Integer.parseInt(inputArmy.getText());
+			for (Country country : players.getTerritory()) {
+				if (country.equals(countryId.getSelectionModel().getSelectedItem())) {
+					country.setArmyCount(Armyinput);
+					players.updateCurrentTerritory();
 					break;
 				}
 			}
 			players.getCurrentPlayer().setReinforcement(Armyinput);
 			armyAvailable.setText(
-					"Army available => " + Integer.toString(players.getCurrentPlayer().getReinforcement()));
+					"Army: " + Integer.toString(players.getCurrentPlayer().getReinforcement()));
+			
 		}
+		
 	}
 	/**
 	 * Method to set up the Attack.fxml view and set the controller (AttackController) for the view. 
