@@ -14,11 +14,14 @@
 package com.risk.run;
 
 
-import com.risk.controller.SetUpController;
+import com.risk.controller.GamePhaseController;
+import com.risk.controller.InitializationController;
 import com.risk.exceptions.CannotFindException;
 import com.risk.exceptions.CountLimitException;
 import com.risk.exceptions.DuplicatesException;
-import com.risk.model.Model;
+import com.risk.model.GamePhaseModel;
+import com.risk.model.MapModel;
+import com.risk.model.PlayerModel;
 import com.risk.utilities.RiskMapParser;
 
 import javafx.application.Application;
@@ -30,6 +33,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -211,38 +215,52 @@ public class Run extends Application {
 //	}
     public static void main(String[] args)
     {
-		/**
-		 * @see javafx.application.Application
-		 */
-        launch(args);
+		launch(args);
     }
 
 	/**
 	 * Start is called when JavaFX is ready to be initialized
+	 * @throws IOException 
+	 * @throws DuplicatesException 
+	 * @throws CannotFindException 
+	 * @throws CountLimitException 
 	 * 
 	 * @see javafx.application.Application
 	 */
     @Override
-    public void start(Stage primaryStage) throws Exception
+    public void start(Stage primaryStage) throws CountLimitException, CannotFindException, DuplicatesException, IOException
     {
-        try
-        {
-			Model model = new Model();
-			String inputFile = "src/com/risk/run/inputtext/input.txt";
-			RiskMapParser riskMapParser = new RiskMapParser(model, inputFile);
-			riskMapParser.setUp();
-			SetUpController selectController = new SetUpController(model);
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/risk/view/SetUp.fxml"));
-			loader.setController(selectController);
-			Parent root = loader.load();
-		    Screen screen = Screen.getPrimary();
-		    Rectangle2D bounds = screen.getVisualBounds();
-		    primaryStage.setX((bounds.getWidth() - primaryStage.getWidth()) / 2); 
-		    primaryStage.setY((bounds.getHeight() - primaryStage.getHeight()) / 2);  
-		    primaryStage.setWidth(bounds.getWidth() / 2);
-		    primaryStage.setHeight(bounds.getHeight() / 2);
-	        primaryStage.setScene(new Scene(root, 300, 275));
-	        primaryStage.show();
+    	PlayerModel players = new PlayerModel();
+		MapModel maps = new MapModel();
+		GamePhaseModel gamephase = new GamePhaseModel();
+
+		GamePhaseController gController = new GamePhaseController(gamephase, maps, players);
+		gController.setUp(primaryStage);
+		
+//        try
+//        {
+//			PlayerModel players = new PlayerModel();
+//			MapModel maps = new MapModel();
+//			GamePhaseModel gamephase = new GamePhaseModel();
+//
+//			GamePhaseController gController = new GamePhaseController(gamephase, maps, players);
+//			gController.setUp();
+			
+//			String inputFile = "src/com/risk/run/inputtext/input.txt";
+//			RiskMapParser riskMapParser = new RiskMapParser(maps, inputFile);
+//			riskMapParser.setUp();
+//			SetUpController selectController = new SetUpController(players, maps);
+//			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/risk/view/SetUp.fxml"));
+//			loader.setController(selectController);
+//			Parent root = loader.load();
+//		    Screen screen = Screen.getPrimary();
+//		    Rectangle2D bounds = screen.getVisualBounds();
+//		    primaryStage.setX((bounds.getWidth() - primaryStage.getWidth()) / 2); 
+//		    primaryStage.setY((bounds.getHeight() - primaryStage.getHeight()) / 2);  
+//		    primaryStage.setWidth(bounds.getWidth() / 2);
+//		    primaryStage.setHeight(bounds.getHeight() / 2);
+//	        primaryStage.setScene(new Scene(root, 300, 275));
+//	        primaryStage.show();
 
 //
 //                    System.out.println("\n---------------------------------------------");
@@ -454,23 +472,23 @@ public class Run extends Application {
 //                }
 //            }
 //-------------------------------------------------------------------------------------------------------------
-        }
-        catch (FileNotFoundException ex)
-        {
-            Logger.getLogger(Run.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (DuplicatesException ex)
-        {
-            Logger.getLogger(Run.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (CountLimitException ex)
-        {
-            Logger.getLogger(Run.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (CannotFindException ex)
-        {
-            Logger.getLogger(Run.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        }
+//        catch (FileNotFoundException ex)
+//        {
+//            Logger.getLogger(Run.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        catch (DuplicatesException ex)
+//        {
+//            Logger.getLogger(Run.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        catch (CountLimitException ex)
+//        {
+//            Logger.getLogger(Run.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        catch (CannotFindException ex)
+//        {
+//            Logger.getLogger(Run.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
 
 }

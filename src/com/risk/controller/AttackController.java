@@ -5,9 +5,12 @@ package com.risk.controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Observable;
 import java.util.ResourceBundle;
 
-import com.risk.model.Model;
+import com.risk.model.GamePhaseModel;
+import com.risk.model.MapModel;
+import com.risk.model.PlayerModel;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -21,12 +24,16 @@ import javafx.stage.Stage;
  * @author DKM
  *
  */
-public class AttackController implements Initializable {
+public class AttackController extends Observable implements Initializable {
 	
-	private Model model;
+	private PlayerModel players;
+	private MapModel maps;
+	private GamePhaseModel gamephase;
 	
-	public AttackController(Model m) {
-		model = m;
+	public AttackController(GamePhaseModel game, PlayerModel p, MapModel m) {
+		gamephase = game;
+		players = p;
+		maps = m;
 	}
 	
 	/* (non-Javadoc)
@@ -35,18 +42,11 @@ public class AttackController implements Initializable {
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		System.out.println(model.getNumberOfPlayer());
+		System.out.println(players.getNumberOfPlayer());
 	}
 	public void goToFortificationPhase(ActionEvent event) throws IOException  {
 		
-			FortificationController fortificationController = new FortificationController(model);
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/risk/view/Fortification.fxml"));
-			loader.setController(fortificationController);
-			Parent root = loader.load();
-			Scene ReinforcementScene = new Scene(root);
-			Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-			window.setScene(ReinforcementScene);
-			window.show();
+		gamephase.setPhase("fortification");
 		
 	}
 }

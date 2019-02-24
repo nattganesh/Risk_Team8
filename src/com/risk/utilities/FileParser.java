@@ -15,7 +15,8 @@ import com.risk.exceptions.CountLimitException;
 import com.risk.exceptions.DuplicatesException;
 import com.risk.map.Continent;
 import com.risk.map.Country;
-import com.risk.model.Model;
+import com.risk.model.MapModel;
+import com.risk.model.PlayerModel;
 
 /**
  * @author DKM
@@ -24,52 +25,17 @@ import com.risk.model.Model;
 public class FileParser {
 
 
-    Model model;
+    MapModel model;
     private static String text = ""; // file parser
 
 	/** 
 	 * @param m this is the model of the game
 	 */
-    public FileParser(Model m)
+    public FileParser(MapModel m)
     {
         this.model = m;
     }
 
-	/**
-	 * This method sets the countries in the continents and checks for duplicate and wrong file format
-	 * 
-	 * @param input Scanner of the input.txt file
-	 * @throws CannotFindException Exception thrown when file format is different
-	 * @throws DuplicatesException Exception thrown when country appears twice in the map
-	 */
-    public void setPlayers(Scanner input) throws CountLimitException, CannotFindException
-    {
-        if (input.hasNextInt())
-        {
-            int numberOfPlayers = input.nextInt();
-            if (numberOfPlayers < 2 || numberOfPlayers > 6)
-            {
-                CountLimitException ex = new CountLimitException("Players", numberOfPlayers, 2, 6);
-                throw ex;
-            }
-            else
-            {
-                int a = 0;
-                input.nextLine();
-                while (a != numberOfPlayers)
-                {
-                    model.addPlayer(new Player(input.nextLine())); // ****
-                    a++;
-                }
-            }
-        }
-        else
-        {
-            CannotFindException ex = new CannotFindException(
-                    "The first line of Input Text Document is reserved for the number of players playing the game. This is undefined. This number should be between 2 and 6. Please resolve this issue.");
-            throw ex;
-        }
-    }
 
 	/**
 	 * This method sets the neighbor for each country.

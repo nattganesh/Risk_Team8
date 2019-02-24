@@ -11,12 +11,16 @@ package com.risk.controller;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.ResourceBundle;
 
 import com.risk.army.Player;
 import com.risk.dice.Dice;
 import com.risk.map.Country;
-import com.risk.model.Model;
+import com.risk.model.GamePhaseModel;
+import com.risk.model.MapModel;
+import com.risk.model.PlayerModel;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,20 +33,34 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 
-public class SetUpController implements Initializable {
+public class InitializationController extends Observable implements Initializable {
 
-	private Model model;
+	private GamePhaseModel gamephase;
+	private PlayerModel players;
+	private MapModel maps;
 
+	
 	@FXML
 	ComboBox<String> playerDropDown;
 
 	@FXML
 	Button StartGame;
 
-	public SetUpController(Model m) {
-		model = m;
+	public InitializationController(GamePhaseModel game, PlayerModel p, MapModel m) {
+		gamephase = game;
+		players = p;
+		maps = m;
+	
 	}
-
+//	public void initializeReinforcement(ActionEvent e) throws IOException {
+//		loader.setController(rController);
+//		Parent root = loader.load();
+//		Scene ReinforcementScene = new Scene(root);
+//		Stage window = (Stage) ((Node) e.getSource()).getScene().getWindow();
+//		window.setScene(ReinforcementScene);
+//		window.show();
+//	}
+//	
 	/**
 	 * Add 2-6 player in ComboBox component
 	 * 
@@ -61,7 +79,7 @@ public class SetUpController implements Initializable {
 	 */
 	public void setPlayers(int numberOfPlayer) {
 		while (numberOfPlayer > 0) {
-			model.addPlayer(new Player(Player.PLAYERCOLOR[numberOfPlayer])); 
+			players.addPlayer(new Player(Player.PLAYERCOLOR[numberOfPlayer])); 
 			numberOfPlayer--;
 		}
 	}
@@ -74,24 +92,14 @@ public class SetUpController implements Initializable {
 	 */
 	public void StartGame(ActionEvent event) throws IOException {
 		if (playerDropDown.getSelectionModel().getSelectedItem() != null){
-			
 			setPlayers(Integer.parseInt(playerDropDown.getSelectionModel().getSelectedItem()));
 			calcStartingArmies();
 			assignCountriesToPlayers();
 			determinePlayersStartingOrder();
-			
-			ReinforcementController rController = new ReinforcementController(model);
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/risk/view/Reinforcement.fxml"));
-			loader.setController(rController);
-			Parent root = loader.load();
-			Scene ReinforcementScene = new Scene(root);
-			Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-			window.setScene(ReinforcementScene);
-			window.show();
-			
+			gamephase.setPhase("reinforcement");
 		}
 	}
-	
+
 	/**
 	 *  This method calculates the round robin.
 	 *  It first roll the dice to determine who goes first. 
@@ -101,7 +109,7 @@ public class SetUpController implements Initializable {
 	 */
     public void determinePlayersStartingOrder()
     {
-        int[] diceRolls = new int[model.getNumberOfPlayer()];
+        int[] diceRolls = new int[players.getNumberOfPlayer()];
 
         for (int i = 0; i < diceRolls.length; i++)
         {
@@ -132,24 +140,24 @@ public class SetUpController implements Initializable {
             System.out.println("The Dice Roll Results are as follows");
             for (int i = 0; i < diceRolls.length; i++)
             {
-                System.out.println(model.getPlayers().get(i).getName() + " --> " + diceRolls[i]);
+                System.out.println(players.getPlayers().get(i).getName() + " --> " + diceRolls[i]);
             }
             System.out.println();
-            System.out.println("The player: " + model.getPlayers().get(maxRollIndex).getName()
+            System.out.println("The player: " + players.getPlayers().get(maxRollIndex).getName()
                     + " has won the dice roll with a roll of " + diceRolls[maxRollIndex]
                     + ".\nHe/She will start first, and the play order goes clockwise from the starting player.");
 
             System.out.println("\n---------------------------------------------");
             for (int i = 0; i < maxRollIndex; i++)
             {
-                Player temp = model.getPlayers().remove(0);
-                model.addPlayer(temp);
+                Player temp = players.getPlayers().remove(0);
+                players.addPlayer(temp);
             }
             initializeCurrentPlayer();
             System.out.println("The Play Order is as follows:");
             for (int i = 0; i < diceRolls.length; i++)
             {
-                System.out.println(model.getPlayers().get(i).getName());
+                System.out.println(players.getPlayers().get(i).getName());
             }
             System.out.println("\n---------------------------------------------");
         }
@@ -164,7 +172,7 @@ public class SetUpController implements Initializable {
         int i = 0;
         while (i < Country.MAX_NUMBER_OF_COUNTRIES)
         {
-            for (Player p : model.getPlayers())
+            for (Player p : players.getPlayers())
             {
                 int random = (int) (Math.random() * Country.MAX_NUMBER_OF_COUNTRIES);
                 while (countryOccupied[random])
@@ -173,12 +181,12 @@ public class SetUpController implements Initializable {
                 }
                 if (!countryOccupied[random])
                 {
-                    model.getCountries().get(random).setRuler(p);
-                    model.getCountries().get(random).setIsOccupied(true);
-                    model.getCountries().get(random).setArmyCount(1);
+                    maps.getCountries().get(random).setRuler(p);
+                    maps.getCountries().get(random).setIsOccupied(true);
+                    maps.getCountries().get(random).setArmyCount(1);
 
                     countryOccupied[random] = true;
-                    p.getOccupiedCountries().add(model.getCountries().get(random));
+                    p.getOccupiedCountries().add(maps.getCountries().get(random));
                     i++;
                 }
                 if (i >= Country.MAX_NUMBER_OF_COUNTRIES)
@@ -187,17 +195,17 @@ public class SetUpController implements Initializable {
                 }
             }
         }
-        boolean[] armiesRemaining = new boolean[model.getNumberOfPlayer()];
+        boolean[] armiesRemaining = new boolean[players.getNumberOfPlayer()];
         boolean done = false;
         System.out.println("dfdf");
         while (!done)
         {
-            for (int ii = 0; ii < model.getNumberOfPlayer(); ii++)
+            for (int ii = 0; ii < players.getNumberOfPlayer(); ii++)
             {
-                if (model.getPlayers().get(ii).armiesLeft() > 0)
+                if (players.getPlayers().get(ii).armiesLeft() > 0)
                 {
-                    int random = (int) (Math.random() * model.getPlayers().get(ii).numbOccupied());
-                    model.getPlayers().get(ii).getOccupiedCountries().get(random).setArmyCount(1);
+                    int random = (int) (Math.random() * players.getPlayers().get(ii).numbOccupied());
+                    players.getPlayers().get(ii).getOccupiedCountries().get(random).setArmyCount(1);
                 }
                 else
                 {
@@ -212,7 +220,7 @@ public class SetUpController implements Initializable {
                     countP++;
                 }
             }
-            if (countP == model.getNumberOfPlayer())
+            if (countP == players.getNumberOfPlayer())
             {
                 done = true;
             }
@@ -224,7 +232,7 @@ public class SetUpController implements Initializable {
 	 */
     public void initializeCurrentPlayer()
     {
-        model.setCurrentPlayerCountryObs();
+        players.setCurrentPlayerCountryObs();
     }
 
 	/**
@@ -232,9 +240,9 @@ public class SetUpController implements Initializable {
 	 */
     public void calcStartingArmies()
     {
-        for (Player player : model.getPlayers())
+        for (Player player : players.getPlayers())
         {
-            player.setStartingPoints(calcStartingArmiesHelper(model.getNumberOfPlayer()));
+            player.setStartingPoints(calcStartingArmiesHelper(players.getNumberOfPlayer()));
         }
     }
 
@@ -271,4 +279,5 @@ public class SetUpController implements Initializable {
 
     }
 
+	
 }

@@ -8,10 +8,14 @@ package com.risk.controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.ResourceBundle;
 
 import com.risk.map.Country;
-import com.risk.model.Model;
+import com.risk.model.GamePhaseModel;
+import com.risk.model.MapModel;
+import com.risk.model.PlayerModel;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -36,9 +40,12 @@ import javafx.stage.Stage;
  * @see javafx.fxml.Initializable
  * 	
  */
-public class ReinforcementController implements Initializable {
+public class ReinforcementController extends Observable implements Initializable  {
 
-	private Model model;
+	private PlayerModel players;
+	private MapModel maps;
+	private GamePhaseModel gamephase;
+
 
 	/**
 	 * @see javafx.fxml.XML
@@ -65,11 +72,12 @@ public class ReinforcementController implements Initializable {
 	
 	/**
 	 * This is the constructor for the reinforcement controller
-	 * 
-	 * @param m model that is passed from previous view
 	 */
-	public ReinforcementController(Model m) {
-		model = m;
+	public ReinforcementController(GamePhaseModel game, PlayerModel p, MapModel m) {
+		gamephase = game;
+		players = p;
+		maps = m;
+	
 	}
 	/**
 	 * This method is data binding for connection between controller and UI. 
@@ -84,7 +92,7 @@ public class ReinforcementController implements Initializable {
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
 		playerId.setText(getName());
-		armyAvailable.setText("Army available => " + Integer.toString(model.getCurrentPlayer().calculateReinforcement()));
+		armyAvailable.setText("Army available => " + Integer.toString(players.getCurrentPlayer().calculateReinforcement()));
 		playerId.setPadding(new Insets(0, 0, 0, 5));
 		
 		inputArmy.textProperty().addListener(new ChangeListener<String>() {
@@ -94,7 +102,7 @@ public class ReinforcementController implements Initializable {
 				}
 			}
 		});
-		countryId.setItems(model.getCurrentPlayerCountryObs());
+		countryId.setItems(players.getCurrentPlayerCountryObs());
 		countryId.setCellFactory(param -> new ListCell<Country>() {
 			@Override
 			protected void updateItem(Country item, boolean empty) {
@@ -115,7 +123,7 @@ public class ReinforcementController implements Initializable {
 	 * @return it returns name of current player
 	 */
 	public String getName() {
-		return "current Player: " + model.getCurrentPlayer().getName();
+		return "current Player: " + players.getCurrentPlayer().getName();
 	}
 	
 	/**
@@ -124,24 +132,24 @@ public class ReinforcementController implements Initializable {
 	public void setArmy() {
 		int Armyinput = Integer.parseInt(inputArmy.getText());
 
-		if (model.getCurrentPlayer().getReinforcement() == 0) {
+		if (players.getCurrentPlayer().getReinforcement() == 0) {
 			inputArmyError.setText("0 available army");
 		} else if (countryId.getSelectionModel().getSelectedItem() == null
-				|| Armyinput > model.getCurrentPlayer().getReinforcement() || Armyinput <= 0) {
+				|| Armyinput > players.getCurrentPlayer().getReinforcement() || Armyinput <= 0) {
 
 			inputArmyError.setText("Invalid Entry");
 		} else {
-			for (Country c : model.getCurrentPlayer().getOccupiedCountries()) {
+			for (Country c : players.getCurrentPlayer().getOccupiedCountries()) {
 				if (c.equals(countryId.getSelectionModel().getSelectedItem())) {
 					c.setArmyCount(Armyinput);
-					model.setView();
+					players.setView();
 					inputArmyError.setText("sucessful");
 					break;
 				}
 			}
-			model.getCurrentPlayer().setReinforcement(Armyinput);
+			players.getCurrentPlayer().setReinforcement(Armyinput);
 			armyAvailable.setText(
-					"Army available => " + Integer.toString(model.getCurrentPlayer().getReinforcement()));
+					"Army available => " + Integer.toString(players.getCurrentPlayer().getReinforcement()));
 		}
 	}
 	/**
@@ -151,19 +159,13 @@ public class ReinforcementController implements Initializable {
 	 * @param event eventlistener for button clicked event
 	 * @throws IOException Exception thrown when view is not found
 	 */
+	
 	public void goToAttackPhase(ActionEvent event) throws IOException  {
-		if (model.getCurrentPlayer().getReinforcement() > 0) {
-
+		if (players.getCurrentPlayer().getReinforcement() > 0) {
 		} 
 		else {
-			AttackController attackController = new AttackController(model);
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/risk/view/Attack.fxml"));
-			loader.setController(attackController);
-			Parent root = loader.load();
-			Scene FortificationScene = new Scene(root);
-			Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-			window.setScene(FortificationScene);
-			window.show();
+			gamephase.setPhase("attack");
 		}
 	}
+
 }

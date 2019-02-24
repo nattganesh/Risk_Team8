@@ -14,22 +14,23 @@ import javax.swing.JFrame;
 import com.risk.exceptions.CannotFindException;
 import com.risk.exceptions.CountLimitException;
 import com.risk.exceptions.DuplicatesException;
-import com.risk.model.Model;
+import com.risk.model.MapModel;
+import com.risk.model.PlayerModel;
 
 public class RiskMapParser {
 
-    private static Model model;
+    private MapModel model;
     static FileParser parser;
     private String inputFile;
 
 	/**
 	 * This is the constructor for RiskMapParser. It initializes the model and instantiates the FileParser(model)
 	 * 
-	 * @param m takes in model of the game
+	 * @param maps takes in model of the game
 	 */
-    public RiskMapParser(Model m, String input)
+    public RiskMapParser(MapModel maps, String input)
     {
-        model = m;
+        model = maps;
         inputFile = input;
         parser = new FileParser(model);
     }

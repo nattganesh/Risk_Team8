@@ -12,7 +12,8 @@ import org.junit.jupiter.api.Test;
 import com.risk.exceptions.CannotFindException;
 import com.risk.exceptions.CountLimitException;
 import com.risk.exceptions.DuplicatesException;
-import com.risk.model.Model;
+import com.risk.model.MapModel;
+import com.risk.model.PlayerModel;
 import com.risk.utilities.RiskMapParser;
 
 /**
@@ -20,7 +21,7 @@ import com.risk.utilities.RiskMapParser;
  *
  */
 class FileParsingTest {
-	private static Model model;
+	private static PlayerModel model;
 	private RiskMapParser parser;
 	
 	// These are current testing
@@ -45,7 +46,7 @@ class FileParsingTest {
 	 */
 	@BeforeEach
 	public void setUp() {
-		model = new Model();
+		model = new PlayerModel();
 	}
 
 	/**

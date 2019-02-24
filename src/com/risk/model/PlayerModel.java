@@ -8,6 +8,7 @@
 package com.risk.model;
 
 import java.util.ArrayList;
+import java.util.Observable;
 
 import com.risk.army.Player;
 import com.risk.map.Continent;
@@ -20,10 +21,8 @@ import javafx.collections.ObservableList;
  * @author DKM
  *
  */
-public class Model {
+public class PlayerModel extends Observable {
 
-    private ArrayList<Continent> continentsModel = new ArrayList<>();
-    private ArrayList<Country> countriesModel = new ArrayList<>();
     private ObservableList<Player> playersModel = FXCollections.observableArrayList();
     private ObservableList<Country> currentPlayerCountry = FXCollections.observableArrayList();
 
@@ -101,25 +100,7 @@ public class Model {
         return playersModel.get(currentPlayerIndex);
     }
 
-	/**
-	 * this method adds a country to the country model
-	 * 
-	 * @param country country being added to the model
-	 */
-    public void addCountry(Country country)
-    {
-        countriesModel.add(country);
-    }
 
-	/**
-	 * this method adds a continent to the continent model
-	 * 
-	 * @param continent continent to be added to the model
-	 */
-    public void addContinent(Continent continent)
-    {
-        continentsModel.add(continent);
-    }
 
 	/**
 	 * this method adds player the player model 
@@ -141,25 +122,6 @@ public class Model {
         return playersModel.size();
     }
 
-	/**
-	 * this method gets the countries in the country model
-	 * 
-	 * @return countriesModel returns the country model
-	 */
-    public ArrayList<Country> getCountries()
-    {
-        return countriesModel;
-    }
-
-	/**
-	 * this method gets the continents in the continent model
-	 * 
-	 * @return continentModel returns the continent model
-	 */
-    public ArrayList<Continent> getContinents()
-    {
-        return continentsModel;
-    }
 
 	/**
 	 * this method gets the players in the player model
