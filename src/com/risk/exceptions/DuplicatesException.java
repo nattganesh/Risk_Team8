@@ -5,7 +5,6 @@
  */
 package com.risk.exceptions;
 
-
 public class DuplicatesException extends Exception {
 
     public DuplicatesException(String duplicateName)

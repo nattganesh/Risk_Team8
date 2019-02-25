@@ -23,7 +23,7 @@ public class Card {
         this.owner = owner;
     }
 
-    /** 
+    /**
      * This method returns the owner for the type of card
      */
     public String toString()
@@ -33,7 +33,7 @@ public class Card {
 
     /**
      * This method gets the type of card
-     * 
+     *
      * @return category returns the type of card
      */
     public String getCatagory()
@@ -43,17 +43,17 @@ public class Card {
 
     /**
      * This method gets the name of the owner for the type of card
-     * 
+     *
      * @return owner returns the owner name of the card
      */
     public String getOwner()
     {
         return owner;
     }
-    
+
     /**
      * This method sets the owner for the the type of card
-     * 
+     *
      * @param owner name of the owner of the card
      */
     public void setOwner(String owner)

@@ -1,18 +1,17 @@
 /**
  * This file is an entry point for JavaFX application. Necessary to parse the file,
  * instantiate the only Model, a selectPlayerController (controller) and SelectPlayer.fxml (view) for the selecting number of players.
- * 
+ *
  * The Model will be passed around different controller and view during this application.
- * 
+ *
  * @author Natheepan
  * @author Tianyi
  * @author Dong Jae Kim
  * @version 1.0
  * @since 1.0
- * 
+ *
  */
 package com.risk.run;
-
 
 import com.risk.controller.GamePhaseController;
 import com.risk.controller.InitializationController;
@@ -333,28 +332,29 @@ public class Run extends Application {
 //		}
     public static void main(String[] args)
     {
-		launch(args);
+        launch(args);
     }
 
-	/**
-	 * Start is called when JavaFX is ready to be initialized
-	 * @throws IOException 
-	 * @throws DuplicatesException 
-	 * @throws CannotFindException 
-	 * @throws CountLimitException 
-	 * 
-	 * @see javafx.application.Application
-	 */
+    /**
+     * Start is called when JavaFX is ready to be initialized
+     *
+     * @throws IOException
+     * @throws DuplicatesException
+     * @throws CannotFindException
+     * @throws CountLimitException
+     *
+     * @see javafx.application.Application
+     */
     @Override
     public void start(Stage primaryStage) throws CountLimitException, CannotFindException, DuplicatesException, IOException
     {
-    	PlayerModel players = new PlayerModel();
-		MapModel maps = new MapModel();
-		GamePhaseModel gamephase = new GamePhaseModel();
+        PlayerModel players = new PlayerModel();
+        MapModel maps = new MapModel();
+        GamePhaseModel gamephase = new GamePhaseModel();
 
-		GamePhaseController gController = new GamePhaseController(gamephase, maps, players);
-		gController.setUp(primaryStage);
-		
+        GamePhaseController gController = new GamePhaseController(gamephase, maps, players);
+        gController.setUp(primaryStage);
+
 //        try
 //        {
 //			PlayerModel players = new PlayerModel();
@@ -363,7 +363,6 @@ public class Run extends Application {
 //
 //			GamePhaseController gController = new GamePhaseController(gamephase, maps, players);
 //			gController.setUp();
-			
 //			String inputFile = "src/com/risk/run/inputtext/input.txt";
 //			RiskMapParser riskMapParser = new RiskMapParser(maps, inputFile);
 //			riskMapParser.setUp();
@@ -379,7 +378,6 @@ public class Run extends Application {
 //		    primaryStage.setHeight(bounds.getHeight() / 2);
 //	        primaryStage.setScene(new Scene(root, 300, 275));
 //	        primaryStage.show();
-
 //
 //	        System.out.println("\n---------------------------------------------");
 //            System.out.println("Time To Attack");

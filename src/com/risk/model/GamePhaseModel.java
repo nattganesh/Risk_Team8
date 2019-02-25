@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.risk.model;
 
@@ -15,16 +15,18 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * 
+ *
  * @author DKM
  *
  */
 public class GamePhaseModel extends Observable {
-	String phase = "setup";
-	
-	public void setPhase(String p) {
-		phase = p;
-		setChanged();
-		notifyObservers(phase);
-	}
+
+    String phase = "setup";
+
+    public void setPhase(String p)
+    {
+        phase = p;
+        setChanged();
+        notifyObservers(phase);
+    }
 }

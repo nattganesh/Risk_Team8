@@ -1,4 +1,4 @@
-/** 
+/**
  * Exception thrown when input.txt file formatting is different from standard format.
  *
  * @author Natheepan

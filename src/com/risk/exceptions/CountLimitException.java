@@ -5,7 +5,6 @@
  */
 package com.risk.exceptions;
 
-
 public class CountLimitException extends Exception {
 
     public CountLimitException(String name, int count, int maxCount)

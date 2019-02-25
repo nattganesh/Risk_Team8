@@ -43,10 +43,12 @@ public class Continent {
     {
         countries.add(country);
     }
+
     public int getPointsWhenFullyOccupied()
     {
         return pointsWhenFullyOccupied;
     }
+
     public void setPointsWhenFullyOccupied(int pointsWhenFullyOccupied)
     {
         this.pointsWhenFullyOccupied = pointsWhenFullyOccupied;

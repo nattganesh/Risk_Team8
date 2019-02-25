@@ -1,6 +1,6 @@
 /**
  * Necessary for calling file parser class for parsing risk map.
- * 
+ *
  * @author DKM
  */
 package com.risk.utilities;
@@ -24,11 +24,12 @@ public class RiskMap {
     FileParser parser;
     private String inputFile;
 
-	/**
-	 * This is the constructor for RiskMapParser. It initializes the model and instantiates the FileParser(model)
-	 * 
-	 * @param maps takes in model of the game
-	 */
+    /**
+     * This is the constructor for RiskMapParser. It initializes the model and
+     * instantiates the FileParser(model)
+     *
+     * @param maps takes in model of the game
+     */
     public RiskMap(MapModel maps, String input)
     {
         map = maps;
@@ -37,36 +38,39 @@ public class RiskMap {
         validator = new Validate(map);
     }
 
-	/**
-	 * This is a getter method for returning a scanner for a file
-	 * 
-	 * @return returns a new Scanner of the input file
-	 * @throws FileNotFoundException Exception thrown when input file does not exist
-	 */
+    /**
+     * This is a getter method for returning a scanner for a file
+     *
+     * @return returns a new Scanner of the input file
+     * @throws FileNotFoundException Exception thrown when input file does not
+     * exist
+     */
     public FileParser getParser()
     {
         return parser;
     }
 
-
-
-	/**
-	 * This methods role is to call the parseInput method and give it the Scanner as an argument
-	 * 
-	 * @throws FileNotFoundException
-	 * @throws CountLimitException
-	 * @throws CannotFindException
-	 * @throws DuplicatesException
-	 */
+    /**
+     * This methods role is to call the parseInput method and give it the
+     * Scanner as an argument
+     *
+     * @throws FileNotFoundException
+     * @throws CountLimitException
+     * @throws CannotFindException
+     * @throws DuplicatesException
+     */
     public void parseFile() throws CountLimitException, CannotFindException, DuplicatesException, FileNotFoundException
     {
         Scanner input = new Scanner(new File(inputFile));
         parser.setCountriesInContinents(input);
         parser.setNeighboringCountries(input);
     }
-    public void validateMap() throws CannotFindException, CountLimitException {
-    	validator.continentChecks();
+
+    public void validateMap() throws CannotFindException, CountLimitException
+    {
+        validator.continentChecks();
     }
+
     public void setUp() throws FileNotFoundException, CountLimitException, CannotFindException, DuplicatesException
     {
         parseFile();

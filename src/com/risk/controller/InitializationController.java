@@ -1,7 +1,7 @@
 /**
  * This class is the Controller for SelectPlayer.fxml, where users can select number of players.
- * 
- * 
+ *
+ *
  * @author DKM
  * @version 1.0
  * @see javafx.fxml.Initializable
@@ -35,23 +35,23 @@ import javafx.stage.Stage;
 
 public class InitializationController extends Observable implements Initializable {
 
-	private GamePhaseModel gamephase;
-	private PlayerModel players;
-	private MapModel maps;
+    private GamePhaseModel gamephase;
+    private PlayerModel players;
+    private MapModel maps;
 
-	
-	@FXML
-	ComboBox<String> playerDropDown;
+    @FXML
+    ComboBox<String> playerDropDown;
 
-	@FXML
-	Button StartGame;
+    @FXML
+    Button StartGame;
 
-	public InitializationController(GamePhaseModel game, PlayerModel p, MapModel m) {
-		gamephase = game;
-		players = p;
-		maps = m;
-	
-	}
+    public InitializationController(GamePhaseModel game, PlayerModel p, MapModel m)
+    {
+        gamephase = game;
+        players = p;
+        maps = m;
+
+    }
 //	public void initializeReinforcement(ActionEvent e) throws IOException {
 //		loader.setController(rController);
 //		Parent root = loader.load();
@@ -61,52 +61,60 @@ public class InitializationController extends Observable implements Initializabl
 //		window.show();
 //	}
 //	
-	/**
-	 * Add 2-6 player in ComboBox component
-	 * 
-	 * @see javafx.fxml.Initializable#initialize(java.net.URL,
-	 * java.util.ResourceBundle)
-	 */	
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		playerDropDown.getItems().addAll("2", "3", "4", "5",
-				"6");
-	}
-	/**
-	 * sets the number of players
-	 * 
-	 * @param numberOfPlayer the number of player
-	 */
-	public void setPlayers(int numberOfPlayer) {
-		while (numberOfPlayer > 0) {
-			players.addPlayer(new Player(PlayerModel.PLAYERCOLOR[numberOfPlayer])); 
-			numberOfPlayer--;
-		}
-	}
-	/**
-	 * Sets the number of player, assign countries to each player and calculate round robin, then load the Reinforcement scene
-	 * 
-	 * @param eventlistener for button clicked event
-	 * @throws IOException the exception thrown for when .fxml not found
-	 * @see javafx.event.ActionEvent
-	 */
-	public void StartGame(ActionEvent event) throws IOException {
-		if (playerDropDown.getSelectionModel().getSelectedItem() != null){
-			setPlayers(Integer.parseInt(playerDropDown.getSelectionModel().getSelectedItem()));
-			calcStartingArmies();
-			assignCountriesToPlayers();
-			determinePlayersStartingOrder();
-			gamephase.setPhase("reinforcement");
-		}
-	}
 
-	/**
-	 *  This method calculates the round robin.
-	 *  It first roll the dice to determine who goes first. 
-	 *  The player who rolls the highest number starts the game. 
-	 *  Then the play order goes clockwise from the starting player. 
-	 *  The game starts after the order of play has been determined.
-	 */
+    /**
+     * Add 2-6 player in ComboBox component
+     *
+     * @see javafx.fxml.Initializable#initialize(java.net.URL,
+     * java.util.ResourceBundle)
+     */
+    @Override
+    public void initialize(URL location, ResourceBundle resources)
+    {
+        playerDropDown.getItems().addAll("2", "3", "4", "5",
+                "6");
+    }
+
+    /**
+     * sets the number of players
+     *
+     * @param numberOfPlayer the number of player
+     */
+    public void setPlayers(int numberOfPlayer)
+    {
+        while (numberOfPlayer > 0)
+        {
+            players.addPlayer(new Player(PlayerModel.PLAYERCOLOR[numberOfPlayer]));
+            numberOfPlayer--;
+        }
+    }
+
+    /**
+     * Sets the number of player, assign countries to each player and calculate
+     * round robin, then load the Reinforcement scene
+     *
+     * @param eventlistener for button clicked event
+     * @throws IOException the exception thrown for when .fxml not found
+     * @see javafx.event.ActionEvent
+     */
+    public void StartGame(ActionEvent event) throws IOException
+    {
+        if (playerDropDown.getSelectionModel().getSelectedItem() != null)
+        {
+            setPlayers(Integer.parseInt(playerDropDown.getSelectionModel().getSelectedItem()));
+            calcStartingArmies();
+            assignCountriesToPlayers();
+            determinePlayersStartingOrder();
+            gamephase.setPhase("reinforcement");
+        }
+    }
+
+    /**
+     * This method calculates the round robin. It first roll the dice to
+     * determine who goes first. The player who rolls the highest number starts
+     * the game. Then the play order goes clockwise from the starting player.
+     * The game starts after the order of play has been determined.
+     */
     public void determinePlayersStartingOrder()
     {
         int[] diceRolls = new int[players.getNumberOfPlayer()];
@@ -163,9 +171,9 @@ public class InitializationController extends Observable implements Initializabl
         }
     }
 
-	/**
-	 * This method assigns countries to players.
-	 */
+    /**
+     * This method assigns countries to players.
+     */
     public void assignCountriesToPlayers()
     {
         boolean[] countryOccupied = new boolean[Country.MAX_NUMBER_OF_COUNTRIES];
@@ -197,7 +205,7 @@ public class InitializationController extends Observable implements Initializabl
         }
         boolean[] armiesRemaining = new boolean[players.getNumberOfPlayer()];
         boolean done = false;
-        
+
         while (!done)
         {
             for (int ii = 0; ii < players.getNumberOfPlayer(); ii++)
@@ -226,18 +234,20 @@ public class InitializationController extends Observable implements Initializabl
             }
         }
     }
-    
-	/**
-	 * This method sets the observable list for the country occupied by current player.	 * 
-	 */
+
+    /**
+     * This method sets the observable list for the country occupied by current
+     * player.	*
+     */
     public void initializeCurrentPlayer()
     {
         players.setCurrentPlayerCountryObs();
     }
 
-	/**
-	 * This method sets the starting armies during initialization based on number of players.
-	 */
+    /**
+     * This method sets the starting armies during initialization based on
+     * number of players.
+     */
     public void calcStartingArmies()
     {
         for (Player player : players.getPlayers())
@@ -246,14 +256,13 @@ public class InitializationController extends Observable implements Initializabl
         }
     }
 
-
-	/**
-	 * This is a helper method for setStartingPoints. Based on the number of players it returns 
-	 * inital army count.
-	 * 
-	 * @param getPlayerSize number of players
-	 * @return startingP initial army count
-	 */
+    /**
+     * This is a helper method for setStartingPoints. Based on the number of
+     * players it returns inital army count.
+     *
+     * @param getPlayerSize number of players
+     * @return startingP initial army count
+     */
     public int calcStartingArmiesHelper(int getPlayerSize)
     {
         int startingP = 0;
@@ -279,5 +288,4 @@ public class InitializationController extends Observable implements Initializabl
 
     }
 
-	
 }

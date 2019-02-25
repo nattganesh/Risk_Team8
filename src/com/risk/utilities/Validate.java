@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.risk.utilities;
 
@@ -13,11 +13,15 @@ import com.risk.model.MapModel;
  *
  */
 public class Validate {
-	MapModel map;
-	public Validate(MapModel m) {
-		map = m;
-	}
-	public void continentChecks() throws CannotFindException, CountLimitException
+
+    MapModel map;
+
+    public Validate(MapModel m)
+    {
+        map = m;
+    }
+
+    public void continentChecks() throws CannotFindException, CountLimitException
     {
         for (Continent cont : map.getContinents())
         {

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.risk.controller;
 
@@ -25,28 +25,31 @@ import javafx.stage.Stage;
  *
  */
 public class AttackController extends Observable implements Initializable {
-	
-	private PlayerModel players;
-	private MapModel maps;
-	private GamePhaseModel gamephase;
-	
-	public AttackController(GamePhaseModel game, PlayerModel p, MapModel m) {
-		gamephase = game;
-		players = p;
-		maps = m;
-	}
-	
-	/* (non-Javadoc)
+
+    private PlayerModel players;
+    private MapModel maps;
+    private GamePhaseModel gamephase;
+
+    public AttackController(GamePhaseModel game, PlayerModel p, MapModel m)
+    {
+        gamephase = game;
+        players = p;
+        maps = m;
+    }
+
+    /* (non-Javadoc)
 	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
-	 */
-	
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-		System.out.println(players.getNumberOfPlayer());
-	}
-	public void goToFortificationPhase(ActionEvent event) throws IOException  {
-		
-		gamephase.setPhase("fortification");
-		
-	}
+     */
+    @Override
+    public void initialize(URL arg0, ResourceBundle arg1)
+    {
+        System.out.println(players.getNumberOfPlayer());
+    }
+
+    public void goToFortificationPhase(ActionEvent event) throws IOException
+    {
+
+        gamephase.setPhase("fortification");
+
+    }
 }
