@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+	<children>
+		<SplitPane dividerPositions="0.29797979797979796" prefHeight="300.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+			<items>
+				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+					<children>
+						<Label fx:id="playerId" layoutX="62.0" layoutY="139.0" text="Player X" />
+					</children>
+				</AnchorPane>
+				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+					<children>
+						<Label layoutX="156.0" layoutY="44.0" text="Country Owned" />
+						<ListView fx:id="countryId" layoutX="115.0" layoutY="71.0" prefHeight="200.0" prefWidth="415.0" />
+						<!--  <Button fx:id="nextPlayer" layoutX="523.0" layoutY="14.0" mnemonicParsing="false" onAction="#onNextPlayer" text="Next Player" /> -->
+						<TextField fx:id="inputArmy" layoutX="129.0" layoutY="299.0" prefHeight="31.0" prefWidth="132.0" />
+						<Label fx:id="armyAvailable" layoutX="129.0" layoutY="271.0" text="Army Available" />
+						<Button fx:id="addArmy" layoutX="129.0" layoutY="339.0" mnemonicParsing="false" onMouseClicked="#setArmy" text="Add Army" />
+                  <Label fx:id="inputArmyError" layoutX="264.0" layoutY="304.0" />
+                 	<Button fx:id="AttackPhaseID" layoutX="530.0" layoutY="24.0" mnemonicParsing="false" onAction="#goToAttackPhase" text="Attack" /> 
+					</children>
+				</AnchorPane>
+			</items>
+		</SplitPane>
+	</children>
+</AnchorPane>
