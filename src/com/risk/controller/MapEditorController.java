@@ -69,8 +69,10 @@ public class MapEditorController implements Initializable {
 		ContinentList.addAll(continent);
 
 		
-		
+		// this adds observables to the view, meaning view now represents change in observablist dynamically
 		Continent.setItems(ContinentList);
+		
+		// Looks long, but it all it does to access object properties so i can print stuff to view
 		Continent.setCellFactory(param -> new ListCell<Continent>() {
             @Override
             protected void updateItem(Continent continent, boolean empty)
@@ -87,8 +89,10 @@ public class MapEditorController implements Initializable {
             }
 		});
 		
-		
+		// this adds observables to the view, meaning view now represents change in observablist dynamically
 		Territory.setItems(TerritoryList);
+		
+		// Looks long, but it all it does to access object properties so i can print stuff to view
 		Territory.setCellFactory(param -> new ListCell<Country>() {
 	            @Override
 	            protected void updateItem(Country country, boolean empty)
@@ -106,7 +110,10 @@ public class MapEditorController implements Initializable {
         });
 		
 
+		// this adds observables to the view, meaning view now represents change in observablist dynamically
 		Neighbour.setItems(AdjacentList);
+		
+		// Looks long, but it all it does to access object properties so i can print stuff to view
 		Neighbour.setCellFactory(param -> new ListCell<Country>() {
 	            @Override
 	            protected void updateItem(Country country, boolean empty)
@@ -126,7 +133,8 @@ public class MapEditorController implements Initializable {
 		
 		
 	}
-   
+	
+   // when user clicks continent it loads territory
 	@FXML
 	public void loadTerritory(MouseEvent arg0) {	
 		TerritoryList.clear();
@@ -146,12 +154,14 @@ public class MapEditorController implements Initializable {
 		}
 	}
 	
+	// when user clicks territory it loads adjacent territory
 	@FXML
 	public void loadNeighbours(MouseEvent arg0) {	
 		AdjacentList.clear();
 		AdjacentList.addAll(Territory.getSelectionModel().getSelectedItem().getConnectedCountries());
 	}
 	
+
 	@FXML 
 	public void AdjacentAdd() {
 		if(!NeighbourInput.getText().equals("")) {
