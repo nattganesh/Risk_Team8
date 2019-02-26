@@ -15,6 +15,7 @@ package com.risk.run;
 
 import com.risk.controller.GamePhaseController;
 import com.risk.controller.InitializationController;
+import com.risk.controller.MapEditorController;
 import com.risk.exceptions.CannotFindException;
 import com.risk.exceptions.CountLimitException;
 import com.risk.exceptions.DuplicatesException;
@@ -348,12 +349,27 @@ public class Run extends Application {
     @Override
     public void start(Stage primaryStage) throws CountLimitException, CannotFindException, DuplicatesException, IOException
     {
-        PlayerModel players = new PlayerModel();
-        MapModel maps = new MapModel();
-        GamePhaseModel gamephase = new GamePhaseModel();
-
-        GamePhaseController gController = new GamePhaseController(gamephase, maps, players);
-        gController.setUp(primaryStage);
+//        PlayerModel players = new PlayerModel();
+//        MapModel maps = new MapModel();
+//        GamePhaseModel gamephase = new GamePhaseModel();
+//
+//        GamePhaseController gController = new GamePhaseController(gamephase, maps, players);
+//        gController.setUp(primaryStage);
+    	
+			
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/risk/view/MapSelector.fxml"));
+			MapEditorController mapController = new MapEditorController();
+			loader.setController(mapController);
+		
+			Parent root = loader.load();
+		    Screen screen = Screen.getPrimary();
+		    Rectangle2D bounds = screen.getVisualBounds();
+		    primaryStage.setX((bounds.getWidth() - primaryStage.getWidth()) / 2); 
+		    primaryStage.setY((bounds.getHeight() - primaryStage.getHeight()) / 2);  
+		    primaryStage.setWidth(bounds.getWidth() / 2);
+		    primaryStage.setHeight(bounds.getHeight() / 2);
+	        primaryStage.setScene(new Scene(root, 300, 275));
+	        primaryStage.show();
 
 //        try
 //        {

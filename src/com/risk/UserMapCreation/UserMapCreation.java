@@ -50,7 +50,6 @@ public class UserMapCreation {
                     System.out.println("Please Enter the name of country number " + i);
                     countryName = key.nextLine();
                 }
-
                 Country country = new Country(countryName, name);
                 countries.add(country);
                 continent.getCountries().add(country);
