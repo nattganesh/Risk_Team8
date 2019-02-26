@@ -23,6 +23,8 @@
             <ListView fx:id="Neighbour" layoutX="503.0" layoutY="339.0" prefHeight="200.0" prefWidth="200.0" />
             <Label layoutX="503.0" layoutY="312.0" text="NEIGHBOURS" />
             <Text layoutX="42.0" layoutY="558.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select Territory" />
+            <Button layoutX="418.0" layoutY="566.0" mnemonicParsing="false" onAction="#TerritoryDelete" text="DELETE" />
+            <Button layoutX="666.0" layoutY="566.0" mnemonicParsing="false" onAction="#AdjacentDelete" text="DELETE" />
          </children>
       </AnchorPane>
    </children>

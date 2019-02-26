@@ -172,6 +172,30 @@ public class MapEditorController implements Initializable {
 		}
 	}
 	
+	@FXML
+	public void TerritoryDelete() {
+		if (Territory.getSelectionModel().getSelectedItem() != null) {
+			Continent.getSelectionModel().getSelectedItem().getCountries().remove(Territory.getSelectionModel().getSelectedItem());
+			TerritoryList.clear();
+			AdjacentList.clear();
+			TerritoryList.addAll(Continent.getSelectionModel().getSelectedItem().getCountries());
+			
+		} else {
+			System.out.println("not selected");
+		}
+	}
+	
+	@FXML
+	public void AdjacentDelete() {
+		if (Neighbour.getSelectionModel().getSelectedItem() != null) {
+			Territory.getSelectionModel().getSelectedItem().getConnectedCountries().remove(Neighbour.getSelectionModel().getSelectedItem());
+			AdjacentList.clear();
+			AdjacentList.addAll(Territory.getSelectionModel().getSelectedItem().getConnectedCountries());
+		} else {
+			System.out.println("not selected");
+		}
+	}
+	
 	
 	
 	
