@@ -69,6 +69,18 @@ public class RiskMap {
     public void validateMap() throws CannotFindException, CountLimitException
     {
         validator.continentChecks();
+        validator.mapConnected(map.getCountries().get(0));
+        if (Validate.countriesModelValidationList.size()== map.getCountries().size())
+        {
+            System.out.println("Validated");
+        }
+        else
+        {
+            System.out.println("Not Validated");
+        }
+        System.out.println(Validate.counter);
+//        validator.mapConnected(map.getCountries().get(0));
+
     }
 
     public void setUp() throws FileNotFoundException, CountLimitException, CannotFindException, DuplicatesException
