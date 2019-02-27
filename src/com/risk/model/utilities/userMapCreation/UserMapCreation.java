@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.risk.model.UserMapCreation;
+package com.risk.model.utilities.userMapCreation;
 
 import com.risk.model.map.Continent;
 import com.risk.model.map.Country;

@@ -23,6 +23,7 @@ import com.risk.model.GamePhaseModel;
 import com.risk.model.MapModel;
 import com.risk.model.PlayerModel;
 import com.risk.model.utilities.RiskMap;
+import com.risk.model.utilities.generateOutputFile.Output;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -334,6 +335,8 @@ public class Run extends Application {
     public static void main(String[] args)
     {
         launch(args);
+        
+        Output.generate("NewOutputFileTEMP");
     }
 
     /**
@@ -379,7 +382,7 @@ public class Run extends Application {
 //
 //			GamePhaseController gController = new GamePhaseController(gamephase, maps, players);
 //			gController.setUp();
-//			String inputFile = "src/com/risk/run/inputtext/input.txt";
+//			String inputFile = "src/com/risk/main/mapTextFiles/input.txt";
 //			RiskMapParser riskMapParser = new RiskMapParser(maps, inputFile);
 //			riskMapParser.setUp();
 //			SetUpController selectController = new SetUpController(players, maps);
