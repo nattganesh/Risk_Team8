@@ -39,12 +39,8 @@ public class MapEditorController implements Initializable {
 	@FXML
 	ListView<Country> Neighbour;
 	
-	
 	@FXML
-	TextField NeighbourInput;
-	
-
-	
+	TextField NeighbourInput;	
 
 	ObservableList<Continent>ContinentList = FXCollections.observableArrayList();
 	ObservableList<Country>TerritoryList = FXCollections.observableArrayList();

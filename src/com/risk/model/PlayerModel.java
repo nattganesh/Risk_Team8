@@ -52,7 +52,6 @@ public class PlayerModel extends Observable implements Observer {
     {
         currentPlayerIndex = (currentPlayerIndex + 1) % getNumberOfPlayer();
         updateCurrentTerritory();
-
     }
 
     public void updateCurrentTerritory()
