@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
-import com.risk.army.Player;
-import com.risk.map.Country;
+import com.risk.model.player.Player;
+import com.risk.model.map.Country;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

@@ -1,12 +1,12 @@
 /**
  *
  */
-package com.risk.utilities;
+package com.risk.model.utilities;
 
-import com.risk.exceptions.CannotFindException;
-import com.risk.exceptions.CountLimitException;
-import com.risk.map.Continent;
-import com.risk.map.Country;
+import com.risk.model.exceptions.CannotFindException;
+import com.risk.model.exceptions.CountLimitException;
+import com.risk.model.map.Continent;
+import com.risk.model.map.Country;
 import com.risk.model.MapModel;
 import java.util.ArrayList;
 

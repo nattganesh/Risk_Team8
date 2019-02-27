@@ -6,8 +6,8 @@ package com.risk.model;
 import java.util.ArrayList;
 import java.util.Observable;
 
-import com.risk.map.Continent;
-import com.risk.map.Country;
+import com.risk.model.map.Continent;
+import com.risk.model.map.Country;
 
 /**
  * @author DKM

@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.risk.map;
+package com.risk.model.map;
 
-import com.risk.army.Player;
+import com.risk.model.player.Player;
 
 import java.util.ArrayList;
 

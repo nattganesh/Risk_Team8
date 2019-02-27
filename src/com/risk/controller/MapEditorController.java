@@ -7,8 +7,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import com.risk.map.Continent;
-import com.risk.map.Country;
+import com.risk.model.map.Continent;
+import com.risk.model.map.Country;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

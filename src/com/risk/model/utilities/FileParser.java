@@ -4,17 +4,17 @@
  * @author Natheepan
  *
  */
-package com.risk.utilities;
+package com.risk.model.utilities;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import com.risk.army.Player;
-import com.risk.exceptions.CannotFindException;
-import com.risk.exceptions.CountLimitException;
-import com.risk.exceptions.DuplicatesException;
-import com.risk.map.Continent;
-import com.risk.map.Country;
+import com.risk.model.player.Player;
+import com.risk.model.exceptions.CannotFindException;
+import com.risk.model.exceptions.CountLimitException;
+import com.risk.model.exceptions.DuplicatesException;
+import com.risk.model.map.Continent;
+import com.risk.model.map.Country;
 import com.risk.model.MapModel;
 import com.risk.model.PlayerModel;
 

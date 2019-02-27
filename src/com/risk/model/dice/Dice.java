@@ -4,11 +4,11 @@
  * @author Natheepan
  *
  */
-package com.risk.dice;
+package com.risk.model.dice;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import com.risk.map.Country;
+import com.risk.model.map.Country;
 
 public class Dice {
 

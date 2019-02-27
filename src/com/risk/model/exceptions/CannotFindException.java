@@ -3,7 +3,7 @@
  *
  * @author Natheepan
  */
-package com.risk.exceptions;
+package com.risk.model.exceptions;
 
 public class CannotFindException extends Exception {
 

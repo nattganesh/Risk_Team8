@@ -3,7 +3,7 @@
  *
  * @author DKM
  */
-package com.risk.utilities;
+package com.risk.model.utilities;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,9 +11,9 @@ import java.util.Scanner;
 
 import javax.swing.JFrame;
 
-import com.risk.exceptions.CannotFindException;
-import com.risk.exceptions.CountLimitException;
-import com.risk.exceptions.DuplicatesException;
+import com.risk.model.exceptions.CannotFindException;
+import com.risk.model.exceptions.CountLimitException;
+import com.risk.model.exceptions.DuplicatesException;
 import com.risk.model.MapModel;
 import com.risk.model.PlayerModel;
 

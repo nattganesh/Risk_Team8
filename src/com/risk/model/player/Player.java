@@ -5,10 +5,10 @@
  *
  *
  */
-package com.risk.army;
+package com.risk.model.player;
 
-import com.risk.card.Card;
-import com.risk.map.Country;
+import com.risk.model.card.Card;
+import com.risk.model.map.Country;
 import java.util.ArrayList;
 
 /**

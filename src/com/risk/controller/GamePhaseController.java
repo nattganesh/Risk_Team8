@@ -8,13 +8,13 @@ import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
-import com.risk.exceptions.CannotFindException;
-import com.risk.exceptions.CountLimitException;
-import com.risk.exceptions.DuplicatesException;
+import com.risk.model.exceptions.CannotFindException;
+import com.risk.model.exceptions.CountLimitException;
+import com.risk.model.exceptions.DuplicatesException;
 import com.risk.model.GamePhaseModel;
 import com.risk.model.MapModel;
 import com.risk.model.PlayerModel;
-import com.risk.utilities.RiskMap;
+import com.risk.model.utilities.RiskMap;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

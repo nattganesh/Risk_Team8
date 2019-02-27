@@ -15,9 +15,9 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 
-import com.risk.army.Player;
-import com.risk.dice.Dice;
-import com.risk.map.Country;
+import com.risk.model.player.Player;
+import com.risk.model.dice.Dice;
+import com.risk.model.map.Country;
 import com.risk.model.GamePhaseModel;
 import com.risk.model.MapModel;
 import com.risk.model.PlayerModel;

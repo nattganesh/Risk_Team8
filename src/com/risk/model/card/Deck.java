@@ -4,7 +4,7 @@
  * @author Tianyi
  *
  */
-package com.risk.card;
+package com.risk.model.card;
 
 import java.util.Random;
 

@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.risk.UserMapCreation;
+package com.risk.model.UserMapCreation;
 
-import com.risk.map.Continent;
-import com.risk.map.Country;
+import com.risk.model.map.Continent;
+import com.risk.model.map.Country;
 import java.util.ArrayList;
 import java.util.Scanner;
 
