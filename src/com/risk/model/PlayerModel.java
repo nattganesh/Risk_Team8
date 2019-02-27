@@ -23,7 +23,7 @@ import javafx.collections.ObservableList;
  */
 public class PlayerModel extends Observable implements Observer {
 
-    private ArrayList<Player> playersTurn = new ArrayList<Player>();
+    private ArrayList<Player> playerList = new ArrayList<Player>();
     private ObservableList<Country> currentPlayerTerritory = FXCollections.observableArrayList();
     public static final String[] PLAYERCOLOR =
     {
@@ -31,6 +31,11 @@ public class PlayerModel extends Observable implements Observer {
     };
     private int currentPlayerIndex = 0;
     private Player playerWins = null;
+    private static PlayerModel playerModel;
+
+    private PlayerModel()
+    {
+    }
 
     /**
      * Sets the winner of the game
@@ -67,7 +72,7 @@ public class PlayerModel extends Observable implements Observer {
      */
     public Player getNextPlayer()
     {
-        Player current = playersTurn.get(currentPlayerIndex);
+        Player current = playerList.get(currentPlayerIndex);
         IncrementPlayerIndex();
         return current;
     }
@@ -99,7 +104,7 @@ public class PlayerModel extends Observable implements Observer {
      */
     public Player getCurrentPlayer()
     {
-        return playersTurn.get(currentPlayerIndex);
+        return playerList.get(currentPlayerIndex);
     }
 
     /**
@@ -109,7 +114,7 @@ public class PlayerModel extends Observable implements Observer {
      */
     public void addPlayer(Player player)
     {
-        playersTurn.add(player);
+        playerList.add(player);
     }
 
     /**
@@ -119,7 +124,7 @@ public class PlayerModel extends Observable implements Observer {
      */
     public int getNumberOfPlayer()
     {
-        return playersTurn.size();
+        return playerList.size();
     }
 
     /**
@@ -129,7 +134,7 @@ public class PlayerModel extends Observable implements Observer {
      */
     public ArrayList<Player> getPlayers()
     {
-        return playersTurn;
+        return playerList;
     }
 
     /* (non-Javadoc)
@@ -140,6 +145,15 @@ public class PlayerModel extends Observable implements Observer {
     {
         // TODO Auto-generated method stub
 
+    }
+
+    public static PlayerModel getPlayerModel()
+    {
+        if (playerModel == null)
+        {
+            playerModel = new PlayerModel();
+        }
+        return playerModel;
     }
 
 }

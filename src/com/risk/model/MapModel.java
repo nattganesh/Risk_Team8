@@ -17,7 +17,8 @@ public class MapModel extends Observable {
 
     private ArrayList<Continent> continentsModel = new ArrayList<>();
     private ArrayList<Country> countriesModel = new ArrayList<>();
-
+    private static MapModel mapModel;
+    private MapModel(){}
     /**
      * this method adds a country to the country model
      *
@@ -57,5 +58,13 @@ public class MapModel extends Observable {
     {
         return continentsModel;
     }
-
+    
+    public static MapModel getMapModel()
+    {
+        if(mapModel == null)
+        {
+            mapModel = new MapModel();
+        }
+        return mapModel;
+    }
 }
