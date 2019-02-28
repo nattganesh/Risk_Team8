@@ -29,6 +29,7 @@ public class Output {
 
         try
         {
+        	PrintStream printOut = 	System.out;
             PrintStream fileOut = new PrintStream("src/com/risk/main/mapTextFiles/" + nameOfFile + ".txt");
             System.setOut(fileOut);
 
@@ -46,9 +47,8 @@ public class Output {
                     System.out.println(country.getName() + "," + neighCountry.getName());
                 }
             }
-            System.out.println("finished outputting");
             fileOut.close();
-           
+            System.setOut(printOut);
             return true;
         }
         catch (Exception e)

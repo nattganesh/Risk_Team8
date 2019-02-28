@@ -327,11 +327,13 @@ public class MapEditorController implements Initializable {
 				System.out.println("validated model size after saving: " + MapModel.getMapModel().getCountries().size());
 				System.out.println("Validate size after saving: " + Validate.getValidate().getValidateSize());
 				ValidationError.setText("Saved File");
-				if (Output.generate(ExistingFile.getText())) {
-					initializePlayers();
-					validated = 1;
-					System.out.println("validated");
-				}
+				Output.generate(ExistingFile.getText());
+				initializePlayers();
+				validated = 1;
+				System.out.println("validated");
+				
+//					startGame();
+				
 				
 
 			} else {
@@ -355,9 +357,9 @@ public class MapEditorController implements Initializable {
 
 	@FXML
 	public void startGame() {
-		System.out.println("in here");
+//		System.out.println("in here");
 		if (validated == 1) {
-			System.out.println("in here");
+//			System.out.println("in here");
 			if (PlayerID.getSelectionModel().getSelectedItem() != null) {
 				System.out.println("in here");
 				int numbPlayers = Integer.parseInt(PlayerID.getSelectionModel().getSelectedItem());
