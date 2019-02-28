@@ -34,9 +34,6 @@ import javafx.scene.layout.FlowPane;
  */
 public class ReinforcementController implements Initializable {
 
-    private PlayerModel players;
-    private MapModel maps;
-    private GamePhaseModel gamephase;
 
     /**
      * @see javafx.fxml.XML
@@ -64,11 +61,9 @@ public class ReinforcementController implements Initializable {
     /**
      * This is the constructor for the reinforcement controller
      */
-    public ReinforcementController(GamePhaseModel game, PlayerModel p, MapModel m)
+    public ReinforcementController()
     {
-        gamephase = game;
-        players = p;
-        maps = m;
+
     }
 
     /**
@@ -106,7 +101,7 @@ public class ReinforcementController implements Initializable {
 
     public void initializeTerritory()
     {
-        countryId.setItems(players.getTerritory());
+        countryId.setItems(PlayerModel.getPlayerModel().getTerritory());
         countryId.setCellFactory(param -> new ListCell<Country>() {
             @Override
             protected void updateItem(Country country, boolean empty)
@@ -126,7 +121,7 @@ public class ReinforcementController implements Initializable {
 
     public int getReinforcement()
     {
-        return players.getCurrentPlayer().calculateReinforcement();
+        return PlayerModel.getPlayerModel().getCurrentPlayer().calculateReinforcement();
     }
 
     /**
@@ -136,7 +131,7 @@ public class ReinforcementController implements Initializable {
      */
     public String getName()
     {
-        return players.getCurrentPlayer().getName();
+        return PlayerModel.getPlayerModel().getCurrentPlayer().getName();
     }
 
     /**
@@ -146,22 +141,22 @@ public class ReinforcementController implements Initializable {
     public void setArmy()
     {
         int Armyinput = 0;
-        if (!inputArmy.getText().equals("") && players.getCurrentPlayer().getReinforcement() != 0 && countryId.getSelectionModel().getSelectedItem() != null)
+        if (!inputArmy.getText().equals("") && PlayerModel.getPlayerModel().getCurrentPlayer().getReinforcement() != 0 && countryId.getSelectionModel().getSelectedItem() != null)
         {
 
             Armyinput = Integer.parseInt(inputArmy.getText());
-            for (Country country : players.getTerritory())
+            for (Country country : PlayerModel.getPlayerModel().getTerritory())
             {
                 if (country.equals(countryId.getSelectionModel().getSelectedItem()))
                 {
                     country.setArmyCount(Armyinput);
-                    players.updateCurrentTerritory();
+                    PlayerModel.getPlayerModel().updateCurrentTerritory();
                     break;
                 }
             }
-            players.getCurrentPlayer().setReinforcement(Armyinput);
+            PlayerModel.getPlayerModel().getCurrentPlayer().setReinforcement(Armyinput);
             armyAvailable.setText(
-                    "Army: " + Integer.toString(players.getCurrentPlayer().getReinforcement()));
+                    "Army: " + Integer.toString(PlayerModel.getPlayerModel().getCurrentPlayer().getReinforcement()));
 
         }
 
@@ -178,12 +173,12 @@ public class ReinforcementController implements Initializable {
 
     public void goToAttackPhase(ActionEvent event) throws IOException
     {
-        if (players.getCurrentPlayer().getReinforcement() > 0)
+        if (PlayerModel.getPlayerModel().getCurrentPlayer().getReinforcement() > 0)
         {
         }
         else
         {
-            gamephase.setPhase("attack");
+            GamePhaseModel.getGamePhaseModel().setPhase("attack");
         }
     }
 

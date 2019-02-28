@@ -32,6 +32,7 @@ public class GamePhaseModel extends Observable {
     {
         phase = p;
         setChanged();
+        
         notifyObservers(phase);
     }
 

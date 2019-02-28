@@ -367,6 +367,7 @@ public class MapEditorController implements Initializable {
 				calcStartingArmies();
 				assignCountriesToPlayers();
 				determinePlayersStartingOrder();
+				GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
 
 			}
 		} else {

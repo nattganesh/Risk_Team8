@@ -428,8 +428,9 @@ public class Run extends Application {
 //        GamePhaseController gController = new GamePhaseController(gamephase, maps, players);
 //        gController.setUp(primaryStage);
     	
-			
+		
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/risk/view/MapSelector.fxml"));
+			GamePhaseController gamephase = new GamePhaseController(primaryStage);
 			MapEditorController mapController = new MapEditorController();
 			loader.setController(mapController);
 		

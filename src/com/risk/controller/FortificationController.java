@@ -26,15 +26,10 @@ import javafx.stage.Stage;
  */
 public class FortificationController implements Initializable {
 
-    private PlayerModel players;
-    private MapModel maps;
-    private GamePhaseModel gamephase;
 
-    public FortificationController(GamePhaseModel game, PlayerModel p, MapModel m)
+    public FortificationController()
     {
-        gamephase = game;
-        players = p;
-        maps = m;
+ 
 
     }
 
@@ -44,13 +39,13 @@ public class FortificationController implements Initializable {
     @Override
     public void initialize(URL arg0, ResourceBundle arg1)
     {
-        System.out.println(players.getNumberOfPlayer());
+        System.out.println(PlayerModel.getPlayerModel().getNumberOfPlayer());
     }
 
     public void onNextPlayer(ActionEvent event) throws IOException
     {
-        players.IncrementPlayerIndex();
-        gamephase.setPhase("reinforcement");
+        PlayerModel.getPlayerModel().IncrementPlayerIndex();
+        GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
     }
 
 }
