@@ -40,8 +40,10 @@ public class GamePhaseController implements Observer {
     Scene scene;
     Parent root;
 
-    String inputFile = "src/com/risk/run/inputtext/input.txt";
-//    RiskMap riskMapParser;
+
+    String inputFile = "src/com/risk/main/mapTextFiles/input.txt";
+
+
     private Stage stage;
 
     public GamePhaseController(GamePhaseModel game, MapModel m, PlayerModel p)

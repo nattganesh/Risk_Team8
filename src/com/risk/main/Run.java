@@ -23,6 +23,9 @@ import com.risk.model.GamePhaseModel;
 import com.risk.model.MapModel;
 import com.risk.model.PlayerModel;
 
+import com.risk.model.utilities.generateOutputFile.Output;
+
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -142,6 +145,24 @@ public class Run extends Application {
 //			return result;
 //		}
 //		
+//	public static String[] isCountryBelongtoPlayer(String c, Player p) 
+//	{
+//		String countryNeedtoCheck = c;
+//		String[] result = new String[2];
+//		Country attack = isCountryBelongedtoPlayer(countryNeedtoCheck, p);
+//		if (attack == null) 
+//		{
+//			result[0] = "0";
+//			result[1] = "This country does not belong to you! Please input again!";
+//		} else if (attack.getArmyCount() < 2) 
+//		{
+//			result[0] = "0";
+//			result[1] = "You don't have enough armies in this country! Please input again!";
+//		}else{
+//		result[0] = "1";}
+//		return result;
+//	}
+	
 //		 /**
 //	   	 * This method checks if the country defender inputs is connected to the attacker
 //	   	 * Return the instance of Country if it is connected to the attacker
@@ -330,9 +351,60 @@ public class Run extends Application {
 //			}
 //			return result;
 //		}
+//	public static boolean doesPlayerHaveEnoughArmies(Player p) {
+//		ArrayList<Country> countries = p.getOccupiedCountries();
+//		int i=0;
+//		for(Country c: countries) {
+//			if(c.getArmyCount()>1) {
+//				i=1;
+//			}
+//		}
+//		if(i==1) {
+//			return true;
+//		}
+//		else{
+//			return false;
+//		}
+//	}
+//	
+//	public static boolean checkCardNumberInput(int cardPlayerChoose[]) {
+//		int check = 0;
+//		for(int i=0; i<3; i++) {
+//			for(int j=i+1; j<3; j++) {
+//				if(cardPlayerChoose[i]==cardPlayerChoose[j]) {
+//					check = 1;
+//				}
+//			}
+//		}
+//		if(check == 1) {
+//			return false;
+//		}
+//		else {
+//			return true;
+//		}
+//	}
+//
+//	public static boolean checkCardCategory(int cardPlayerChoose[],ArrayList<Card> cards) {
+//		String[] cardCategory = new String[3];
+//		for (int i = 0; i < 3; i++) {
+//			card[i] = cards.get(cardPlayerChoose[i]);
+//			cardCategory[i] = card[i].getCatagory();
+//		}
+//		if (((cardCategory[0].equals(cardCategory[1])) && (cardCategory[0].equals(cardCategory[2])))
+//				|| ((!(cardCategory[0].equals(cardCategory[1])))
+//						&& (!(cardCategory[0].equals(cardCategory[2])))
+//						&& (!(cardCategory[1].equals(cardCategory[2]))))) {
+//			return true;
+//		} else {
+//			return false;
+//		}
+//	}
     public static void main(String[] args)
     {
         launch(args);
+        
+       
+//        Output.generate("NewOutputFileTEMP");
     }
 
     /**
@@ -378,7 +450,7 @@ public class Run extends Application {
 //
 //			GamePhaseController gController = new GamePhaseController(gamephase, maps, players);
 //			gController.setUp();
-//			String inputFile = "src/com/risk/run/inputtext/input.txt";
+//			String inputFile = "src/com/risk/main/mapTextFiles/input.txt";
 //			RiskMapParser riskMapParser = new RiskMapParser(maps, inputFile);
 //			riskMapParser.setUp();
 //			SetUpController selectController = new SetUpController(players, maps);
@@ -407,28 +479,31 @@ public class Run extends Application {
 //            int diceattack;
 //            int dicedefend;
 //            int rolltime;
+//            int occupyTime=0;
 //            while (true) 
 //			{
-//				System.out.println("Do you want to invoke an attak? Y/N");
-//				String answer = key.nextLine();
-//				if (answer.equalsIgnoreCase("Y")) 
+//				System.out.println("Do you want to invoke an attack? Y/N");
+//				String answer1 = key.nextLine();
+//				if (answer1.equalsIgnoreCase("Y")) 
 //				{
 //					while (true) 
 //					{
 //						System.out.println("Please input the name of the attacker:");
 //						attacker = key.nextLine();
-//						String[] attackCheck = checkCountryValidation(attacker, p);
+//						String[] attackCheck = isCountryBelongtoPlayer(attacker, p);
 //						if (attackCheck[0]=="0") 
 //						{
+//							System.out.println(attackCheck[1]);
 //							continue;
 //						} else 
 //						{	
-//							attack = p.getCountry(attacker);
+//							attack = isCountryBelongedtoPlayer(attacker, p);
 //							while (true) 
 //							{
 //								System.out.println("These are countries connected to the attacker:");
 //								for (Country c : attack.getConnectedCountries()) 
 //								{
+//									if(!(c.getRuler().getName().equals(p.getName())))
 //									System.out.println(c.getName());
 //								}
 //								System.out.println("Please input the name of the defender:");
@@ -482,6 +557,7 @@ public class Run extends Application {
 //							System.out.println("defender army:" + defend.getArmyCount());
 //							if (defend.getArmyCount() == 0) 
 //							{
+//								occupyTime++;
 //								defend.setRuler(p);
 //								System.out.println(defend.getRuler().getName());
 //								System.out.println("You have already occupied this country!");
@@ -504,101 +580,103 @@ public class Run extends Application {
 //					}
 //				} else 
 //				{
+//					if(occupyTime>0) {
+//						Card cardForOccupy = deck.sendCard(p.getName());
+//						p.addCard(cardForOccupy);
+//						System.out.println("You got one card in this round!: "+cardForOccupy.getCatagory());
+//					}
 //					break;
 //				}
 //
 //			}
 //
-//            System.out.println("\n---------------------------------------------");
-//            System.out.println("Time To Fortification");
-//            System.out.println("---------------------------------------------\n");
-//            String firstcountry="";
-//            String secondcountry="";
-//            Country country1;
-//            Country country2;
-//            int armiesformove;
-//            ArrayList<Country> CountriesArrivedbyPath = new ArrayList<>();
-//            ArrayList<Country> CountriesConnected = new ArrayList<>();
-//            CountriesConnected = isAnyCountriesConnected(p.getOccupiedCountries());
-//            if(!CountriesConnected.isEmpty())
-//            {
-//            for(int i=0; i< CountriesConnected.size();i++) {
-//            	System.out.print(CountriesConnected.get(i).getName());
-//            	if(i%2==1) {
-//            		System.out.println();
-//            	}
-//            	else{
-//            		System.out.print(",");
-//            	}
-//            }
-//            while (true) 
-//			{
-//				System.out.println("Please input the name of the first country:");
-//				firstcountry = key.nextLine();
-//				String[] result = new String[2];
-//				result = checkCountryValidation(firstcountry,p);
-//				if(result[0]=="0") 
-//				{
-//					System.out.println(result[1]);
-//					continue;
+//			System.out.println("\n---------------------------------------------");
+//			System.out.println("Time To Fortification");
+//			System.out.println("---------------------------------------------\n");
+//			String firstcountry = "";
+//			String secondcountry = "";
+//			Country country1;
+//			Country country2;
+//			int armiesformove;
+//
+//			ArrayList<Country> CountriesArrivedbyPath = new ArrayList<>();
+//			ArrayList<Country> CountriesConnected = new ArrayList<>();
+//			CountriesConnected = isAnyCountriesConnected(p.getOccupiedCountries());
+//			if(doesPlayerHaveEnoughArmies(p)) {
+//			if (!CountriesConnected.isEmpty()) {
+//				System.out.println("Those are countries that are accessible:");
+//				for (int i = 0; i < CountriesConnected.size(); i++) {
+//					System.out.print(CountriesConnected.get(i).getName());
+//					if (i % 2 == 1) {
+//						System.out.println();
+//					} else {
+//						System.out.print(",");
+//					}
 //				}
-//				country1 = p.getCountry(firstcountry);
-//				CountriesArrivedbyPath = getCountriesArrivedbyPath(country1, country1, CountriesArrivedbyPath);
-//				if(CountriesArrivedbyPath.isEmpty()) 
-//				{
-//					System.out.println("There is no accessible country to the first country!");
-//					continue;
-//				}
-//				if(country1.getArmyCount()==1) 
-//				{
-//					System.out.println("There is no more arimes to be moved from the first country!");
-//					continue;
-//				}
-//				System.out.println("There are accessible countries to the first country:");
-//				for(Country c: CountriesArrivedbyPath) 
-//				{
-//					System.out.println(c.getName());
-//				}
-//				break;
-//			}
-//			System.out.println("Please input the name of the second country:");
-//			while(true) 
-//			{
-//				secondcountry = key.nextLine();
-//				if(isCountryBelongedtoAccessibleCountries(secondcountry, CountriesArrivedbyPath)) 
-//				{
-//					System.out.println("The first and second countries are determined!");
+//				while (true) {
+//					System.out.println("Please input the name of the first country:");
+//					firstcountry = key.nextLine();
+//					String[] result = new String[2];
+//					result = checkCountryValidation(firstcountry, p);
+//					if (result[0] == "0") {
+//						System.out.println(result[1]);
+//						continue;
+//					}
+//					country1 = p.getCountry(firstcountry);
+//					CountriesArrivedbyPath = getCountriesArrivedbyPath(country1, country1,
+//							CountriesArrivedbyPath);
+//					if (CountriesArrivedbyPath.isEmpty()) {
+//						System.out.println("There is no accessible country to the first country!");
+//						continue;
+//					}
+//					if (country1.getArmyCount() == 1) {
+//						System.out.println("There is no more arimes to be moved from the first country!");
+//						continue;
+//					}
+//					System.out.println("There are accessible countries to the first country:");
+//					for (Country c : CountriesArrivedbyPath) {
+//						System.out.println(c.getName());
+//					}
 //					break;
 //				}
-//				System.out.println("The second country you input is unaccessible. Please input again:");
-//				continue;
-//			}
-//			country2 = p.getCountry(secondcountry);
-//			System.out.println("Number of armies on the first country: " + country1.getArmyCount());
-//			System.out.println("Number of armies on the second country: " + country2.getArmyCount());
-//			System.out.println("Please input the number of armies you want to move. It should be at most "+ (country1.getArmyCount()-1) +":");
-//			while (true) 
-//			{
-//				armiesformove = key.nextInt();
-//				key.nextLine();
-//				if ((armiesformove < 1)||(armiesformove > (country1.getArmyCount()-1))) 
-//				{
-//					System.out.println("The number is invalid. Please input again:");
+//				System.out.println("Please input the name of the second country:");
+//				while (true) {
+//					secondcountry = key.nextLine();
+//					if (isCountryBelongedtoAccessibleCountries(secondcountry, CountriesArrivedbyPath)) {
+//						System.out.println("The first and second countries are determined!");
+//						break;
+//					}
+//					System.out.println("The second country you input is unaccessible. Please input again:");
 //					continue;
 //				}
-//				break;
+//				country2 = p.getCountry(secondcountry);
+//				System.out.println("Number of armies on the first country: " + country1.getArmyCount());
+//				System.out.println("Number of armies on the second country: " + country2.getArmyCount());
+//				System.out.println("Please input the number of armies you want to move. It should be at most "
+//						+ (country1.getArmyCount() - 1) + ":");
+//				while (true) {
+//					armiesformove = key.nextInt();
+//					key.nextLine();
+//					if ((armiesformove < 1) || (armiesformove > (country1.getArmyCount() - 1))) {
+//						System.out.println("The number is invalid. Please input again:");
+//						continue;
+//					}
+//					break;
+//				}
+//				country1.reduceArmyCount(armiesformove);
+//				country2.setArmyCount(armiesformove);
+//				System.out.println("Move successfully");
+//			} else {
+//          	System.out.println("You have no occupied countries connected to each other");
+//          }}
+//			else {
+//				System.out.println("None of your countries has enough armies for fortification.");
 //			}
-//			country1.reduceArmyCount(armiesformove);
-//			country2.setArmyCount(armiesformove);
-//			System.out.println("Move successfully");}
-//            else {
-//            	System.out.println("You have no occupied countries connected to each other");
-//            }
 //			System.out.println("\n---------------------------------------------");
 //            System.out.println("Next Round");
 //            System.out.println("---------------------------------------------\n");
 //		}
-//			} END OF WHILE LOOP
+//	} END OF WHILE LOOP
 // FOR DEBUGGING PURPOSE -------------------------------------------------------------------------------------
 //            int y = 0;
 //            for (Continent cont : continents)

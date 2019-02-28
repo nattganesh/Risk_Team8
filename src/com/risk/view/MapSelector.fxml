@@ -26,7 +26,6 @@
             <Button layoutX="418.0" layoutY="566.0" mnemonicParsing="false" onAction="#TerritoryDelete" text="DELETE" />
             <Button layoutX="666.0" layoutY="566.0" mnemonicParsing="false" onAction="#AdjacentDelete" text="DELETE" />
             <Button layoutX="341.0" layoutY="627.0" mnemonicParsing="false" onAction="#saveMap" text="Save Map" />
-            <ComboBox fx:id="ExistingFile" layoutX="53.0" layoutY="73.0" prefWidth="150.0" />
             <Label layoutX="51.0" layoutY="45.0" text="Existing File" />
             <Button layoutX="281.0" layoutY="73.0" mnemonicParsing="false" onAction="#newMap" text="New" />
             <Button layoutX="203.0" layoutY="73.0" mnemonicParsing="false" onAction="#loadMap" text="Load" />
@@ -34,6 +33,7 @@
             <Label fx:id="AdjacentError" layoutX="721.0" layoutY="545.0" />
             <Button layoutX="645.0" layoutY="722.0" mnemonicParsing="false" onAction="#startGame" text="Start Game" />
             <ComboBox fx:id="PlayerID" layoutX="495.0" layoutY="722.0" onAction="#playerDropDown" prefWidth="150.0" />
+            <TextField fx:id="ExistingFile" layoutX="47.0" layoutY="73.0" />
          </children>
       </AnchorPane>
    </children>

@@ -24,6 +24,7 @@ import com.risk.model.map.Country;
 import com.risk.model.player.Player;
 import com.risk.model.utilities.FileParser;
 import com.risk.model.utilities.Validate;
+import com.risk.model.utilities.generateOutputFile.Output;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -59,7 +60,7 @@ public class MapEditorController implements Initializable {
 	TextField AdjacentInput;
 
 	@FXML
-	ComboBox<String> ExistingFile;
+	TextField ExistingFile;
 
 	@FXML
 	Label ValidationError;
@@ -81,9 +82,7 @@ public class MapEditorController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
 		ContinentView.setItems(continentObservableList);
-		ExistingFile.getItems().addAll("src/com/risk/main/inputtext/input.txt",
-				"src/com/risk/main/inputtext/NoConnectivity.txt");
-
+		
 		ContinentView.setCellFactory(param -> new ListCell<Continent>() {
 			@Override
 			protected void updateItem(Continent continent, boolean empty) {
@@ -276,8 +275,9 @@ public class MapEditorController implements Initializable {
 	@FXML
 	public void loadMap() throws CannotFindException, DuplicatesException, FileNotFoundException, CountLimitException {
 		validated = 0;
-		if (ExistingFile.getSelectionModel().getSelectedItem() != null) {
-			String inputFile = ExistingFile.getSelectionModel().getSelectedItem();
+//		System.out.println(ExistingFile.getText().trim().isEmpty());
+		if (!ExistingFile.getText().trim().isEmpty()) {
+			String inputFile = "src/com/risk/main/mapTextFiles/"+ExistingFile.getText()+".txt";
 			Scanner scan = new Scanner(new File(inputFile));
 			FileParser fileParser = new FileParser();
 			if (fileParser.init(scan)) {
@@ -321,6 +321,7 @@ public class MapEditorController implements Initializable {
 			System.out.println("Model country size after validate: " + MapModel.getMapModel().getCountries().size());
 			System.out.println("validate size: " + Validate.getValidate().getValidateSize());
 			ValidationError.setText("Saved File");
+			Output.generate(ExistingFile.getText());
 			initializePlayers();
 			validated = 1;
 
