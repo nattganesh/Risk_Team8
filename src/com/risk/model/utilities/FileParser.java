@@ -68,7 +68,7 @@ public class FileParser {
                         boolean continentExists = false;
 
                         Country c = new Country(nameOfCountry, nameOfContinent);
-                        maps.addCountry(c); // ****
+                        maps.addCountry(c); 
 
                         for (Continent cont : maps.getContinents())
                         {
@@ -136,14 +136,23 @@ public class FileParser {
                         {
                             if (c2.getName().equalsIgnoreCase(nameOfCountry2))
                             {
-                                c.getConnectedCountries().add(c2);
-                                c2.getConnectedCountries().add(c);
+                            	boolean exists = false;
+                            	for (Country connected : c.getConnectedCountries()) {
+                            		if (connected.getName().equals(c2.getName())) {
+                            			exists = true;
+                            			break;
+                            		}
+                            	}
+                            	if (!exists) {
+                            		 c.getConnectedCountries().add(c2);
+                                     c2.getConnectedCountries().add(c);
+                            	}
+                               
                             }
                         }
                     }
                 }
             }
-
         }
         else
         {
@@ -152,6 +161,7 @@ public class FileParser {
             throw ex;
         }
     }
+ 
     public boolean init(Scanner input) throws CannotFindException, DuplicatesException {
     	maps.getCountries().clear();
     	maps.getContinents().clear();

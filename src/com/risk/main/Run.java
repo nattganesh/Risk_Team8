@@ -417,6 +417,7 @@ public class Run extends Application {
      *
      * @see javafx.application.Application
      */
+    
     @Override
     public void start(Stage primaryStage) throws CountLimitException, CannotFindException, DuplicatesException, IOException
     {

@@ -275,9 +275,11 @@ public class MapEditorController implements Initializable {
 	@FXML
 	public void loadMap() throws CannotFindException, DuplicatesException, FileNotFoundException, CountLimitException {
 		validated = 0;
-//		System.out.println(ExistingFile.getText().trim().isEmpty());
-		if (!ExistingFile.getText().trim().isEmpty()) {
-			String inputFile = "src/com/risk/main/mapTextFiles/"+ExistingFile.getText()+".txt";
+		clearMapEditor();
+		String inputFile = "src/com/risk/main/mapTextFiles/"+ExistingFile.getText()+".txt";
+		if (!ExistingFile.getText().trim().isEmpty() && new File(inputFile).isFile()) {
+			MapModel.getMapModel().getContinents().clear();
+			MapModel.getMapModel().getCountries().clear();			
 			Scanner scan = new Scanner(new File(inputFile));
 			FileParser fileParser = new FileParser();
 			if (fileParser.init(scan)) {
@@ -301,7 +303,11 @@ public class MapEditorController implements Initializable {
 					populateMapEditor();
 				}
 			}
-		}
+			
+		} else {
+			ValidationError.setText("file does not exist");
+			clearMapEditor();
+		}		
 	}
 
 	@FXML
@@ -315,22 +321,28 @@ public class MapEditorController implements Initializable {
 				MapModel.getMapModel().getCountries().add(country);
 			}
 		}
+		if (MapModel.getMapModel().getCountries().size() != 0){
+			Validate.getValidate().validateMap();
+			if (Validate.getValidate().getValidateSize() == MapModel.getMapModel().getCountries().size()) {
+				System.out.println("validated model size after saving: " + MapModel.getMapModel().getCountries().size());
+				System.out.println("Validate size after saving: " + Validate.getValidate().getValidateSize());
+				ValidationError.setText("Saved File");
+				if (Output.generate(ExistingFile.getText())) {
+					initializePlayers();
+					validated = 1;
+					System.out.println("validated");
+				}
+				
 
-		Validate.getValidate().validateMap();
-		if (Validate.getValidate().getValidateSize() == MapModel.getMapModel().getCountries().size()) {
-			System.out.println("Model country size after validate: " + MapModel.getMapModel().getCountries().size());
-			System.out.println("validate size: " + Validate.getValidate().getValidateSize());
-			ValidationError.setText("Saved File");
-			Output.generate(ExistingFile.getText());
-			initializePlayers();
-			validated = 1;
-
-		} else {
-			System.out.println("Model country size after validate: " + MapModel.getMapModel().getCountries().size());
-			System.out.println("validate size: " + Validate.getValidate().getValidateSize());
-			ValidationError.setText("Can't Save Map it's an invalid map");
-			validated = 0;
-		}
+			} else {
+				System.out.println("Model country size after validate: " + MapModel.getMapModel().getCountries().size());
+				System.out.println("validate size: " + Validate.getValidate().getValidateSize());
+				ValidationError.setText("Can't Save Map it's an invalid map");
+				validated = 0;
+			}
+		} else  {
+			ValidationError.setText("can't save - invalid map");
+		} 
 	}
 
 	@FXML
@@ -338,13 +350,16 @@ public class MapEditorController implements Initializable {
 		validated = 0;
 		clearMapEditor();
 		initializeContinents();
+		ValidationError.setText("New Map");
 	}
 
 	@FXML
 	public void startGame() {
+		System.out.println("in here");
 		if (validated == 1) {
+			System.out.println("in here");
 			if (PlayerID.getSelectionModel().getSelectedItem() != null) {
-
+				System.out.println("in here");
 				int numbPlayers = Integer.parseInt(PlayerID.getSelectionModel().getSelectedItem());
 				setPlayers(numbPlayers);
 				calcStartingArmies();
@@ -381,7 +396,7 @@ public class MapEditorController implements Initializable {
 	}
 
 	public void initializePlayers() {
-
+		PlayerID.getItems().clear();
 		PlayerID.getItems().addAll("2", "3", "4", "5", "6");
 	}
 

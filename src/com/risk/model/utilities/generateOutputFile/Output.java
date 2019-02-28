@@ -46,9 +46,9 @@ public class Output {
                     System.out.println(country.getName() + "," + neighCountry.getName());
                 }
             }
-
+            System.out.println("finished outputting");
             fileOut.close();
-
+           
             return true;
         }
         catch (Exception e)
