@@ -14,16 +14,11 @@
 package com.risk.main;
 
 import com.risk.controller.GamePhaseController;
-import com.risk.controller.InitializationController;
 import com.risk.controller.MapEditorController;
 import com.risk.model.exceptions.CannotFindException;
 import com.risk.model.exceptions.CountLimitException;
 import com.risk.model.exceptions.DuplicatesException;
-import com.risk.model.GamePhaseModel;
-import com.risk.model.MapModel;
-import com.risk.model.PlayerModel;
 
-import com.risk.model.utilities.generateOutputFile.Output;
 
 
 import javafx.application.Application;
@@ -34,10 +29,10 @@ import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-import java.io.FileNotFoundException;
+
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+
 
 public class Run extends Application {
 

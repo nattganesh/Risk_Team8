@@ -86,6 +86,7 @@ public class ReinforcementController implements Initializable {
         initializeArmyField();
     }
 
+    @FXML
     public void initializeArmyField()
     {
         inputArmy.textProperty().addListener(new ChangeListener<String>() {
@@ -99,6 +100,7 @@ public class ReinforcementController implements Initializable {
         });
     }
 
+    @FXML
     public void initializeTerritory()
     {
         countryId.setItems(PlayerModel.getPlayerModel().getTerritory());
@@ -117,21 +119,6 @@ public class ReinforcementController implements Initializable {
                 }
             }
         });
-    }
-
-    public int getReinforcement()
-    {
-        return PlayerModel.getPlayerModel().getCurrentPlayer().calculateReinforcement();
-    }
-
-    /**
-     * gets the name of current player in the game
-     *
-     * @return it returns name of current player
-     */
-    public String getName()
-    {
-        return PlayerModel.getPlayerModel().getCurrentPlayer().getName();
     }
 
     /**
@@ -162,6 +149,7 @@ public class ReinforcementController implements Initializable {
 
     }
 
+    @FXML
     /**
      * Method to set up the Attack.fxml view and set the controller
      * (AttackController) for the view. Then, changes the scene on the stage to
@@ -170,7 +158,6 @@ public class ReinforcementController implements Initializable {
      * @param event eventlistener for button clicked event
      * @throws IOException Exception thrown when view is not found
      */
-
     public void goToAttackPhase(ActionEvent event) throws IOException
     {
         if (PlayerModel.getPlayerModel().getCurrentPlayer().getReinforcement() > 0)
@@ -180,6 +167,20 @@ public class ReinforcementController implements Initializable {
         {
             GamePhaseModel.getGamePhaseModel().setPhase("attack");
         }
+    }
+    public int getReinforcement()
+    {
+        return PlayerModel.getPlayerModel().getCurrentPlayer().calculateReinforcement();
+    }
+
+    /**
+     * gets the name of current player in the game
+     *
+     * @return it returns name of current player
+     */
+    public String getName()
+    {
+        return PlayerModel.getPlayerModel().getCurrentPlayer().getName();
     }
 
 }
