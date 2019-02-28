@@ -14,7 +14,7 @@ import com.risk.model.exceptions.DuplicatesException;
 import com.risk.model.GamePhaseModel;
 import com.risk.model.MapModel;
 import com.risk.model.PlayerModel;
-import com.risk.model.utilities.RiskMap;
+//import com.risk.model.utilities.RiskMap;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -41,7 +41,7 @@ public class GamePhaseController implements Observer {
     Parent root;
 
     String inputFile = "src/com/risk/run/inputtext/input.txt";
-    RiskMap riskMapParser;
+//    RiskMap riskMapParser;
     private Stage stage;
 
     public GamePhaseController(GamePhaseModel game, MapModel m, PlayerModel p)
@@ -121,8 +121,8 @@ public class GamePhaseController implements Observer {
     public void setUp(Stage primaryStage) throws CountLimitException, CannotFindException, DuplicatesException, IOException
     {
         stage = primaryStage;
-        riskMapParser = new RiskMap(maps, inputFile);
-        riskMapParser.setUp();
+//        riskMapParser = new RiskMap(maps, inputFile);
+//        riskMapParser.setUp();
         InitializationController selectController = new InitializationController(gamephase, players, maps);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/risk/view/Initialization.fxml"));
         loader.setController(selectController);

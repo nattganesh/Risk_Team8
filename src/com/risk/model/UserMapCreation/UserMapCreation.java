@@ -52,7 +52,7 @@ public class UserMapCreation {
                 }
                 Country country = new Country(countryName, name);
                 countries.add(country);
-                continent.getCountries().add(country);
+                continent.getCountries().add(country);	
             }
         }
     }

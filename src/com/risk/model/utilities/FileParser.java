@@ -24,15 +24,14 @@ import com.risk.model.PlayerModel;
  */
 public class FileParser {
 
-    MapModel model;
-    private static String text = ""; // file parser
+    static MapModel maps = MapModel.getMapModel();
+    private String text = ""; // file parser
 
     /**
      * @param m this is the model of the game
      */
-    public FileParser(MapModel m)
+    public FileParser()
     {
-        this.model = m;
     }
 
     /**
@@ -57,7 +56,7 @@ public class FileParser {
                     String nameOfContinent = text.substring(0, text.indexOf(","));
                     String nameOfCountry = text.substring(text.indexOf(",") + 1, text.length());
                     boolean countryExists = false;
-                    for (Country country : model.getCountries())
+                    for (Country country : maps.getCountries())
                     {
                         if (country.getName().equalsIgnoreCase(nameOfCountry))
                         {
@@ -69,9 +68,9 @@ public class FileParser {
                         boolean continentExists = false;
 
                         Country c = new Country(nameOfCountry, nameOfContinent);
-                        model.addCountry(c); // ****
+                        maps.addCountry(c); // ****
 
-                        for (Continent cont : model.getContinents())
+                        for (Continent cont : maps.getContinents())
                         {
                             if (cont.getName().equalsIgnoreCase(nameOfContinent))
                             {
@@ -84,7 +83,7 @@ public class FileParser {
                         {
                             Continent continent = new Continent(nameOfContinent, 10);
                             continent.setCountry(c);
-                            model.addContinent(continent);
+                            maps.addContinent(continent);
                         }
                     }
                     else
@@ -129,11 +128,11 @@ public class FileParser {
                 String nameOfCountry1 = text.substring(0, text.indexOf(","));
                 String nameOfCountry2 = text.substring(text.indexOf(",") + 1, text.length());
 
-                for (Country c : model.getCountries())
+                for (Country c : maps.getCountries())
                 {
                     if (c.getName().equalsIgnoreCase(nameOfCountry1))
                     {
-                        for (Country c2 : model.getCountries())
+                        for (Country c2 : maps.getCountries())
                         {
                             if (c2.getName().equalsIgnoreCase(nameOfCountry2))
                             {
@@ -152,5 +151,16 @@ public class FileParser {
                     "The tag 'SET NEIGHBORS' is not set. Please follow the Input Text Format Please resolve this issue.");
             throw ex;
         }
+    }
+    public boolean init(Scanner input) throws CannotFindException, DuplicatesException {
+    	maps.getCountries().clear();
+    	maps.getContinents().clear();
+
+    	setCountriesInContinents(input);
+    	setNeighboringCountries(input);
+    	System.out.println("model continent size: " + maps.getCountries().size());
+    	System.out.println("model countries size: " + maps.getContinents().size());
+    	
+    	return true;
     }
 }

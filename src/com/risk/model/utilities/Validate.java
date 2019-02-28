@@ -16,15 +16,21 @@ import java.util.ArrayList;
  */
 public class Validate {
 
-    MapModel map;
+  
     static int counter = 0;
     static ArrayList<Country> countriesModelValidationList = new ArrayList<>();
+    private static Validate validate;
+    
+    MapModel map = MapModel.getMapModel();
 
-    public Validate(MapModel m)
+    public Validate()
     {
-        map = m;
+    	
     }
 
+    public int getValidateSize() {
+    	return countriesModelValidationList.size();
+    }
     public void continentChecks() throws CannotFindException, CountLimitException
     {
         for (Continent cont : map.getContinents())
@@ -103,4 +109,24 @@ public class Validate {
             mapConnected(a);
         }
     }
+    public void validateMap() throws CannotFindException, CountLimitException {
+    	
+    	counter = 0;
+    	countriesModelValidationList.clear();
+    	continentChecks();
+    	mapConnected(map.getCountries().get(0));
+    	
+    }
+
+    
+    public static Validate getValidate()
+    {	
+        if(validate == null)
+        {
+            validate = new Validate();
+        }
+        
+        return validate;
+    }
+    
 }

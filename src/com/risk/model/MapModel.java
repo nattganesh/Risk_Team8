@@ -48,6 +48,7 @@ public class MapModel extends Observable {
     {
         return countriesModel;
     }
+    
 
     /**
      * this method gets the continents in the continent model
