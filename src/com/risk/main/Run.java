@@ -439,6 +439,82 @@ public class Run extends Application {
 	        primaryStage.setScene(new Scene(root, 300, 275));
 	        primaryStage.show();
 
+//	     // For every three countries, the player gets one army.
+//            // For example, if you had 11 countries, you would receive 3 armies;
+//            // if you had 22 countries, you would receive 7 armies.
+//            int availableArmies = Math.floorDiv(p.getOccupiedCountries().size(), 3);
+//            if (availableArmies < 3)
+//            {
+//                availableArmies = 3;
+//            }
+//            
+//            int cardNumber = p.getCardNumber();
+//            int cardPlayerChoose[] = new int[3];
+//            Card card[] = new Card[3];
+//            String answer = "";
+//			if (cardNumber > 3) 
+//			{
+//				if(cardNumber<5) {
+//					System.out.println("Do you want to trade your cards?Y/N");
+//					answer = key.nextLine();
+//				}
+//				if ((cardNumber >= 5)||(answer.equals("Y"))||(answer.equals("y")))
+//				{
+//					System.out.println("You have to trade your cards in at least one set!");
+//					System.out.println("These are the cards you have:");
+//					ArrayList<Card> cards = p.getCards();
+//					for (int i = 0; i < cards.size(); i++)
+//						System.out.println((i + 1) + " " + cards.get(i).getCatagory());
+//					while (true) {
+//						for (int i = 0; i < 3; i++) {
+//							System.out.println("Please enter card" + (i + 1) + " you want to exchange.");
+//							String text = key.nextLine();
+//							if (text.trim().isEmpty()) {
+//								System.out.println("Your input is empty. Please input again!:");
+//							} else {
+//								try {
+//									n = Integer.parseInt(text) - 1;
+//									if ((n >= 0) && (n < cardNumber)) {
+//										break;
+//									} else {
+//										System.out.println(
+//												"Please enter the number that is bigger than 1 and at most "
+//														+ cardNumber);
+//									}
+//								} catch (Exception e) {
+//									System.out.println("It's not a number. Please input again!:");
+//								}
+//							}
+//							cardPlayerChoose[i] = n;
+//						}
+//						if(checkCardNumberInput(cardPlayerChoose)) {
+//							if (checkCardCategory(cardPlayerChoose, cards)) {
+//								availableArmies += 5 * (exchangeTime + 1);
+//								exchangeTime++;
+//								break;
+//							} else {
+//								System.out.println("You should choose three different cards!");
+//								continue;
+//							}
+//						}
+//						else 
+//						{
+//							System.out.println("You should enter three different numbers!");
+//							continue;
+//						}
+//					}
+//					
+//				}
+//				else if(answer.equals("N") || answer.equals("n")){
+//				break;
+//				} else {
+//					System.out.println("The answer you input is invaild. Please input again!");
+//				}
+	        
+	        
+	        
+	        
+	        
 //        try
 //        {
 //			PlayerModel players = new PlayerModel();
