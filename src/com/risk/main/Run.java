@@ -415,15 +415,7 @@ public class Run extends Application {
     
     @Override
     public void start(Stage primaryStage) throws CountLimitException, CannotFindException, DuplicatesException, IOException
-    {
-//        PlayerModel players = new PlayerModel();
-//        MapModel maps = new MapModel();
-//        GamePhaseModel gamephase = new GamePhaseModel();
-//
-//        GamePhaseController gController = new GamePhaseController(gamephase, maps, players);
-//        gController.setUp(primaryStage);
-    	
-		
+    {		
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/risk/view/MapSelector.fxml"));
 			GamePhaseController gamephase = new GamePhaseController(primaryStage);
 			MapEditorController mapController = new MapEditorController();

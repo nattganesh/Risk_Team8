@@ -10,13 +10,17 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
 import com.risk.model.GamePhaseModel;
 import com.risk.model.MapModel;
 import com.risk.model.PlayerModel;
+import com.risk.model.card.Card;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -57,6 +61,15 @@ public class ReinforcementController implements Initializable {
 
     @FXML
     Label inputArmyError;
+    
+    @FXML
+    Label CardMessage;
+    
+    @FXML
+    ListView<Card> yourCards;
+    
+    ObservableList<Card> cardsObservableList = FXCollections.observableArrayList();
+    ObservableList<Card> tradeObservableList = FXCollections.observableArrayList();
 
     /**
      * This is the constructor for the reinforcement controller
@@ -82,6 +95,9 @@ public class ReinforcementController implements Initializable {
     {
         playerId.setText(getName());
         armyAvailable.setText("Army: " + Integer.toString(getReinforcement()));
+        cardsObservableList.addAll(PlayerModel.getPlayerModel().getCurrentPlayer().getCards());
+        yourCards.setItems(cardsObservableList);
+        
         initializeTerritory();
         initializeArmyField();
     }
@@ -168,6 +184,14 @@ public class ReinforcementController implements Initializable {
             GamePhaseModel.getGamePhaseModel().setPhase("attack");
         }
     }
+    
+    @FXML
+    public void tradeCard() {
+    	
+    }
+    
+    
+    
     public int getReinforcement()
     {
         return PlayerModel.getPlayerModel().getCurrentPlayer().calculateReinforcement();

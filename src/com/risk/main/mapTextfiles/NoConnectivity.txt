@@ -45,75 +45,154 @@ SET NEIGHBORS
 Alaska,Kamchatka
 Alaska,Alberta
 Alaska,Northwest Territory
+Northwest Territory,Alaska
 Northwest Territory,Greenland
 Northwest Territory,Ontario
 Northwest Territory,Alberta
+Greenland,Northwest Territory
 Greenland,Ontario
 Greenland,Quebec
 Greenland,Iceland
+Alberta,Alaska
+Alberta,Northwest Territory
 Alberta,Ontario
 Alberta,Western United States
+Ontario,Northwest Territory
+Ontario,Greenland
+Ontario,Alberta
 Ontario,Quebec
 Ontario,Western United States
 Ontario,Eastern United States
+Quebec,Greenland
+Quebec,Ontario
 Quebec,Eastern United States
+Western United States,Alberta
+Western United States,Ontario
+Western United States,Central America
+Eastern United States,Ontario
+Eastern United States,Quebec
+Eastern United States,Central America
 Central America,Western United States
 Central America,Eastern United States
 Central America,Venezuela
+Venezuela,Central America
 Venezuela,Peru
 Venezuela,Brazil
+Peru,Venezuela
 Peru,Brazil
 Peru,Argentina
+Brazil,Venezuela
+Brazil,Peru
 Brazil,North Africa
-North Africa,Southern Europe
-North Africa,Western Europe
-North Africa,Congo
-North Africa,Egypt
-North Africa,East Africa
-Egypt,Southern Europe
-Egypt,Middle East
-Egypt,East Africa
-East Africa,Middle East
-East Africa,Congo
-East Africa,Madagascar
-Congo,South Africa
-South Africa,Madagascar
+Argentina,Peru
+Iceland,Greenland
 Iceland,Scandinavia
 Iceland,Great Britian
-Great Britian,Scandinavia
-Great Britian,Western Europe
-Great Britian,Northern Europe
+Scandinavia,Iceland
+Scandinavia,Great Britian
 Scandinavia,Northern Europe
 Scandinavia,Ukraine
-Northern Europe,Southern Europe
-Western Europe,Northern Europe
-Western Europe,Southern Europe
+Ukraine,Scandinavia
 Ukraine,Northern Europe
 Ukraine,Southern Europe
 Ukraine,Ural
 Ukraine,Afghanistan
 Ukraine,Middle East
-Middle East,Afghanistan
-Middle East,India
-Afghanistan,India
-Afghanistan,Ural
-Afghanistan,China
-Ural,Siberia
-Ural,China
+Great Britian,Iceland
+Great Britian,Scandinavia
+Great Britian,Western Europe
+Great Britian,Northern Europe
+Northern Europe,Great Britian
+Northern Europe,Scandinavia
+Northern Europe,Southern Europe
+Northern Europe,Western Europe
+Northern Europe,Ukraine
+Southern Europe,North Africa
+Southern Europe,Egypt
+Southern Europe,Northern Europe
+Southern Europe,Western Europe
+Southern Europe,Ukraine
+Western Europe,North Africa
+Western Europe,Great Britian
+Western Europe,Northern Europe
+Western Europe,Southern Europe
+North Africa,Brazil
+North Africa,Southern Europe
+North Africa,Western Europe
+North Africa,Congo
+North Africa,Egypt
+North Africa,East Africa
+Egypt,North Africa
+Egypt,Southern Europe
+Egypt,Middle East
+Egypt,East Africa
+East Africa,North Africa
+East Africa,Egypt
+East Africa,Middle East
+East Africa,Congo
+East Africa,Madagascar
+Congo,North Africa
+Congo,East Africa
+Congo,South Africa
+South Africa,Congo
+South Africa,Madagascar
+Madagascar,East Africa
+Madagascar,South Africa
+Siam,India
+Siam,China
+Siam,Indonesia
+India,Middle East
+India,Afghanistan
+India,Siam
+India,China
+China,Afghanistan
+China,Ural
+China,Siberia
+China,India
+China,Siam
+China,Mongolia
+Mongolia,Siberia
+Mongolia,China
+Mongolia,Irkutsk
+Mongolia,Kamchatka
+Mongolia,Japan
+Japan,Mongolia
+Japan,Kamchatka
+Irkutsk,Siberia
+Irkutsk,Mongolia
+Irkutsk,Kamchatka
+Yakutsk,Siberia
+Yakutsk,Kamchatka
+Kamchatka,Alaska
+Kamchatka,Mongolia
+Kamchatka,Japan
+Kamchatka,Irkutsk
+Kamchatka,Yakutsk
+Siberia,Ural
 Siberia,China
 Siberia,Mongolia
 Siberia,Yakutsk
 Siberia,Irkutsk
-India,Siam
-India,China
-China,Siam
-China,Mongolia
-Mongolia,Irkutsk
-Mongolia,Kamchatka
-Mongolia,Japan
-Kamchatka,Japan
-Kamchatka,Irkutsk
-Kamchatka,Yakutsk
-Western Australia,Eastern Australia
+Afghanistan,Ukraine
+Afghanistan,Middle East
+Afghanistan,India
+Afghanistan,Ural
+Afghanistan,China
+Ural,Ukraine
+Ural,Afghanistan
+Ural,Siberia
+Ural,China
+Middle East,Egypt
+Middle East,East Africa
+Middle East,Ukraine
+Middle East,Afghanistan
+Middle East,India
+Indonesia,Siam
+Indonesia,Western Australia
 New Guinea,Eastern Australia
 New Guinea,Western Australia
+Western Australia,Eastern Australia
+Western Australia,New Guinea
+Western Australia,Indonesia
+Eastern Australia,Western Australia
+Eastern Australia,New Guinea

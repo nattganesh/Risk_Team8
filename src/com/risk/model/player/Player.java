@@ -96,14 +96,14 @@ public class Player {
      * @param assign number of armies to assign
      * @return returns 1 if you successfully assigned, -1 otherwise
      */
-    public int setReinforcement(int assign)
+    public boolean setReinforcement(int assign)
     {
         if (assign > getReinforcement())
         {
-            return -1;
+            return false;
         }
         reinforcement -= assign;
-        return 1;
+        return true;
 
     }
 
