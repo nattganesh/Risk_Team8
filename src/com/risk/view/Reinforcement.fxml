@@ -27,8 +27,8 @@
                  	<Button fx:id="AttackPhaseID" layoutX="530.0" layoutY="24.0" mnemonicParsing="false" onAction="#goToAttackPhase" text="Attack" />
                   <Button layoutX="430.0" layoutY="544.0" mnemonicParsing="false" onAction="#tradeCard" text="Trade Cards" />
                   <Label fx:id="CardMessage" layoutX="170.0" layoutY="325.0" />
-                  <ListView fx:id="yourCards" layoutX="340.0" layoutY="406.0" prefHeight="111.0" prefWidth="122.0" />
-                  <ListView fx:id="tradeCards" layoutX="479.0" layoutY="406.0" prefHeight="111.0" prefWidth="122.0" />
+                  <ListView fx:id="yourCard" layoutX="340.0" layoutY="406.0" onMouseClicked="#yourCardHandler" prefHeight="111.0" prefWidth="122.0" />
+                  <ListView fx:id="tradeCard" layoutX="479.0" layoutY="406.0" onMouseClicked="#yourTradeHandler" prefHeight="111.0" prefWidth="122.0" />
                   <Label layoutX="340.0" layoutY="513.0" text="Your cards" />
                   <Label layoutX="484.0" layoutY="513.0" text="Trade in cards" /> 
 					</children>

@@ -17,8 +17,20 @@ public class MapModel extends Observable {
 
     private ArrayList<Continent> continentsModel = new ArrayList<>();
     private ArrayList<Country> countriesModel = new ArrayList<>();
+    private int exchangeTime = 0;
     private static MapModel mapModel;
     private MapModel(){}
+    
+    public int getExchangeTime() {
+    	return exchangeTime;
+    }
+    
+    public void setExchangeTime() {
+    	 exchangeTime++;
+    }
+    
+   
+    
     /**
      * this method adds a country to the country model
      *
