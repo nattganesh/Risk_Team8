@@ -47,7 +47,7 @@ public class GamePhaseController implements Observer {
         rController = new ReinforcementController();
         aController = new AttackController();
         fController = new FortificationController();
-        
+
     }
 
     @Override

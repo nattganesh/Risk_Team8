@@ -130,7 +130,7 @@ public class ReinforcementController implements Initializable {
 
 	@FXML
 	public void initializeTerritory() {
-		countryId.setItems(PlayerModel.getPlayerModel().getTerritory());
+		countryId.setItems(PlayerModel.getPlayerModel().getCurrentTerritory());
 		countryId.setCellFactory(param -> new ListCell<Country>() {
 			@Override
 			protected void updateItem(Country country, boolean empty) {
@@ -154,7 +154,7 @@ public class ReinforcementController implements Initializable {
 				&& countryId.getSelectionModel().getSelectedItem() != null) {
 
 			Armyinput = Integer.parseInt(inputArmy.getText());
-			for (Country country : PlayerModel.getPlayerModel().getTerritory()) {
+			for (Country country : PlayerModel.getPlayerModel().getCurrentTerritory()) {
 				if (country.equals(countryId.getSelectionModel().getSelectedItem())) {
 					country.setArmyCount(Armyinput);
 					PlayerModel.getPlayerModel().updateCurrentTerritory();

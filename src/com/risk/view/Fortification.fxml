@@ -6,13 +6,18 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+      <AnchorPane prefHeight="800.0" prefWidth="800.0">
          <children>
-            <Text layoutX="67.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fortification" />
-            <Button fx:id="nextPlayerID" layoutX="54.0" layoutY="136.0" mnemonicParsing="false" onAction="#onNextPlayer" text="reinforcement" />
+            <Text layoutX="21.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fortification" />
+            <Button fx:id="nextPlayerID" layoutX="673.0" layoutY="18.0" mnemonicParsing="false" onAction="#onNextPlayer" text="reinforcement" />
+            <ListView fx:id="Territory" layoutX="152.0" layoutY="182.0" onMouseClicked="#territoryHandler" prefHeight="200.0" prefWidth="200.0" />
+            <ListView fx:id="Adjacent" layoutX="413.0" layoutY="182.0" prefHeight="200.0" prefWidth="200.0" />
+            <TextField fx:id="moveField" layoutX="280.0" layoutY="420.0" prefHeight="31.0" prefWidth="113.0" />
+            <Button layoutX="393.0" layoutY="420.0" mnemonicParsing="false" onAction="#moveHandler" text="Move" />
+            <Label layoutX="152.0" layoutY="149.0" text="Your Territory" />
+            <Label layoutX="413.0" layoutY="149.0" text="Connected Territory" />
          </children>
       </AnchorPane>
    </children>

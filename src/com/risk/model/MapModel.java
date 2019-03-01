@@ -28,9 +28,7 @@ public class MapModel extends Observable {
     public void setExchangeTime() {
     	 exchangeTime++;
     }
-    
-   
-    
+     
     /**
      * this method adds a country to the country model
      *

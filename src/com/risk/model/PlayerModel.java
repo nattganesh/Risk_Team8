@@ -92,7 +92,7 @@ public class PlayerModel extends Observable implements Observer {
      * @return currentPlayerCountry returns ObservableList<Country> of current
      * player
      */
-    public ObservableList<Country> getTerritory()
+    public ObservableList<Country> getCurrentTerritory()
     {
         return currentPlayerTerritory;
     }
