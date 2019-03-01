@@ -477,7 +477,7 @@ public class MapEditorController implements Initializable {
 				Player temp = PlayerModel.getPlayerModel().getPlayers().remove(0);
 				PlayerModel.getPlayerModel().addPlayer(temp);
 			}
-			initializeCurrentPlayer();
+			
 			System.out.println("The Play Order is as follows:");
 			for (int i = 0; i < diceRolls.length; i++) {
 				System.out.println(PlayerModel.getPlayerModel().getPlayers().get(i).getName());
@@ -539,13 +539,7 @@ public class MapEditorController implements Initializable {
 		}
 	}
 
-	/**
-	 * This method sets the observable list for the country occupied by current
-	 * player. *
-	 */
-	public void initializeCurrentPlayer() {
-		PlayerModel.getPlayerModel().setCurrentPlayerCountryObs();
-	}
+
 
 	/**
 	 * This method sets the starting armies during initialization based on number of

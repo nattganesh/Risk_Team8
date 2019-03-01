@@ -424,10 +424,10 @@ public class Run extends Application {
 			Parent root = loader.load();
 		    Screen screen = Screen.getPrimary();
 		    Rectangle2D bounds = screen.getVisualBounds();
-		    primaryStage.setX((bounds.getWidth() - primaryStage.getWidth()) / 2); 
-		    primaryStage.setY((bounds.getHeight() - primaryStage.getHeight()) / 2);  
+		    primaryStage.setX((bounds.getWidth() - primaryStage.getWidth())); 
+		    primaryStage.setY((bounds.getHeight() - primaryStage.getHeight()));  
 		    primaryStage.setWidth(bounds.getWidth() / 2);
-		    primaryStage.setHeight(bounds.getHeight() / 2);
+		    primaryStage.setHeight(bounds.getHeight());
 	        primaryStage.setScene(new Scene(root, 300, 275));
 	        primaryStage.show();
 

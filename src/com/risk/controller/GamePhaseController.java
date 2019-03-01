@@ -44,9 +44,7 @@ public class GamePhaseController implements Observer {
         GamePhaseModel.getGamePhaseModel().addObserver(this);
 
         this.stage = s;
-        rController = new ReinforcementController();
-        aController = new AttackController();
-        fController = new FortificationController();
+     
 
     }
 
@@ -56,7 +54,8 @@ public class GamePhaseController implements Observer {
         String view = (String) phase;
         if (view.equals("reinforcement"))
         {
-        	
+        	   rController = new ReinforcementController();
+               
             FXMLLoader reinforcementLoader = new FXMLLoader(getClass().getResource("/com/risk/view/Reinforcement.fxml"));
             reinforcementLoader.setController(rController);
             System.out.println("here~");
@@ -76,6 +75,8 @@ public class GamePhaseController implements Observer {
         }
         else if (view.equals("attack"))
         {
+        	aController = new AttackController();
+           
             FXMLLoader attackLoader = new FXMLLoader(getClass().getResource("/com/risk/view/Attack.fxml"));
             attackLoader.setController(aController);
             try
@@ -92,6 +93,7 @@ public class GamePhaseController implements Observer {
         }
         else if (view.equals("fortification"))
         {
+        	 fController = new FortificationController();
             FXMLLoader fortificationLoader = new FXMLLoader(getClass().getResource("/com/risk/view/Fortification.fxml"));
             fortificationLoader.setController(fController);
             try

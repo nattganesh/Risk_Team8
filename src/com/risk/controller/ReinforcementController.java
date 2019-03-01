@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 
 import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
+import com.risk.model.player.Player;
 import com.risk.model.GamePhaseModel;
 import com.risk.model.MapModel;
 import com.risk.model.PlayerModel;
@@ -31,6 +32,8 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
+import javafx.util.Callback;
+
 
 /**
  *
@@ -39,7 +42,10 @@ import javafx.scene.layout.FlowPane;
  */
 public class ReinforcementController implements Initializable {
 	public int reinforcement;
-	public int TradeInCard;
+	public int TradeInCard = 0;
+	public int ContinentControl = 0;
+	public boolean controlPoint = false;
+	public boolean occupiedTerritory = false;
 	public ArrayList<String> cards = new ArrayList<>();
 
 	/**
@@ -73,9 +79,19 @@ public class ReinforcementController implements Initializable {
 
 	@FXML
 	ListView<Card> tradeCard;
+	
+	@FXML
+	TextField ArmyCount;
+	
+	@FXML
+	ListView<String> reinforcementMessage;
 
 	ObservableList<Card> cardsObservableList = FXCollections.observableArrayList();
 	ObservableList<Card> tradeObservableList = FXCollections.observableArrayList();
+	ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
+	ObservableList<String> messageObservableList = FXCollections.observableArrayList();
+	
+	
 
 	/**
 	 * This is the constructor for the reinforcement controller
@@ -86,8 +102,7 @@ public class ReinforcementController implements Initializable {
 	/**
 	 * This method is data binding for connection between controller and UI. It also
 	 * sets up observable list, in which the view listens for changes and update its
-	 * view.
-	 *s
+	 * view. 
 	 *
 	 *
 	 * @see javafx.fxml.Initializable.initialize
@@ -96,29 +111,44 @@ public class ReinforcementController implements Initializable {
 	 */
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
-		playerId.setText(getName());
+		playerId.setText(PlayerModel.getPlayerModel().getCurrentPlayer().getName());
+
 		calculateReinforcement();
 		armyAvailable.setText("Army: " + Integer.toString(getReinforcement()));
+		
+//		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("cate1", "blue"));
+//		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("cate1", "blueadsf"));
+//		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("cate2", "blue"));
+//		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("cate2", "blueadsf"));
+//		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("cate3", "blueadsf"));
+//		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("cate3", "blueadsf"));
+//		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("cate4", "blueadsf"));
+//		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("cate4", "blueadsf"));
 		cardsObservableList.addAll(PlayerModel.getPlayerModel().getCurrentPlayer().getCards());
-		cardsObservableList.add(new Card("cate1", "blue"));
-		cardsObservableList.add(new Card("cate1", "blueadsf"));
-		cardsObservableList.add(new Card("cate2", "blue"));
-		cardsObservableList.add(new Card("cate2", "blueadsf"));
-		cardsObservableList.add(new Card("cate3", "blueadsf"));
-		cardsObservableList.add(new Card("cate3", "blueadsf"));
-		cardsObservableList.add(new Card("cate4", "blueadsf"));
-		cardsObservableList.add(new Card("cate4", "blueadsf"));
-		cardsObservableList.add(new Card("cate4", "blueadsf"));
+	
+		
 
 		yourCard.setItems(cardsObservableList);
 		tradeCard.setItems(tradeObservableList);
 
-		initializeTerritory();
-		initializeArmyField();
-	}
+		territoryObservableList.addAll(PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
 
-	@FXML
-	public void initializeArmyField() {
+		countryId.setItems(territoryObservableList);
+		countryId.setCellFactory(param -> new ListCell<Country>() {
+			@Override
+			protected void updateItem(Country country, boolean empty) {
+				super.updateItem(country, empty);
+				if (empty || country == null || country.getName() == null) {
+					setText(null);
+				} else {
+					setText(country.getName());
+				}
+			}
+		});
+		
+		reinforcementMessage.setItems(messageObservableList);
+
+
 		inputArmy.textProperty().addListener(new ChangeListener<String>() {
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				if (!newValue.matches("\\d*")) {
@@ -127,46 +157,44 @@ public class ReinforcementController implements Initializable {
 			}
 		});
 	}
-
 	@FXML
-	public void initializeTerritory() {
-		countryId.setItems(PlayerModel.getPlayerModel().getCurrentTerritory());
-		countryId.setCellFactory(param -> new ListCell<Country>() {
-			@Override
-			protected void updateItem(Country country, boolean empty) {
-				super.updateItem(country, empty);
-				if (empty || country == null || country.getName() == null) {
-					setText(null);
-				} else {
-					setText(country.getName() + " (" + country.getArmyCount() + ")");
-				}
-			}
-		});
+	public void territoryHandler() {
+		if (countryId.getSelectionModel().getSelectedItem() != null) {
+			ArmyCount.setText(Integer.toString(countryId.getSelectionModel().getSelectedItem().getArmyCount()));
+		}
 	}
-
+	
 	/**
 	 * sets the number of available army to your occupied country
 	 */
 	@FXML
 	public void setArmy() {
 		int Armyinput = 0;
-		if (!inputArmy.getText().equals("") && PlayerModel.getPlayerModel().getCurrentPlayer().getReinforcement() != 0
+		System.out.println(Armyinput);
+		if (!inputArmy.getText().trim().isEmpty() && getReinforcement() != 0
 				&& countryId.getSelectionModel().getSelectedItem() != null) {
 
 			Armyinput = Integer.parseInt(inputArmy.getText());
-			for (Country country : PlayerModel.getPlayerModel().getCurrentTerritory()) {
-				if (country.equals(countryId.getSelectionModel().getSelectedItem())) {
-					country.setArmyCount(Armyinput);
-					PlayerModel.getPlayerModel().updateCurrentTerritory();
-					break;
+			if (Armyinput <= getReinforcement()) {
+				
+				
+				for (Country c : territoryObservableList) {
+					if (c.getName().equals(countryId.getSelectionModel().getSelectedItem().getName())) {
+						c.setArmyCount(Armyinput);
+						setReinforcement(Armyinput);				
+						ArmyCount.setText(Integer.toString(countryId.getSelectionModel().getSelectedItem().getArmyCount()));
+						messageObservableList.add("Added " + Armyinput + " Army to " + c.getName());
+						TradeInCard = 0;
+						break;
+					}
 				}
+				
+				
+				
 			}
-			PlayerModel.getPlayerModel().getCurrentPlayer().setReinforcement(Armyinput);
-			armyAvailable.setText(
-					"Army: " + Integer.toString(PlayerModel.getPlayerModel().getCurrentPlayer().getReinforcement()));
-
-		}
-
+		} 
+		armyAvailable.setText(
+				"Army: " + Integer.toString(getReinforcement()));
 	}
 
 	@FXML
@@ -179,20 +207,34 @@ public class ReinforcementController implements Initializable {
 	 * @throws IOException Exception thrown when view is not found
 	 */
 	public void goToAttackPhase(ActionEvent event) throws IOException {
-		if (PlayerModel.getPlayerModel().getCurrentPlayer().getReinforcement() > 0) {
-		} else {
+		if (getReinforcement() > 0 ) { // change this
+		   messageObservableList.add("place all your army");
+		}
+		else if (PlayerModel.getPlayerModel().getCurrentPlayer().getCards().size() >= 5) {
+			 messageObservableList.add("you got 5+ cards");
+		}
+		else {
+			reinforcement = 0;
+			TradeInCard = 0;
+			
 			GamePhaseModel.getGamePhaseModel().setPhase("attack");
 		}
 	}
 
 	@FXML
 	public void tradeCard() {
-		if (cardValidation()) {
-			tradeCard.getItems().clear();
-			PlayerModel.getPlayerModel().getCurrentPlayer().getCards().clear();
-			for (Card c : yourCard.getItems()) {
-				PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(c);
-				System.out.println(c.getCatagory());
+		if (tradeCard.getItems().size() == 3) {
+			if (cardValidation()) {
+				tradeCard.getItems().clear();
+				System.out.println("card size before: " + PlayerModel.getPlayerModel().getCurrentPlayer().getCards().size());
+				PlayerModel.getPlayerModel().getCurrentPlayer().getCards().clear();
+				
+				for (Card c : yourCard.getItems()) {
+					
+					PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(c);
+				}
+				System.out.println("card size after : " + PlayerModel.getPlayerModel().getCurrentPlayer().getCards().size());
+				
 			}
 		}
 	}
@@ -201,13 +243,8 @@ public class ReinforcementController implements Initializable {
 	public void yourCardHandler() {
 		if (yourCard.getSelectionModel().getSelectedItem() != null && tradeCard.getItems().size() < 3) {
 			Card card = yourCard.getSelectionModel().getSelectedItem();
-
 			tradeCard.getItems().add(card);
 			yourCard.getItems().remove(card);
-
-//        	for (Card c : PlayerModel.getPlayerModel().getCurrentPlayer().getCards()) {
-//        		System.out.println(c.getCatagory());
-//        	} get nothing means we need to set the Model
 
 		}
 	}
@@ -225,6 +262,7 @@ public class ReinforcementController implements Initializable {
 	public boolean cardValidation() {
 		ObservableList<Card> cards = FXCollections.observableArrayList();
 		cards = tradeCard.getItems();
+
 		if (((cards.get(0).getCatagory().equals(cards.get(1).getCatagory()))
 				&& (cards.get(0).getCatagory().equals(cards.get(2).getCatagory())))
 				|| ((!(cards.get(0).getCatagory().equals(cards.get(1).getCatagory())))
@@ -234,37 +272,37 @@ public class ReinforcementController implements Initializable {
 			setReinforcementTradeInCard();
 			MapModel.getMapModel().setExchangeTime();
 			calculateReinforcement();
-			
+			tradeCard.getItems().clear();
+
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	/**
-	 * gets the name of current player in the game
-	 *
-	 * @return it returns name of current player
-	 */
-	public String getName() {
-		return PlayerModel.getPlayerModel().getCurrentPlayer().getName();
-	}
-
 	public int getReinforcementOccupiedTerritory() {
-		return (int) Math.floor(PlayerModel.getPlayerModel().getCurrentPlayer().numbOccupied() / 3);
+		if (!occupiedTerritory) {
+			occupiedTerritory = true;
+			return (int) Math.floor(PlayerModel.getPlayerModel().getCurrentPlayer().numbOccupied() / 3);
+		}
+		return 0;
 	}
 
 	public int getReinforcementContinentControl() {
+		if (!controlPoint) {
+			controlPoint = true;
+			return ContinentControl;
+		}
 		return 0;
 	}
 
 	public int getReinforcementTradeInCard() {
+		
 		return TradeInCard;
 	}
 
 	public void setReinforcementTradeInCard() {
-		TradeInCard += (MapModel.getMapModel().getExchangeTime() + 1) * 5;
-		System.out.println(TradeInCard);
+		TradeInCard = TradeInCard + (MapModel.getMapModel().getExchangeTime() + 1) * 5;
 	}
 
 	public void calculateReinforcement() {
@@ -278,8 +316,10 @@ public class ReinforcementController implements Initializable {
 		armyAvailable.setText("Army: " + Integer.toString(getReinforcement()));
 	}
 
-	public int getReinforcement() {		
+	public int getReinforcement() {
 		return reinforcement;
 	}
-
+	public void setReinforcement(int i) {
+		reinforcement = reinforcement - i;
+	}
 }

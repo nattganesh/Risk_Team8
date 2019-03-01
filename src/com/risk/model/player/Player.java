@@ -21,7 +21,6 @@ public class Player {
     private ArrayList<Country> occupiedCountries = new ArrayList<>();
     private ArrayList<Card> cards = new ArrayList<>();
     private int startingPoints;
-    private int reinforcement = 0;
 
     private boolean playerLost = false;
 
@@ -45,67 +44,34 @@ public class Player {
         startingPoints = i;
     }
 
-    /**
-     * Calculates the initial reinforcement at the start of reinforcement phase.
-     * Different from getAvailableReinforcement(), which returns the remaining
-     * armies after assigning.
-     *
-     * @return availableReinforcement number of armies
-     */
-    public int getReinforcementOccupiedTerritory()
-    {
-        return (int) Math.floor(numbOccupied() / 3);
-    }
 
-    public int getReinforcementContinentControl()
-    {
-        return 0;
-    }
-
-    public int getReinforcementTradeInCard()
-    {
-        return 0;
-    }
-
-    public int calculateReinforcement()
-    {
-        int numbArmies = getReinforcementOccupiedTerritory() + getReinforcementContinentControl() + getReinforcementTradeInCard();
-        if (numbArmies < 3)
-        {
-            reinforcement = 3;
-            return reinforcement;
-        }
-        reinforcement = numbArmies;
-
-        return reinforcement;
-    }
-
-    /**
-     * Gets the number of armies remaining
-     *
-     * @return availableReinforement number of armies
-     */
-    public int getReinforcement()
-    {
-        return reinforcement;
-    }
-
-    /**
-     * Sets the number of armies during reinforcement.
-     *
-     * @param assign number of armies to assign
-     * @return returns 1 if you successfully assigned, -1 otherwise
-     */
-    public boolean setReinforcement(int assign)
-    {
-        if (assign > getReinforcement())
-        {
-            return false;
-        }
-        reinforcement -= assign;
-        return true;
-
-    }
+//
+//    /**
+//     * Gets the number of armies remaining
+//     *
+//     * @return availableReinforement number of armies
+//     */
+//    public int getReinforcement()
+//    {
+//        return reinforcement;
+//    }
+//
+//    /**
+//     * Sets the number of armies during reinforcement.
+//     *
+//     * @param assign number of armies to assign
+//     * @return returns 1 if you successfully assigned, -1 otherwise
+//     */
+//    public boolean setReinforcement(int assign)
+//    {
+//        if (assign > getReinforcement())
+//        {
+//            return false;
+//        }
+//        reinforcement -= assign;
+//        return true;
+//
+//    }
 
     /**
      * gets the name of player

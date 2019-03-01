@@ -36,10 +36,23 @@ public class FortificationController implements Initializable {
 	ListView<Country> Adjacent;
 
 	@FXML
+	ListView<String> messageFortification;
+	
+	@FXML
 	TextField moveField;
 
+	@FXML
+	TextField TerritoryArmy;
+	
+	@FXML
+	TextField AdjacentArmy;
+	
+	
+	
 	ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
 	ObservableList<Country> adjacentObservableList = FXCollections.observableArrayList();
+	ObservableList<String> messageObservableList = FXCollections.observableArrayList();
+	
 	private boolean fortification = false;
 	private Player currentPlayer;
 
@@ -56,6 +69,9 @@ public class FortificationController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		currentPlayer = PlayerModel.getPlayerModel().getCurrentPlayer();
+		
+		messageFortification.setItems(messageObservableList);
+		
 		territoryObservableList.addAll(PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
 		Territory.setItems(territoryObservableList);
 		Territory.setCellFactory(param -> new ListCell<Country>() {
@@ -65,7 +81,7 @@ public class FortificationController implements Initializable {
 				if (empty || country == null || country.getName() == null) {
 					setText(null);
 				} else {
-					setText(country.getName() + " (" + country.getArmyCount() + ")");
+					setText(country.getName());
 				}
 			}
 		});
@@ -77,7 +93,7 @@ public class FortificationController implements Initializable {
 				if (empty || country == null || country.getName() == null) {
 					setText(null);
 				} else {
-					setText(country.getName() + " (" + country.getArmyCount() + ")");
+					setText(country.getName());
 				}
 			}
 		});
@@ -89,11 +105,22 @@ public class FortificationController implements Initializable {
 
 		if (Territory.getSelectionModel().getSelectedItem() != null) {
 			Adjacent.getItems().clear();
-			for (Country country : Territory.getSelectionModel().getSelectedItem().getConnectedCountries()) {
-				if (country.getRuler().getName().equals(currentPlayer.getName())) {
-					Adjacent.getItems().add(country);
-				}
-			}
+//			for (Country country : Territory.getSelectionModel().getSelectedItem().getConnectedCountries()) {
+//				if (country.getRuler().getName().equals(currentPlayer.getName())) {
+//					Adjacent.getItems().add(country);
+//				}
+//			}
+			AdjacentArmy.setText("");
+			Adjacent.getItems().addAll(Territory.getSelectionModel().getSelectedItem().getConnectedCountries());
+			TerritoryArmy.setText(Integer.toString(Territory.getSelectionModel().getSelectedItem().getArmyCount()));
+		}
+	}
+	
+	@FXML
+	public void adjacentHandler() {
+	
+		if (Adjacent.getSelectionModel().getSelectedItem() != null) {
+			AdjacentArmy.setText(Integer.toString(Adjacent.getSelectionModel().getSelectedItem().getArmyCount()));
 		}
 	}
 
@@ -106,17 +133,34 @@ public class FortificationController implements Initializable {
 			int Armyinput = Integer.parseInt(moveField.getText());
 			System.out.println(Armyinput);
 			if (Armyinput <= Territory.getSelectionModel().getSelectedItem().getArmyCount() - 1) {
-				System.out.println("here : " + Armyinput);
+	
+				int territoryArmy = Territory.getSelectionModel().getSelectedItem().getArmyCount();
+				int adjacentArmy = Adjacent.getSelectionModel().getSelectedItem().getArmyCount();
+				System.out.println(territoryArmy);
+				System.out.println(adjacentArmy);
+				
 				Territory.getSelectionModel().getSelectedItem()
-						.setArmyCount(Territory.getSelectionModel().getSelectedItem().getArmyCount() - Armyinput);
+						.reduceArmyCount(Armyinput);
 
 				Adjacent.getSelectionModel().getSelectedItem()
-						.setArmyCount(Adjacent.getSelectionModel().getSelectedItem().getArmyCount() + Armyinput);
-
+						.setArmyCount(Armyinput);
+				
+				System.out.println("after calculation");
+				System.out.println(territoryArmy);
+				System.out.println(adjacentArmy);
+				
+				
+				AdjacentArmy.setText(Integer.toString(Adjacent.getSelectionModel().getSelectedItem().getArmyCount()));
+				TerritoryArmy.setText(Integer.toString(Territory.getSelectionModel().getSelectedItem().getArmyCount()));
 				
 				fortification = true;
-				System.out.println(fortification);
+				
 			}
+			else {
+				messageObservableList.add("You don't have that many army");
+			}
+		} else {
+			messageObservableList.add("Invalid Selection");
 		}
 	}
 
@@ -126,8 +170,11 @@ public class FortificationController implements Initializable {
 			saveToModel();
 			PlayerModel.getPlayerModel().IncrementPlayerIndex();
 			GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
+		} else  {
+			messageObservableList.add("you need to fortify");
 		}
 	}
+
 	public void saveToModel() {
 		PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries().clear();
 		PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries().addAll(territoryObservableList);

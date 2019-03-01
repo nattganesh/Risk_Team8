@@ -38,7 +38,7 @@ public class AttackController extends Observable implements Initializable {
     @Override
     public void initialize(URL arg0, ResourceBundle arg1)
     {
-        System.out.println(PlayerModel.getPlayerModel().getNumberOfPlayer());
+        System.out.println(PlayerModel.getPlayerModel().getPlayers().size());
     }
 
     public void goToFortificationPhase(ActionEvent event) throws IOException

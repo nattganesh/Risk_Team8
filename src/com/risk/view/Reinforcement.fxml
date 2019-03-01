@@ -12,25 +12,28 @@
 			<items>
 				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
 					<children>
-						<Label fx:id="playerId" layoutX="62.0" layoutY="139.0" text="Player X" />
+						<Label fx:id="playerId" layoutX="106.0" layoutY="139.0" text="Player X" />
 					</children>
 				</AnchorPane>
-				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+				<AnchorPane minHeight="0.0" minWidth="0.0" onKeyReleased="#territoryHandler" prefHeight="160.0" prefWidth="100.0">
 					<children>
-						<Label layoutX="156.0" layoutY="44.0" text="Country Owned" />
-						<ListView fx:id="countryId" layoutX="115.0" layoutY="71.0" prefHeight="200.0" prefWidth="415.0" />
+						<Label layoutX="73.0" layoutY="45.0" text="Country Owned" />
+						<ListView fx:id="countryId" layoutX="77.0" layoutY="70.0" onMouseClicked="#territoryHandler" prefHeight="200.0" prefWidth="303.0" />
 						<!--  <Button fx:id="nextPlayer" layoutX="523.0" layoutY="14.0" mnemonicParsing="false" onAction="#onNextPlayer" text="Next Player" /> -->
 						<TextField fx:id="inputArmy" layoutX="38.0" layoutY="523.0" prefHeight="31.0" prefWidth="132.0" />
-						<Label fx:id="armyAvailable" layoutX="232.0" layoutY="278.0" text="Army Available" />
+						<Label fx:id="armyAvailable" layoutX="38.0" layoutY="489.0" text="Army Available" />
 						<Button fx:id="addArmy" layoutX="38.0" layoutY="554.0" mnemonicParsing="false" onMouseClicked="#setArmy" text="Add Army" />
                   <Label fx:id="inputArmyError" layoutX="264.0" layoutY="304.0" />
-                 	<Button fx:id="AttackPhaseID" layoutX="530.0" layoutY="24.0" mnemonicParsing="false" onAction="#goToAttackPhase" text="Attack" />
-                  <Button layoutX="430.0" layoutY="544.0" mnemonicParsing="false" onAction="#tradeCard" text="Trade Cards" />
+                 	<Button fx:id="AttackPhaseID" layoutX="550.0" layoutY="14.0" mnemonicParsing="false" onAction="#goToAttackPhase" text="Attack" />
+                  <Button layoutX="380.0" layoutY="554.0" mnemonicParsing="false" onAction="#tradeCard" text="Trade Cards" />
                   <Label fx:id="CardMessage" layoutX="170.0" layoutY="325.0" />
-                  <ListView fx:id="yourCard" layoutX="340.0" layoutY="406.0" onMouseClicked="#yourCardHandler" prefHeight="111.0" prefWidth="122.0" />
-                  <ListView fx:id="tradeCard" layoutX="479.0" layoutY="406.0" onMouseClicked="#yourTradeHandler" prefHeight="111.0" prefWidth="122.0" />
-                  <Label layoutX="340.0" layoutY="513.0" text="Your cards" />
-                  <Label layoutX="484.0" layoutY="513.0" text="Trade in cards" /> 
+                  <ListView fx:id="yourCard" layoutX="248.0" layoutY="406.0" onMouseClicked="#yourCardHandler" prefHeight="111.0" prefWidth="172.0" />
+                  <ListView fx:id="tradeCard" layoutX="429.0" layoutY="406.0" onMouseClicked="#yourTradeHandler" prefHeight="111.0" prefWidth="172.0" />
+                  <Label layoutX="247.0" layoutY="524.0" text="Your cards" />
+                  <Label layoutX="429.0" layoutY="524.0" text="Trade in cards" />
+                  <TextField fx:id="ArmyCount" layoutX="394.0" layoutY="233.0" prefHeight="31.0" prefWidth="199.0" />
+                  <Label layoutX="422.0" layoutY="212.0" text="Army Count" />
+                  <ListView fx:id="reinforcementMessage" layoutX="381.0" layoutY="70.0" prefHeight="142.0" prefWidth="231.0" /> 
 					</children>
 				</AnchorPane>
 			</items>

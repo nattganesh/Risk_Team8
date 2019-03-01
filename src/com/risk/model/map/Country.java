@@ -7,6 +7,8 @@ package com.risk.model.map;
 
 import com.risk.model.player.Player;
 
+import javafx.beans.Observable;
+
 import java.util.ArrayList;
 
 /**

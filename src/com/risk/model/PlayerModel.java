@@ -24,7 +24,7 @@ import javafx.collections.ObservableList;
 public class PlayerModel extends Observable implements Observer {
 
     private ArrayList<Player> playerList = new ArrayList<Player>();
-    private ObservableList<Country> currentPlayerTerritory = FXCollections.observableArrayList();
+//    private ObservableList<Country> currentPlayerTerritory = FXCollections.observableArrayList();
     public static final String[] PLAYERCOLOR =
     {
         "Red", "Blue", "Green", "Yellow", "Orange", "Purple"
@@ -55,14 +55,8 @@ public class PlayerModel extends Observable implements Observer {
      */
     public void IncrementPlayerIndex()
     {
-        currentPlayerIndex = (currentPlayerIndex + 1) % getNumberOfPlayer();
-        updateCurrentTerritory();
-    }
-
-    public void updateCurrentTerritory()
-    {
-        currentPlayerTerritory.clear();
-        currentPlayerTerritory.addAll(getCurrentPlayer().getOccupiedCountries());
+        currentPlayerIndex = (currentPlayerIndex + 1) % playerList.size();
+        System.out.println("current player index : " + currentPlayerIndex);
     }
 
     /**
@@ -76,27 +70,10 @@ public class PlayerModel extends Observable implements Observer {
         IncrementPlayerIndex();
         return current;
     }
-
-    /**
-     * This method sets the observable list of current player's occupied country
-     */
-    public void setCurrentPlayerCountryObs()
-    {
-        currentPlayerTerritory.addAll(getCurrentPlayer().getOccupiedCountries());
+    public int getNumberOfPlayer() {
+    	return playerList.size();
     }
-
-    /**
-     * This method returns the observable list for countries occupied by current
-     * player
-     *
-     * @return currentPlayerCountry returns ObservableList<Country> of current
-     * player
-     */
-    public ObservableList<Country> getCurrentTerritory()
-    {
-        return currentPlayerTerritory;
-    }
-
+    
     /**
      * this method gets the current player
      *
@@ -115,16 +92,6 @@ public class PlayerModel extends Observable implements Observer {
     public void addPlayer(Player player)
     {
         playerList.add(player);
-    }
-
-    /**
-     * this method gets the number of players in the game
-     *
-     * @return returns number of players
-     */
-    public int getNumberOfPlayer()
-    {
-        return playerList.size();
     }
 
     /**
