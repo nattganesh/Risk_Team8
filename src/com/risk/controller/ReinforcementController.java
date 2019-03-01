@@ -304,10 +304,14 @@ public class ReinforcementController implements Initializable {
 		int numbArmies;
 		numbArmies = getReinforcementOccupiedTerritory() + getReinforcementContinentControl()
 				+ getReinforcementTradeInCard();
+		System.out.println(numbArmies);
 		if (numbArmies < 3) {
 			reinforcement = 3;
+		
+		} else {
+			reinforcement = numbArmies;
 		}
-		reinforcement = numbArmies;
+		
 		armyAvailable.setText("Army: " + Integer.toString(getReinforcement()));
 	}
 

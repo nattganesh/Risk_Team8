@@ -388,7 +388,7 @@ public class MapEditorController implements Initializable {
 	 */
 	public void setPlayers(int numberOfPlayer) {
 		while (numberOfPlayer > 0) {
-			PlayerModel.getPlayerModel().addPlayer(new Player(PlayerModel.PLAYERCOLOR[numberOfPlayer]));
+			PlayerModel.getPlayerModel().addPlayer(new Player(PlayerModel.PLAYERCOLOR[numberOfPlayer-1]));
 			numberOfPlayer--;
 		}
 	}
