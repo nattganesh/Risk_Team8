@@ -140,7 +140,6 @@ Madagascar,East Africa
 Madagascar,South Africa
 Siam,India
 Siam,China
-Siam,Indonesia
 India,Middle East
 India,Afghanistan
 India,Siam
@@ -187,12 +186,9 @@ Middle East,East Africa
 Middle East,Ukraine
 Middle East,Afghanistan
 Middle East,India
-Indonesia,Siam
-Indonesia,Western Australia
 New Guinea,Eastern Australia
 New Guinea,Western Australia
 Western Australia,Eastern Australia
 Western Australia,New Guinea
-Western Australia,Indonesia
 Eastern Australia,Western Australia
 Eastern Australia,New Guinea

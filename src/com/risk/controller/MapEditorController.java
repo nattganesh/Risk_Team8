@@ -74,6 +74,7 @@ public class MapEditorController implements Initializable {
 	private int validated = 0;
 	private boolean territoryExists = false;
 
+
 	ObservableList<Continent> continentObservableList = FXCollections.observableArrayList();
 	ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
 	ObservableList<Country> adjacentObservableList = FXCollections.observableArrayList();
@@ -158,7 +159,6 @@ public class MapEditorController implements Initializable {
 			for (Continent continent : continentObservableList) {
 				for  (Country country : continent.getCountries()) {
 					if (country.getName().equals(TerritoryInput.getText())) {
-						System.out.println("Territory already exists");
 						territoryExists = true;
 						break;
 					}
@@ -168,7 +168,7 @@ public class MapEditorController implements Initializable {
 				Country country = new Country(TerritoryInput.getText(),
 						ContinentView.getSelectionModel().getSelectedItem().getName());
 				
-				ContinentView.getSelectionModel().getSelectedItem().setCountry(country); // getting the observable object
+				ContinentView.getSelectionModel().getSelectedItem().setCountry(country); 
 				territoryObservableList.clear();
 				territoryObservableList.addAll(ContinentView.getSelectionModel().getSelectedItem().getCountries());
 			}
@@ -191,10 +191,6 @@ public class MapEditorController implements Initializable {
 				// search whether adjacent being added is an existing country
 				for (Continent cont : continentObservableList) {
 					for (Country count : cont.getCountries()) {
-						System.out.println(count.getName() + " ; " + (AdjacentInput.getText()));
-						System.out.println("does it exists?? " + existsInAdjacentList(AdjacentInput.getText()));
-						System.out.println("====");
-
 						if (count.getName().equals(AdjacentInput.getText())
 								&& !existsInAdjacentList(AdjacentInput.getText())) {
 							TerritoryView.getSelectionModel().getSelectedItem().getConnectedCountries().add(count);
@@ -224,11 +220,8 @@ public class MapEditorController implements Initializable {
 	@FXML
 	public void TerritoryDelete() {
 		if (TerritoryView.getSelectionModel().getSelectedItem() != null && ContinentView.getSelectionModel().getSelectedItem() != null) {
-			
-			
 			ContinentView.getSelectionModel().getSelectedItem().getCountries()
 					.remove(TerritoryView.getSelectionModel().getSelectedItem());
-			
 			for (Country c : TerritoryView.getSelectionModel().getSelectedItem().getConnectedCountries()) {
 				for (Country connected : c.getConnectedCountries()) {
 					if (connected.getName().equals(TerritoryView.getSelectionModel().getSelectedItem().getName())) {
@@ -240,10 +233,7 @@ public class MapEditorController implements Initializable {
 			territoryObservableList.clear();
 			adjacentObservableList.clear();
 			territoryObservableList.addAll(ContinentView.getSelectionModel().getSelectedItem().getCountries());
-
-		} else {
-			System.out.println("not selected");
-		}
+		} 
 	}
 
 	@FXML
@@ -267,9 +257,7 @@ public class MapEditorController implements Initializable {
 			}
 			adjacentObservableList.clear();	
 			adjacentObservableList.addAll(TerritoryView.getSelectionModel().getSelectedItem().getConnectedCountries());
-		} else {
-			System.out.println("not selected");
-		}
+		} 
 	}
 
 	@FXML
@@ -283,23 +271,12 @@ public class MapEditorController implements Initializable {
 			Scanner scan = new Scanner(new File(inputFile));
 			FileParser fileParser = new FileParser();
 			if (fileParser.init(scan)) {
-				System.out.println("parsed");
-
 				Validate.getValidate().validateMap();
-
 				if (Validate.getValidate().getValidateSize() == MapModel.getMapModel().getCountries().size()) {
 					ValidationError.setText("Connected Map");
-					System.out.println(
-							"Model country size after validate: " + MapModel.getMapModel().getCountries().size());
-					System.out.println("validate size: " + Validate.getValidate().getValidateSize());
-					System.out.println("====");
 					populateMapEditor();
 				} else {
 					ValidationError.setText("Invalid Map. Might want to reassign territories");
-					System.out.println(
-							"Model country size after validate: " + MapModel.getMapModel().getCountries().size());
-					System.out.println("validate size: " + Validate.getValidate().getValidateSize());
-					System.out.println("====");
 					populateMapEditor();
 				}
 			}
@@ -321,24 +298,15 @@ public class MapEditorController implements Initializable {
 				MapModel.getMapModel().getCountries().add(country);
 			}
 		}
+		
 		if (MapModel.getMapModel().getCountries().size() != 0){
 			Validate.getValidate().validateMap();
 			if (Validate.getValidate().getValidateSize() == MapModel.getMapModel().getCountries().size()) {
-				System.out.println("validated model size after saving: " + MapModel.getMapModel().getCountries().size());
-				System.out.println("Validate size after saving: " + Validate.getValidate().getValidateSize());
 				ValidationError.setText("Saved File");
 				Output.generate(ExistingFile.getText());
 				initializePlayers();
 				validated = 1;
-				System.out.println("validated");
-				
-//					startGame();
-				
-				
-
 			} else {
-				System.out.println("Model country size after validate: " + MapModel.getMapModel().getCountries().size());
-				System.out.println("validate size: " + Validate.getValidate().getValidateSize());
 				ValidationError.setText("Can't Save Map it's an invalid map");
 				validated = 0;
 			}
@@ -349,19 +317,21 @@ public class MapEditorController implements Initializable {
 
 	@FXML
 	public void newMap() {
-		validated = 0;
-		clearMapEditor();
-		initializeContinents();
-		ValidationError.setText("New Map");
+		if (!ExistingFile.getText().trim().isEmpty()) {
+			validated = 0;
+			clearMapEditor();
+			initializeContinents();
+			ValidationError.setText("New Map");
+			
+		} else {
+			ValidationError.setText("You need a name for the file");
+		}
 	}
 
 	@FXML
 	public void startGame() {
-//		System.out.println("in here");
 		if (validated == 1) {
-//			System.out.println("in here");
 			if (PlayerID.getSelectionModel().getSelectedItem() != null) {
-				System.out.println("in here");
 				int numbPlayers = Integer.parseInt(PlayerID.getSelectionModel().getSelectedItem());
 				setPlayers(numbPlayers);
 				calcStartingArmies();
@@ -373,11 +343,6 @@ public class MapEditorController implements Initializable {
 		} else {
 			ValidationError.setText("Need to save the map before you could start");
 		}
-	}
-
-	@FXML
-	public void playerDropDown() {
-
 	}
 
 	/*
@@ -422,14 +387,6 @@ public class MapEditorController implements Initializable {
 		adjacentObservableList.clear();
 	}
 
-	/* THIS IS THE METHOD FOR ASSIGNIN PLAYERS */
-
-	/**
-	 * This method calculates the round robin. It first roll the dice to determine
-	 * who goes first. The player who rolls the highest number starts the game. Then
-	 * the play order goes clockwise from the starting player. The game starts after
-	 * the order of play has been determined.
-	 */
 	/**
 	 * sets the number of players
 	 *
@@ -441,7 +398,13 @@ public class MapEditorController implements Initializable {
 			numberOfPlayer--;
 		}
 	}
-
+	
+	/**
+	 * This method calculates the round robin. It first roll the dice to determine
+	 * who goes first. The player who rolls the highest number starts the game. Then
+	 * the play order goes clockwise from the starting player. The game starts after
+	 * the order of play has been determined.
+	 */
 	public void determinePlayersStartingOrder() {
 		int[] diceRolls = new int[PlayerModel.getPlayerModel().getNumberOfPlayer()];
 
@@ -463,26 +426,10 @@ public class MapEditorController implements Initializable {
 		if (tieBreakingNeeded) {
 			determinePlayersStartingOrder();
 		} else {
-			System.out.println("The Dice Roll Results are as follows");
-			for (int i = 0; i < diceRolls.length; i++) {
-				System.out.println(PlayerModel.getPlayerModel().getPlayers().get(i).getName() + " --> " + diceRolls[i]);
-			}
-			System.out.println();
-			System.out.println("The player: " + PlayerModel.getPlayerModel().getPlayers().get(maxRollIndex).getName()
-					+ " has won the dice roll with a roll of " + diceRolls[maxRollIndex]
-					+ ".\nHe/She will start first, and the play order goes clockwise from the starting player.");
-
-			System.out.println("\n---------------------------------------------");
 			for (int i = 0; i < maxRollIndex; i++) {
 				Player temp = PlayerModel.getPlayerModel().getPlayers().remove(0);
 				PlayerModel.getPlayerModel().addPlayer(temp);
 			}
-			
-			System.out.println("The Play Order is as follows:");
-			for (int i = 0; i < diceRolls.length; i++) {
-				System.out.println(PlayerModel.getPlayerModel().getPlayers().get(i).getName());
-			}
-			System.out.println("\n---------------------------------------------");
 		}
 	}
 

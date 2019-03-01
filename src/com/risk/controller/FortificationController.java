@@ -105,13 +105,12 @@ public class FortificationController implements Initializable {
 
 		if (Territory.getSelectionModel().getSelectedItem() != null) {
 			Adjacent.getItems().clear();
-//			for (Country country : Territory.getSelectionModel().getSelectedItem().getConnectedCountries()) {
-//				if (country.getRuler().getName().equals(currentPlayer.getName())) {
-//					Adjacent.getItems().add(country);
-//				}
-//			}
 			AdjacentArmy.setText("");
-			Adjacent.getItems().addAll(Territory.getSelectionModel().getSelectedItem().getConnectedCountries());
+			for (Country connectedTerritory : Territory.getSelectionModel().getSelectedItem().getConnectedCountries()) {
+				if (connectedTerritory.getRuler().getName().equals(PlayerModel.getPlayerModel().getCurrentPlayer().getName())) {
+					Adjacent.getItems().add(connectedTerritory);
+				}
+			}
 			TerritoryArmy.setText(Integer.toString(Territory.getSelectionModel().getSelectedItem().getArmyCount()));
 		}
 	}
@@ -174,10 +173,8 @@ public class FortificationController implements Initializable {
 			messageObservableList.add("you need to fortify");
 		}
 	}
-
 	public void saveToModel() {
 		PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries().clear();
 		PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries().addAll(territoryObservableList);
 	}
-
 }
