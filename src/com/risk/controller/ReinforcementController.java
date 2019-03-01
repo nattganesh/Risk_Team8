@@ -263,12 +263,13 @@ public class ReinforcementController implements Initializable {
 	}
 
 	public void setReinforcementTradeInCard() {
-		TradeInCard = (MapModel.getMapModel().getExchangeTime() + 1) * 5;
+		TradeInCard += (MapModel.getMapModel().getExchangeTime() + 1) * 5;
 		System.out.println(TradeInCard);
 	}
 
 	public void calculateReinforcement() {
-		int numbArmies = getReinforcementOccupiedTerritory() + getReinforcementContinentControl()
+		int numbArmies;
+		numbArmies = getReinforcementOccupiedTerritory() + getReinforcementContinentControl()
 				+ getReinforcementTradeInCard();
 		if (numbArmies < 3) {
 			reinforcement = 3;
