@@ -29,11 +29,11 @@
             <Label layoutX="51.0" layoutY="45.0" text="Existing File" />
             <Button layoutX="288.0" layoutY="73.0" mnemonicParsing="false" onAction="#newMap" text="New" />
             <Button layoutX="235.0" layoutY="73.0" mnemonicParsing="false" onAction="#loadMap" text="Load" />
-            <Label fx:id="ValidationError" layoutX="44.0" layoutY="219.0" />
-            <Label fx:id="AdjacentError" layoutX="721.0" layoutY="545.0" />
+            <Label fx:id="AdjacentError" layoutX="536.0" layoutY="273.0" prefHeight="21.0" prefWidth="69.0" />
             <Button layoutX="645.0" layoutY="722.0" mnemonicParsing="false" onAction="#startGame" text="Start Game" />
             <ComboBox fx:id="PlayerID" layoutX="495.0" layoutY="722.0" prefWidth="150.0" />
             <TextField fx:id="ExistingFile" layoutX="47.0" layoutY="73.0" />
+            <ListView fx:id="ValidationError" layoutX="41.0" layoutY="151.0" prefHeight="107.0" prefWidth="702.0" />
          </children>
       </AnchorPane>
    </children>

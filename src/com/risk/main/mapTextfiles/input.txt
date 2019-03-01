@@ -187,9 +187,9 @@ Middle East,Egypt
 Middle East,East Africa
 Middle East,India
 Middle East,Afghanistan
-Indonesia,Siam
 Indonesia,Western Australia
 Indonesia,New Guinea
+Indonesia,Siam
 New Guinea,Indonesia
 New Guinea,Eastern Australia
 New Guinea,Western Australia

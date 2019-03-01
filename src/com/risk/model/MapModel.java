@@ -9,13 +9,17 @@ import java.util.Observable;
 import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 /**
  * @author DKM
  *
  */
 public class MapModel extends Observable {
 
-    private ArrayList<Continent> continentsModel = new ArrayList<>();
+//    private ArrayList<Continent> continentsModel = new ArrayList<>();
+	private ObservableList<Continent> continentsModel = FXCollections.observableArrayList();
     private ArrayList<Country> countriesModel = new ArrayList<>();
     private int exchangeTime = 0;
     private static MapModel mapModel;
@@ -64,7 +68,7 @@ public class MapModel extends Observable {
      *
      * @return continentModel returns the continent model
      */
-    public ArrayList<Continent> getContinents()
+    public ObservableList<Continent> getContinents()
     {
         return continentsModel;
     }

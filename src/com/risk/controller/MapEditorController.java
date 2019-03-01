@@ -63,7 +63,7 @@ public class MapEditorController implements Initializable {
 	TextField ExistingFile;
 
 	@FXML
-	Label ValidationError;
+	ListView<String> ValidationError;
 
 	@FXML
 	Label AdjacentError;
@@ -72,18 +72,18 @@ public class MapEditorController implements Initializable {
 	ComboBox<String> PlayerID;
 
 	private int validated = 0;
-	private boolean territoryExists = false;
+//	private boolean territoryExists = false;
 
-
-	ObservableList<Continent> continentObservableList = FXCollections.observableArrayList();
+//	ObservableList<Continent> continentObservableList = FXCollections.observableArrayList();
 	ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
 	ObservableList<Country> adjacentObservableList = FXCollections.observableArrayList();
-
+	ObservableList<String> messageObservableList = FXCollections.observableArrayList();
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-
-		ContinentView.setItems(continentObservableList);
+		ValidationError.setItems(messageObservableList);
 		
+		ContinentView.setItems(MapModel.getMapModel().getContinents());
 		ContinentView.setCellFactory(param -> new ListCell<Continent>() {
 			@Override
 			protected void updateItem(Continent continent, boolean empty) {
@@ -155,48 +155,57 @@ public class MapEditorController implements Initializable {
 	// add a territory
 	@FXML
 	public void TerritoryAdd() {
-		if (!TerritoryInput.getText().equals("") && ContinentView.getSelectionModel().getSelectedItem() != null) {
-			for (Continent continent : continentObservableList) {
-				for  (Country country : continent.getCountries()) {
-					if (country.getName().equals(TerritoryInput.getText())) {
-						territoryExists = true;
-						break;
-					}
-				}
-			}
-			if (!territoryExists) {
+		if (!TerritoryInput.getText().trim().isEmpty() && ContinentView.getSelectionModel().getSelectedItem() != null) {
+			
+			if (!territoryExists(TerritoryInput.getText())) {
 				Country country = new Country(TerritoryInput.getText(),
 						ContinentView.getSelectionModel().getSelectedItem().getName());
 				
 				ContinentView.getSelectionModel().getSelectedItem().setCountry(country); 
 				territoryObservableList.clear();
 				territoryObservableList.addAll(ContinentView.getSelectionModel().getSelectedItem().getCountries());
+				messageObservableList.add("added a territory to the continent");
+				
 			}
-			
 		}
 	}
-
+	
+	// check whether territory already exists in the continents
+	public boolean territoryExists(String countryName) {
+		boolean territoryExists = false;
+		for (Continent continent : ContinentView.getItems()) {
+			for  (Country country : continent.getCountries()) {
+				if (country.getName().equals(TerritoryInput.getText())) {
+					territoryExists = true;
+					messageObservableList.add("territory exists");
+					break;
+				}
+			}
+		}
+		return territoryExists;
+	}
+	
 	// add an adjacent territory
 	@FXML
 	public void AdjacentAdd() {
-		if (!AdjacentInput.getText().equals("") && TerritoryView.getSelectionModel().getSelectedItem() != null) {
+		if (!AdjacentInput.getText().trim().isEmpty() && TerritoryView.getSelectionModel().getSelectedItem() != null) {
 
 			if (AdjacentInput.getText().equals(TerritoryView.getSelectionModel().getSelectedItem().getName())) {
-				AdjacentError.setText("You can't add a territory as it's own neighbour");
+				messageObservableList.add("You can't add a territory as it's own neighbour");
 
 			} else if (existsInAdjacentList(AdjacentInput.getText())) {
-				AdjacentError.setText("Territory has already beenn added");
+				messageObservableList.add("Territory is already a neighbour");
 			} else {
 
 				// search whether adjacent being added is an existing country
-				for (Continent cont : continentObservableList) {
+				for (Continent cont : MapModel.getMapModel().getContinents()) {
 					for (Country count : cont.getCountries()) {
 						if (count.getName().equals(AdjacentInput.getText())
 								&& !existsInAdjacentList(AdjacentInput.getText())) {
 							TerritoryView.getSelectionModel().getSelectedItem().getConnectedCountries().add(count);
 							count.getConnectedCountries().add(TerritoryView.getSelectionModel().getSelectedItem());
 							
-							AdjacentError.setText("Added");
+							messageObservableList.add("added adjacent territory");
 							break;
 						} 
 					}
@@ -216,6 +225,8 @@ public class MapEditorController implements Initializable {
 		}
 		return false;
 	}
+	
+
 
 	@FXML
 	public void TerritoryDelete() {
@@ -233,6 +244,7 @@ public class MapEditorController implements Initializable {
 			territoryObservableList.clear();
 			adjacentObservableList.clear();
 			territoryObservableList.addAll(ContinentView.getSelectionModel().getSelectedItem().getCountries());
+			messageObservableList.add("territory deleted along with connections");
 		} 
 	}
 
@@ -243,7 +255,7 @@ public class MapEditorController implements Initializable {
 			TerritoryView.getSelectionModel().getSelectedItem().getConnectedCountries()
 					.remove(AdjacentView.getSelectionModel().getSelectedItem());
 
-			for (Continent continent : continentObservableList) {
+			for (Continent continent : MapModel.getMapModel().getContinents()) {
 				for (Country country : continent.getCountries()) {
 					if (country.getName().equals(AdjacentView.getSelectionModel().getSelectedItem().getName())) {
 						for (Country adj : country.getConnectedCountries()) {
@@ -273,16 +285,14 @@ public class MapEditorController implements Initializable {
 			if (fileParser.init(scan)) {
 				Validate.getValidate().validateMap();
 				if (Validate.getValidate().getValidateSize() == MapModel.getMapModel().getCountries().size()) {
-					ValidationError.setText("Connected Map");
-					populateMapEditor();
+					messageObservableList.add("Connected Map");
 				} else {
-					ValidationError.setText("Invalid Map. Might want to reassign territories");
-					populateMapEditor();
+					messageObservableList.add("Invalid Map. Might want to reassign territories");
 				}
 			}
 			
 		} else {
-			ValidationError.setText("file does not exist");
+			messageObservableList.add("file does not exist");
 			clearMapEditor();
 		}		
 	}
@@ -290,28 +300,20 @@ public class MapEditorController implements Initializable {
 	@FXML
 	public void saveMap() throws CannotFindException, CountLimitException {
 
-		MapModel.getMapModel().getContinents().clear();
-		MapModel.getMapModel().getCountries().clear();
-		for (Continent continent : continentObservableList) {
-			MapModel.getMapModel().getContinents().add(continent);
-			for (Country country : continent.getCountries()) {
-				MapModel.getMapModel().getCountries().add(country);
-			}
-		}
 		
 		if (MapModel.getMapModel().getCountries().size() != 0){
 			Validate.getValidate().validateMap();
 			if (Validate.getValidate().getValidateSize() == MapModel.getMapModel().getCountries().size()) {
-				ValidationError.setText("Saved File");
+				messageObservableList.add("Saved File");
 				Output.generate(ExistingFile.getText());
 				initializePlayers();
 				validated = 1;
 			} else {
-				ValidationError.setText("Can't Save Map it's an invalid map");
+				messageObservableList.add("Can't Save Map it's an invalid map");
 				validated = 0;
 			}
 		} else  {
-			ValidationError.setText("can't save - invalid map");
+			messageObservableList.add("can't save - invalid map");
 		} 
 	}
 
@@ -321,10 +323,10 @@ public class MapEditorController implements Initializable {
 			validated = 0;
 			clearMapEditor();
 			initializeContinents();
-			ValidationError.setText("New Map");
+			messageObservableList.add("New Map");
 			
 		} else {
-			ValidationError.setText("You need a name for the file");
+			messageObservableList.add("You need a name for the file");
 		}
 	}
 
@@ -341,7 +343,7 @@ public class MapEditorController implements Initializable {
 
 			}
 		} else {
-			ValidationError.setText("Need to save the map before you could start");
+			messageObservableList.add("Need to save the map before you could start");
 		}
 	}
 
@@ -352,7 +354,7 @@ public class MapEditorController implements Initializable {
 	 * java.util.ResourceBundle)
 	 */
 	public void initializeContinents() {
-		continentObservableList.clear();
+		MapModel.getMapModel().getContinents().clear();
 		ArrayList<Continent> continent = new ArrayList<>();
 		continent.add(new Continent("North America", 10));
 		continent.add(new Continent("South America", 10));
@@ -360,7 +362,8 @@ public class MapEditorController implements Initializable {
 		continent.add(new Continent("Africa", 10));
 		continent.add(new Continent("Asia", 10));
 		continent.add(new Continent("Australia", 10));
-		continentObservableList.addAll(continent);
+		MapModel.getMapModel().getContinents().addAll(continent);
+		messageObservableList.add("This is a fixed map with the following continents");
 	}
 
 	public void initializePlayers() {
@@ -368,21 +371,12 @@ public class MapEditorController implements Initializable {
 		PlayerID.getItems().addAll("2", "3", "4", "5", "6");
 	}
 
-	public void populateMapEditor() {
-		clearMapEditor();
-		for (Continent cont : MapModel.getMapModel().getContinents()) {
-			continentObservableList.add(cont);
-			for (Country count : cont.getCountries()) {
-				territoryObservableList.add(count);
-				for (Country adj : count.getConnectedCountries()) {
-					adjacentObservableList.add(adj);
-				}
-			}
-		}
-	}
-
+	/**
+	 * This method is a helper method for clearing the UI board
+	 */
+	
 	public void clearMapEditor() {
-		continentObservableList.clear();
+		MapModel.getMapModel().getContinents().clear();
 		territoryObservableList.clear();
 		adjacentObservableList.clear();
 	}
@@ -434,7 +428,7 @@ public class MapEditorController implements Initializable {
 	}
 
 	/**
-	 * This method assigns countries to PlayerModel.getPlayerModel().
+	 * This method assigns countries to players
 	 */
 	public void assignCountriesToPlayers() {
 		boolean[] countryOccupied = new boolean[Country.MAX_NUMBER_OF_COUNTRIES];

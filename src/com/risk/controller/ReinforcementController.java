@@ -170,13 +170,11 @@ public class ReinforcementController implements Initializable {
 	@FXML
 	public void setArmy() {
 		int Armyinput = 0;
-		System.out.println(Armyinput);
 		if (!inputArmy.getText().trim().isEmpty() && getReinforcement() != 0
 				&& countryId.getSelectionModel().getSelectedItem() != null) {
 
 			Armyinput = Integer.parseInt(inputArmy.getText());
 			if (Armyinput <= getReinforcement()) {
-				
 				
 				for (Country c : territoryObservableList) {
 					if (c.getName().equals(countryId.getSelectionModel().getSelectedItem().getName())) {
@@ -187,10 +185,7 @@ public class ReinforcementController implements Initializable {
 						TradeInCard = 0;
 						break;
 					}
-				}
-				
-				
-				
+				}	
 			}
 		} 
 		armyAvailable.setText(

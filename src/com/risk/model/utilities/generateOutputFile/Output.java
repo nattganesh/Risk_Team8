@@ -9,6 +9,9 @@ import com.risk.model.MapModel;
 import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
 import com.sun.media.jfxmedia.logging.Logger;
+
+import javafx.collections.ObservableList;
+
 import java.io.PrintStream;
 import java.util.ArrayList;
 
@@ -24,7 +27,7 @@ public class Output {
 
     public static boolean generate(String nameOfFile)
     {
-        ArrayList<Continent> continents = MapModel.getMapModel().getContinents();
+    
         ArrayList<Country> countries = MapModel.getMapModel().getCountries();
 
         try

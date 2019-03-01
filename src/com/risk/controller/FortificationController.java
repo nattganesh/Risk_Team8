@@ -54,7 +54,7 @@ public class FortificationController implements Initializable {
 	ObservableList<String> messageObservableList = FXCollections.observableArrayList();
 	
 	private boolean fortification = false;
-	private Player currentPlayer;
+
 
 	public FortificationController() {
 
@@ -68,7 +68,6 @@ public class FortificationController implements Initializable {
 	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		currentPlayer = PlayerModel.getPlayerModel().getCurrentPlayer();
 		
 		messageFortification.setItems(messageObservableList);
 		
@@ -130,24 +129,13 @@ public class FortificationController implements Initializable {
 				&& Territory.getSelectionModel().getSelectedItem().getArmyCount() > 1
 				&& !moveField.getText().trim().isEmpty() && !fortification) {
 			int Armyinput = Integer.parseInt(moveField.getText());
-			System.out.println(Armyinput);
 			if (Armyinput <= Territory.getSelectionModel().getSelectedItem().getArmyCount() - 1) {
-	
-				int territoryArmy = Territory.getSelectionModel().getSelectedItem().getArmyCount();
-				int adjacentArmy = Adjacent.getSelectionModel().getSelectedItem().getArmyCount();
-				System.out.println(territoryArmy);
-				System.out.println(adjacentArmy);
-				
+
 				Territory.getSelectionModel().getSelectedItem()
 						.reduceArmyCount(Armyinput);
 
 				Adjacent.getSelectionModel().getSelectedItem()
 						.setArmyCount(Armyinput);
-				
-				System.out.println("after calculation");
-				System.out.println(territoryArmy);
-				System.out.println(adjacentArmy);
-				
 				
 				AdjacentArmy.setText(Integer.toString(Adjacent.getSelectionModel().getSelectedItem().getArmyCount()));
 				TerritoryArmy.setText(Integer.toString(Territory.getSelectionModel().getSelectedItem().getArmyCount()));
