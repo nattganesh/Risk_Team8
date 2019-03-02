@@ -21,10 +21,9 @@ import javafx.collections.ObservableList;
  * @author DKM
  *
  */
-public class PlayerModel extends Observable implements Observer {
+public class PlayerModel extends Observable {
 
     private ArrayList<Player> playerList = new ArrayList<Player>();
-//    private ObservableList<Country> currentPlayerTerritory = FXCollections.observableArrayList();
     public static final String[] PLAYERCOLOR =
     {
         "Red", "Blue", "Green", "Yellow", "Orange", "Purple"
@@ -56,7 +55,6 @@ public class PlayerModel extends Observable implements Observer {
     public void IncrementPlayerIndex()
     {
         currentPlayerIndex = (currentPlayerIndex + 1) % playerList.size();
-        System.out.println("current player index : " + currentPlayerIndex);
     }
 
     /**
@@ -102,16 +100,6 @@ public class PlayerModel extends Observable implements Observer {
     public ArrayList<Player> getPlayers()
     {
         return playerList;
-    }
-
-    /* (non-Javadoc)
-	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
-     */
-    @Override
-    public void update(Observable arg0, Object arg1)
-    {
-        // TODO Auto-generated method stub
-
     }
 
     public static PlayerModel getPlayerModel()

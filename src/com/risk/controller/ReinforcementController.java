@@ -11,6 +11,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
 import com.risk.model.GamePhaseModel;
 import com.risk.model.MapModel;
@@ -37,11 +38,7 @@ import javafx.scene.layout.FlowPane;
  *
  */
 public class ReinforcementController implements Initializable {
-	public int reinforcement;
-	public int TradeInCard = 0;
-	public int ContinentControl = 0;
-	public boolean controlPoint = false;
-	public boolean occupiedTerritory = false;
+	public int TotalReinforcement;
 	public ArrayList<String> cards = new ArrayList<>();
 
 	/**
@@ -108,18 +105,21 @@ public class ReinforcementController implements Initializable {
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
 		playerId.setText(PlayerModel.getPlayerModel().getCurrentPlayer().getName());
-
-		calculateReinforcement();
+		TotalReinforcement = calculateReinforcementOccupiedTerritory() + calculateReinforcementContinentControl();
 		armyAvailable.setText("Army: " + Integer.toString(getReinforcement()));
 		
-//		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("cate1", "blue"));
-//		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("cate1", "blueadsf"));
-//		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("cate2", "blue"));
-//		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("cate2", "blueadsf"));
-//		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("cate3", "blueadsf"));
-//		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("cate3", "blueadsf"));
-//		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("cate4", "blueadsf"));
-//		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("cate4", "blueadsf"));
+		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("cate1", "blue"));
+		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("cate1", "blue"));
+		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("cate1", "blueadsf"));
+		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("cate2", "blue"));
+		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("cate2", "blueadsf"));
+		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("cate3", "blueadsf"));
+		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("cate3", "blueadsf"));
+		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("cate3", "blueadsf"));
+		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("cate3", "blueadsf"));
+		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("cate4", "blueadsf"));
+		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("cate4", "blueadsf"));
+		
 		cardsObservableList.addAll(PlayerModel.getPlayerModel().getCurrentPlayer().getCards());
 	
 		
@@ -161,6 +161,7 @@ public class ReinforcementController implements Initializable {
 			}
 		});
 	}
+	
 	@FXML
 	public void territoryHandler() 
 	{
@@ -193,7 +194,6 @@ public class ReinforcementController implements Initializable {
 						setReinforcement(Armyinput);				
 						ArmyCount.setText(Integer.toString(countryId.getSelectionModel().getSelectedItem().getArmyCount()));
 						messageObservableList.add("Added " + Armyinput + " Army to " + c.getName());
-						TradeInCard = 0;
 						break;
 					}
 				}	
@@ -224,31 +224,10 @@ public class ReinforcementController implements Initializable {
 		}
 		else 
 		{
-			reinforcement = 0;
-			TradeInCard = 0;
 			GamePhaseModel.getGamePhaseModel().setPhase("attack");
 		}
 	}
-
-	@FXML
-	public void tradeCard()
-	{
-		if (tradeCard.getItems().size() == 3)
-		{
-			if (cardValidation()) 
-			{
-				tradeCard.getItems().clear();
-				PlayerModel.getPlayerModel().getCurrentPlayer().getCards().clear();
-				
-				for (Card c : yourCard.getItems()) 
-				{
-					
-					PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(c);
-				}	
-			}
-		}
-	}
-
+	
 	@FXML
 	public void yourCardHandler() 
 	{
@@ -271,84 +250,86 @@ public class ReinforcementController implements Initializable {
 
 		}
 	}
+	
+	@FXML
+	public void tradeCard()
+	{
+		if (tradeCard.getItems().size() == 3)
+		{
+			if (cardValidation(tradeCard.getItems())) 
+			{
+				TotalReinforcement += calculateReinforcementFromCards();
+				armyAvailable.setText("Army: " + Integer.toString(getReinforcement()));
+				tradeCard.getItems().clear();
+				PlayerModel.getPlayerModel().getCurrentPlayer().getCards().clear();
+				
+				for (Card c : yourCard.getItems()) 
+				{
+					PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(c);
+				}	
+			}
+		}
+	}
 
-	public boolean cardValidation() 
+	public boolean cardValidation(ObservableList<Card> selectedCards) 
 	{
 		ObservableList<Card> cards = FXCollections.observableArrayList();
-		cards = tradeCard.getItems();
+		cards = selectedCards;
 
 		if (((cards.get(0).getCatagory().equals(cards.get(1).getCatagory()))
 				&& (cards.get(0).getCatagory().equals(cards.get(2).getCatagory())))
 				|| ((!(cards.get(0).getCatagory().equals(cards.get(1).getCatagory())))
 						&& (!(cards.get(0).getCatagory().equals(cards.get(2).getCatagory())))
 						&& (!(cards.get(1).getCatagory().equals(cards.get(2).getCatagory()))))) 
-		{
-
-			setReinforcementTradeInCard();
-			MapModel.getMapModel().setExchangeTime();
-			calculateReinforcement();
-			tradeCard.getItems().clear();
+		{			
 			return true;
-			
 		}
 		else 
 		{
 			return false;
 		}
 	}
-
-	public int getReinforcementOccupiedTerritory() 
+	public int calculateReinforcementOccupiedTerritory() 
 	{
-		if (!occupiedTerritory) 
-		{
-			occupiedTerritory = true;
-			return (int) Math.floor(PlayerModel.getPlayerModel().getCurrentPlayer().numbOccupied() / 3);
-		}
-		return 0;
+		int reinforcement = (int) Math.floor(PlayerModel.getPlayerModel().getCurrentPlayer().numbOccupied() / 3);
+		return reinforcement;
 	}
-
-	public int getReinforcementContinentControl() 
+	
+	public int calculateReinforcementContinentControl()
 	{
-		if (!controlPoint) 
-		{
-			controlPoint = true;
-			return ContinentControl;
-		}
-		return 0;
-	}
-
-	public int getReinforcementTradeInCard() 
-	{	
-		return TradeInCard;
-	}
-
-	public void setReinforcementTradeInCard() 
-	{
-		TradeInCard = TradeInCard + (MapModel.getMapModel().getExchangeTime() + 1) * 5;
-	}
-
-	public void calculateReinforcement() 
-	{
-		int numbArmies;
-		numbArmies = getReinforcementOccupiedTerritory() + getReinforcementContinentControl()
-				+ getReinforcementTradeInCard();
-
-		if (numbArmies < 3) 
-		{
-			reinforcement = 3;
+		String currentRuler = PlayerModel.getPlayerModel().getCurrentPlayer().getName();
 		
-		} else {
-			reinforcement = numbArmies;
+		int reinforcement = 0;
+		for (Continent continent : MapModel.getMapModel().getContinents())
+		{
+			boolean control = true;
+			for (Country country : continent.getCountries()) 
+			{
+				if (country.getRuler().getName() != currentRuler) 
+				{
+					control = false;
+					break;
+				}
+			}
+			if (control) {
+				reinforcement = reinforcement + continent.getPointsWhenFullyOccupied();
+			}
 		}
-		armyAvailable.setText("Army: " + Integer.toString(getReinforcement()));
+		return reinforcement;
 	}
-
+	
+	public int calculateReinforcementFromCards() {
+		int reinforcement = (MapModel.getMapModel().getExchangeTime() + 1) * 5;
+		MapModel.getMapModel().setExchangeTime();
+		return reinforcement;
+	}
+	
 	public int getReinforcement()
 	{
-		return reinforcement;
+		return TotalReinforcement;
 	}
 	public void setReinforcement(int i) 
 	{
-		reinforcement = reinforcement - i;
+		TotalReinforcement = TotalReinforcement - i;
 	}
 }

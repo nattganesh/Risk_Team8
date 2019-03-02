@@ -43,36 +43,7 @@ public class Player {
     {
         startingPoints = i;
     }
-
-
-//
-//    /**
-//     * Gets the number of armies remaining
-//     *
-//     * @return availableReinforement number of armies
-//     */
-//    public int getReinforcement()
-//    {
-//        return reinforcement;
-//    }
-//
-//    /**
-//     * Sets the number of armies during reinforcement.
-//     *
-//     * @param assign number of armies to assign
-//     * @return returns 1 if you successfully assigned, -1 otherwise
-//     */
-//    public boolean setReinforcement(int assign)
-//    {
-//        if (assign > getReinforcement())
-//        {
-//            return false;
-//        }
-//        reinforcement -= assign;
-//        return true;
-//
-//    }
-
+    
     /**
      * gets the name of player
      *
@@ -142,7 +113,6 @@ public class Player {
     }
 
     /**
-     * TODO
      *
      * @param cards
      */

@@ -60,7 +60,7 @@ public class FortificationController implements Initializable {
 
 	}
 
-	/*
+	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see javafx.fxml.Initializable#initialize(java.net.URL,
@@ -159,7 +159,6 @@ public class FortificationController implements Initializable {
 				
 				AdjacentArmy.setText(Integer.toString(Adjacent.getSelectionModel().getSelectedItem().getArmyCount()));
 				TerritoryArmy.setText(Integer.toString(Territory.getSelectionModel().getSelectedItem().getArmyCount()));
-				
 				fortification = true;
 				
 			}
@@ -178,8 +177,8 @@ public class FortificationController implements Initializable {
 	{
 		if (fortification == true) 
 		{
-			System.out.println(fortification);
-			saveToModel();
+			PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries().clear();
+			PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries().addAll(territoryObservableList);
 			PlayerModel.getPlayerModel().IncrementPlayerIndex();
 			GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
 		} 
@@ -187,10 +186,5 @@ public class FortificationController implements Initializable {
 		{
 			messageObservableList.add("you need to fortify");
 		}
-	}
-	public void saveToModel() 
-	{
-		PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries().clear();
-		PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries().addAll(territoryObservableList);
 	}
 }

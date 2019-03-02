@@ -25,11 +25,8 @@ class ValidateMapTest {
 	private RiskMap riskMap;
 	
 
-	// These are current testing
-	private String DuplicateFile = "src/com/risk/run/inputtext/DuplicateCountry.txt";
-	
-	// removed North America,Alaska --> results in index out of bounds (have an error message for this)
-	private String SetNeighOfNullCountry = "src/com/risk/run/inputtext/SetNeighOfNullCountry.txt";
+	// addedd North America,Alaska two times
+	private String DuplicateCountry = "src/com/risk/run/inputtext/DuplicateCountry.txt";
 	
 	// added North America,Alaska2 --> Cannot find exception due to Set Neighbors not found (this exception does not correlate with the actual error)
 	private String ExceedsContinentLimitFile = "src/com/risk/run/inputtext/ExceedsContinentLimit.txt";
@@ -53,7 +50,7 @@ class ValidateMapTest {
 	 */
 	@Test
 	public void testDuplicateCountry() {
-		riskMap = new RiskMap(map, DuplicateFile);
+		riskMap = new RiskMap(map, DuplicateCountry);
 		assertThrows(DuplicatesException.class,
 				() -> riskMap.setUp());
 	}
@@ -68,17 +65,6 @@ class ValidateMapTest {
 		assertThrows(CannotFindException.class,
 				() -> riskMap.setUp());
 	}
-	
-	/**
-	 * Tests for file that sets neighbour of non existent country. 
-	 */
-	@Test
-	public void testSetNeighOfNullCountryFile() {
-		riskMap = new RiskMap(map, SetNeighOfNullCountry);
-		assertThrows(CannotFindException.class,
-				() -> riskMap.setUp());
-	}
-
 
 	/**
 	 * Tests for file that has exceeding number of country in the continent

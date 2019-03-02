@@ -91,7 +91,7 @@ public class GamePhaseController implements Observer {
         }
         else if (view.equals("fortification"))
         {
-        	 fController = new FortificationController();
+        	fController = new FortificationController();
             FXMLLoader fortificationLoader = new FXMLLoader(getClass().getResource("/com/risk/view/Fortification.fxml"));
             fortificationLoader.setController(fController);
             try
