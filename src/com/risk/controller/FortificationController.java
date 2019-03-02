@@ -67,31 +67,42 @@ public class FortificationController implements Initializable {
 	 * java.util.ResourceBundle)
 	 */
 	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
+	public void initialize(URL arg0, ResourceBundle arg1)
+	{
 		
 		messageFortification.setItems(messageObservableList);
 		
 		territoryObservableList.addAll(PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
 		Territory.setItems(territoryObservableList);
-		Territory.setCellFactory(param -> new ListCell<Country>() {
+		Territory.setCellFactory(param -> new ListCell<Country>() 
+		{
 			@Override
-			protected void updateItem(Country country, boolean empty) {
+			protected void updateItem(Country country, boolean empty)
+			{
 				super.updateItem(country, empty);
-				if (empty || country == null || country.getName() == null) {
+				if (empty || country == null || country.getName() == null) 
+				{
 					setText(null);
-				} else {
+				}
+				else
+				{
 					setText(country.getName());
 				}
 			}
 		});
 		Adjacent.setItems(adjacentObservableList);
-		Adjacent.setCellFactory(param -> new ListCell<Country>() {
+		Adjacent.setCellFactory(param -> new ListCell<Country>()
+		{
 			@Override
-			protected void updateItem(Country country, boolean empty) {
+			protected void updateItem(Country country, boolean empty)
+			{
 				super.updateItem(country, empty);
-				if (empty || country == null || country.getName() == null) {
+				if (empty || country == null || country.getName() == null) 
+				{
 					setText(null);
-				} else {
+				} 
+				else 
+				{
 					setText(country.getName());
 				}
 			}
@@ -100,13 +111,17 @@ public class FortificationController implements Initializable {
 	}
 
 	@FXML
-	public void territoryHandler() {
+	public void territoryHandler() 
+	{
 
-		if (Territory.getSelectionModel().getSelectedItem() != null) {
+		if (Territory.getSelectionModel().getSelectedItem() != null) 
+		{
 			Adjacent.getItems().clear();
 			AdjacentArmy.setText("");
-			for (Country connectedTerritory : Territory.getSelectionModel().getSelectedItem().getConnectedCountries()) {
-				if (connectedTerritory.getRuler().getName().equals(PlayerModel.getPlayerModel().getCurrentPlayer().getName())) {
+			for (Country connectedTerritory : Territory.getSelectionModel().getSelectedItem().getConnectedCountries()) 
+			{
+				if (connectedTerritory.getRuler().getName().equals(PlayerModel.getPlayerModel().getCurrentPlayer().getName())) 
+				{
 					Adjacent.getItems().add(connectedTerritory);
 				}
 			}
@@ -115,21 +130,26 @@ public class FortificationController implements Initializable {
 	}
 	
 	@FXML
-	public void adjacentHandler() {
+	public void adjacentHandler() 
+	{
 	
-		if (Adjacent.getSelectionModel().getSelectedItem() != null) {
+		if (Adjacent.getSelectionModel().getSelectedItem() != null) 
+		{
 			AdjacentArmy.setText(Integer.toString(Adjacent.getSelectionModel().getSelectedItem().getArmyCount()));
 		}
 	}
 
 	@FXML
-	public void moveHandler() {
+	public void moveHandler() 
+	{
 		if (Territory.getSelectionModel().getSelectedItem() != null
 				&& Adjacent.getSelectionModel().getSelectedItem() != null
 				&& Territory.getSelectionModel().getSelectedItem().getArmyCount() > 1
-				&& !moveField.getText().trim().isEmpty() && !fortification) {
+				&& !moveField.getText().trim().isEmpty() && !fortification) 
+		{
 			int Armyinput = Integer.parseInt(moveField.getText());
-			if (Armyinput <= Territory.getSelectionModel().getSelectedItem().getArmyCount() - 1) {
+			if (Armyinput <= Territory.getSelectionModel().getSelectedItem().getArmyCount() - 1) 
+			{
 
 				Territory.getSelectionModel().getSelectedItem()
 						.reduceArmyCount(Armyinput);
@@ -143,25 +163,33 @@ public class FortificationController implements Initializable {
 				fortification = true;
 				
 			}
-			else {
+			else 
+			{
 				messageObservableList.add("You don't have that many army");
 			}
-		} else {
+		} 
+		else 
+		{
 			messageObservableList.add("Invalid Selection");
 		}
 	}
 
-	public void onNextPlayer(ActionEvent event) throws IOException {
-		if (fortification == true) {
+	public void onNextPlayer(ActionEvent event) throws IOException 
+	{
+		if (fortification == true) 
+		{
 			System.out.println(fortification);
 			saveToModel();
 			PlayerModel.getPlayerModel().IncrementPlayerIndex();
 			GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
-		} else  {
+		} 
+		else 
+		{
 			messageObservableList.add("you need to fortify");
 		}
 	}
-	public void saveToModel() {
+	public void saveToModel() 
+	{
 		PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries().clear();
 		PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries().addAll(territoryObservableList);
 	}

@@ -68,7 +68,6 @@ public class GamePhaseController implements Observer {
             }
             catch (IOException e)
             {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
             stage.show();
@@ -102,7 +101,6 @@ public class GamePhaseController implements Observer {
             }
             catch (IOException e)
             {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
             stage.show();

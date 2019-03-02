@@ -24,12 +24,12 @@ import javafx.stage.Stage;
  * @author DKM
  *
  */
-public class AttackController extends Observable implements Initializable {
+public class AttackController extends Observable implements Initializable
+{
 
 
     public AttackController()
     {
-
     }
 
     /* (non-Javadoc)
@@ -38,13 +38,10 @@ public class AttackController extends Observable implements Initializable {
     @Override
     public void initialize(URL arg0, ResourceBundle arg1)
     {
-        System.out.println(PlayerModel.getPlayerModel().getPlayers().size());
     }
 
     public void goToFortificationPhase(ActionEvent event) throws IOException
     {
-
         GamePhaseModel.getGamePhaseModel().setPhase("fortification");
-
     }
 }

@@ -11,9 +11,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
-import com.risk.model.player.Player;
 import com.risk.model.GamePhaseModel;
 import com.risk.model.MapModel;
 import com.risk.model.PlayerModel;
@@ -32,8 +30,6 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
-import javafx.util.Callback;
-
 
 /**
  *
@@ -134,13 +130,18 @@ public class ReinforcementController implements Initializable {
 		territoryObservableList.addAll(PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
 
 		countryId.setItems(territoryObservableList);
-		countryId.setCellFactory(param -> new ListCell<Country>() {
+		countryId.setCellFactory(param -> new ListCell<Country>()
+		{
 			@Override
-			protected void updateItem(Country country, boolean empty) {
+			protected void updateItem(Country country, boolean empty)
+			{
 				super.updateItem(country, empty);
-				if (empty || country == null || country.getName() == null) {
+				if (empty || country == null || country.getName() == null) 
+				{
 					setText(null);
-				} else {
+				} 
+				else 
+				{
 					setText(country.getName());
 				}
 			}
@@ -149,17 +150,22 @@ public class ReinforcementController implements Initializable {
 		reinforcementMessage.setItems(messageObservableList);
 
 
-		inputArmy.textProperty().addListener(new ChangeListener<String>() {
-			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				if (!newValue.matches("\\d*")) {
+		inputArmy.textProperty().addListener(new ChangeListener<String>() 
+		{
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+			{
+				if (!newValue.matches("\\d*")) 
+				{
 					inputArmy.setText(newValue.replaceAll("[^\\d]", ""));
 				}
 			}
 		});
 	}
 	@FXML
-	public void territoryHandler() {
-		if (countryId.getSelectionModel().getSelectedItem() != null) {
+	public void territoryHandler() 
+	{
+		if (countryId.getSelectionModel().getSelectedItem() != null)
+		{
 			ArmyCount.setText(Integer.toString(countryId.getSelectionModel().getSelectedItem().getArmyCount()));
 		}
 	}
@@ -168,16 +174,21 @@ public class ReinforcementController implements Initializable {
 	 * sets the number of available army to your occupied country
 	 */
 	@FXML
-	public void setArmy() {
+	public void setArmy()
+	{
 		int Armyinput = 0;
 		if (!inputArmy.getText().trim().isEmpty() && getReinforcement() != 0
-				&& countryId.getSelectionModel().getSelectedItem() != null) {
+				&& countryId.getSelectionModel().getSelectedItem() != null)
+		{
 
 			Armyinput = Integer.parseInt(inputArmy.getText());
-			if (Armyinput <= getReinforcement()) {
+			if (Armyinput <= getReinforcement()) 
+			{
 				
-				for (Country c : territoryObservableList) {
-					if (c.getName().equals(countryId.getSelectionModel().getSelectedItem().getName())) {
+				for (Country c : territoryObservableList)
+				{
+					if (c.getName().equals(countryId.getSelectionModel().getSelectedItem().getName())) 
+					{
 						c.setArmyCount(Armyinput);
 						setReinforcement(Armyinput);				
 						ArmyCount.setText(Integer.toString(countryId.getSelectionModel().getSelectedItem().getArmyCount()));
@@ -201,52 +212,59 @@ public class ReinforcementController implements Initializable {
 	 * @param event eventlistener for button clicked event
 	 * @throws IOException Exception thrown when view is not found
 	 */
-	public void goToAttackPhase(ActionEvent event) throws IOException {
-		if (getReinforcement() > 0 ) { // change this
+	public void goToAttackPhase(ActionEvent event) throws IOException 
+	{
+		if (getReinforcement() > 0 ) 
+		{ 
 		   messageObservableList.add("place all your army");
 		}
-		else if (PlayerModel.getPlayerModel().getCurrentPlayer().getCards().size() >= 5) {
+		else if (PlayerModel.getPlayerModel().getCurrentPlayer().getCards().size() >= 5)
+		{
 			 messageObservableList.add("you got 5+ cards");
 		}
-		else {
+		else 
+		{
 			reinforcement = 0;
 			TradeInCard = 0;
-			
 			GamePhaseModel.getGamePhaseModel().setPhase("attack");
 		}
 	}
 
 	@FXML
-	public void tradeCard() {
-		if (tradeCard.getItems().size() == 3) {
-			if (cardValidation()) {
+	public void tradeCard()
+	{
+		if (tradeCard.getItems().size() == 3)
+		{
+			if (cardValidation()) 
+			{
 				tradeCard.getItems().clear();
-				System.out.println("card size before: " + PlayerModel.getPlayerModel().getCurrentPlayer().getCards().size());
 				PlayerModel.getPlayerModel().getCurrentPlayer().getCards().clear();
 				
-				for (Card c : yourCard.getItems()) {
+				for (Card c : yourCard.getItems()) 
+				{
 					
 					PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(c);
-				}
-				System.out.println("card size after : " + PlayerModel.getPlayerModel().getCurrentPlayer().getCards().size());
-				
+				}	
 			}
 		}
 	}
 
 	@FXML
-	public void yourCardHandler() {
-		if (yourCard.getSelectionModel().getSelectedItem() != null && tradeCard.getItems().size() < 3) {
+	public void yourCardHandler() 
+	{
+		if (yourCard.getSelectionModel().getSelectedItem() != null && tradeCard.getItems().size() < 3) 
+		{
 			Card card = yourCard.getSelectionModel().getSelectedItem();
 			tradeCard.getItems().add(card);
 			yourCard.getItems().remove(card);
-
 		}
 	}
 
 	@FXML
-	public void yourTradeHandler() {
-		if (tradeCard.getSelectionModel().getSelectedItem() != null) {
+	public void yourTradeHandler() 
+	{
+		if (tradeCard.getSelectionModel().getSelectedItem() != null)
+		{
 			Card card = tradeCard.getSelectionModel().getSelectedItem();
 			yourCard.getItems().add(card);
 			tradeCard.getItems().remove(card);
@@ -254,7 +272,8 @@ public class ReinforcementController implements Initializable {
 		}
 	}
 
-	public boolean cardValidation() {
+	public boolean cardValidation() 
+	{
 		ObservableList<Card> cards = FXCollections.observableArrayList();
 		cards = tradeCard.getItems();
 
@@ -262,63 +281,74 @@ public class ReinforcementController implements Initializable {
 				&& (cards.get(0).getCatagory().equals(cards.get(2).getCatagory())))
 				|| ((!(cards.get(0).getCatagory().equals(cards.get(1).getCatagory())))
 						&& (!(cards.get(0).getCatagory().equals(cards.get(2).getCatagory())))
-						&& (!(cards.get(1).getCatagory().equals(cards.get(2).getCatagory()))))) {
+						&& (!(cards.get(1).getCatagory().equals(cards.get(2).getCatagory()))))) 
+		{
 
 			setReinforcementTradeInCard();
 			MapModel.getMapModel().setExchangeTime();
 			calculateReinforcement();
 			tradeCard.getItems().clear();
-
 			return true;
-		} else {
+			
+		}
+		else 
+		{
 			return false;
 		}
 	}
 
-	public int getReinforcementOccupiedTerritory() {
-		if (!occupiedTerritory) {
+	public int getReinforcementOccupiedTerritory() 
+	{
+		if (!occupiedTerritory) 
+		{
 			occupiedTerritory = true;
 			return (int) Math.floor(PlayerModel.getPlayerModel().getCurrentPlayer().numbOccupied() / 3);
 		}
 		return 0;
 	}
 
-	public int getReinforcementContinentControl() {
-		if (!controlPoint) {
+	public int getReinforcementContinentControl() 
+	{
+		if (!controlPoint) 
+		{
 			controlPoint = true;
 			return ContinentControl;
 		}
 		return 0;
 	}
 
-	public int getReinforcementTradeInCard() {
-		
+	public int getReinforcementTradeInCard() 
+	{	
 		return TradeInCard;
 	}
 
-	public void setReinforcementTradeInCard() {
+	public void setReinforcementTradeInCard() 
+	{
 		TradeInCard = TradeInCard + (MapModel.getMapModel().getExchangeTime() + 1) * 5;
 	}
 
-	public void calculateReinforcement() {
+	public void calculateReinforcement() 
+	{
 		int numbArmies;
 		numbArmies = getReinforcementOccupiedTerritory() + getReinforcementContinentControl()
 				+ getReinforcementTradeInCard();
-		System.out.println(numbArmies);
-		if (numbArmies < 3) {
+
+		if (numbArmies < 3) 
+		{
 			reinforcement = 3;
 		
 		} else {
 			reinforcement = numbArmies;
 		}
-		
 		armyAvailable.setText("Army: " + Integer.toString(getReinforcement()));
 	}
 
-	public int getReinforcement() {
+	public int getReinforcement()
+	{
 		return reinforcement;
 	}
-	public void setReinforcement(int i) {
+	public void setReinforcement(int i) 
+	{
 		reinforcement = reinforcement - i;
 	}
 }
