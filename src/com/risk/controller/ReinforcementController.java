@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 
 import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
+import com.risk.model.player.Player;
 import com.risk.model.GamePhaseModel;
 import com.risk.model.MapModel;
 import com.risk.model.PlayerModel;
@@ -105,20 +106,9 @@ public class ReinforcementController implements Initializable {
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
 		playerId.setText(PlayerModel.getPlayerModel().getCurrentPlayer().getName());
-		TotalReinforcement = calculateReinforcementOccupiedTerritory() + calculateReinforcementContinentControl();
+		TotalReinforcement = calculateReinforcementOccupiedTerritory(PlayerModel.getPlayerModel().getCurrentPlayer()) 
+				+ calculateReinforcementContinentControl(PlayerModel.getPlayerModel().getCurrentPlayer());
 		armyAvailable.setText("Army: " + Integer.toString(getReinforcement()));
-		
-		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("cate1", "blue"));
-		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("cate1", "blue"));
-		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("cate1", "blueadsf"));
-		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("cate2", "blue"));
-		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("cate2", "blueadsf"));
-		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("cate3", "blueadsf"));
-		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("cate3", "blueadsf"));
-		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("cate3", "blueadsf"));
-		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("cate3", "blueadsf"));
-		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("cate4", "blueadsf"));
-		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("cate4", "blueadsf"));
 		
 		cardsObservableList.addAll(PlayerModel.getPlayerModel().getCurrentPlayer().getCards());
 	
@@ -289,16 +279,15 @@ public class ReinforcementController implements Initializable {
 			return false;
 		}
 	}
-	public int calculateReinforcementOccupiedTerritory() 
+	public int calculateReinforcementOccupiedTerritory(Player currentPlayer) 
 	{
-		int reinforcement = (int) Math.floor(PlayerModel.getPlayerModel().getCurrentPlayer().numbOccupied() / 3);
+		int reinforcement = (int) Math.floor(currentPlayer.numbOccupied() / 3);
 		return reinforcement;
 	}
 	
-	public int calculateReinforcementContinentControl()
+	public int calculateReinforcementContinentControl(Player currentPlayer)
 	{
-		String currentRuler = PlayerModel.getPlayerModel().getCurrentPlayer().getName();
-		
+		String currentRuler = currentPlayer.getName();
 		int reinforcement = 0;
 		for (Continent continent : MapModel.getMapModel().getContinents())
 		{
@@ -311,16 +300,19 @@ public class ReinforcementController implements Initializable {
 					break;
 				}
 			}
-			if (control) {
+			if (control) 
+			{
 				reinforcement = reinforcement + continent.getPointsWhenFullyOccupied();
 			}
 		}
 		return reinforcement;
 	}
 	
-	public int calculateReinforcementFromCards() {
-		int reinforcement = (MapModel.getMapModel().getExchangeTime() + 1) * 5;
-		MapModel.getMapModel().setExchangeTime();
+	public int calculateReinforcementFromCards() 
+	{
+		int currentExchange = MapModel.getMapModel().getExchangeTime();
+		int reinforcement = (currentExchange) * 5;
+		MapModel.getMapModel().setExchangeTime(currentExchange + 1);
 		return reinforcement;
 	}
 	

@@ -19,28 +19,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses(
 {
-    com.risk.controller.ControllerSuite.class, com.risk.army.ArmySuite.class, com.risk.map.MapSuite.class, com.risk.tests.TestsSuite.class, com.risk.run.RunSuite.class, com.risk.dice.DiceSuite.class, com.risk.view.ViewSuite.class, com.risk.utilities.UtilitiesSuite.class, com.risk.exceptions.ExceptionsSuite.class, com.risk.card.CardSuite.class, com.risk.model.ModelSuite.class
+   com.risk.controller.ReinforcementControllerTest.class
 })
 public class RiskSuite {
-
-    @BeforeClass
-    public static void setUpClass() throws Exception
-    {
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception
-    {
-    }
-
-    @Before
-    public void setUp() throws Exception
-    {
-    }
-
-    @After
-    public void tearDown() throws Exception
-    {
-    }
-    
+	
 }

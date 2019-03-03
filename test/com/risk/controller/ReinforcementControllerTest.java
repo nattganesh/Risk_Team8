@@ -1,146 +1,368 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * 
  */
 package com.risk.controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.ArrayList;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import com.risk.model.MapModel;
+import com.risk.model.card.Card;
+import com.risk.model.map.Continent;
+import com.risk.model.map.Country;
+import com.risk.model.player.Player;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
+ * This class test for reinforcement contoller
+ * 
+ * @author DKM
  *
- * @author Natt
  */
 public class ReinforcementControllerTest {
-    
-    public ReinforcementControllerTest()
-    {
-    }
-    
-    @BeforeClass
-    public static void setUpClass()
-    {
-    }
-    
-    @AfterClass
-    public static void tearDownClass()
-    {
-    }
-    
-    @Before
-    public void setUp()
-    {
-    }
-    
-    @After
-    public void tearDown()
-    {
-    }
+	
+	 private ArrayList<Country> occupiedCountries;
+	 private ArrayList<Continent> continents;
+	 private ObservableList<Card> selectedCards;
+	 private Player testPlayer1;
+	 private Player testPlayer2;
+	
+	
+	
+	@BeforeEach
+	public void setUp() 
+	{
+		testPlayer1 = new Player("dummy player1");
+		testPlayer2 = new Player("dummy player2");
+		
+	}
+	@AfterEach
+	public void tearDown() 
+	{
+		MapModel.getMapModel().getContinents().clear();
+	}
+	
+	/**
+	 *  testing reinforcement from 6 territory occupied
+	 */
+	@Test public void testReinforcementNumbOccupied() {
+		
+		occupiedCountries = new ArrayList<Country>();
+		occupiedCountries.add(new Country("dummy country","dummy continent"));
+		occupiedCountries.add(new Country("dummy country","dummy continent"));
+		occupiedCountries.add(new Country("dummy country","dummy continent"));
+		occupiedCountries.add(new Country("dummy country","dummy continent"));
+		occupiedCountries.add(new Country("dummy country","dummy continent"));
+		occupiedCountries.add(new Country("dummy country","dummy continent"));
+		
+		testPlayer1.setOccupiedCountries(occupiedCountries);
+		ReinforcementController rController = new ReinforcementController();
+		assertEquals(2, rController.calculateReinforcementOccupiedTerritory(testPlayer1));
+	
+	}
+	/**
+	 *  testing reinforcement from 11 territory occupied
+	 */
+	@Test public void testReinforcementNumbOccupied1() {
+		
+		occupiedCountries = new ArrayList<Country>();
+		occupiedCountries.add(new Country("dummy country","dummy continent"));
+		occupiedCountries.add(new Country("dummy country","dummy continent"));
+		occupiedCountries.add(new Country("dummy country","dummy continent"));
+		occupiedCountries.add(new Country("dummy country","dummy continent"));
+		occupiedCountries.add(new Country("dummy country","dummy continent"));
+		occupiedCountries.add(new Country("dummy country","dummy continent"));
+		occupiedCountries.add(new Country("dummy country","dummy continent"));
+		occupiedCountries.add(new Country("dummy country","dummy continent"));
+		occupiedCountries.add(new Country("dummy country","dummy continent"));
+		occupiedCountries.add(new Country("dummy country","dummy continent"));
+		
+		testPlayer1.setOccupiedCountries(occupiedCountries);
+		ReinforcementController rController = new ReinforcementController();
+		assertEquals(3, rController.calculateReinforcementOccupiedTerritory(testPlayer1));
+	
+	}
+	
+	/**
+	 * testing reinforcement from continent control when both player doesn't own any continents
+	 */
+	@Test public void testReinforcementContinentControl() 
+	{
+		continents = new ArrayList<Continent>();
+		Continent continent1 = new Continent("continent1", 10);
+		Continent continent2 = new Continent("continent2", 10);
+		
+		Country country1 = new Country("country1","continent1");
+		Country country2 = new Country("country2","continent2");
+		Country country3 = new Country("country3","continent1");
+		Country country4 = new Country("country4","continent2");
+		Country country5 = new Country("country5","continent2");
+		
+		country1.setRuler(testPlayer1);
+		country2.setRuler(testPlayer1);
+		country3.setRuler(testPlayer2);
+		country4.setRuler(testPlayer2);
+		country5.setRuler(testPlayer1);
+		
+		continent1.setCountry(country1);
+		continent1.setCountry(country2);
+		continent1.setCountry(country3);
+		continent2.setCountry(country4);
+		continent2.setCountry(country5);
+		
+		MapModel.getMapModel().addContinent(continent1);
+		MapModel.getMapModel().addContinent(continent2);
+		
+		ReinforcementController rController = new ReinforcementController();
+		assertEquals(0, rController.calculateReinforcementContinentControl(testPlayer1));	
+		assertEquals(0, rController.calculateReinforcementContinentControl(testPlayer2));	
+			
+	}
+	
+	
+	/**
+	 * testing reinforcement from continent control when both player owns 1 continents
+	 */
+	@Test public void testReinforcementContinentControl1() 
+	{
+		continents = new ArrayList<Continent>();
+		Continent continent1 = new Continent("continent1", 10);
+		Continent continent2 = new Continent("continent2", 10);
+		
+		Country country1 = new Country("country1","continent1");
+		Country country2 = new Country("country2","continent2");
+		Country country3 = new Country("country3","continent1");
+		Country country4 = new Country("country4","continent2");
+		Country country5 = new Country("country5","continent2");
+		
+		country1.setRuler(testPlayer1);
+		country2.setRuler(testPlayer1);
+		country3.setRuler(testPlayer1);
+		country4.setRuler(testPlayer2);
+		country5.setRuler(testPlayer2);
+		
+		continent1.setCountry(country1);
+		continent1.setCountry(country2);
+		continent1.setCountry(country3);
+		continent2.setCountry(country4);
+		continent2.setCountry(country5);
+		
+		MapModel.getMapModel().addContinent(continent1);
+		MapModel.getMapModel().addContinent(continent2);
+		
+		ReinforcementController rController = new ReinforcementController();
+		assertEquals(10, rController.calculateReinforcementContinentControl(testPlayer1));	
+		assertEquals(10, rController.calculateReinforcementContinentControl(testPlayer2));	
+			
+	}
+	
+	/**
+	 * testing reinforcement from continent control when player1 owns 2 continents and other owns No continent
+	 */
+	@Test public void testReinforcementContinentControl2() 
+	{
+		continents = new ArrayList<Continent>();
+		Continent continent1 = new Continent("continent1", 10);
+		Continent continent2 = new Continent("continent2", 10);
+		Country country1 = new Country("country1","continent1");
+		Country country2 = new Country("country2","continent2");
+		Country country3 = new Country("country3","continent1");
+		Country country4 = new Country("country4","continent2");
+		Country country5 = new Country("country5","continent2");
+		country1.setRuler(testPlayer1);
+		country2.setRuler(testPlayer1);
+		country3.setRuler(testPlayer1);
+		country4.setRuler(testPlayer1);
+		country5.setRuler(testPlayer1);
+		
+		
+		continent1.setCountry(country1);
+		continent1.setCountry(country2);
+		continent1.setCountry(country3);
+		continent2.setCountry(country4);
+		continent2.setCountry(country5);
+		
+		MapModel.getMapModel().addContinent(continent1);
+		MapModel.getMapModel().addContinent(continent2);
+		
+		ReinforcementController rController = new ReinforcementController();
+		assertEquals(20, rController.calculateReinforcementContinentControl(testPlayer1));	
+		assertEquals(0, rController.calculateReinforcementContinentControl(testPlayer2));
+			
+	}
 
-    /**
-     * Test of initialize method, of class ReinforcementController.
-     */
-    @Test
-    public void testInitialize()
-    {
-        System.out.println("initialize");
-        URL url = null;
-        ResourceBundle resourceBundle = null;
-        ReinforcementController instance = null;
-        instance.initialize(url, resourceBundle);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+	/**
+	 * Reinforcement from 2nd exchange
+	 */
+	@Test public void testReinforcementTradedCard() 
+	{
+		ReinforcementController rController = new ReinforcementController();
+		MapModel.getMapModel().setExchangeTime(2);
+		
+		assertEquals(10, rController.calculateReinforcementFromCards());
+	}
+	
 
-    /**
-     * Test of initializeArmyField method, of class ReinforcementController.
-     */
-    @Test
-    public void testInitializeArmyField()
-    {
-        System.out.println("initializeArmyField");
-        ReinforcementController instance = null;
-        instance.initializeArmyField();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+	/**
+	 * Reinforcement from 3rd exchange
+	 */
+	@Test public void testReinforcementTradedCard3() 
+	{
+		ReinforcementController rController = new ReinforcementController();
+		MapModel.getMapModel().setExchangeTime(3);
+		assertEquals(15, rController.calculateReinforcementFromCards());
+	}
+	
+	/**
+	 * Validate 3 of different kind of card
+	 */
+	@Test public void testCardValidation() {
+		selectedCards = FXCollections.observableArrayList();
+		selectedCards.add(new Card("category1", "blue"));
+		selectedCards.add(new Card("category2", "blue"));
+		selectedCards.add(new Card("category3", "blue"));
+		ReinforcementController rController = new ReinforcementController();
+		assertTrue(rController.cardValidation(selectedCards));
+	}
+	
+	/**
+	 * Validate 3 of the different kind of card
+	 */
+	@Test public void testCardValidation2() {
+		selectedCards = FXCollections.observableArrayList();
+		selectedCards.add(new Card("category1", "blue"));
+		selectedCards.add(new Card("category3", "blue"));
+		selectedCards.add(new Card("category4", "blue"));
+		ReinforcementController rController = new ReinforcementController();
+		assertTrue(rController.cardValidation(selectedCards));
+	}
 
-    /**
-     * Test of initializeTerritory method, of class ReinforcementController.
-     */
-    @Test
-    public void testInitializeTerritory()
-    {
-        System.out.println("initializeTerritory");
-        ReinforcementController instance = null;
-        instance.initializeTerritory();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+	/**
+	 * Validate 3 of the different kind of card
+	 */
+	@Test public void testCardValidation3() {
+		selectedCards = FXCollections.observableArrayList();
+		selectedCards.add(new Card("category1", "blue"));
+		selectedCards.add(new Card("category4", "blue"));
+		selectedCards.add(new Card("category3", "blue"));
+		ReinforcementController rController = new ReinforcementController();
+		assertTrue(rController.cardValidation(selectedCards));
+	}
+	
+	/**
+	 * Validate 3 of the different kind of card
+	 */
+	@Test public void testCardValidation4() {
+		selectedCards = FXCollections.observableArrayList();
+		selectedCards.add(new Card("category2", "blue"));
+		selectedCards.add(new Card("category3", "blue"));
+		selectedCards.add(new Card("category4", "blue"));
+		ReinforcementController rController = new ReinforcementController();
+		assertTrue(rController.cardValidation(selectedCards));
+	}
+	
+	
+	/**
+	 * Validate 3 of the different kind of card
+	 */
+	@Test public void testCardValidation5() {
+		selectedCards = FXCollections.observableArrayList();
+		selectedCards.add(new Card("category1", "blue"));
+		selectedCards.add(new Card("category3", "blue"));
+		selectedCards.add(new Card("category4", "blue"));
+		ReinforcementController rController = new ReinforcementController();
+		assertTrue(rController.cardValidation(selectedCards));
+	}
+	
+	/**
+	 * Validate 3 of the same kind of card
+	 */
+	@Test public void testCardValidation7() {
+		selectedCards = FXCollections.observableArrayList();
+		selectedCards.add(new Card("category1", "blue"));
+		selectedCards.add(new Card("category1", "blue"));
+		selectedCards.add(new Card("category1", "blue"));
+		ReinforcementController rController = new ReinforcementController();
+		assertTrue(rController.cardValidation(selectedCards));
+	}
 
-    /**
-     * Test of getReinforcement method, of class ReinforcementController.
-     */
-    @Test
-    public void testGetReinforcement()
-    {
-        System.out.println("getReinforcement");
-        ReinforcementController instance = null;
-        int expResult = 0;
-        int result = instance.getReinforcement();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+	/**
+	 * Validate 3 of the same kind of card
+	 */
+	@Test public void testCardValidation8() {
+		selectedCards = FXCollections.observableArrayList();
+		selectedCards.add(new Card("category2", "blue"));
+		selectedCards.add(new Card("category2", "blue"));
+		selectedCards.add(new Card("category2", "blue"));
+		ReinforcementController rController = new ReinforcementController();
+		assertTrue(rController.cardValidation(selectedCards));
+	}
 
-    /**
-     * Test of getName method, of class ReinforcementController.
-     */
-    @Test
-    public void testGetName()
-    {
-        System.out.println("getName");
-        ReinforcementController instance = null;
-        String expResult = "";
-        String result = instance.getName();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+	/**
+	 * Validate 3 of the same kind of card
+	 */
+	@Test public void testCardValidation9() {
+		selectedCards = FXCollections.observableArrayList();
+		selectedCards.add(new Card("category3", "blue"));
+		selectedCards.add(new Card("category3", "blue"));
+		selectedCards.add(new Card("category3", "blue"));
+		ReinforcementController rController = new ReinforcementController();
+		assertTrue(rController.cardValidation(selectedCards));
+	}
+	
+	/**
+	 * Validate non exchangeable card
+	 */
+	@Test public void testCardValidation10() {
+		selectedCards = FXCollections.observableArrayList();
+		selectedCards.add(new Card("category3", "blue"));
+		selectedCards.add(new Card("category3", "blue"));
+		selectedCards.add(new Card("category2", "blue"));
+		ReinforcementController rController = new ReinforcementController();
+		assertFalse(rController.cardValidation(selectedCards));
+	}
+	
+	/**
+	 * Validate non exchangeable card
+	 */
+	@Test public void testCardValidation11() {
+		selectedCards = FXCollections.observableArrayList();
+		selectedCards.add(new Card("category3", "blue"));
+		selectedCards.add(new Card("category2", "blue"));
+		selectedCards.add(new Card("category2", "blue"));
+		ReinforcementController rController = new ReinforcementController();
+		assertFalse(rController.cardValidation(selectedCards));
+	}
+	
+	/**
+	 * Validate non exchangeable card
+	 */
+	@Test public void testCardValidation12() {
+		selectedCards = FXCollections.observableArrayList();
+		selectedCards.add(new Card("category1", "blue"));
+		selectedCards.add(new Card("category3", "blue"));
+		selectedCards.add(new Card("category3", "blue"));
+		ReinforcementController rController = new ReinforcementController();
+		assertFalse(rController.cardValidation(selectedCards));
+	}
+	
+	/**
+	 * Validate non exchangeable card
+	 */
+	@Test public void testCardValidation13() {
+		selectedCards = FXCollections.observableArrayList();
+		selectedCards.add(new Card("category4", "blue"));
+		selectedCards.add(new Card("category3", "blue"));
+		selectedCards.add(new Card("category4", "blue"));
+		ReinforcementController rController = new ReinforcementController();
+		assertFalse(rController.cardValidation(selectedCards));
+	}
 
-    /**
-     * Test of setArmy method, of class ReinforcementController.
-     */
-    @Test
-    public void testSetArmy()
-    {
-        System.out.println("setArmy");
-        ReinforcementController instance = null;
-        instance.setArmy();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of goToAttackPhase method, of class ReinforcementController.
-     */
-    @Test
-    public void testGoToAttackPhase() throws Exception
-    {
-        System.out.println("goToAttackPhase");
-        ActionEvent event = null;
-        ReinforcementController instance = null;
-        instance.goToAttackPhase(event);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-    
 }

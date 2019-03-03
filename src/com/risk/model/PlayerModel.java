@@ -52,22 +52,16 @@ public class PlayerModel extends Observable {
      * This method increments the current player index
      *
      */
-    public void IncrementPlayerIndex()
+    public void setPlayerIndex(int increment)
     {
-        currentPlayerIndex = (currentPlayerIndex + 1) % playerList.size();
+        currentPlayerIndex = increment;
+    }
+    
+    public int getPlayerIndex() {
+    	return currentPlayerIndex;
     }
 
-    /**
-     * This method gets the next player and increments the player index.
-     *
-     * @return current returns the next player
-     */
-    public Player getNextPlayer()
-    {
-        Player current = playerList.get(currentPlayerIndex);
-        IncrementPlayerIndex();
-        return current;
-    }
+
     public int getNumberOfPlayer() {
     	return playerList.size();
     }

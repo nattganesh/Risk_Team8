@@ -18,10 +18,9 @@ import javafx.collections.ObservableList;
  */
 public class MapModel extends Observable {
 
-//    private ArrayList<Continent> continentsModel = new ArrayList<>();
 	private ObservableList<Continent> continentsModel = FXCollections.observableArrayList();
     private ArrayList<Country> countriesModel = new ArrayList<>();
-    private int exchangeTime = 0;
+    private int exchangeTime = 1;
     private static MapModel mapModel;
     private MapModel(){}
     
@@ -29,10 +28,11 @@ public class MapModel extends Observable {
     	return exchangeTime;
     }
     
-    public void setExchangeTime() {
-    	 exchangeTime++;
+    public void setExchangeTime(int exchange) {
+    	 exchangeTime = exchange;
     }
-     
+    
+
     /**
      * this method adds a country to the country model
      *

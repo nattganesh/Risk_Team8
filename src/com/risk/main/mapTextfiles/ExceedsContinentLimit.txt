@@ -9,7 +9,6 @@ North America,Quebec
 North America,Western United States
 North America,Eastern United States
 North America,Central America
-South America,Venezuela
 South America,Peru
 South America,Brazil
 South America,Argentina

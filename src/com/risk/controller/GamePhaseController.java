@@ -42,12 +42,13 @@ public class GamePhaseController implements Observer {
     public GamePhaseController(Stage s)
     {
         GamePhaseModel.getGamePhaseModel().addObserver(this);
-
         this.stage = s;
-     
-
     }
-
+    
+    public Stage getStage() {
+        return stage;
+    }
+    
     @Override
     public void update(Observable o, Object phase)
     {
@@ -58,13 +59,12 @@ public class GamePhaseController implements Observer {
                
             FXMLLoader reinforcementLoader = new FXMLLoader(getClass().getResource("/com/risk/view/Reinforcement.fxml"));
             reinforcementLoader.setController(rController);
-            System.out.println("here~");
+            System.out.println("we in reinforcement");
             try
             {
-            	
                 stage.getScene().setRoot(reinforcementLoader.load());
                 
-                System.out.println("we in reinforcement");
+
             }
             catch (IOException e)
             {
@@ -81,7 +81,8 @@ public class GamePhaseController implements Observer {
             try
             {
                 stage.getScene().setRoot(attackLoader.load());
-                System.out.println("we in attack");
+             
+                System.out.println(attackLoader.getClass());
             }
             catch (IOException e)
             {
@@ -105,6 +106,7 @@ public class GamePhaseController implements Observer {
             }
             stage.show();
         }
+  
 
     }
 }

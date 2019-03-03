@@ -5,6 +5,7 @@ package com.risk.controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import com.risk.model.GamePhaseModel;
@@ -118,13 +119,7 @@ public class FortificationController implements Initializable {
 		{
 			Adjacent.getItems().clear();
 			AdjacentArmy.setText("");
-			for (Country connectedTerritory : Territory.getSelectionModel().getSelectedItem().getConnectedCountries()) 
-			{
-				if (connectedTerritory.getRuler().getName().equals(PlayerModel.getPlayerModel().getCurrentPlayer().getName())) 
-				{
-					Adjacent.getItems().add(connectedTerritory);
-				}
-			}
+			Adjacent.getItems().addAll(getConnectedCountryYouOwn(Territory.getSelectionModel().getSelectedItem()));
 			TerritoryArmy.setText(Integer.toString(Territory.getSelectionModel().getSelectedItem().getArmyCount()));
 		}
 	}
@@ -132,7 +127,6 @@ public class FortificationController implements Initializable {
 	@FXML
 	public void adjacentHandler() 
 	{
-	
 		if (Adjacent.getSelectionModel().getSelectedItem() != null) 
 		{
 			AdjacentArmy.setText(Integer.toString(Adjacent.getSelectionModel().getSelectedItem().getArmyCount()));
@@ -172,6 +166,18 @@ public class FortificationController implements Initializable {
 			messageObservableList.add("Invalid Selection");
 		}
 	}
+	
+	public ArrayList<Country> getConnectedCountryYouOwn(Country country) {
+		ArrayList <Country> connectedCountry = new ArrayList <Country>();
+		for (Country connectedTerritory : country.getConnectedCountries()) 
+		{
+			if (connectedTerritory.getRuler().getName().equals(country.getRuler().getName())) 
+			{
+				connectedCountry.add(connectedTerritory);
+			}
+		}
+		return connectedCountry;
+	}
 
 	public void onNextPlayer(ActionEvent event) throws IOException 
 	{
@@ -179,7 +185,8 @@ public class FortificationController implements Initializable {
 		{
 			PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries().clear();
 			PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries().addAll(territoryObservableList);
-			PlayerModel.getPlayerModel().IncrementPlayerIndex();
+			int currentIndex = PlayerModel.getPlayerModel().getPlayerIndex();
+			PlayerModel.getPlayerModel().setPlayerIndex((currentIndex + 1) % PlayerModel.getPlayerModel().getNumberOfPlayer());
 			GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
 		} 
 		else 
