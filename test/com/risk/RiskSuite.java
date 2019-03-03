@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import com.risk.controller.*;
 
 /**
  *
@@ -19,7 +20,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses(
 {
-   com.risk.controller.ReinforcementControllerTest.class
+   ReinforcementControllerTest.class,
+   FortificationControllerTest.class
 })
 public class RiskSuite {
 	

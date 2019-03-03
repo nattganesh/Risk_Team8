@@ -55,6 +55,7 @@ public class FortificationController implements Initializable {
 	ObservableList<String> messageObservableList = FXCollections.observableArrayList();
 	
 	private boolean fortification = false;
+	ArrayList<Country> CountriesArrivedbyPath = new ArrayList<>();
 
 
 	public FortificationController() {
@@ -119,7 +120,7 @@ public class FortificationController implements Initializable {
 		{
 			Adjacent.getItems().clear();
 			AdjacentArmy.setText("");
-			Adjacent.getItems().addAll(getConnectedCountryYouOwn(Territory.getSelectionModel().getSelectedItem()));
+			Adjacent.getItems().addAll(getCountriesArrivedbyPath(Territory.getSelectionModel().getSelectedItem(),Territory.getSelectionModel().getSelectedItem(),CountriesArrivedbyPath));
 			TerritoryArmy.setText(Integer.toString(Territory.getSelectionModel().getSelectedItem().getArmyCount()));
 		}
 	}
@@ -167,16 +168,45 @@ public class FortificationController implements Initializable {
 		}
 	}
 	
-	public ArrayList<Country> getConnectedCountryYouOwn(Country country) {
-		ArrayList <Country> connectedCountry = new ArrayList <Country>();
-		for (Country connectedTerritory : country.getConnectedCountries()) 
+	public static ArrayList<Country> getCountriesArrivedbyPath(Country country, Country firstCountry,ArrayList<Country> countries)
+	{
+		Player p = country.getRuler();
+		for(Country c: country.getConnectedCountries()) 
 		{
-			if (connectedTerritory.getRuler().getName().equals(country.getRuler().getName())) 
+			Player player =c.getRuler();
+			if(player.getName().equals(p.getName())) 
 			{
-				connectedCountry.add(connectedTerritory);
+				if(isCountryDuplicated(c,firstCountry, countries)) 
+				{
+					countries.add(c);
+					countries = getCountriesArrivedbyPath(c,firstCountry, countries);
+				}
 			}
 		}
-		return connectedCountry;
+		return countries;
+	}
+	
+	public static boolean isCountryDuplicated(Country country, Country firstCountry, ArrayList<Country> countries) 
+	{
+		int i = 0;
+		if (country.getName().equalsIgnoreCase(firstCountry.getName())) 
+		{
+			i = 1;
+		} else 
+		{
+			for (Country c : countries) 
+			{
+				if (c.getName().equalsIgnoreCase(country.getName())) 
+				{
+					i = 1;
+				}
+			}
+		}
+		if (i == 0) 
+		{
+			return true;
+		}
+		return false;
 	}
 
 	public void onNextPlayer(ActionEvent event) throws IOException 
