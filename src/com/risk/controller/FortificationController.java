@@ -1,19 +1,12 @@
-/**
- *
- */
 package com.risk.controller;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import com.risk.model.GamePhaseModel;
-import com.risk.model.MapModel;
 import com.risk.model.PlayerModel;
-import com.risk.model.card.Card;
 import com.risk.model.map.Country;
-import com.risk.model.player.Player;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,6 +18,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
 /**
+ * This class is necessary for the controller of fortification phase
  * @author DKM
  *
  */
@@ -56,7 +50,9 @@ public class FortificationController implements Initializable {
 	
 	private boolean fortification = false;
 
-
+	/**
+	 * This is a constructor of the FortificationController class
+	 */
 	public FortificationController() {
 
 	}
@@ -71,10 +67,14 @@ public class FortificationController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1)
 	{
 		
+		// sets observableList for handling game message to UI
 		messageFortification.setItems(messageObservableList);
 		
+		// sets occupied country of current player to observableList
 		territoryObservableList.addAll(PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
+		// sets observableList to the UI
 		Territory.setItems(territoryObservableList);
+		// This method extracts the country name in the ObservableList and outputs to UI
 		Territory.setCellFactory(param -> new ListCell<Country>() 
 		{
 			@Override
@@ -91,7 +91,10 @@ public class FortificationController implements Initializable {
 				}
 			}
 		});
+		
+		// sets observableList to the UI
 		Adjacent.setItems(adjacentObservableList);
+		// This method extracts the country name in the ObservableList and outputs to UI
 		Adjacent.setCellFactory(param -> new ListCell<Country>()
 		{
 			@Override
@@ -111,10 +114,12 @@ public class FortificationController implements Initializable {
 
 	}
 
+	/**
+	 * This method handles loading adjacent connected countries that current player owns
+	 */
 	@FXML
 	public void territoryHandler() 
 	{
-
 		if (Territory.getSelectionModel().getSelectedItem() != null) 
 		{
 			Adjacent.getItems().clear();
@@ -124,6 +129,9 @@ public class FortificationController implements Initializable {
 		}
 	}
 	
+	/**
+	 * This method handles showing the army count of the adjacent country
+	 */
 	@FXML
 	public void adjacentHandler() 
 	{
@@ -133,6 +141,9 @@ public class FortificationController implements Initializable {
 		}
 	}
 
+	/**
+	 * This method handles the movement of armies selected country to adjacent country
+	 */
 	@FXML
 	public void moveHandler() 
 	{
@@ -167,6 +178,11 @@ public class FortificationController implements Initializable {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param country selected country in your occupied countries
+	 * @return connectedCountry this returns ArrayList of connected countries that you own
+	 */
 	public ArrayList<Country> getConnectedCountryYouOwn(Country country) {
 		ArrayList <Country> connectedCountry = new ArrayList <Country>();
 		for (Country connectedTerritory : country.getConnectedCountries()) 
@@ -179,7 +195,13 @@ public class FortificationController implements Initializable {
 		return connectedCountry;
 	}
 
-	public void onNextPlayer(ActionEvent event) throws IOException 
+    /**
+     * This method sets the GamePhaseModel to reinforcement, which notifies the subscribed GameController 
+     * to set new scene. This method also updates the index of current player to the next player
+     * 
+     * @param event listens for click event
+     */
+	public void onNextPlayer(ActionEvent event)
 	{
 		if (fortification == true) 
 		{

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.risk.controller;
 
 import java.io.File;
@@ -39,6 +36,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
 /**
+ * This class is necessary for controller of the interactive Map Editor phase of the game.
+ * It's responsible for file parsing, validating map, and assigning countries to players
  * @author DKM
  *
  */
@@ -76,11 +75,13 @@ public class MapEditorController implements Initializable {
 	ObservableList<Country> adjacentObservableList = FXCollections.observableArrayList();
 	ObservableList<String> messageObservableList = FXCollections.observableArrayList();
 	
+   /** (non-Javadoc)
+	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
+     */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1)
 	{
 		ValidationError.setItems(messageObservableList);
-		
 		ContinentView.setItems(MapModel.getMapModel().getContinents());
 		ContinentView.setCellFactory(param -> new ListCell<Continent>()
 		{
@@ -99,12 +100,7 @@ public class MapEditorController implements Initializable {
 			}
 		});
 
-		// this adds observables to the view, meaning view now represents change in
-		// observablist dynamically
 		TerritoryView.setItems(territoryObservableList);
-
-		// Looks long, but it all it does to access object properties so i can print
-		// stuff to view
 		TerritoryView.setCellFactory(param -> new ListCell<Country>() 
 		{
 			@Override
@@ -121,12 +117,7 @@ public class MapEditorController implements Initializable {
 				}
 			}
 		});
-		// this adds observables to the view, meaning view now represents change in
-		// observablist dynamically
 		AdjacentView.setItems(adjacentObservableList);
-
-		// Looks long, but it all it does to access object properties so i can print
-		// stuff to view
 		AdjacentView.setCellFactory(param -> new ListCell<Country>() 
 		{
 			@Override
@@ -146,7 +137,10 @@ public class MapEditorController implements Initializable {
 
 	}
 
-	// when user clicks continent it loads territory associated with it
+	/**
+	 * 
+	 * @param arg0
+	 */
 	@FXML
 	public void loadTerritoryHandler(MouseEvent arg0) 
 	{
@@ -169,7 +163,9 @@ public class MapEditorController implements Initializable {
 		}
 	}
 
-	// add a territory
+	/**
+	 * This method handles adding territory to the continent
+	 */
 	@FXML
 	public void territoryAddHandler() 
 	{
@@ -189,7 +185,11 @@ public class MapEditorController implements Initializable {
 		}
 	}
 	
-	// check whether territory already exists in the continents
+	/**
+	 * This method checks if the territory already exists in the map
+	 * @param countryName country to be searched in the map
+	 * @return if the country if it exists, otherwise null
+	 */
 	public Country searchTerritory(String countryName) 
 	{
 		Country territoryExists = null;
@@ -208,7 +208,9 @@ public class MapEditorController implements Initializable {
 		return territoryExists;
 	}
 	
-	// add an adjacent territory
+	/**
+	 * This method handles adding the neighbour in the territory
+	 */
 	@FXML
 	public void adjacentAddHandler() 
 	{
@@ -241,6 +243,11 @@ public class MapEditorController implements Initializable {
 		}
 	}
 
+	/**
+	 * 
+	 * @param countryName name of the country to be searched in the adjacent list
+	 * @return true if the country already exists in the adjacent list, false otherwise
+	 */
 	private boolean existsInAdjacentList(String countryName) 
 	{
 		for (Country country : TerritoryView.getSelectionModel().getSelectedItem().getConnectedCountries()) 
@@ -253,6 +260,9 @@ public class MapEditorController implements Initializable {
 		return false;
 	}
 
+	/**
+	 * This method handles deleting a territory and all of it's connection in the map
+	 */
 	@FXML
 	public void territoryDeleteHandler() {
 		if (TerritoryView.getSelectionModel().getSelectedItem() != null && ContinentView.getSelectionModel().getSelectedItem() != null) 
@@ -277,6 +287,9 @@ public class MapEditorController implements Initializable {
 		} 
 	}
 
+	/**
+	 * This method handles deleting adjacent territories
+	 */
 	@FXML
 	public void adjacentDeleteHandler() 
 	{
@@ -308,6 +321,13 @@ public class MapEditorController implements Initializable {
 		} 
 	}
 
+	/** 
+	 * This method handles loading the map to the UI from input file by parsing and checking validity of the map
+	 * @throws CannotFindException file format is invalid
+	 * @throws DuplicatesException country is duplicated
+	 * @throws FileNotFoundException file is not found
+	 * @throws CountLimitException continent has more or less than fixed number of country
+	 */
 	@FXML
 	public void loadMapHandler() throws CannotFindException, DuplicatesException, FileNotFoundException, CountLimitException 
 	{
@@ -341,6 +361,11 @@ public class MapEditorController implements Initializable {
 		}		
 	}
 
+	/**
+	 * This methods handles validation of edited map file before saving outputting to a file
+	 * @throws CannotFindException file format is invalid
+	 * @throws CountLimitException continent has more or less than fixed number of country
+	 */
 	@FXML
 	public void saveMapHandler() throws CannotFindException, CountLimitException {		
 		if (MapModel.getMapModel().getCountries().size() != 0)
@@ -365,6 +390,9 @@ public class MapEditorController implements Initializable {
 		} 
 	}
 
+	/** 
+	 * This method handles generating a new map with new file name
+	 */
 	@FXML
 	public void newMapHandler()
 	{
@@ -382,6 +410,11 @@ public class MapEditorController implements Initializable {
 		}
 	}
 
+	/**
+	 * This method handles setting number of players, calculating starting armies in each country,
+	 * it assigns countries to players and determines round robin turn. Once all of these are done it will
+	 * set the phase to reinforcement.
+	 */
 	@FXML
 	public void startGameHandler()
 	{
@@ -403,11 +436,8 @@ public class MapEditorController implements Initializable {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javafx.fxml.Initializable#initialize(java.net.URL,
-	 * java.util.ResourceBundle)
+	/**
+	 * This method initializes fixed continents in the UI
 	 */
 	public void initializeContinents()
 	{
@@ -423,6 +453,9 @@ public class MapEditorController implements Initializable {
 		messageObservableList.add("This is a fixed map with the following continents");
 	}
 
+	/** 
+	 * This method initalizes the 2 - 6 players in the UI
+	 */
 	public void initializePlayers() 
 	{
 		PlayerID.getItems().clear();
@@ -432,7 +465,6 @@ public class MapEditorController implements Initializable {
 	/**
 	 * This method is a helper method for clearing the UI board
 	 */
-	
 	public void clearMapEditor() 
 	{
 		ContinentView.getItems().clear();

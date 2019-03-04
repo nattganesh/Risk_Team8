@@ -1,5 +1,6 @@
 /**
- *
+ * Necessary to create the model of the map in the game play. It's important for getting 
+ * continents and countries of the map, and also keeping track of how many time the card was exchanged
  */
 package com.risk.model;
 
@@ -24,10 +25,18 @@ public class MapModel extends Observable {
     private static MapModel mapModel;
     private MapModel(){}
     
+    /**
+     * 
+     * @return this gets the number of time the card was exchanged in the current game
+     */
     public int getExchangeTime() {
     	return exchangeTime;
     }
     
+    /**
+     * 
+     * @param exchange sets the number of times the cards were exchanged in the game
+     */
     public void setExchangeTime(int exchange) {
     	 exchangeTime = exchange;
     }
@@ -73,6 +82,10 @@ public class MapModel extends Observable {
         return continentsModel;
     }
     
+    /**
+     * 
+     * @return this returns MapModel class as a singleton
+     */
     public static MapModel getMapModel()
     {
         if(mapModel == null)

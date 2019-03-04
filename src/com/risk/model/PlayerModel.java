@@ -1,5 +1,6 @@
 /**
- * Necessary to create the model of the gameplay. Keeps track of parsed map and players.
+ * Necessary to create the model of the players in the game play. Important for getting current
+ * player
  *
  * @author Natheepan
  * @author Tianyi
@@ -32,6 +33,9 @@ public class PlayerModel extends Observable {
     private Player playerWins = null;
     private static PlayerModel playerModel;
 
+    /**
+     * Constructor for PlayerModel class
+     */
     private PlayerModel()
     {
     }
@@ -57,11 +61,18 @@ public class PlayerModel extends Observable {
         currentPlayerIndex = increment;
     }
     
+    /**
+     * 
+     * @return the index of the current player
+     */
     public int getPlayerIndex() {
     	return currentPlayerIndex;
     }
 
-
+    /**
+     * 
+     * @return number of total players
+     */
     public int getNumberOfPlayer() {
     	return playerList.size();
     }
@@ -96,6 +107,10 @@ public class PlayerModel extends Observable {
         return playerList;
     }
 
+    /**
+     * 
+     * @return this PlayerModel class as a singleton
+     */
     public static PlayerModel getPlayerModel()
     {
         if (playerModel == null)
