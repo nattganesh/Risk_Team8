@@ -180,6 +180,15 @@ public class FortificationController implements Initializable {
 		}
 	}
 	
+	
+	/**
+	 * This method is used to get all accessible countries of the country player chooses to move armies from
+	 * 
+	 * @param country The country which is being checked to find all accessible countries to it
+	 * @param firstCountry The country the player chooses to move armies from
+	 * @param countries The list that saves all countries accessible to the country the player chooses
+	 * @return The list of accessible countries corresponding to the country
+	 **/
 	public static ArrayList<Country> getCountriesArrivedbyPath(Country country, Country firstCountry,ArrayList<Country> countries)
 	{
 		Player p = country.getRuler();
@@ -198,6 +207,15 @@ public class FortificationController implements Initializable {
 		return countries;
 	}
 	
+	/**
+	 * This method is used to check if the country accessible is already in the result list
+	 * And avoid adding the origin country the player choose to the result list
+	 * 
+	 * @param country The country which is being checked to find all accessible countries to it
+	 * @param firstCountry The country the player chooses to move armies from
+	 * @param countries The list that saves all countries accessible to the country the player chooses
+	 * @return true if the country accessible is not in the result list; otherwise return false
+	 */
 	public static boolean isCountryDuplicated(Country country, Country firstCountry, ArrayList<Country> countries) 
 	{
 		int i = 0;

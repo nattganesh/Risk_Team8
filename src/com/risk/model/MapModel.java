@@ -21,7 +21,7 @@ public class MapModel extends Observable {
 
 	private ObservableList<Continent> continentsModel = FXCollections.observableArrayList();
     private ArrayList<Country> countriesModel = new ArrayList<>();
-    private int exchangeTime = 1;
+    private int exchangeTime = 0;
     private static MapModel mapModel;
     private MapModel(){}
     
@@ -43,9 +43,9 @@ public class MapModel extends Observable {
     
 
     /**
-     * this method adds a country to the country model
+     * This method adds a country to the country model
      *
-     * @param country country being added to the model
+     * @param country Country being added to the model
      */
     public void addCountry(Country country)
     {
@@ -53,9 +53,9 @@ public class MapModel extends Observable {
     }
 
     /**
-     * this method adds a continent to the continent model
+     * This method adds a continent to the continent model
      *
-     * @param continent continent to be added to the model
+     * @param continent Continent to be added to the model
      */
     public void addContinent(Continent continent)
     {
@@ -63,9 +63,9 @@ public class MapModel extends Observable {
     }
 
     /**
-     * this method gets the countries in the country model
+     * This method gets the countries in the country model
      *
-     * @return countriesModel returns the country model
+     * @return countriesModel Returns the country model
      */
     public ArrayList<Country> getCountries()
     {
@@ -73,9 +73,9 @@ public class MapModel extends Observable {
     }
 
     /**
-     * this method gets the continents in the continent model
+     * This method gets the continents in the continent model
      *
-     * @return continentModel returns the continent model
+     * @return continentModel Returns the continent model
      */
     public ObservableList<Continent> getContinents()
     {

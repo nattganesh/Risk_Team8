@@ -18,9 +18,12 @@ public class Deck {
     int n = 44;
     String owner = null;
 
+	/* This method is used to initialize the deck with 44 cards. 
+	 * 
+	 * */
     public void initialize()
     {
-        String catagory[] =
+        String category[] =
         {
             "Infantry", "Cavalry", "Artillery", "Wild"
         };
@@ -30,19 +33,19 @@ public class Deck {
         {
             if (i == 0 || i == 1)
             {
-                card[i] = new Card(catagory[3], owner);
+                card[i] = new Card(category[3], owner);
             }
             else if (i < 16)
             {
-                card[i] = new Card(catagory[0], owner);
+                card[i] = new Card(category[0], owner);
             }
             else if (i < 30)
             {
-                card[i] = new Card(catagory[1], owner);
+                card[i] = new Card(category[1], owner);
             }
             else
             {
-                card[i] = new Card(catagory[2], owner);
+                card[i] = new Card(category[2], owner);
             }
         }
         for (int i = 0; i < n; i++)
@@ -53,6 +56,9 @@ public class Deck {
 
     }
 
+    /* This method is used to shuffle the deck randomly. 
+	 * 
+	 * */
     public void shuffleCard()
     {
         Random r = new Random();
@@ -70,6 +76,10 @@ public class Deck {
         System.out.print("\n");
     }
 
+    /* This method is used to send the card to a player. 
+   	 * 
+   	 * @param player The name of the player
+   	 * */
     public void sendCard(String player)
     {
         Card cardforp = card[0];
