@@ -17,85 +17,69 @@ import static org.junit.Assert.*;
  * This class test for fortification controller
  *
  * @author DKM
+ * @author Tianyi
  */
 public class FortificationControllerTest {
+	private String countryName;
+	private Player firstPlayer;
+	private Player secondPlayer;
+	private ArrayList<Country> occupiedCountries1;
+	private ArrayList<Country> occupiedCountries2;
+	private Country firstCountry;
 
-	 
-	 private ArrayList <Country> connected;
-	 private Country selectedCountry;
 	 
 	@BeforeEach
 	public void setUp() {
-		selectedCountry = new Country("country0", "continent1");
-		selectedCountry.setRuler(new Player("red"));
-		connected = new ArrayList<Country>();
+		firstPlayer = new Player("Green");
+		occupiedCountries1 = new ArrayList<Country>();
+		Country c1 = new Country("China","Asia");
+		Country c2 = new Country("Quebec","North America");
+		Country c3 = new Country("Siam","Asia");
+		Country c4 = new Country("India","Asia");
+		Country c5 = new Country("Congo","Africa");
+		Country c6 = new Country("Indonesia","Australia");
+		occupiedCountries1.add(c1);
+		occupiedCountries1.add(c2);
+		occupiedCountries1.add(c3);
+		occupiedCountries1.add(c6);
+		c1.getConnectedCountries().add(c3);
+		c1.getConnectedCountries().add(c4);
+		c3.getConnectedCountries().add(c4);
+		c3.getConnectedCountries().add(c6);
+		firstPlayer.setOccupiedCountries(occupiedCountries1);
+		c1.setRuler(firstPlayer);
+		c2.setRuler(firstPlayer);
+		c3.setRuler(firstPlayer);
+		c6.setRuler(firstPlayer);
+		secondPlayer = new Player("Red");
+		occupiedCountries2 = new ArrayList<Country>();
+		occupiedCountries2.add(c4);
+		occupiedCountries2.add(c5);
+		secondPlayer.setOccupiedCountries(occupiedCountries2);
+		c4.setRuler(secondPlayer);
+		c5.setRuler(secondPlayer);
+		countryName = "China";
+		firstCountry = firstPlayer.getCountry(countryName);
+		
 	}
 
-	/**
-	 * test for number of connected country you own, which is 1
-	 */
-    @Test 
-    public void testgetConnectedCountryYouOwn() {
+    @Test
+    public void testGetCountriesArrivedbyPath1() {
+		ArrayList<Country> expected = new ArrayList<>();
+		expected.add(firstPlayer.getCountry("Siam"));
+		expected.add(firstPlayer.getCountry("Indonesia"));
+		ArrayList<Country> result = new ArrayList<>();
+		FortificationController fController = new FortificationController();
+		result = fController.getCountriesArrivedbyPath(firstCountry, firstCountry,result);
+		assertEquals(expected, result);
+	}
+    @Test
+    public void testGetCountriesArrivedbyPath2() {
+		ArrayList<Country> result = new ArrayList<>();
+		Country testCountry = firstPlayer.getCountry("Quebec");
+		FortificationController fController = new FortificationController();
+		result = fController.getCountriesArrivedbyPath(testCountry, testCountry,result);
+		assertTrue(result.isEmpty());
+	}
 
-    	Country country1 = new Country("country1", "continent1");
-    	Country country2 = new Country("country2", "continent1");
-    	
-    	country1.setRuler(new Player("blue"));
-    	country2.setRuler(new Player("red"));
-    	
-    	connected.add(country1);
-    	connected.add(country2);
-
-    	selectedCountry.setConnectedCountries(connected);
-    	
-    	FortificationController fController = new FortificationController();
-    	assertEquals(1, fController.getConnectedCountryYouOwn(selectedCountry).size());    	
-    	
-    	
-    }
-    
-	/**
-	 * test for number of connected country you own, which is 6
-	 */
-    @Test 
-    public void testgetConnectedCountryYouOwn1() {
-
-    	Country country1 = new Country("country1", "continent1");
-    	Country country2 = new Country("country2", "continent1");
-    	Country country3 = new Country("country3", "continent2");
-    	Country country4 = new Country("country4", "continent1");
-    	Country country5 = new Country("country5", "continent1");
-    	Country country6 = new Country("country6", "continent2");
-    	Country country7 = new Country("country7", "continent3");
-    	Country country8 = new Country("country8", "continent3");
-    	Country country9 = new Country("country9", "continent3");
-    	
-    	
-    	country1.setRuler(new Player("blue"));
-    	country2.setRuler(new Player("red"));
-    	country3.setRuler(new Player("red"));
-    	country4.setRuler(new Player("red"));
-    	country5.setRuler(new Player("red"));
-    	country6.setRuler(new Player("red"));
-    	country7.setRuler(new Player("red"));
-    	country8.setRuler(new Player("yellow"));
-    	country9.setRuler(new Player("green"));
-
-    	connected.add(country1);
-    	connected.add(country2);
-    	connected.add(country3);
-    	connected.add(country4);
-    	connected.add(country5);
-    	connected.add(country6);
-    	connected.add(country7);
-    	connected.add(country8);
-    	connected.add(country9);
-    	
-    	selectedCountry.setConnectedCountries(connected);
-    	
-    	FortificationController fController = new FortificationController();
-    	assertEquals(6, fController.getConnectedCountryYouOwn(selectedCountry).size());    	
-    	
-    	
-    }
 }

@@ -233,136 +233,53 @@ public class ReinforcementControllerTest {
 	}
 	
 	/**
-	 * Validate 3 of the different kind of card
+	 * Validate 3 of the same kind of card
 	 */
 	@Test public void testCardValidation2() {
 		selectedCards = FXCollections.observableArrayList();
 		selectedCards.add(new Card("category1", "blue"));
-		selectedCards.add(new Card("category3", "blue"));
-		selectedCards.add(new Card("category4", "blue"));
+		selectedCards.add(new Card("category1", "blue"));
+		selectedCards.add(new Card("category1", "blue"));
 		ReinforcementController rController = new ReinforcementController();
 		assertTrue(rController.cardValidation(selectedCards));
 	}
 
+	
 	/**
-	 * Validate 3 of the different kind of card
+	 * Validate non exchangeable card
 	 */
 	@Test public void testCardValidation3() {
 		selectedCards = FXCollections.observableArrayList();
-		selectedCards.add(new Card("category1", "blue"));
-		selectedCards.add(new Card("category4", "blue"));
 		selectedCards.add(new Card("category3", "blue"));
+		selectedCards.add(new Card("category3", "blue"));
+		selectedCards.add(new Card("category2", "blue"));
 		ReinforcementController rController = new ReinforcementController();
-		assertTrue(rController.cardValidation(selectedCards));
+		assertFalse(rController.cardValidation(selectedCards));
 	}
 	
 	/**
-	 * Validate 3 of the different kind of card
+	 * Validate non exchangeable card
 	 */
 	@Test public void testCardValidation4() {
 		selectedCards = FXCollections.observableArrayList();
-		selectedCards.add(new Card("category2", "blue"));
 		selectedCards.add(new Card("category3", "blue"));
-		selectedCards.add(new Card("category4", "blue"));
+		selectedCards.add(new Card("category2", "blue"));
+		selectedCards.add(new Card("category2", "blue"));
 		ReinforcementController rController = new ReinforcementController();
-		assertTrue(rController.cardValidation(selectedCards));
+		assertFalse(rController.cardValidation(selectedCards));
 	}
 	
-	
 	/**
-	 * Validate 3 of the different kind of card
+	 * Validate non exchangeable card
 	 */
 	@Test public void testCardValidation5() {
 		selectedCards = FXCollections.observableArrayList();
-		selectedCards.add(new Card("category1", "blue"));
-		selectedCards.add(new Card("category3", "blue"));
-		selectedCards.add(new Card("category4", "blue"));
-		ReinforcementController rController = new ReinforcementController();
-		assertTrue(rController.cardValidation(selectedCards));
-	}
-	
-	/**
-	 * Validate 3 of the same kind of card
-	 */
-	@Test public void testCardValidation7() {
-		selectedCards = FXCollections.observableArrayList();
-		selectedCards.add(new Card("category1", "blue"));
-		selectedCards.add(new Card("category1", "blue"));
-		selectedCards.add(new Card("category1", "blue"));
-		ReinforcementController rController = new ReinforcementController();
-		assertTrue(rController.cardValidation(selectedCards));
-	}
-
-	/**
-	 * Validate 3 of the same kind of card
-	 */
-	@Test public void testCardValidation8() {
-		selectedCards = FXCollections.observableArrayList();
-		selectedCards.add(new Card("category2", "blue"));
-		selectedCards.add(new Card("category2", "blue"));
-		selectedCards.add(new Card("category2", "blue"));
-		ReinforcementController rController = new ReinforcementController();
-		assertTrue(rController.cardValidation(selectedCards));
-	}
-
-	/**
-	 * Validate 3 of the same kind of card
-	 */
-	@Test public void testCardValidation9() {
-		selectedCards = FXCollections.observableArrayList();
-		selectedCards.add(new Card("category3", "blue"));
-		selectedCards.add(new Card("category3", "blue"));
-		selectedCards.add(new Card("category3", "blue"));
-		ReinforcementController rController = new ReinforcementController();
-		assertTrue(rController.cardValidation(selectedCards));
-	}
-	
-	/**
-	 * Validate non exchangeable card
-	 */
-	@Test public void testCardValidation10() {
-		selectedCards = FXCollections.observableArrayList();
-		selectedCards.add(new Card("category3", "blue"));
-		selectedCards.add(new Card("category3", "blue"));
-		selectedCards.add(new Card("category2", "blue"));
-		ReinforcementController rController = new ReinforcementController();
-		assertFalse(rController.cardValidation(selectedCards));
-	}
-	
-	/**
-	 * Validate non exchangeable card
-	 */
-	@Test public void testCardValidation11() {
-		selectedCards = FXCollections.observableArrayList();
-		selectedCards.add(new Card("category3", "blue"));
-		selectedCards.add(new Card("category2", "blue"));
-		selectedCards.add(new Card("category2", "blue"));
-		ReinforcementController rController = new ReinforcementController();
-		assertFalse(rController.cardValidation(selectedCards));
-	}
-	
-	/**
-	 * Validate non exchangeable card
-	 */
-	@Test public void testCardValidation12() {
-		selectedCards = FXCollections.observableArrayList();
-		selectedCards.add(new Card("category1", "blue"));
-		selectedCards.add(new Card("category3", "blue"));
-		selectedCards.add(new Card("category3", "blue"));
-		ReinforcementController rController = new ReinforcementController();
-		assertFalse(rController.cardValidation(selectedCards));
-	}
-	
-	/**
-	 * Validate non exchangeable card
-	 */
-	@Test public void testCardValidation13() {
-		selectedCards = FXCollections.observableArrayList();
 		selectedCards.add(new Card("category4", "blue"));
 		selectedCards.add(new Card("category3", "blue"));
 		selectedCards.add(new Card("category4", "blue"));
 		ReinforcementController rController = new ReinforcementController();
 		assertFalse(rController.cardValidation(selectedCards));
 	}
-
+	
+	
 }
