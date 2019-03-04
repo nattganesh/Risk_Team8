@@ -14,6 +14,7 @@ import com.risk.model.exceptions.CountLimitException;
 import com.risk.model.exceptions.DuplicatesException;
 import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
+import com.risk.controller.MapEditorController;
 import com.risk.model.MapModel;
 
 public class FileParser {
@@ -82,6 +83,7 @@ public class FileParser {
                     else
                     {
                         DuplicatesException ex1 = new DuplicatesException("Country: " + nameOfCountry);
+                        MapEditorController.messageObservableList.add(nameOfCountry + " is duplicated");
                         throw ex1;
                     }
                     text = input.nextLine();
@@ -91,7 +93,7 @@ public class FileParser {
             {
                 CannotFindException ex = new CannotFindException(
                         "The tag 'SET COUNTRIES IN CONTINENTS' is not set. Please follow the Input Text Format Please resolve this issue.");
-                throw ex;
+                throw ex;	
             }
         }
         else
@@ -168,10 +170,7 @@ public class FileParser {
     	maps.getContinents().clear();
 
     	setCountriesInContinents(input);
-    	setNeighboringCountries(input);
-    	System.out.println("model continent size: " + maps.getCountries().size());
-    	System.out.println("model countries size: " + maps.getContinents().size());
-    	
+    	setNeighboringCountries(input);    	
     	return true;
     }
 }

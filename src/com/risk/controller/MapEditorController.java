@@ -71,7 +71,7 @@ public class MapEditorController implements Initializable {
 	private int validated = 0;
 	ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
 	ObservableList<Country> adjacentObservableList = FXCollections.observableArrayList();
-	ObservableList<String> messageObservableList = FXCollections.observableArrayList();
+	public static ObservableList<String> messageObservableList = FXCollections.observableArrayList();
 	
    /** (non-Javadoc)
 	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
@@ -343,6 +343,7 @@ public class MapEditorController implements Initializable {
 			FileParser fileParser = new FileParser();
 			if (fileParser.init(scan))
 			{
+
 				Validate.getValidate().validateMap();
 				if (Validate.getValidate().getValidateSize() == MapModel.getMapModel().getCountries().size()) 
 				{
@@ -350,10 +351,9 @@ public class MapEditorController implements Initializable {
 				} 
 				else 
 				{
-					messageObservableList.add("Invalid Map. Might want to reassign territories");
+					messageObservableList.add("Disconnected Map. Might want to reassign territories");
 				}
 			}
-			
 		} 
 		else
 		{

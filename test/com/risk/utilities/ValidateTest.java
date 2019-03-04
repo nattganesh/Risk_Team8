@@ -20,7 +20,6 @@ import com.risk.model.utilities.Validate;
 /**
  * This class test for validity of the connected graph
  * @author DKM
- *
  */
 public class ValidateTest {
 	
@@ -91,7 +90,7 @@ public class ValidateTest {
 	/**
 	 * Tests for file that has no connectivity
 	 * @throws FileNotFoundException 
-	 * @throws DuplicatesException
+	 * @throws DuplicatesExceptions
 	 * @throws CannotFindException 
 	 * @throws CountLimitException 
 	 */

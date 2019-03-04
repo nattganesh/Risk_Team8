@@ -8,6 +8,7 @@ import com.risk.model.exceptions.CannotFindException;
 import com.risk.model.exceptions.CountLimitException;
 import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
+import com.risk.controller.MapEditorController;
 import com.risk.model.MapModel;
 import java.util.ArrayList;
 
@@ -59,12 +60,14 @@ public class Validate {
                 default:
                     CannotFindException ex2 = new CannotFindException(cont.getName()
                             + " is not predefined. Size of continent is not known. Please resolve this issue.");
+                    MapEditorController.messageObservableList.add(cont.getName() + " is not predefined: resolve this issue");
                     throw ex2;
             }
 
             if (maxCount != count)
             {
                 CountLimitException ex3 = new CountLimitException(cont.getName(), count, maxCount);
+                MapEditorController.messageObservableList.add(cont.getName() + " must be equal to " + maxCount + ", currently it is " + count + ". Please resolve this issue, and try again.");
                 throw ex3;
             }
         }
