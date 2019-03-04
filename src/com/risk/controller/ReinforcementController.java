@@ -218,6 +218,10 @@ public class ReinforcementController implements Initializable {
 		}
 	}
 	
+	/**
+	 * This method is used to update the cards the player owned and the cards the player chooses to exchange
+	 * 
+	 */
 	@FXML
 	public void yourCardHandler() 
 	{
@@ -228,7 +232,11 @@ public class ReinforcementController implements Initializable {
 			yourCard.getItems().remove(card);
 		}
 	}
-
+	
+	/**
+	 * This method is used to update the cards the player owned and the cards the player chooses to exchange
+	 * 
+	 */
 	@FXML
 	public void yourTradeHandler() 
 	{
@@ -241,6 +249,11 @@ public class ReinforcementController implements Initializable {
 		}
 	}
 	
+	/**
+	 * This method is used to update the total reinforcement based on the cards the player chooses
+	 * And update the cards the player owned.
+	 * 
+	 */
 	@FXML
 	public void tradeCard()
 	{
@@ -261,6 +274,12 @@ public class ReinforcementController implements Initializable {
 		}
 	}
 
+	/**
+	 * This method is used to validate the cards the player chooses to exchange
+	 * 
+	 * @param selectedCards A list of cards the player chooses to exchange for armies
+	 * @return The result corresponding to the countries the player occupied
+	 */
 	public boolean cardValidation(ObservableList<Card> selectedCards) 
 	{
 		ObservableList<Card> cards = FXCollections.observableArrayList();
@@ -279,12 +298,26 @@ public class ReinforcementController implements Initializable {
 			return false;
 		}
 	}
+	
+	/**
+	 * This method is used to calculate the extra armies based on the number of countries the player already occupied
+	 * 
+	 * @param currentPlayer The player who is in his reinforcement round
+	 * @return The result corresponding to the countries the player occupied
+	 */
 	public int calculateReinforcementOccupiedTerritory(Player currentPlayer) 
 	{
 		int reinforcement = (int) Math.floor(currentPlayer.numbOccupied() / 3);
 		return reinforcement;
 	}
 	
+	
+	/**
+	 * This method is used to calculate the extra armies earned if the player has occupied continents
+	 * 
+	 * @param currentPlayer The player who is in his reinforcement round
+	 * @return The result corresponding to the countries the player occupied
+	 */
 	public int calculateReinforcementContinentControl(Player currentPlayer)
 	{
 		String currentRuler = currentPlayer.getName();
@@ -308,18 +341,33 @@ public class ReinforcementController implements Initializable {
 		return reinforcement;
 	}
 	
+	/**
+	 * This method is used to calculate the extra armies earned by exchanging cards
+	 * 
+	 * @return The result corresponding to the total exchange time.
+	 */
 	public int calculateReinforcementFromCards() 
 	{
 		int currentExchange = MapModel.getMapModel().getExchangeTime();
-		int reinforcement = (currentExchange) * 5;
+		int reinforcement = (currentExchange +1) * 5;
 		MapModel.getMapModel().setExchangeTime(currentExchange + 1);
 		return reinforcement;
 	}
-	
+	/**
+	 * This method is used to get the number of total armies earned for reinforcement 
+	 * 
+	 * @return The the number of total armies
+	 */
 	public int getReinforcement()
 	{
 		return TotalReinforcement;
 	}
+	
+	/**
+	 * This method is used to reduce the number of available armies for reinforcement 
+	 * 
+	 * @param i The number of armies a player added to an occupied country
+	 */
 	public void setReinforcement(int i) 
 	{
 		TotalReinforcement = TotalReinforcement - i;

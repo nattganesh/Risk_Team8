@@ -10,25 +10,25 @@ import java.util.Random;
 
 public class Card {
 
-    public String catagory;
+    public String category;
     public String owner;
 
     /**
-     * @param catagory type of card
+     * @param category type of card
      * @param owner player of that card
      */
-    public Card(String catagory, String owner)
+    public Card(String category, String owner)
     {
-        this.catagory = catagory;
+        this.category = category;
         this.owner = owner;
     }
 
     /**
-     * This method returns the owner for the type of card
+     * This method returns the category and the owner for the type of card
      */
     public String toString()
     {
-        return catagory + " " + owner;
+        return category + " " + owner;
     }
 
     /**
@@ -38,7 +38,7 @@ public class Card {
      */
     public String getCatagory()
     {
-        return catagory;
+        return category;
     }
 
     /**
