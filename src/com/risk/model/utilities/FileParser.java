@@ -2,26 +2,20 @@
  * Necessary for parsing the input text file
  *
  * @author Natheepan
+ * @author Dong Jae Kim (DKM)
  *
  */
 package com.risk.model.utilities;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
-import com.risk.model.player.Player;
 import com.risk.model.exceptions.CannotFindException;
 import com.risk.model.exceptions.CountLimitException;
 import com.risk.model.exceptions.DuplicatesException;
 import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
 import com.risk.model.MapModel;
-import com.risk.model.PlayerModel;
 
-/**
- * @author DKM
- *
- */
 public class FileParser {
 
     static MapModel maps = MapModel.getMapModel();
@@ -38,8 +32,7 @@ public class FileParser {
      * This method sets the neighbor for each country.
      *
      * @param input Scanner of the input text file
-     * @throws CannotFindException Exception thrown when file formatting is
-     * wrong
+     * @throws CannotFindException Exception thrown when file formatting is wrong
      */
     public void setCountriesInContinents(Scanner input) throws CannotFindException, DuplicatesException
     {
@@ -162,6 +155,14 @@ public class FileParser {
         }
     }
  
+    /**
+     * This method is called to parse a file
+     * 
+     * @param input file to be parsed
+     * @return true if the file has been parsed correctly, otherwise exception thrown
+     * @throws CannotFindException Exception thrown when invalid formatting of file
+     * @throws DuplicatesException Exception thrown when duplicate country in continents
+     */
     public boolean init(Scanner input) throws CannotFindException, DuplicatesException {
     	maps.getCountries().clear();
     	maps.getContinents().clear();

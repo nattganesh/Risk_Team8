@@ -63,6 +63,9 @@ public class FortificationControllerTest {
 		
 	}
 
+	/**
+	 * Method test for all countries arrived by path for fortification
+	 */
     @Test
     public void testGetCountriesArrivedbyPath1() {
 		ArrayList<Country> expected = new ArrayList<>();
@@ -73,6 +76,10 @@ public class FortificationControllerTest {
 		result = fController.getCountriesArrivedbyPath(firstCountry, firstCountry,result);
 		assertEquals(expected, result);
 	}
+    
+    /**
+     * Method test for all countries arrived by path for fortification
+     */
     @Test
     public void testGetCountriesArrivedbyPath2() {
 		ArrayList<Country> result = new ArrayList<>();

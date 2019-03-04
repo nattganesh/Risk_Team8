@@ -11,10 +11,6 @@ import com.risk.model.card.Card;
 import com.risk.model.map.Country;
 import java.util.ArrayList;
 
-/**
- *
- * @author Natheepan
- */
 public class Player {
 
     private String name;

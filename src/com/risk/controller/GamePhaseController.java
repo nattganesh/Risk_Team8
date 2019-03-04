@@ -1,33 +1,21 @@
 /**
+ * This file is necessary for changing the phases of the RISK game
+ * @author DKM
  *
  */
 package com.risk.controller;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
-import com.risk.model.exceptions.CannotFindException;
-import com.risk.model.exceptions.CountLimitException;
-import com.risk.model.exceptions.DuplicatesException;
 import com.risk.model.GamePhaseModel;
-import com.risk.model.MapModel;
-import com.risk.model.PlayerModel;
-//import com.risk.model.utilities.RiskMap;
 
-import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-/**
- * @author DKM
- *
- */
 public class GamePhaseController implements Observer {
 
 
@@ -38,17 +26,21 @@ public class GamePhaseController implements Observer {
     Scene scene;
     Parent root;
     private Stage stage;
-
+    
+    /**
+     * This is a constructor for GamePhaseController
+     * @param s Stage of Javafx application to set different phase in the game
+     */
     public GamePhaseController(Stage s)
     {
         GamePhaseModel.getGamePhaseModel().addObserver(this);
         this.stage = s;
     }
     
-    public Stage getStage() {
-        return stage;
-    }
-    
+    /**
+     * This method receives notification from the changes in the state from the GamePhaseModel, then
+     * changes the scene to the next phase.
+     */
     @Override
     public void update(Observable o, Object phase)
     {
@@ -82,7 +74,7 @@ public class GamePhaseController implements Observer {
             {
                 stage.getScene().setRoot(attackLoader.load());
              
-                System.out.println(attackLoader.getClass());
+                System.out.println("we in attack");
             }
             catch (IOException e)
             {

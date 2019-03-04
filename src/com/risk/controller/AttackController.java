@@ -1,3 +1,9 @@
+/**
+ * This class is necessary for Controller of the Attack Phase
+ * @author DKM
+ * @author Tianyi
+ *
+ */
 package com.risk.controller;
 
 import java.net.URL;
@@ -9,11 +15,6 @@ import com.risk.model.GamePhaseModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 
-/**
- * This class is necessary for Controller of the Attack Phase
- * @author DKM
- *
- */
 public class AttackController extends Observable implements Initializable
 {
 

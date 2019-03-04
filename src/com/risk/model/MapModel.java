@@ -1,6 +1,9 @@
 /**
  * Necessary to create the model of the map in the game play. It's important for getting 
  * continents and countries of the map, and also keeping track of how many time the card was exchanged
+ * 
+ * @author DKM
+ * 
  */
 package com.risk.model;
 
@@ -13,10 +16,6 @@ import com.risk.model.map.Country;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-/**
- * @author DKM
- *
- */
 public class MapModel extends Observable {
 
 	private ObservableList<Continent> continentsModel = FXCollections.observableArrayList();

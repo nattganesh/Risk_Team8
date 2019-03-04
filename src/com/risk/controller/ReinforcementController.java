@@ -34,9 +34,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 
 /**
- *
  * @see javafx.fxml.Initializable
- *
  */
 public class ReinforcementController implements Initializable {
 	public int TotalReinforcement;
@@ -162,7 +160,7 @@ public class ReinforcementController implements Initializable {
 	}
 	
 	/**
-	 * sets the number of available army to your occupied country
+	 * This method sets the number of available army to your occupied country
 	 */
 	@FXML
 	public void setArmy()
@@ -220,7 +218,6 @@ public class ReinforcementController implements Initializable {
 	
 	/**
 	 * This method is used to update the cards the player owned and the cards the player chooses to exchange
-	 * 
 	 */
 	@FXML
 	public void yourCardHandler() 
@@ -234,8 +231,7 @@ public class ReinforcementController implements Initializable {
 	}
 	
 	/**
-	 * This method is used to update the cards the player owned and the cards the player chooses to exchange
-	 * 
+	 * This method is used to update the cards the player owned and the cards the player chooses to exchange.
 	 */
 	@FXML
 	public void yourTradeHandler() 
@@ -252,7 +248,6 @@ public class ReinforcementController implements Initializable {
 	/**
 	 * This method is used to update the total reinforcement based on the cards the player chooses
 	 * And update the cards the player owned.
-	 * 
 	 */
 	@FXML
 	public void tradeCard()

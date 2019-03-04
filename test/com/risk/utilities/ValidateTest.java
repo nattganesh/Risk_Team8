@@ -58,7 +58,6 @@ public class ValidateTest {
 				() -> fileParser.init(scan));
 	}
 
-
 	/**
 	 * Test for file that has a continent that does not exist
 	 * @throws FileNotFoundException 

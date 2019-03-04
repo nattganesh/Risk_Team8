@@ -1,10 +1,15 @@
+/**
+ * This class is necessary for controller of the interactive Map Editor phase of the game.
+ * It's responsible for file parsing, validating map, and assigning countries to players
+ * @author DKM
+ *
+ */
 package com.risk.controller;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.ListIterator;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
@@ -26,7 +31,6 @@ import com.risk.model.utilities.generateOutputFile.Output;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -35,12 +39,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
-/**
- * This class is necessary for controller of the interactive Map Editor phase of the game.
- * It's responsible for file parsing, validating map, and assigning countries to players
- * @author DKM
- *
- */
 
 public class MapEditorController implements Initializable {
 	@FXML
@@ -138,8 +136,8 @@ public class MapEditorController implements Initializable {
 	}
 
 	/**
-	 * 
-	 * @param arg0
+	 * This method loads the territory in the selected continent
+	 * @param arg0 this listens for the mouse event in the ContinentView ListView
 	 */
 	@FXML
 	public void loadTerritoryHandler(MouseEvent arg0) 
@@ -152,7 +150,10 @@ public class MapEditorController implements Initializable {
 		}
 	}
 
-	// when user clicks territory it loads adjacent territory
+	/**
+	 * This method loads the adjacent territory of the selecter territory
+	 * @param arg0 listens for the click event in the TerritoryView ListView
+	 */
 	@FXML
 	public void loadAdjacentHandler(MouseEvent arg0) 
 	{

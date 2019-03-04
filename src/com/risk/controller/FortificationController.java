@@ -1,3 +1,9 @@
+
+/**
+ * This class is necessary for the controller of fortification phase
+ * @author DKM
+ * @author Tianyi
+ */
 package com.risk.controller;
 
 import java.net.URL;
@@ -18,11 +24,6 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
-/**
- * This class is necessary for the controller of fortification phase
- * @author DKM
- *
- */
 public class FortificationController implements Initializable {
 
 	@FXML
@@ -125,6 +126,7 @@ public class FortificationController implements Initializable {
 		if (Territory.getSelectionModel().getSelectedItem() != null) 
 		{
 			Adjacent.getItems().clear();
+			
 			AdjacentArmy.setText("");
 			Adjacent.getItems().addAll(getCountriesArrivedbyPath(Territory.getSelectionModel().getSelectedItem(),Territory.getSelectionModel().getSelectedItem(),CountriesArrivedbyPath));
 			TerritoryArmy.setText(Integer.toString(Territory.getSelectionModel().getSelectedItem().getArmyCount()));

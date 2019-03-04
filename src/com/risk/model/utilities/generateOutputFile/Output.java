@@ -1,30 +1,30 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * This class is necessary for generating a file
+ * @author Natheepan
  */
 package com.risk.model.utilities.generateOutputFile;
 
 import com.risk.model.MapModel;
-import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
 import com.sun.media.jfxmedia.logging.Logger;
-
-import javafx.collections.ObservableList;
-
 import java.io.PrintStream;
 import java.util.ArrayList;
 
-/**
- *
- * @author Natheepan
- */
+
 public class Output {
 
+	/**
+	 * This is a constructor for the Output class
+	 */
     private Output()
     {
     }
 
+    /**
+     * 
+     * @param nameOfFile file name
+     * @return true if file has been generated, otherwise false
+     */
     public static boolean generate(String nameOfFile)
     {
     

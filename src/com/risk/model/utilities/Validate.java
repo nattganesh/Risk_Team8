@@ -1,5 +1,6 @@
 /**
- *
+ * Necessary for validating the connectivity of the parsed map
+ * @author Natheepan
  */
 package com.risk.model.utilities;
 
@@ -10,10 +11,7 @@ import com.risk.model.map.Country;
 import com.risk.model.MapModel;
 import java.util.ArrayList;
 
-/**
- * @author DKM
- *
- */
+
 public class Validate {
 
   

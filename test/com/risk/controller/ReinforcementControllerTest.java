@@ -1,5 +1,8 @@
 /**
+ * This class test for reinforcement contoller
  * 
+ * @author DKM
+ *
  */
 package com.risk.controller;
 
@@ -20,12 +23,7 @@ import com.risk.model.player.Player;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-/**
- * This class test for reinforcement contoller
- * 
- * @author DKM
- *
- */
+
 public class ReinforcementControllerTest {
 	
 	 private ArrayList<Country> occupiedCountries;

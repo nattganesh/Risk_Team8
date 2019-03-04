@@ -6,8 +6,6 @@
  */
 package com.risk.model.card;
 
-import java.util.Random;
-
 public class Card {
 
     public String category;

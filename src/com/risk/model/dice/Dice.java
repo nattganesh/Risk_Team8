@@ -6,8 +6,6 @@
  */
 package com.risk.model.dice;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import com.risk.model.map.Country;
 
 public class Dice {
