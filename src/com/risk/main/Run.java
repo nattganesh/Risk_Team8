@@ -19,8 +19,6 @@ import com.risk.model.exceptions.CannotFindException;
 import com.risk.model.exceptions.CountLimitException;
 import com.risk.model.exceptions.DuplicatesException;
 
-
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -29,13 +27,10 @@ import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-
 import java.io.IOException;
 
+public class Run extends Application {
 
-
-public class Run extends Application
-{
     public static void main(String[] args)
     {
         launch(args);
@@ -53,21 +48,21 @@ public class Run extends Application
      */
     @Override
     public void start(Stage primaryStage) throws CountLimitException, CannotFindException, DuplicatesException, IOException
-    {		
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/risk/view/MapSelector.fxml"));
-			GamePhaseController gamephase = new GamePhaseController(primaryStage);
-			MapEditorController mapController = new MapEditorController();
-			loader.setController(mapController);
-		
-			Parent root = loader.load();
-		    Screen screen = Screen.getPrimary();
-		    Rectangle2D bounds = screen.getVisualBounds();
-		    primaryStage.setX((bounds.getWidth() - primaryStage.getWidth())); 
-		    primaryStage.setY((bounds.getHeight() - primaryStage.getHeight()));  
-		    primaryStage.setWidth(bounds.getWidth() / 2);
-		    primaryStage.setHeight(bounds.getHeight());
-	        primaryStage.setScene(new Scene(root, 300, 275));
-	        primaryStage.show();
+    {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/risk/view/MapSelector.fxml"));
+        GamePhaseController gamephase = new GamePhaseController(primaryStage);
+        MapEditorController mapController = new MapEditorController();
+        loader.setController(mapController);
+
+        Parent root = loader.load();
+        Screen screen = Screen.getPrimary();
+        Rectangle2D bounds = screen.getVisualBounds();
+        primaryStage.setX((bounds.getWidth() - primaryStage.getWidth()));
+        primaryStage.setY((bounds.getHeight() - primaryStage.getHeight()));
+        primaryStage.setWidth(bounds.getWidth() / 2);
+        primaryStage.setHeight(bounds.getHeight());
+        primaryStage.setScene(new Scene(root, 300, 275));
+        primaryStage.show();
     }
 
 }

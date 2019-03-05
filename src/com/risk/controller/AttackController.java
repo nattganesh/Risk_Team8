@@ -1,5 +1,6 @@
 /**
  * This class is necessary for Controller of the Attack Phase
+ *
  * @author DKM
  * @author Tianyi
  *
@@ -15,18 +16,20 @@ import com.risk.model.GamePhaseModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 
-public class AttackController extends Observable implements Initializable
-{
+public class AttackController extends Observable implements Initializable {
 
-	/**
-	 * This is the constructor for AttackController class
-	 */
+    /**
+     * This is the constructor for AttackController class
+     */
     public AttackController()
     {
     }
 
-   /** (non-Javadoc)
-	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
+    /**
+     * (non-Javadoc)
+     *
+     * @see javafx.fxml.Initializable#initialize(java.net.URL,
+     * java.util.ResourceBundle)
      */
     @Override
     public void initialize(URL arg0, ResourceBundle arg1)
@@ -34,12 +37,12 @@ public class AttackController extends Observable implements Initializable
     }
 
     /**
-     * This method sets the GamePhaseModel to fortification, which notifies the subscribed GameController 
-     * to set new scene
-     * 
+     * This method sets the GamePhaseModel to fortification, which notifies the
+     * subscribed GameController to set new scene
+     *
      * @param event listens for click event
      */
-    public void goToFortificationPhase(ActionEvent event) 
+    public void goToFortificationPhase(ActionEvent event)
     {
         GamePhaseModel.getGamePhaseModel().setPhase("fortification");
     }

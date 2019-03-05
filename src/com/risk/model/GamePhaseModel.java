@@ -1,7 +1,9 @@
 /**
  * Necessary to create the model of the game state. It is important for keeping track of game phase
  * and notify GamePhaseController to set the new scene for the game when the state changes.
+ *
  * @author DKM
+ * @author Natheepan
  */
 package com.risk.model;
 
@@ -20,7 +22,7 @@ public class GamePhaseModel extends Observable {
     }
 
     /**
-     * 
+     *
      * @param p name of the game phase
      */
     public void setPhase(String p)
@@ -31,7 +33,7 @@ public class GamePhaseModel extends Observable {
     }
 
     /**
-     * 
+     *
      * @return this returns the GamePhaseModel class as a singleton
      */
     public static GamePhaseModel getGamePhaseModel()

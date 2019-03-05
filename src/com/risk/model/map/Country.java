@@ -1,5 +1,6 @@
 /**
  * This class is necessary for creating country
+ *
  * @author Natheepan
  */
 package com.risk.model.map;
@@ -9,7 +10,6 @@ import com.risk.model.player.Player;
 import javafx.beans.Observable;
 
 import java.util.ArrayList;
-
 
 public class Country {
 
@@ -28,8 +28,9 @@ public class Country {
 
     /**
      * This is the constructor for Country
+     *
      * @param name this country name
-     * @param continentName this continent name 
+     * @param continentName this continent name
      */
     public Country(String name, String continentName)
     {
@@ -40,7 +41,7 @@ public class Country {
     }
 
     /**
-     * 
+     *
      * @return name returns the country name
      */
     public String getName()
@@ -49,7 +50,7 @@ public class Country {
     }
 
     /**
-     * 
+     *
      * @return continentName returns the continent name
      */
     public String getContinentName()
@@ -58,8 +59,8 @@ public class Country {
     }
 
     /**
-     * 
-     * @return armyCount returns the army count 
+     *
+     * @return armyCount returns the army count
      */
     public int getArmyCount()
     {
@@ -67,7 +68,7 @@ public class Country {
     }
 
     /**
-     * 
+     *
      * @param armyCount army to increase for a country
      */
     public void setArmyCount(int armyCount)
@@ -76,7 +77,7 @@ public class Country {
     }
 
     /**
-     * 
+     *
      * @param armyCount army to decrease for a country
      */
     public void reduceArmyCount(int armyCount)
@@ -85,7 +86,7 @@ public class Country {
     }
 
     /**
-     * 
+     *
      * @return isOccupied true if country occupied, false otherwise
      */
     public boolean isIsOccupied()
@@ -94,7 +95,7 @@ public class Country {
     }
 
     /**
-     * 
+     *
      * @param isOccupied boolean value to set the country's occupied state
      */
     public void setIsOccupied(boolean isOccupied)
@@ -103,7 +104,7 @@ public class Country {
     }
 
     /**
-     * 
+     *
      * @return ruler The player object ruling the country
      */
     public Player getRuler()
@@ -112,7 +113,7 @@ public class Country {
     }
 
     /**
-     * 
+     *
      * @param ruler sets the ruler of the country
      */
     public void setRuler(Player ruler)
@@ -121,7 +122,7 @@ public class Country {
     }
 
     /**
-     * 
+     *
      * @return connectedCountries connected countries for the country
      */
     public ArrayList<Country> getConnectedCountries()
@@ -130,8 +131,9 @@ public class Country {
     }
 
     /**
-     * 
-     * @param connectedCountries sets the arraylist of connected countries for the given country
+     *
+     * @param connectedCountries sets the arraylist of connected countries for
+     * the given country
      */
     public void setConnectedCountries(ArrayList<Country> connectedCountries)
     {

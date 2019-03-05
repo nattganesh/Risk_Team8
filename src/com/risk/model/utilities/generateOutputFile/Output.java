@@ -1,5 +1,6 @@
 /**
  * This class is necessary for generating a file
+ *
  * @author Natheepan
  */
 package com.risk.model.utilities.generateOutputFile;
@@ -10,29 +11,28 @@ import com.sun.media.jfxmedia.logging.Logger;
 import java.io.PrintStream;
 import java.util.ArrayList;
 
-
 public class Output {
 
-	/**
-	 * This is a constructor for the Output class
-	 */
+    /**
+     * This is a constructor for the Output class
+     */
     private Output()
     {
     }
 
     /**
-     * 
+     *
      * @param nameOfFile file name
      * @return true if file has been generated, otherwise false
      */
     public static boolean generate(String nameOfFile)
     {
-    
+
         ArrayList<Country> countries = MapModel.getMapModel().getCountries();
 
         try
         {
-        	PrintStream printOut = 	System.out;
+            PrintStream printOut = System.out;
             PrintStream fileOut = new PrintStream("src/com/risk/main/mapTextFiles/" + nameOfFile + ".txt");
             System.setOut(fileOut);
 

@@ -39,7 +39,7 @@ public class Player {
     {
         startingPoints = i;
     }
-    
+
     /**
      * gets the name of player
      *
