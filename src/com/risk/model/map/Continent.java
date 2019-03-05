@@ -21,9 +21,10 @@ public class Continent {
 
     /**
      * This is the constructor for Continent
-     * 
+     *
      * @param name this continent's name
-     * @param pointsWhenFullyOccupied points given when continents is occupied by 1 ruler
+     * @param pointsWhenFullyOccupied points given when continents is occupied
+     * by 1 ruler
      */
     public Continent(String name, int pointsWhenFullyOccupied)
     {
@@ -33,6 +34,7 @@ public class Continent {
 
     /**
      * this method is a getter for this continent name
+     *
      * @return this returns name of continent
      */
     public String getName()
@@ -42,6 +44,7 @@ public class Continent {
 
     /**
      * this method is a getter for country within the continent
+     *
      * @return this returns conutries inside continent
      */
     public ArrayList<Country> getCountries()
@@ -51,6 +54,7 @@ public class Continent {
 
     /**
      * This method is a setter for adding country to a continent
+     *
      * @param country Country to ba added
      */
     public void setCountry(Country country)
@@ -68,8 +72,9 @@ public class Continent {
 
     /**
      * This method sets the continent control of the continent
+     *
      * @param pointsWhenFullyOccupied army points when fully occupied
-     */ 
+     */
     public void setPointsWhenFullyOccupied(int pointsWhenFullyOccupied)
     {
         this.pointsWhenFullyOccupied = pointsWhenFullyOccupied;
@@ -77,8 +82,9 @@ public class Continent {
 
     /**
      * This is a getter method for country given its name
+     *
      * @param name this country name
-     * @return country returns country object 
+     * @return country returns country object
      */
     public Country getCountry(String name)
     {

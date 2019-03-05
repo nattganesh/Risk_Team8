@@ -1,6 +1,7 @@
 /**
  * This class is necessary for controller of the interactive Map Editor phase of the game.
  * It's responsible for file parsing, validating map, and assigning countries to players
+ *
  * @author DKM
  *
  */
@@ -39,608 +40,622 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
-
 public class MapEditorController implements Initializable {
-	@FXML
-	ListView<Continent> ContinentView;
 
-	@FXML
-	ListView<Country> TerritoryView;
+    @FXML
+    ListView<Continent> ContinentView;
 
-	@FXML
-	TextField TerritoryInput;
+    @FXML
+    ListView<Country> TerritoryView;
 
-	@FXML
-	ListView<Country> AdjacentView;
+    @FXML
+    TextField TerritoryInput;
 
-	@FXML
-	TextField AdjacentInput;
+    @FXML
+    ListView<Country> AdjacentView;
 
-	@FXML
-	TextField ExistingFile;
+    @FXML
+    TextField AdjacentInput;
 
-	@FXML
-	ListView<String> ValidationError;
+    @FXML
+    TextField ExistingFile;
 
-	@FXML
-	Label AdjacentError;
+    @FXML
+    ListView<String> ValidationError;
 
-	@FXML
-	ComboBox<String> PlayerID;
+    @FXML
+    Label AdjacentError;
 
-	private int validated = 0;
-	ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
-	ObservableList<Country> adjacentObservableList = FXCollections.observableArrayList();
-	public static ObservableList<String> messageObservableList = FXCollections.observableArrayList();
-	
-   /** (non-Javadoc)
-	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
+    @FXML
+    ComboBox<String> PlayerID;
+
+    private int validated = 0;
+    ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
+    ObservableList<Country> adjacentObservableList = FXCollections.observableArrayList();
+    public static ObservableList<String> messageObservableList = FXCollections.observableArrayList();
+
+    /**
+     * (non-Javadoc)
+     *
+     * @see javafx.fxml.Initializable#initialize(java.net.URL,
+     * java.util.ResourceBundle)
      */
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1)
-	{
-		ValidationError.setItems(messageObservableList);
-		ContinentView.setItems(MapModel.getMapModel().getContinents());
-		ContinentView.setCellFactory(param -> new ListCell<Continent>()
-		{
-			@Override
-			protected void updateItem(Continent continent, boolean empty) 
-			{
-				super.updateItem(continent, empty);
-				if (empty || continent == null || continent.getName() == null)
-				{
-					setText(null);
-				} 
-				else
-				{
-					setText(continent.getName());
-				}
-			}
-		});
+    @Override
+    public void initialize(URL arg0, ResourceBundle arg1)
+    {
+        ValidationError.setItems(messageObservableList);
+        ContinentView.setItems(MapModel.getMapModel().getContinents());
+        ContinentView.setCellFactory(param -> new ListCell<Continent>() {
+            @Override
+            protected void updateItem(Continent continent, boolean empty)
+            {
+                super.updateItem(continent, empty);
+                if (empty || continent == null || continent.getName() == null)
+                {
+                    setText(null);
+                }
+                else
+                {
+                    setText(continent.getName());
+                }
+            }
+        });
 
-		TerritoryView.setItems(territoryObservableList);
-		TerritoryView.setCellFactory(param -> new ListCell<Country>() 
-		{
-			@Override
-			protected void updateItem(Country country, boolean empty) 
-			{
-				super.updateItem(country, empty);
-				if (empty || country == null || country.getName() == null)
-				{
-					setText(null);
-				} 
-				else
-				{
-					setText(country.getName());
-				}
-			}
-		});
-		AdjacentView.setItems(adjacentObservableList);
-		AdjacentView.setCellFactory(param -> new ListCell<Country>() 
-		{
-			@Override
-			protected void updateItem(Country country, boolean empty)
-			{
-				super.updateItem(country, empty);
-				if (empty || country == null || country.getName() == null) 
-				{
-					setText(null);
-				}
-				else 
-				{
-					setText(country.getName());
-				}
-			}
-		});
+        TerritoryView.setItems(territoryObservableList);
+        TerritoryView.setCellFactory(param -> new ListCell<Country>() {
+            @Override
+            protected void updateItem(Country country, boolean empty)
+            {
+                super.updateItem(country, empty);
+                if (empty || country == null || country.getName() == null)
+                {
+                    setText(null);
+                }
+                else
+                {
+                    setText(country.getName());
+                }
+            }
+        });
+        AdjacentView.setItems(adjacentObservableList);
+        AdjacentView.setCellFactory(param -> new ListCell<Country>() {
+            @Override
+            protected void updateItem(Country country, boolean empty)
+            {
+                super.updateItem(country, empty);
+                if (empty || country == null || country.getName() == null)
+                {
+                    setText(null);
+                }
+                else
+                {
+                    setText(country.getName());
+                }
+            }
+        });
 
-	}
+    }
 
-	/**
-	 * This method loads the territory in the selected continent
-	 * @param arg0 this listens for the mouse event in the ContinentView ListView
-	 */
-	@FXML
-	public void loadTerritoryHandler(MouseEvent arg0) 
-	{
-		if (ContinentView.getSelectionModel().getSelectedItem() != null) 
-		{
-			territoryObservableList.clear();
-			adjacentObservableList.clear();
-			territoryObservableList.addAll(ContinentView.getSelectionModel().getSelectedItem().getCountries());
-		}
-	}
+    /**
+     * This method loads the territory in the selected continent
+     *
+     * @param arg0 this listens for the mouse event in the ContinentView
+     * ListView
+     */
+    @FXML
+    public void loadTerritoryHandler(MouseEvent arg0)
+    {
+        if (ContinentView.getSelectionModel().getSelectedItem() != null)
+        {
+            territoryObservableList.clear();
+            adjacentObservableList.clear();
+            territoryObservableList.addAll(ContinentView.getSelectionModel().getSelectedItem().getCountries());
+        }
+    }
 
-	/**
-	 * This method loads the adjacent territory of the selecter territory
-	 * @param arg0 listens for the click event in the TerritoryView ListView
-	 */
-	@FXML
-	public void loadAdjacentHandler(MouseEvent arg0) 
-	{
-		if (TerritoryView.getSelectionModel().getSelectedItem() != null) 
-		{
-			adjacentObservableList.clear();
-			adjacentObservableList.addAll(TerritoryView.getSelectionModel().getSelectedItem().getConnectedCountries());
-		}
-	}
+    /**
+     * This method loads the adjacent territory of the selecter territory
+     *
+     * @param arg0 listens for the click event in the TerritoryView ListView
+     */
+    @FXML
+    public void loadAdjacentHandler(MouseEvent arg0)
+    {
+        if (TerritoryView.getSelectionModel().getSelectedItem() != null)
+        {
+            adjacentObservableList.clear();
+            adjacentObservableList.addAll(TerritoryView.getSelectionModel().getSelectedItem().getConnectedCountries());
+        }
+    }
 
-	/**
-	 * This method handles adding territory to the continent
-	 */
-	@FXML
-	public void territoryAddHandler() 
-	{
-		if (!TerritoryInput.getText().trim().isEmpty() && ContinentView.getSelectionModel().getSelectedItem() != null)
-		{
-			
-			if (searchTerritory(TerritoryInput.getText()) == null)
-			{
-				Country country = new Country(TerritoryInput.getText(),
-						ContinentView.getSelectionModel().getSelectedItem().getName());
-				ContinentView.getSelectionModel().getSelectedItem().setCountry(country); 
-				territoryObservableList.clear();
-				territoryObservableList.addAll(ContinentView.getSelectionModel().getSelectedItem().getCountries());
-				messageObservableList.add("added a territory to the continent");
-				
-			}
-		}
-	}
-	
-	/**
-	 * This method checks if the territory already exists in the map
-	 * @param countryName country to be searched in the map
-	 * @return if the country if it exists, otherwise null
-	 */
-	public Country searchTerritory(String countryName) 
-	{
-		Country territoryExists = null;
-		for (Continent continent : ContinentView.getItems()) 
-		{
-			for  (Country country : continent.getCountries()) 
-			{
-				if (country.getName().equals(countryName)) 
-				{
-					territoryExists = country;
-					messageObservableList.add("territory exists");
-					break;
-				}
-			}
-		}
-		return territoryExists;
-	}
-	
-	/**
-	 * This method handles adding the neighbour in the territory
-	 */
-	@FXML
-	public void adjacentAddHandler() 
-	{
-		if (!AdjacentInput.getText().trim().isEmpty() && TerritoryView.getSelectionModel().getSelectedItem() != null) 
-		{
+    /**
+     * This method handles adding territory to the continent
+     */
+    @FXML
+    public void territoryAddHandler()
+    {
+        if (!TerritoryInput.getText().trim().isEmpty() && ContinentView.getSelectionModel().getSelectedItem() != null)
+        {
 
-			if (AdjacentInput.getText().equals(TerritoryView.getSelectionModel().getSelectedItem().getName())) 
-			{
-				messageObservableList.add("You can't add a territory as it's own neighbour");
+            if (searchTerritory(TerritoryInput.getText()) == null)
+            {
+                Country country = new Country(TerritoryInput.getText(),
+                        ContinentView.getSelectionModel().getSelectedItem().getName());
+                ContinentView.getSelectionModel().getSelectedItem().setCountry(country);
+                territoryObservableList.clear();
+                territoryObservableList.addAll(ContinentView.getSelectionModel().getSelectedItem().getCountries());
+                messageObservableList.add("added a territory to the continent");
 
-			} 
-			else if (existsInAdjacentList(AdjacentInput.getText())) 
-			{
-				messageObservableList.add("Territory is already a neighbour");
-			} 
-			else if (searchTerritory(AdjacentInput.getText()) != null && !existsInAdjacentList(AdjacentInput.getText()))
-			{
-					Country country = searchTerritory(AdjacentInput.getText());
-					TerritoryView.getSelectionModel().getSelectedItem().getConnectedCountries().add(country);
-					country.getConnectedCountries().add(TerritoryView.getSelectionModel().getSelectedItem());
-					adjacentObservableList.clear();	
-					adjacentObservableList
-							.addAll(TerritoryView.getSelectionModel().getSelectedItem().getConnectedCountries());
-					messageObservableList.add("added neighbour");
-			}
-			else 
-			{
-				messageObservableList.add("territory doesn't exist");
-			}
-		}
-	}
+            }
+        }
+    }
 
-	/**
-	 * 
-	 * @param countryName name of the country to be searched in the adjacent list
-	 * @return true if the country already exists in the adjacent list, false otherwise
-	 */
-	private boolean existsInAdjacentList(String countryName) 
-	{
-		for (Country country : TerritoryView.getSelectionModel().getSelectedItem().getConnectedCountries()) 
-		{
-			if (country.getName().equals(countryName)) 
-			{
-				return true;
-			}
-		}
-		return false;
-	}
+    /**
+     * This method checks if the territory already exists in the map
+     *
+     * @param countryName country to be searched in the map
+     * @return if the country if it exists, otherwise null
+     */
+    public Country searchTerritory(String countryName)
+    {
+        Country territoryExists = null;
+        for (Continent continent : ContinentView.getItems())
+        {
+            for (Country country : continent.getCountries())
+            {
+                if (country.getName().equals(countryName))
+                {
+                    territoryExists = country;
+                    messageObservableList.add("territory exists");
+                    break;
+                }
+            }
+        }
+        return territoryExists;
+    }
 
-	/**
-	 * This method handles deleting a territory and all of it's connection in the map
-	 */
-	@FXML
-	public void territoryDeleteHandler() {
-		if (TerritoryView.getSelectionModel().getSelectedItem() != null && ContinentView.getSelectionModel().getSelectedItem() != null) 
-		{
-			ContinentView.getSelectionModel().getSelectedItem().getCountries()
-					.remove(TerritoryView.getSelectionModel().getSelectedItem());
-			for (Country c : TerritoryView.getSelectionModel().getSelectedItem().getConnectedCountries()) 
-			{
-				for (Country connected : c.getConnectedCountries())
-				{
-					if (connected.getName().equals(TerritoryView.getSelectionModel().getSelectedItem().getName())) 
-					{
-						c.getConnectedCountries().remove(TerritoryView.getSelectionModel().getSelectedItem());
-						break;
-					}
-				}
-			}
-			territoryObservableList.clear();
-			adjacentObservableList.clear();
-			territoryObservableList.addAll(ContinentView.getSelectionModel().getSelectedItem().getCountries());
-			messageObservableList.add("territory deleted along with connections");
-		} 
-	}
+    /**
+     * This method handles adding the neighbour in the territory
+     */
+    @FXML
+    public void adjacentAddHandler()
+    {
+        if (!AdjacentInput.getText().trim().isEmpty() && TerritoryView.getSelectionModel().getSelectedItem() != null)
+        {
 
-	/**
-	 * This method handles deleting adjacent territories
-	 */
-	@FXML
-	public void adjacentDeleteHandler() 
-	{
-		
-		if (AdjacentView.getSelectionModel().getSelectedItem() != null && TerritoryView.getSelectionModel().getSelectedItem() != null) 
-		{
-			TerritoryView.getSelectionModel().getSelectedItem().getConnectedCountries()
-					.remove(AdjacentView.getSelectionModel().getSelectedItem());
+            if (AdjacentInput.getText().equals(TerritoryView.getSelectionModel().getSelectedItem().getName()))
+            {
+                messageObservableList.add("You can't add a territory as it's own neighbour");
 
-			for (Continent continent : ContinentView.getItems()) 
-			{
-				for (Country country : continent.getCountries())
-				{
-					if (country.getName().equals(AdjacentView.getSelectionModel().getSelectedItem().getName())) 
-					{
-						for (Country adj : country.getConnectedCountries())
-						{
-							if (adj.getName().equals(TerritoryView.getSelectionModel().getSelectedItem().getName()))
-							{
-								country.getConnectedCountries().remove(adj);
-								break;
-							}
-						}
-					}
-				}
-			}
-			adjacentObservableList.clear();	
-			adjacentObservableList.addAll(TerritoryView.getSelectionModel().getSelectedItem().getConnectedCountries());
-		} 
-	}
+            }
+            else if (existsInAdjacentList(AdjacentInput.getText()))
+            {
+                messageObservableList.add("Territory is already a neighbour");
+            }
+            else if (searchTerritory(AdjacentInput.getText()) != null && !existsInAdjacentList(AdjacentInput.getText()))
+            {
+                Country country = searchTerritory(AdjacentInput.getText());
+                TerritoryView.getSelectionModel().getSelectedItem().getConnectedCountries().add(country);
+                country.getConnectedCountries().add(TerritoryView.getSelectionModel().getSelectedItem());
+                adjacentObservableList.clear();
+                adjacentObservableList
+                        .addAll(TerritoryView.getSelectionModel().getSelectedItem().getConnectedCountries());
+                messageObservableList.add("added neighbour");
+            }
+            else
+            {
+                messageObservableList.add("territory doesn't exist");
+            }
+        }
+    }
 
-	/** 
-	 * This method handles loading the map to the UI from input file by parsing and checking validity of the map
-	 * @throws CannotFindException file format is invalid
-	 * @throws DuplicatesException country is duplicated
-	 * @throws FileNotFoundException file is not found
-	 * @throws CountLimitException continent has more or less than fixed number of country
-	 */
-	@FXML
-	public void loadMapHandler() throws CannotFindException, DuplicatesException, FileNotFoundException, CountLimitException 
-	{
-		validated = 0;
-		clearMapEditor();
-		String inputFile = "src/com/risk/main/mapTextFiles/"+ExistingFile.getText()+".txt";
-		if (!ExistingFile.getText().trim().isEmpty() && new File(inputFile).isFile()) 
-		{
-			MapModel.getMapModel().getContinents().clear();
-			MapModel.getMapModel().getCountries().clear();			
-			Scanner scan = new Scanner(new File(inputFile));
-			FileParser fileParser = new FileParser();
-			if (fileParser.init(scan))
-			{
+    /**
+     *
+     * @param countryName name of the country to be searched in the adjacent
+     * list
+     * @return true if the country already exists in the adjacent list, false
+     * otherwise
+     */
+    private boolean existsInAdjacentList(String countryName)
+    {
+        for (Country country : TerritoryView.getSelectionModel().getSelectedItem().getConnectedCountries())
+        {
+            if (country.getName().equals(countryName))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
-				Validate.getValidate().validateMap();
-				if (Validate.getValidate().getValidateSize() == MapModel.getMapModel().getCountries().size()) 
-				{
-					messageObservableList.add("Connected Map");
-				} 
-				else 
-				{
-					messageObservableList.add("Disconnected Map. Might want to reassign territories");
-				}
-			}
-		} 
-		else
-		{
-			messageObservableList.add("file does not exist");
-			clearMapEditor();
-		}		
-	}
+    /**
+     * This method handles deleting a territory and all of it's connection in
+     * the map
+     */
+    @FXML
+    public void territoryDeleteHandler()
+    {
+        if (TerritoryView.getSelectionModel().getSelectedItem() != null && ContinentView.getSelectionModel().getSelectedItem() != null)
+        {
+            ContinentView.getSelectionModel().getSelectedItem().getCountries()
+                    .remove(TerritoryView.getSelectionModel().getSelectedItem());
+            for (Country c : TerritoryView.getSelectionModel().getSelectedItem().getConnectedCountries())
+            {
+                for (Country connected : c.getConnectedCountries())
+                {
+                    if (connected.getName().equals(TerritoryView.getSelectionModel().getSelectedItem().getName()))
+                    {
+                        c.getConnectedCountries().remove(TerritoryView.getSelectionModel().getSelectedItem());
+                        break;
+                    }
+                }
+            }
+            territoryObservableList.clear();
+            adjacentObservableList.clear();
+            territoryObservableList.addAll(ContinentView.getSelectionModel().getSelectedItem().getCountries());
+            messageObservableList.add("territory deleted along with connections");
+        }
+    }
 
-	/**
-	 * This methods handles validation of edited map file before saving outputting to a file
-	 * @throws CannotFindException file format is invalid
-	 * @throws CountLimitException continent has more or less than fixed number of country
-	 */
-	@FXML
-	public void saveMapHandler() throws CannotFindException, CountLimitException {		
-		if (MapModel.getMapModel().getCountries().size() != 0)
-		{
-			Validate.getValidate().validateMap();
-			if (Validate.getValidate().getValidateSize() == MapModel.getMapModel().getCountries().size()) 
-			{
-				messageObservableList.add("Saved File");
-				Output.generate(ExistingFile.getText());
-				initializePlayers();
-				validated = 1;
-			} 
-			else
-			{
-				messageObservableList.add("Can't Save Map it's an invalid map");
-				validated = 0;
-			}
-		} 
-		else 
-		{
-			messageObservableList.add("can't save - invalid map");
-		} 
-	}
+    /**
+     * This method handles deleting adjacent territories
+     */
+    @FXML
+    public void adjacentDeleteHandler()
+    {
 
-	/** 
-	 * This method handles generating a new map with new file name
-	 */
-	@FXML
-	public void newMapHandler()
-	{
-		if (!ExistingFile.getText().trim().isEmpty()) 
-		{
-			validated = 0;
-			clearMapEditor();
-			initializeContinents();
-			messageObservableList.add("New Map");
-			
-		} 
-		else
-		{
-			messageObservableList.add("You need a name for the file");
-		}
-	}
+        if (AdjacentView.getSelectionModel().getSelectedItem() != null && TerritoryView.getSelectionModel().getSelectedItem() != null)
+        {
+            TerritoryView.getSelectionModel().getSelectedItem().getConnectedCountries()
+                    .remove(AdjacentView.getSelectionModel().getSelectedItem());
 
-	/**
-	 * This method handles setting number of players, calculating starting armies in each country,
-	 * it assigns countries to players and determines round robin turn. Once all of these are done it will
-	 * set the phase to reinforcement.
-	 */
-	@FXML
-	public void startGameHandler()
-	{
-		if (validated == 1) 
-		{
-			if (PlayerID.getSelectionModel().getSelectedItem() != null) 
-			{
-				int numbPlayers = Integer.parseInt(PlayerID.getSelectionModel().getSelectedItem());
-				setPlayers(numbPlayers);
-				calcStartingArmies();
-				assignCountriesToPlayers();
-				determinePlayersStartingOrder();
-				GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
-			}
-		} 
-		else 
-		{
-			messageObservableList.add("Need to save the map before you could start");
-		}
-	}
+            for (Continent continent : ContinentView.getItems())
+            {
+                for (Country country : continent.getCountries())
+                {
+                    if (country.getName().equals(AdjacentView.getSelectionModel().getSelectedItem().getName()))
+                    {
+                        for (Country adj : country.getConnectedCountries())
+                        {
+                            if (adj.getName().equals(TerritoryView.getSelectionModel().getSelectedItem().getName()))
+                            {
+                                country.getConnectedCountries().remove(adj);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            adjacentObservableList.clear();
+            adjacentObservableList.addAll(TerritoryView.getSelectionModel().getSelectedItem().getConnectedCountries());
+        }
+    }
 
-	/**
-	 * This method initializes fixed continents in the UI
-	 */
-	public void initializeContinents()
-	{
-		ContinentView.getItems().clear();
-		ArrayList<Continent> continent = new ArrayList<>();
-		continent.add(new Continent("North America", 10));
-		continent.add(new Continent("South America", 10));
-		continent.add(new Continent("Europe", 10));
-		continent.add(new Continent("Africa", 10));
-		continent.add(new Continent("Asia", 10));
-		continent.add(new Continent("Australia", 10));
-		ContinentView.getItems().addAll(continent);
-		messageObservableList.add("This is a fixed map with the following continents");
-	}
+    /**
+     * This method handles loading the map to the UI from input file by parsing
+     * and checking validity of the map
+     *
+     * @throws CannotFindException file format is invalid
+     * @throws DuplicatesException country is duplicated
+     * @throws FileNotFoundException file is not found
+     * @throws CountLimitException continent has more or less than fixed number
+     * of country
+     */
+    @FXML
+    public void loadMapHandler() throws CannotFindException, DuplicatesException, FileNotFoundException, CountLimitException
+    {
+        validated = 0;
+        clearMapEditor();
+        String inputFile = "src/com/risk/main/mapTextFiles/" + ExistingFile.getText() + ".txt";
+        if (!ExistingFile.getText().trim().isEmpty() && new File(inputFile).isFile())
+        {
+            MapModel.getMapModel().getContinents().clear();
+            MapModel.getMapModel().getCountries().clear();
+            Scanner scan = new Scanner(new File(inputFile));
+            FileParser fileParser = new FileParser();
+            if (fileParser.init(scan))
+            {
 
-	/** 
-	 * This method initalizes the 2 - 6 players in the UI
-	 */
-	public void initializePlayers() 
-	{
-		PlayerID.getItems().clear();
-		PlayerID.getItems().addAll("2", "3", "4", "5", "6");
-	}
+                Validate.getValidate().validateMap();
+                if (Validate.getValidate().getValidateSize() == MapModel.getMapModel().getCountries().size())
+                {
+                    messageObservableList.add("Connected Map");
+                }
+                else
+                {
+                    messageObservableList.add("Disconnected Map. Might want to reassign territories");
+                }
+            }
+        }
+        else
+        {
+            messageObservableList.add("file does not exist");
+            clearMapEditor();
+        }
+    }
 
-	/**
-	 * This method is a helper method for clearing the UI board
-	 */
-	public void clearMapEditor() 
-	{
-		ContinentView.getItems().clear();
-		territoryObservableList.clear();
-		adjacentObservableList.clear();
-	}
+    /**
+     * This methods handles validation of edited map file before saving
+     * outputting to a file
+     *
+     * @throws CannotFindException file format is invalid
+     * @throws CountLimitException continent has more or less than fixed number
+     * of country
+     */
+    @FXML
+    public void saveMapHandler() throws CannotFindException, CountLimitException
+    {
+        if (MapModel.getMapModel().getCountries().size() != 0)
+        {
+            Validate.getValidate().validateMap();
+            if (Validate.getValidate().getValidateSize() == MapModel.getMapModel().getCountries().size())
+            {
+                messageObservableList.add("Saved File");
+                Output.generate(ExistingFile.getText());
+                initializePlayers();
+                validated = 1;
+            }
+            else
+            {
+                messageObservableList.add("Can't Save Map it's an invalid map");
+                validated = 0;
+            }
+        }
+        else
+        {
+            messageObservableList.add("can't save - invalid map");
+        }
+    }
 
-	/**
-	 * sets the number of players
-	 *
-	 * @param numberOfPlayer the number of players
-	 */
-	public void setPlayers(int numberOfPlayer)
-	{
-		while (numberOfPlayer > 0)
-		{
-			PlayerModel.getPlayerModel().addPlayer(new Player(PlayerModel.PLAYERCOLOR[numberOfPlayer-1]));
-			numberOfPlayer--;
-		}
-	}
-	
-	/**
-	 * This method calculates the round robin. It first roll the dice to determine
-	 * who goes first. The player who rolls the highest number starts the game. Then
-	 * the play order goes clockwise from the starting player. The game starts after
-	 * the order of play has been determined.
-	 */
-	public void determinePlayersStartingOrder()
-	{
-		int[] diceRolls = new int[PlayerModel.getPlayerModel().getNumberOfPlayer()];
+    /**
+     * This method handles generating a new map with new file name
+     */
+    @FXML
+    public void newMapHandler()
+    {
+        if (!ExistingFile.getText().trim().isEmpty())
+        {
+            validated = 0;
+            clearMapEditor();
+            initializeContinents();
+            messageObservableList.add("New Map");
 
-		for (int i = 0; i < diceRolls.length; i++) 
-		{
-			diceRolls[i] = Dice.roll();
-		}
-		int maxRollIndex = 0;
-		for (int i = 1; i < diceRolls.length; i++)
-		{
-			if (diceRolls[maxRollIndex] < diceRolls[i]) 
-			{
-				maxRollIndex = i;
-			}
-		}
-		boolean tieBreakingNeeded = false;
-		for (int i = 1; i < diceRolls.length; i++)
-		{
-			if (diceRolls[maxRollIndex] == diceRolls[i] && maxRollIndex != i)
-			{
-				tieBreakingNeeded = true;
-			}
-		}
-		if (tieBreakingNeeded) 
-		{
-			determinePlayersStartingOrder();
-		}
-		else
-		{
-			for (int i = 0; i < maxRollIndex; i++)
-			{
-				Player temp = PlayerModel.getPlayerModel().getPlayers().remove(0);
-				PlayerModel.getPlayerModel().addPlayer(temp);
-			}
-		}
-	}
+        }
+        else
+        {
+            messageObservableList.add("You need a name for the file");
+        }
+    }
 
-	/**
-	 * This method assigns countries to players
-	 */
-	public void assignCountriesToPlayers() 
-	{
-		boolean[] countryOccupied = new boolean[Country.MAX_NUMBER_OF_COUNTRIES];
-		int i = 0;
-		while (i < Country.MAX_NUMBER_OF_COUNTRIES) 
-		{
-			for (Player p : PlayerModel.getPlayerModel().getPlayers()) 
-			{
-				int random = (int) (Math.random() * Country.MAX_NUMBER_OF_COUNTRIES);
-				while (countryOccupied[random]) 
-				{
-					random = (int) (Math.random() * Country.MAX_NUMBER_OF_COUNTRIES);
-				}
-				if (!countryOccupied[random])
-				{
-					MapModel.getMapModel().getCountries().get(random).setRuler(p);
-					MapModel.getMapModel().getCountries().get(random).setIsOccupied(true);
-					MapModel.getMapModel().getCountries().get(random).setArmyCount(1);
+    /**
+     * This method handles setting number of players, calculating starting
+     * armies in each country, it assigns countries to players and determines
+     * round robin turn. Once all of these are done it will set the phase to
+     * reinforcement.
+     */
+    @FXML
+    public void startGameHandler()
+    {
+        if (validated == 1)
+        {
+            if (PlayerID.getSelectionModel().getSelectedItem() != null)
+            {
+                int numbPlayers = Integer.parseInt(PlayerID.getSelectionModel().getSelectedItem());
+                setPlayers(numbPlayers);
+                calcStartingArmies();
+                assignCountriesToPlayers();
+                determinePlayersStartingOrder();
+                GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
+            }
+        }
+        else
+        {
+            messageObservableList.add("Need to save the map before you could start");
+        }
+    }
 
-					countryOccupied[random] = true;
-					p.getOccupiedCountries().add(MapModel.getMapModel().getCountries().get(random));
-					i++;
-				}
-				if (i >= Country.MAX_NUMBER_OF_COUNTRIES)
-				{
-					break;
-				}
-			}
-		}
+    /**
+     * This method initializes fixed continents in the UI
+     */
+    public void initializeContinents()
+    {
+        ContinentView.getItems().clear();
+        ArrayList<Continent> continent = new ArrayList<>();
+        continent.add(new Continent("North America", 10));
+        continent.add(new Continent("South America", 10));
+        continent.add(new Continent("Europe", 10));
+        continent.add(new Continent("Africa", 10));
+        continent.add(new Continent("Asia", 10));
+        continent.add(new Continent("Australia", 10));
+        ContinentView.getItems().addAll(continent);
+        messageObservableList.add("This is a fixed map with the following continents");
+    }
 
-		boolean[] armiesRemaining = new boolean[PlayerModel.getPlayerModel().getNumberOfPlayer()];
-		boolean done = false;
+    /**
+     * This method initalizes the 2 - 6 players in the UI
+     */
+    public void initializePlayers()
+    {
+        PlayerID.getItems().clear();
+        PlayerID.getItems().addAll("2", "3", "4", "5", "6");
+    }
 
-		while (!done) 
-		{
-			for (int ii = 0; ii < PlayerModel.getPlayerModel().getNumberOfPlayer(); ii++) 
-			{
-				if (PlayerModel.getPlayerModel().getPlayers().get(ii).armiesLeft() > 0) 
-				{
-					int random = (int) (Math.random()
-							* PlayerModel.getPlayerModel().getPlayers().get(ii).numbOccupied());
-					PlayerModel.getPlayerModel().getPlayers().get(ii).getOccupiedCountries().get(random)
-							.setArmyCount(1);
-				} 
-				else 
-				{
-					armiesRemaining[ii] = true;
-				}
-			}
-			int countP = 0;
-			for (boolean d : armiesRemaining)
-			{
-				if (d)
-				{
-					countP++;
-				}
-			}
-			if (countP == PlayerModel.getPlayerModel().getNumberOfPlayer())
-			{
-				done = true;
-			}
-		}
-	}
+    /**
+     * This method is a helper method for clearing the UI board
+     */
+    public void clearMapEditor()
+    {
+        ContinentView.getItems().clear();
+        territoryObservableList.clear();
+        adjacentObservableList.clear();
+    }
 
+    /**
+     * sets the number of players
+     *
+     * @param numberOfPlayer the number of players
+     */
+    public void setPlayers(int numberOfPlayer)
+    {
+        while (numberOfPlayer > 0)
+        {
+            PlayerModel.getPlayerModel().addPlayer(new Player(PlayerModel.PLAYERCOLOR[numberOfPlayer - 1]));
+            numberOfPlayer--;
+        }
+    }
 
+    /**
+     * This method calculates the round robin. It first roll the dice to
+     * determine who goes first. The player who rolls the highest number starts
+     * the game. Then the play order goes clockwise from the starting player.
+     * The game starts after the order of play has been determined.
+     */
+    public void determinePlayersStartingOrder()
+    {
+        int[] diceRolls = new int[PlayerModel.getPlayerModel().getNumberOfPlayer()];
 
-	/**
-	 * This method sets the starting armies during initialization based on number of
-	 * PlayerModel.getPlayerModel().
-	 */
-	public void calcStartingArmies() 
-	{
-		for (Player player : PlayerModel.getPlayerModel().getPlayers()) 
-		{
-			player.setStartingPoints(calcStartingArmiesHelper(PlayerModel.getPlayerModel().getNumberOfPlayer()));
-		}
-	}
+        for (int i = 0; i < diceRolls.length; i++)
+        {
+            diceRolls[i] = Dice.roll();
+        }
+        int maxRollIndex = 0;
+        for (int i = 1; i < diceRolls.length; i++)
+        {
+            if (diceRolls[maxRollIndex] < diceRolls[i])
+            {
+                maxRollIndex = i;
+            }
+        }
+        boolean tieBreakingNeeded = false;
+        for (int i = 1; i < diceRolls.length; i++)
+        {
+            if (diceRolls[maxRollIndex] == diceRolls[i] && maxRollIndex != i)
+            {
+                tieBreakingNeeded = true;
+            }
+        }
+        if (tieBreakingNeeded)
+        {
+            determinePlayersStartingOrder();
+        }
+        else
+        {
+            for (int i = 0; i < maxRollIndex; i++)
+            {
+                Player temp = PlayerModel.getPlayerModel().getPlayers().remove(0);
+                PlayerModel.getPlayerModel().addPlayer(temp);
+            }
+        }
+    }
 
-	/**
-	 * This is a helper method for setStartingPoints. Based on the number of players
-	 * it returns inital army count.
-	 *
-	 * @param getPlayerSize number of players
-	 * @return startingP initial army count
-	 */
-	public int calcStartingArmiesHelper(int getPlayerSize)
-	{
-		int startingP = 0;
-		switch (getPlayerSize)
-		{
-		case 2:
-			startingP = 40;
-			break;
-		case 3:
-			startingP = 35;
-			break;
-		case 4:
-			startingP = 30;
-			break;
-		case 5:
-			startingP = 25;
-			break;
-		case 6:
-			startingP = 20;
-			break;
-		}
-		return startingP;
+    /**
+     * This method assigns countries to players
+     */
+    public void assignCountriesToPlayers()
+    {
+        boolean[] countryOccupied = new boolean[Country.MAX_NUMBER_OF_COUNTRIES];
+        int i = 0;
+        while (i < Country.MAX_NUMBER_OF_COUNTRIES)
+        {
+            for (Player p : PlayerModel.getPlayerModel().getPlayers())
+            {
+                int random = (int) (Math.random() * Country.MAX_NUMBER_OF_COUNTRIES);
+                while (countryOccupied[random])
+                {
+                    random = (int) (Math.random() * Country.MAX_NUMBER_OF_COUNTRIES);
+                }
+                if (!countryOccupied[random])
+                {
+                    MapModel.getMapModel().getCountries().get(random).setRuler(p);
+                    MapModel.getMapModel().getCountries().get(random).setIsOccupied(true);
+                    MapModel.getMapModel().getCountries().get(random).setArmyCount(1);
 
-	}
+                    countryOccupied[random] = true;
+                    p.getOccupiedCountries().add(MapModel.getMapModel().getCountries().get(random));
+                    i++;
+                }
+                if (i >= Country.MAX_NUMBER_OF_COUNTRIES)
+                {
+                    break;
+                }
+            }
+        }
+
+        boolean[] armiesRemaining = new boolean[PlayerModel.getPlayerModel().getNumberOfPlayer()];
+        boolean done = false;
+
+        while (!done)
+        {
+            for (int ii = 0; ii < PlayerModel.getPlayerModel().getNumberOfPlayer(); ii++)
+            {
+                if (PlayerModel.getPlayerModel().getPlayers().get(ii).armiesLeft() > 0)
+                {
+                    int random = (int) (Math.random()
+                            * PlayerModel.getPlayerModel().getPlayers().get(ii).numbOccupied());
+                    PlayerModel.getPlayerModel().getPlayers().get(ii).getOccupiedCountries().get(random)
+                            .setArmyCount(1);
+                }
+                else
+                {
+                    armiesRemaining[ii] = true;
+                }
+            }
+            int countP = 0;
+            for (boolean d : armiesRemaining)
+            {
+                if (d)
+                {
+                    countP++;
+                }
+            }
+            if (countP == PlayerModel.getPlayerModel().getNumberOfPlayer())
+            {
+                done = true;
+            }
+        }
+    }
+
+    /**
+     * This method sets the starting armies during initialization based on
+     * number of PlayerModel.getPlayerModel().
+     */
+    public void calcStartingArmies()
+    {
+        for (Player player : PlayerModel.getPlayerModel().getPlayers())
+        {
+            player.setStartingPoints(calcStartingArmiesHelper(PlayerModel.getPlayerModel().getNumberOfPlayer()));
+        }
+    }
+
+    /**
+     * This is a helper method for setStartingPoints. Based on the number of
+     * players it returns inital army count.
+     *
+     * @param getPlayerSize number of players
+     * @return startingP initial army count
+     */
+    public int calcStartingArmiesHelper(int getPlayerSize)
+    {
+        int startingP = 0;
+        switch (getPlayerSize)
+        {
+            case 2:
+                startingP = 40;
+                break;
+            case 3:
+                startingP = 35;
+                break;
+            case 4:
+                startingP = 30;
+                break;
+            case 5:
+                startingP = 25;
+                break;
+            case 6:
+                startingP = 20;
+                break;
+        }
+        return startingP;
+
+    }
 }

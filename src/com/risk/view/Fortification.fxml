@@ -7,23 +7,23 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <AnchorPane prefHeight="800.0" prefWidth="800.0">
-         <children>
-            <Text layoutX="21.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fortification" />
-            <Button fx:id="nextPlayerID" layoutX="673.0" layoutY="18.0" mnemonicParsing="false" onAction="#onNextPlayer" text="reinforcement" />
-            <ListView fx:id="Territory" layoutX="46.0" layoutY="182.0" onMouseClicked="#territoryHandler" prefHeight="200.0" prefWidth="200.0" />
-            <ListView fx:id="Adjacent" layoutX="553.0" layoutY="182.0" onMouseClicked="#adjacentHandler" prefHeight="200.0" prefWidth="200.0" />
-            <TextField fx:id="moveField" layoutX="348.0" layoutY="367.0" prefHeight="31.0" prefWidth="58.0" />
-            <Button layoutX="409.0" layoutY="367.0" mnemonicParsing="false" onAction="#moveHandler" text="Move" />
-            <Label layoutX="54.0" layoutY="149.0" text="Your Territory" />
-            <Label layoutX="613.0" layoutY="149.0" text="Connected Territory" />
-            <TextField fx:id="TerritoryArmy" layoutX="246.0" layoutY="267.0" prefHeight="31.0" prefWidth="92.0" />
-            <Text layoutX="274.0" layoutY="321.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Army" />
-            <TextField fx:id="AdjacentArmy" layoutX="461.0" layoutY="267.0" prefHeight="31.0" prefWidth="92.0" />
-            <Text layoutX="489.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Army" />
-            <ListView fx:id="messageFortification" layoutX="241.0" layoutY="414.0" prefHeight="200.0" prefWidth="336.0" />
-         </children>
-      </AnchorPane>
-   </children>
+    <children>
+        <AnchorPane prefHeight="800.0" prefWidth="800.0">
+            <children>
+                <Text layoutX="21.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fortification" />
+                <Button fx:id="nextPlayerID" layoutX="673.0" layoutY="18.0" mnemonicParsing="false" onAction="#onNextPlayer" text="reinforcement" />
+                <ListView fx:id="Territory" layoutX="46.0" layoutY="182.0" onMouseClicked="#territoryHandler" prefHeight="200.0" prefWidth="200.0" />
+                <ListView fx:id="Adjacent" layoutX="553.0" layoutY="182.0" onMouseClicked="#adjacentHandler" prefHeight="200.0" prefWidth="200.0" />
+                <TextField fx:id="moveField" layoutX="348.0" layoutY="367.0" prefHeight="31.0" prefWidth="58.0" />
+                <Button layoutX="409.0" layoutY="367.0" mnemonicParsing="false" onAction="#moveHandler" text="Move" />
+                <Label layoutX="54.0" layoutY="149.0" text="Your Territory" />
+                <Label layoutX="613.0" layoutY="149.0" text="Connected Territory" />
+                <TextField fx:id="TerritoryArmy" layoutX="246.0" layoutY="267.0" prefHeight="31.0" prefWidth="92.0" />
+                <Text layoutX="274.0" layoutY="321.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Army" />
+                <TextField fx:id="AdjacentArmy" layoutX="461.0" layoutY="267.0" prefHeight="31.0" prefWidth="92.0" />
+                <Text layoutX="489.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Army" />
+                <ListView fx:id="messageFortification" layoutX="241.0" layoutY="414.0" prefHeight="200.0" prefWidth="336.0" />
+            </children>
+        </AnchorPane>
+    </children>
 </AnchorPane>

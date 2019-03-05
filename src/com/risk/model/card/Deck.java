@@ -14,9 +14,9 @@ public class Deck {
     int n = 44;
     String owner = null;
 
-	/**
-	 * This method is used to initialize the deck with 44 cards. 
-	 */
+    /**
+     * This method is used to initialize the deck with 44 cards.
+     */
     public void initialize()
     {
         String category[] =
@@ -72,11 +72,11 @@ public class Deck {
         System.out.print("\n");
     }
 
-	/**
-	 * This method is used to send the card to a player. 
-   	 * 
-   	 * @param player The name of the player
-	 */
+    /**
+     * This method is used to send the card to a player.
+     *
+     * @param player The name of the player
+     */
     public void sendCard(String player)
     {
         Card cardforp = card[0];

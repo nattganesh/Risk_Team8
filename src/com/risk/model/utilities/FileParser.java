@@ -33,7 +33,8 @@ public class FileParser {
      * This method sets the neighbor for each country.
      *
      * @param input Scanner of the input text file
-     * @throws CannotFindException Exception thrown when file formatting is wrong
+     * @throws CannotFindException Exception thrown when file formatting is
+     * wrong
      */
     public void setCountriesInContinents(Scanner input) throws CannotFindException, DuplicatesException
     {
@@ -62,7 +63,7 @@ public class FileParser {
                         boolean continentExists = false;
 
                         Country c = new Country(nameOfCountry, nameOfContinent);
-                        maps.addCountry(c); 
+                        maps.addCountry(c);
 
                         for (Continent cont : maps.getContinents())
                         {
@@ -93,7 +94,7 @@ public class FileParser {
             {
                 CannotFindException ex = new CannotFindException(
                         "The tag 'SET COUNTRIES IN CONTINENTS' is not set. Please follow the Input Text Format Please resolve this issue.");
-                throw ex;	
+                throw ex;
             }
         }
         else
@@ -131,18 +132,21 @@ public class FileParser {
                         {
                             if (c2.getName().equalsIgnoreCase(nameOfCountry2))
                             {
-                            	boolean exists = false;
-                            	for (Country connected : c.getConnectedCountries()) {
-                            		if (connected.getName().equals(c2.getName())) {
-                            			exists = true;
-                            			break;
-                            		}
-                            	}
-                            	if (!exists) {
-                            		 c.getConnectedCountries().add(c2);
-                                     c2.getConnectedCountries().add(c);
-                            	}
-                               
+                                boolean exists = false;
+                                for (Country connected : c.getConnectedCountries())
+                                {
+                                    if (connected.getName().equals(c2.getName()))
+                                    {
+                                        exists = true;
+                                        break;
+                                    }
+                                }
+                                if (!exists)
+                                {
+                                    c.getConnectedCountries().add(c2);
+                                    c2.getConnectedCountries().add(c);
+                                }
+
                             }
                         }
                     }
@@ -156,21 +160,25 @@ public class FileParser {
             throw ex;
         }
     }
- 
+
     /**
      * This method is called to parse a file
-     * 
+     *
      * @param input file to be parsed
-     * @return true if the file has been parsed correctly, otherwise exception thrown
-     * @throws CannotFindException Exception thrown when invalid formatting of file
-     * @throws DuplicatesException Exception thrown when duplicate country in continents
+     * @return true if the file has been parsed correctly, otherwise exception
+     * thrown
+     * @throws CannotFindException Exception thrown when invalid formatting of
+     * file
+     * @throws DuplicatesException Exception thrown when duplicate country in
+     * continents
      */
-    public boolean init(Scanner input) throws CannotFindException, DuplicatesException {
-    	maps.getCountries().clear();
-    	maps.getContinents().clear();
+    public boolean init(Scanner input) throws CannotFindException, DuplicatesException
+    {
+        maps.getCountries().clear();
+        maps.getContinents().clear();
 
-    	setCountriesInContinents(input);
-    	setNeighboringCountries(input);    	
-    	return true;
+        setCountriesInContinents(input);
+        setNeighboringCountries(input);
+        return true;
     }
 }

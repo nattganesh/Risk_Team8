@@ -51,23 +51,25 @@ public class PlayerModel extends Observable {
     {
         currentPlayerIndex = increment;
     }
-    
+
     /**
-     * 
+     *
      * @return the index of the current player
      */
-    public int getPlayerIndex() {
-    	return currentPlayerIndex;
+    public int getPlayerIndex()
+    {
+        return currentPlayerIndex;
     }
 
     /**
-     * 
+     *
      * @return number of total players
      */
-    public int getNumberOfPlayer() {
-    	return playerList.size();
+    public int getNumberOfPlayer()
+    {
+        return playerList.size();
     }
-    
+
     /**
      * this method gets the current player
      *
@@ -99,7 +101,7 @@ public class PlayerModel extends Observable {
     }
 
     /**
-     * 
+     *
      * @return this PlayerModel class as a singleton
      */
     public static PlayerModel getPlayerModel()

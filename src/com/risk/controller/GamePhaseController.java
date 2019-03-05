@@ -1,5 +1,6 @@
 /**
  * This file is necessary for changing the phases of the RISK game
+ *
  * @author DKM
  *
  */
@@ -18,7 +19,6 @@ import javafx.stage.Stage;
 
 public class GamePhaseController implements Observer {
 
-
     ReinforcementController rController;
     AttackController aController;
     FortificationController fController;
@@ -26,9 +26,10 @@ public class GamePhaseController implements Observer {
     Scene scene;
     Parent root;
     private Stage stage;
-    
+
     /**
      * This is a constructor for GamePhaseController
+     *
      * @param s Stage of Javafx application to set different phase in the game
      */
     public GamePhaseController(Stage s)
@@ -36,10 +37,10 @@ public class GamePhaseController implements Observer {
         GamePhaseModel.getGamePhaseModel().addObserver(this);
         this.stage = s;
     }
-    
+
     /**
-     * This method receives notification from the changes in the state from the GamePhaseModel, then
-     * changes the scene to the next phase.
+     * This method receives notification from the changes in the state from the
+     * GamePhaseModel, then changes the scene to the next phase.
      */
     @Override
     public void update(Observable o, Object phase)
@@ -47,15 +48,14 @@ public class GamePhaseController implements Observer {
         String view = (String) phase;
         if (view.equals("reinforcement"))
         {
-        	   rController = new ReinforcementController();
-               
+            rController = new ReinforcementController();
+
             FXMLLoader reinforcementLoader = new FXMLLoader(getClass().getResource("/com/risk/view/Reinforcement.fxml"));
             reinforcementLoader.setController(rController);
             System.out.println("we in reinforcement");
             try
             {
                 stage.getScene().setRoot(reinforcementLoader.load());
-                
 
             }
             catch (IOException e)
@@ -66,14 +66,14 @@ public class GamePhaseController implements Observer {
         }
         else if (view.equals("attack"))
         {
-        	aController = new AttackController();
-           
+            aController = new AttackController();
+
             FXMLLoader attackLoader = new FXMLLoader(getClass().getResource("/com/risk/view/Attack.fxml"));
             attackLoader.setController(aController);
             try
             {
                 stage.getScene().setRoot(attackLoader.load());
-             
+
                 System.out.println("we in attack");
             }
             catch (IOException e)
@@ -84,7 +84,7 @@ public class GamePhaseController implements Observer {
         }
         else if (view.equals("fortification"))
         {
-        	fController = new FortificationController();
+            fController = new FortificationController();
             FXMLLoader fortificationLoader = new FXMLLoader(getClass().getResource("/com/risk/view/Fortification.fxml"));
             fortificationLoader.setController(fController);
             try
@@ -98,7 +98,6 @@ public class GamePhaseController implements Observer {
             }
             stage.show();
         }
-  
 
     }
 }
