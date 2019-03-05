@@ -586,7 +586,7 @@ public class MapEditorController implements Initializable {
 			int countP = 0;
 			for (boolean d : armiesRemaining)
 			{
-				if (d)
+				if (d)	
 				{
 					countP++;
 				}
@@ -611,7 +611,6 @@ public class MapEditorController implements Initializable {
 			player.setStartingPoints(calcStartingArmiesHelper(PlayerModel.getPlayerModel().getNumberOfPlayer()));
 		}
 	}
-
 	/**
 	 * This is a helper method for setStartingPoints. Based on the number of players
 	 * it returns inital army count.

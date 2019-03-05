@@ -44,8 +44,6 @@ public class FortificationController implements Initializable {
 	@FXML
 	TextField AdjacentArmy;
 	
-	
-	
 	ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
 	ObservableList<Country> adjacentObservableList = FXCollections.observableArrayList();
 	ObservableList<String> messageObservableList = FXCollections.observableArrayList();
