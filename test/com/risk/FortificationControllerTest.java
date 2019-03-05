@@ -27,17 +27,23 @@ public class FortificationControllerTest extends TestCase {
     private ArrayList<Country> occupiedCountries1;
     private ArrayList<Country> occupiedCountries2;
     private Country firstCountry;
+    private Country c1;
+	private Country c2;
+	private Country c3;
+	private Country c4;
+	private Country c5;
+	private Country c6;
 
     public void setUp()
     {
         firstPlayer = new Player("Green");
         occupiedCountries1 = new ArrayList<Country>();
-        Country c1 = new Country("China", "Asia");
-        Country c2 = new Country("Quebec", "North America");
-        Country c3 = new Country("Siam", "Asia");
-        Country c4 = new Country("India", "Asia");
-        Country c5 = new Country("Congo", "Africa");
-        Country c6 = new Country("Indonesia", "Australia");
+        c1 = new Country("China", "Asia");
+        c2 = new Country("Quebec", "North America");
+        c3 = new Country("Siam", "Asia");
+        c4 = new Country("India", "Asia");
+        c5 = new Country("Congo", "Africa");
+        c6 = new Country("Indonesia", "Australia");
         occupiedCountries1.add(c1);
         occupiedCountries1.add(c2);
         occupiedCountries1.add(c3);
@@ -88,5 +94,39 @@ public class FortificationControllerTest extends TestCase {
         result = fController.getCountriesArrivedbyPath(testCountry, testCountry, result);
         assertTrue(result.isEmpty());
     }
+    
+    /**
+     * Method test for if there are countries accessible to each other and have enough armies
+     */
+    public void testIsAnyCountriesConnected() 
+    {
+    	c3.setArmyCount(2);
+    	c6.setArmyCount(1);
+    	FortificationController fController = new FortificationController();
+    	assertTrue(fController.isAnyCountriesConnected(firstPlayer));
+    }
+    
+    /**
+     * Method test for if there are countries accessible to each other and have enough armies
+     */
+    public void testIsAnyCountriesConnected2() 
+    {
+    	c3.setArmyCount(1);
+    	c6.setArmyCount(1);
+    	FortificationController fController = new FortificationController();
+    	assertFalse(fController.isAnyCountriesConnected(firstPlayer));
+    }
+    
+    /**
+     * Method test for if there are countries accessible to each other and have enough armies
+     */
+    public void testIsAnyCountriesConnected3() 
+    {
+    	c4.setArmyCount(2);
+    	c5.setArmyCount(2);
+    	FortificationController fController = new FortificationController();
+    	assertFalse(fController.isAnyCountriesConnected(secondPlayer));
+    }
+
 
 }

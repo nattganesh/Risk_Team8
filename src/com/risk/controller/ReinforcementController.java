@@ -2,6 +2,7 @@
  * Necessary for handling business logic for Reinforcement phase.
  *
  * @author DKM
+ * @author Tianyi
  *
  */
 package com.risk.controller;
@@ -107,6 +108,10 @@ public class ReinforcementController implements Initializable {
         playerId.setText(PlayerModel.getPlayerModel().getCurrentPlayer().getName());
         TotalReinforcement = calculateReinforcementOccupiedTerritory(PlayerModel.getPlayerModel().getCurrentPlayer())
                 + calculateReinforcementContinentControl(PlayerModel.getPlayerModel().getCurrentPlayer());
+        if(TotalReinforcement<3) 
+        {
+			TotalReinforcement=3;
+		}
         armyAvailable.setText("Army: " + Integer.toString(getReinforcement()));
 
         cardsObservableList.addAll(PlayerModel.getPlayerModel().getCurrentPlayer().getCards());

@@ -22,7 +22,8 @@ public class GamePhaseController implements Observer {
     ReinforcementController rController;
     AttackController aController;
     FortificationController fController;
-
+    SetUpController sController;
+    
     Scene scene;
     Parent root;
     private Stage stage;
@@ -46,7 +47,26 @@ public class GamePhaseController implements Observer {
     public void update(Observable o, Object phase)
     {
         String view = (String) phase;
-        if (view.equals("reinforcement"))
+        if (view.equals("setup"))
+        {
+        	sController = new SetUpController();
+               
+            FXMLLoader setupLoader = new FXMLLoader(getClass().getResource("/com/risk/view/SetUp.fxml"));
+            setupLoader.setController(sController);
+            System.out.println("we in setup");
+            try
+            {
+                stage.getScene().setRoot(setupLoader.load());
+                
+
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+            stage.show();
+        }
+        else if (view.equals("reinforcement"))
         {
             rController = new ReinforcementController();
 

@@ -445,7 +445,7 @@ public class MapEditorController implements Initializable {
                 calcStartingArmies();
                 assignCountriesToPlayers();
                 determinePlayersStartingOrder();
-                GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
+                GamePhaseModel.getGamePhaseModel().setPhase("setup");
             }
         }
         else
@@ -568,7 +568,7 @@ public class MapEditorController implements Initializable {
                 {
                     MapModel.getMapModel().getCountries().get(random).setRuler(p);
                     MapModel.getMapModel().getCountries().get(random).setIsOccupied(true);
-                    MapModel.getMapModel().getCountries().get(random).setArmyCount(1);
+                    MapModel.getMapModel().getCountries().get(random).setArmyCount(0);
 
                     countryOccupied[random] = true;
                     p.getOccupiedCountries().add(MapModel.getMapModel().getCountries().get(random));
@@ -578,39 +578,6 @@ public class MapEditorController implements Initializable {
                 {
                     break;
                 }
-            }
-        }
-
-        boolean[] armiesRemaining = new boolean[PlayerModel.getPlayerModel().getNumberOfPlayer()];
-        boolean done = false;
-
-        while (!done)
-        {
-            for (int ii = 0; ii < PlayerModel.getPlayerModel().getNumberOfPlayer(); ii++)
-            {
-                if (PlayerModel.getPlayerModel().getPlayers().get(ii).armiesLeft() > 0)
-                {
-                    int random = (int) (Math.random()
-                            * PlayerModel.getPlayerModel().getPlayers().get(ii).numbOccupied());
-                    PlayerModel.getPlayerModel().getPlayers().get(ii).getOccupiedCountries().get(random)
-                            .setArmyCount(1);
-                }
-                else
-                {
-                    armiesRemaining[ii] = true;
-                }
-            }
-            int countP = 0;
-            for (boolean d : armiesRemaining)
-            {
-                if (d)
-                {
-                    countP++;
-                }
-            }
-            if (countP == PlayerModel.getPlayerModel().getNumberOfPlayer())
-            {
-                done = true;
             }
         }
     }

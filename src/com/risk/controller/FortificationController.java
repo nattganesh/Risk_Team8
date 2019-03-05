@@ -49,7 +49,7 @@ public class FortificationController implements Initializable {
     ObservableList<String> messageObservableList = FXCollections.observableArrayList();
 
     private boolean fortification = false;
-    ArrayList<Country> CountriesArrivedbyPath = new ArrayList<>();
+    ArrayList<Country> CountriesArrivedbyPath;
 
     /**
      * This is a constructor of the FortificationController class
@@ -111,6 +111,12 @@ public class FortificationController implements Initializable {
                 }
             }
         });
+        
+        if(!isAnyCountriesConnected(PlayerModel.getPlayerModel().getCurrentPlayer())) 
+        {
+			fortification=true;
+			messageObservableList.add("You have no accessible countries");
+		}
 
     }
 
@@ -126,6 +132,7 @@ public class FortificationController implements Initializable {
             Adjacent.getItems().clear();
 
             AdjacentArmy.setText("");
+            CountriesArrivedbyPath = new ArrayList<>();
             Adjacent.getItems().addAll(getCountriesArrivedbyPath(Territory.getSelectionModel().getSelectedItem(), Territory.getSelectionModel().getSelectedItem(), CountriesArrivedbyPath));
             TerritoryArmy.setText(Integer.toString(Territory.getSelectionModel().getSelectedItem().getArmyCount()));
         }
@@ -156,7 +163,12 @@ public class FortificationController implements Initializable {
                 && !moveField.getText().trim().isEmpty() && !fortification)
         {
             int Armyinput = Integer.parseInt(moveField.getText());
-            if (Armyinput <= Territory.getSelectionModel().getSelectedItem().getArmyCount() - 1)
+            if(Armyinput<=0) 
+            {
+            	messageObservableList.add("The number does not meet the requirement");
+            	moveField.clear();
+            }
+            else if (Armyinput <= Territory.getSelectionModel().getSelectedItem().getArmyCount() - 1)
             {
 
                 Territory.getSelectionModel().getSelectedItem()
@@ -168,7 +180,7 @@ public class FortificationController implements Initializable {
                 AdjacentArmy.setText(Integer.toString(Adjacent.getSelectionModel().getSelectedItem().getArmyCount()));
                 TerritoryArmy.setText(Integer.toString(Territory.getSelectionModel().getSelectedItem().getArmyCount()));
                 fortification = true;
-
+                messageObservableList.add("Move successfully");
             }
             else
             {
@@ -193,23 +205,23 @@ public class FortificationController implements Initializable {
      * @return The list of accessible countries corresponding to the country
 	 *
      */
-    public static ArrayList<Country> getCountriesArrivedbyPath(Country country, Country firstCountry, ArrayList<Country> countries)
-    {
-        Player p = country.getRuler();
-        for (Country c : country.getConnectedCountries())
-        {
-            Player player = c.getRuler();
-            if (player.getName().equals(p.getName()))
-            {
-                if (isCountryDuplicated(c, firstCountry, countries))
-                {
-                    countries.add(c);
-                    countries = getCountriesArrivedbyPath(c, firstCountry, countries);
-                }
-            }
-        }
-        return countries;
-    }
+    public static ArrayList<Country> getCountriesArrivedbyPath(Country country, Country firstCountry,ArrayList<Country> countries)
+	{
+		Player p = country.getRuler();
+		for(Country c: country.getConnectedCountries()) 
+		{
+			Player player =c.getRuler();
+			if(player.getName().equals(p.getName())) 
+			{
+				if(isCountryDuplicated(c,firstCountry, countries)) 
+				{
+					countries.add(c);
+					countries = getCountriesArrivedbyPath(c,firstCountry, countries);
+				}
+			}
+		}
+		return countries;
+	}
 
     /**
      * This method is used to check if the country accessible is already in the
@@ -248,6 +260,34 @@ public class FortificationController implements Initializable {
         return false;
     }
 
+    /**
+     * This method checks if there is any country has accessible countries 
+     * and the country which has accessible countries has enough armies for move
+     * 
+     * @return true if there is a country which has accessible countries and it has enough armies for move. Otherwise, return false.
+     */
+	public static boolean isAnyCountriesConnected(Player p) 
+	{
+		int i = 0;
+		
+        for(Country c : p.getOccupiedCountries()) 
+        {
+        	ArrayList<Country> result = new ArrayList<>();
+            if((getCountriesArrivedbyPath(c, c,result).size()!=0)&&(c.getArmyCount()>1)) 
+            {
+            	i = 1;
+            	break;
+            }
+        }
+        if(i==1) 
+        {
+        	return true;
+        }else 
+        {
+        	return false;
+        }
+    }
+    
     /**
      * This method sets the GamePhaseModel to reinforcement, which notifies the
      * subscribed GameController to set new scene. This method also updates the
