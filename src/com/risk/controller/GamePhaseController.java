@@ -50,15 +50,12 @@ public class GamePhaseController implements Observer {
         if (view.equals("setup"))
         {
         	sController = new SetUpController();
-               
             FXMLLoader setupLoader = new FXMLLoader(getClass().getResource("/com/risk/view/SetUp.fxml"));
             setupLoader.setController(sController);
             System.out.println("we in setup");
             try
             {
                 stage.getScene().setRoot(setupLoader.load());
-                
-
             }
             catch (IOException e)
             {

@@ -18,9 +18,9 @@
                 <Button layoutX="409.0" layoutY="367.0" mnemonicParsing="false" onAction="#moveHandler" text="Move" />
                 <Label layoutX="54.0" layoutY="149.0" text="Your Territory" />
                 <Label layoutX="613.0" layoutY="149.0" text="Connected Territory" />
-                <TextField fx:id="TerritoryArmy" layoutX="246.0" layoutY="267.0" prefHeight="31.0" prefWidth="92.0" />
+                <TextField fx:id="TerritoryArmy" editable="false" layoutX="246.0" layoutY="267.0" prefHeight="31.0" prefWidth="92.0" />
                 <Text layoutX="274.0" layoutY="321.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Army" />
-                <TextField fx:id="AdjacentArmy" layoutX="461.0" layoutY="267.0" prefHeight="31.0" prefWidth="92.0" />
+                <TextField fx:id="AdjacentArmy" editable="false" layoutX="461.0" layoutY="267.0" prefHeight="31.0" prefWidth="92.0" />
                 <Text layoutX="489.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Army" />
                 <ListView fx:id="messageFortification" layoutX="241.0" layoutY="414.0" prefHeight="200.0" prefWidth="336.0" />
             </children>

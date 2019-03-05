@@ -31,7 +31,7 @@
                         <ListView fx:id="tradeCard" layoutX="429.0" layoutY="406.0" onMouseClicked="#yourTradeHandler" prefHeight="111.0" prefWidth="172.0" />
                         <Label layoutX="247.0" layoutY="524.0" text="Your cards" />
                         <Label layoutX="429.0" layoutY="524.0" text="Trade in cards" />
-                        <TextField fx:id="ArmyCount" layoutX="394.0" layoutY="233.0" prefHeight="31.0" prefWidth="199.0" />
+                        <TextField fx:id="ArmyCount" editable="false" layoutX="394.0" layoutY="233.0" prefHeight="31.0" prefWidth="199.0" />
                         <Label layoutX="422.0" layoutY="212.0" text="Army Count" />
                         <ListView fx:id="reinforcementMessage" layoutX="381.0" layoutY="70.0" prefHeight="142.0" prefWidth="231.0" /> 
                     </children>
