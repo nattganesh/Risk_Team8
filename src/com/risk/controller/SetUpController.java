@@ -40,7 +40,7 @@ public class SetUpController implements Initializable
 {
 	public int TotalArmies;
 	public ArrayList<String> cards = new ArrayList<>();
-
+	private boolean setUp = false;
 	/**
 	 * @see javafx.fxml.XML
 	 */
@@ -134,7 +134,11 @@ public class SetUpController implements Initializable
 		} else if (countryId.getSelectionModel().getSelectedItem() == null) 
 		{
 			messageObservableList.add("Please choose a country first");
-		} else {
+		} else if(setUp)
+		{
+			messageObservableList.add("You already place one army");
+		}
+		else{
 			for (Country c : territoryObservableList) 
 			{
 				if (c.getName().equals(countryId.getSelectionModel().getSelectedItem().getName())) 
@@ -142,15 +146,15 @@ public class SetUpController implements Initializable
 					if ((c.getArmyCount() == 0) || checkIfEachCountryHasOneArmy()) 
 					{
 						c.setArmyCount(1);
-						setReinforcement();
+						setStartingPoints();
 						ArmyCount.setText(
 								Integer.toString(countryId.getSelectionModel().getSelectedItem().getArmyCount()));
 						messageObservableList.add("Added 1 Army to " + c.getName());
+						setUp = true;
 						break;
 					}
 				}
 			}
-
 		}
 		armyAvailable.setText("Army: " + Integer.toString(getArmies()));
 	}
@@ -170,9 +174,10 @@ public class SetUpController implements Initializable
 	 * reinforcement
 	 * 
 	 */
-	public void setReinforcement() 
+	public void setStartingPoints() 
 	{
 		TotalArmies--;
+		PlayerModel.getPlayerModel().getCurrentPlayer().setStartingPoints(TotalArmies);
 	}
 
 	/**
@@ -213,11 +218,14 @@ public class SetUpController implements Initializable
 	public void next(ActionEvent event) throws IOException 
 	{
 		int currentIndex = PlayerModel.getPlayerModel().getPlayerIndex();
-		if (getArmies() > 0) 
-		{
-			messageObservableList.add("place all your army");
-		} else {
-			if (currentIndex == (PlayerModel.getPlayerModel().getNumberOfPlayer() - 1)) 
+		boolean isAnyPlayerPlacedAllArmies = true;
+		for(Player p : PlayerModel.getPlayerModel().getPlayers())
+        {
+        	if(p.getStartingP()!=0) 
+        		isAnyPlayerPlacedAllArmies = false;
+        }
+		if(setUp) {
+			if (isAnyPlayerPlacedAllArmies) 
 			{
 				PlayerModel.getPlayerModel()
 						.setPlayerIndex((currentIndex + 1) % PlayerModel.getPlayerModel().getNumberOfPlayer());
@@ -228,6 +236,10 @@ public class SetUpController implements Initializable
 						.setPlayerIndex((currentIndex + 1) % PlayerModel.getPlayerModel().getNumberOfPlayer());
 				GamePhaseModel.getGamePhaseModel().setPhase("setup");
 			}
+		}
+		else
+		{
+			messageObservableList.add("Please place one army in your country");
 		}
 	}
 }

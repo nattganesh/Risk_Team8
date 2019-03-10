@@ -582,8 +582,6 @@ public class MapEditorController implements Initializable {
         for(Player p : PlayerModel.getPlayerModel().getPlayers())
         {
         	p.armiesLeft();
-            int iii = p.getStartingP();
-            System.out.println(iii);
         }
     }
 
