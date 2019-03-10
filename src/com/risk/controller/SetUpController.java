@@ -90,25 +90,7 @@ public class SetUpController implements Initializable
 	public void initialize(URL url, ResourceBundle resourceBundle) 
 	{
 		playerId.setText(PlayerModel.getPlayerModel().getCurrentPlayer().getName());
-		int numOfPlayer = PlayerModel.getPlayerModel().getNumberOfPlayer();
-		switch (numOfPlayer) 
-		{
-		case 2:
-			TotalArmies = 40;
-			break;
-		case 3:
-			TotalArmies = 35;
-			break;
-		case 4:
-			TotalArmies = 30;
-			break;
-		case 5:
-			TotalArmies = 25;
-			break;
-		case 6:
-			TotalArmies = 20;
-			break;
-		}
+		TotalArmies = PlayerModel.getPlayerModel().getCurrentPlayer().getStartingP();
 		armyAvailable.setText("Army: " + Integer.toString(getArmies()));
 		territoryObservableList.addAll(PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
 		countryId.setItems(territoryObservableList);

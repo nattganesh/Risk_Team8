@@ -17,7 +17,6 @@ public class Player {
     private ArrayList<Country> occupiedCountries = new ArrayList<>();
     private ArrayList<Card> cards = new ArrayList<>();
     private int startingPoints;
-
     private boolean playerLost = false;
 
     /**
@@ -37,7 +36,7 @@ public class Player {
      */
     public void setStartingPoints(int i)
     {
-        startingPoints = i;
+        this.startingPoints = i;
     }
 
     /**
@@ -70,6 +69,15 @@ public class Player {
         return occupiedCountries.size();
     }
 
+  
+    /**
+     *
+     * @return the index of the current player
+     */
+    public int getStartingP()
+    {
+        return startingPoints;
+    }
     /**
      * gets country object associated with the name of the string
      *
@@ -144,7 +152,7 @@ public class Player {
      *
      * @return The remaining army after assigning army from startingPoint
      */
-    public int armiesLeft()
+    public void armiesLeft()
     {
         int sum = 0;
         for (Country country : this.occupiedCountries)
@@ -152,6 +160,6 @@ public class Player {
             sum += country.getArmyCount();
         }
 
-        return startingPoints - sum;
+        this.startingPoints = this.startingPoints - sum;
     }
 }
