@@ -12,6 +12,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 
+import com.risk.model.ActionModel;
 import com.risk.model.GamePhaseModel;
 import com.risk.model.PlayerModel;
 
@@ -21,6 +22,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -44,6 +46,9 @@ public class GamePhaseController implements Observer, Initializable{
     @FXML
     Label phaseID;
     
+    @FXML
+    ListView<String> actionMessage;
+    
 //    private class playerObserver implements Observer
 //    {
 //
@@ -66,10 +71,17 @@ public class GamePhaseController implements Observer, Initializable{
     public GamePhaseController(Stage s)
     {
         GamePhaseModel.getGamePhaseModel().addObserver(this);
-//        PlayerModel.getPlayerModel().addObserver(new playerObserver());
+//        ActionModel.getActionModel().addObserver(new actionObserver());
         this.stage = s;
     }
-
+//    public class actionObserver implements Observer{
+//		@Override
+//		public void update(Observable arg0, Object arg1) {
+//			
+//		}
+//    	
+//    }
+    
     /**
      * This method receives notification from the changes in the state from the
      * GamePhaseModel, then changes the scene to the next phase.
@@ -92,7 +104,9 @@ public class GamePhaseController implements Observer, Initializable{
         }
         else if (view.equals("reinforcement"))
         {
+        	
         	try {
+        		ActionModel.getActionModel().clearAction();
         		playerID.setText(PlayerModel.getPlayerModel().getCurrentPlayer().getName());
         		mainPane.getChildren().clear();
 				mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/Reinforcement.fxml")));
@@ -131,6 +145,7 @@ public class GamePhaseController implements Observer, Initializable{
 	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		actionMessage.setItems(ActionModel.getActionModel().getActions());
 		try {
 			mainPane.getChildren().clear();
 			mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/MapSelector.fxml")));

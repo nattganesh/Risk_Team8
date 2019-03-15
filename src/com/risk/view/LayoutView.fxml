@@ -9,7 +9,8 @@
    <children>
       <Label fx:id="playerID" layoutX="34.0" layoutY="38.0" />
       <Label fx:id="phaseID" layoutX="451.0" layoutY="72.0" />
-      <Pane fx:id="mainPane" layoutX="386.0" layoutY="207.0" prefHeight="200.0" prefWidth="200.0">
+      <ListView fx:id="actionMessage" layoutX="34.0" layoutY="200.0" prefHeight="200.0" prefWidth="294.0" />
+      <Pane fx:id="mainPane" layoutX="540.0" layoutY="100.0" prefHeight="200.0" prefWidth="200.0">
          <children>
             <Pane fx:id="content" />
          </children>

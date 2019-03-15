@@ -18,19 +18,18 @@ import javafx.collections.ObservableList;
 public class ActionModel extends Observable {
 	
 	private ObservableList<String> actions = FXCollections.observableArrayList();
-	static ActionModel actionModel;
+	private static ActionModel actionModel;
 	
 	public void addAction(String action)
 	{
 		actions.add(action);
-		setChanged();
-//	s	notifyObservers(); // notify the view that the message has been added 
+
 	}
 	
 	public void clearAction()
 	{
 		actions.clear();
-		setChanged();
+//		setChanged();
 //		notifyObservers(); // notify the view that message has been cleared (between different phase)
 	}
 	

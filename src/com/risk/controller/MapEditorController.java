@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
+import com.risk.model.ActionModel;
 import com.risk.model.GamePhaseModel;
 import com.risk.model.MapModel;
 
@@ -77,7 +78,8 @@ public class MapEditorController implements Initializable {
     ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
     ObservableList<Country> adjacentObservableList = FXCollections.observableArrayList();
     public static ObservableList<String> messageObservableList = FXCollections.observableArrayList();
-
+    ActionModel actions;
+    
     /**
      * (non-Javadoc)
      *
@@ -87,6 +89,8 @@ public class MapEditorController implements Initializable {
     @Override
     public void initialize(URL arg0, ResourceBundle arg1)
     {
+    	actions = ActionModel.getActionModel();
+    	
         ValidationError.setItems(messageObservableList);
         ContinentView.setItems(MapModel.getMapModel().getContinents());
         ContinentView.setCellFactory(param -> new ListCell<Continent>() {
@@ -189,6 +193,8 @@ public class MapEditorController implements Initializable {
                 territoryObservableList.clear();
                 territoryObservableList.addAll(ContinentView.getSelectionModel().getSelectedItem().getCountries());
                 messageObservableList.add("added a territory to the continent");
+                actions.addAction("added a territory to the continent");
+                
 
             }
         }
@@ -211,6 +217,7 @@ public class MapEditorController implements Initializable {
                 {
                     territoryExists = country;
                     messageObservableList.add("territory exists");
+                    actions.addAction("territory exists");
                     break;
                 }
             }
@@ -230,11 +237,13 @@ public class MapEditorController implements Initializable {
             if (AdjacentInput.getText().equals(TerritoryView.getSelectionModel().getSelectedItem().getName()))
             {
                 messageObservableList.add("You can't add a territory as it's own neighbour");
+                actions.addAction("You can't add a territory as it's own neighbour");
 
             }
             else if (existsInAdjacentList(AdjacentInput.getText()))
             {
                 messageObservableList.add("Territory is already a neighbour");
+                actions.addAction("Territory is already a neighbour");
             }
             else if (searchTerritory(AdjacentInput.getText()) != null && !existsInAdjacentList(AdjacentInput.getText()))
             {
@@ -245,10 +254,12 @@ public class MapEditorController implements Initializable {
                 adjacentObservableList
                         .addAll(TerritoryView.getSelectionModel().getSelectedItem().getConnectedCountries());
                 messageObservableList.add("added neighbour");
+                actions.addAction("added neighbour");
             }
             else
             {
                 messageObservableList.add("territory doesn't exist");
+                actions.addAction("territory doesn't exist");
             }
         }
     }
@@ -298,6 +309,7 @@ public class MapEditorController implements Initializable {
             adjacentObservableList.clear();
             territoryObservableList.addAll(ContinentView.getSelectionModel().getSelectedItem().getCountries());
             messageObservableList.add("territory deleted along with connections");
+            actions.addAction("territory deleted along with connections");
         }
     }
 
@@ -364,16 +376,19 @@ public class MapEditorController implements Initializable {
                 if (Validate.getValidate().getValidateSize() == MapModel.getMapModel().getCountries().size())
                 {
                     messageObservableList.add("Connected Map");
+                    actions.addAction("Connected map");
                 }
                 else
                 {
                     messageObservableList.add("Disconnected Map. Might want to reassign territories");
+                    actions.addAction("Disconnected Map. Might want to reassign territories");
                 }
             }
         }
         else
         {
             messageObservableList.add("file does not exist");
+            actions.addAction("file does not exist");
             clearMapEditor();
         }
     }
@@ -395,6 +410,7 @@ public class MapEditorController implements Initializable {
             if (Validate.getValidate().getValidateSize() == MapModel.getMapModel().getCountries().size())
             {
                 messageObservableList.add("Saved File");
+                actions.addAction("saved File");
                 Output.generate(ExistingFile.getText());
                 initializePlayers();
                 validated = 1;
@@ -402,12 +418,14 @@ public class MapEditorController implements Initializable {
             else
             {
                 messageObservableList.add("Can't Save Map it's an invalid map");
+                actions.addAction("Can't Save Map it's an invalid map");
                 validated = 0;
             }
         }
         else
         {
             messageObservableList.add("can't save - invalid map");
+            actions.addAction("Can't save - invalid map");
         }
     }
 
@@ -423,11 +441,12 @@ public class MapEditorController implements Initializable {
             clearMapEditor();
             initializeContinents();
             messageObservableList.add("New Map");
+            actions.addAction("New map");
 
         }
         else
         {
-            messageObservableList.add("You need a name for the file");
+        	actions.addAction("You need a name for a file");
         }
     }
 
@@ -482,6 +501,7 @@ public class MapEditorController implements Initializable {
         continent.add(new Continent("Australia", 10));
         ContinentView.getItems().addAll(continent);
         messageObservableList.add("This is a fixed map with the following continents");
+        actions.addAction("This is a fixed map with the following continents");
     }
 
     /**

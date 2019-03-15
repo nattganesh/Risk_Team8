@@ -15,6 +15,7 @@ import java.util.ResourceBundle;
 import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
 import com.risk.model.player.Player;
+import com.risk.model.ActionModel;
 import com.risk.model.GamePhaseModel;
 import com.risk.model.MapModel;
 import com.risk.model.PlayerModel;
@@ -76,11 +77,14 @@ public class ReinforcementController implements Initializable {
 
     @FXML
     ListView<String> reinforcementMessage;
+    
+    
 
     ObservableList<Card> cardsObservableList = FXCollections.observableArrayList();
     ObservableList<Card> tradeObservableList = FXCollections.observableArrayList();
     ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
     ObservableList<String> messageObservableList = FXCollections.observableArrayList();
+    ActionModel actions;
 
     /**
      * This is the constructor for the reinforcement controller
@@ -102,7 +106,9 @@ public class ReinforcementController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
-
+    	
+    	actions = ActionModel.getActionModel();
+    	
         TotalReinforcement = calculateReinforcementOccupiedTerritory(PlayerModel.getPlayerModel().getCurrentPlayer())
                 + calculateReinforcementContinentControl(PlayerModel.getPlayerModel().getCurrentPlayer());
         if(TotalReinforcement<3) 
@@ -181,6 +187,7 @@ public class ReinforcementController implements Initializable {
                         setReinforcement(Armyinput);
                         ArmyCount.setText(Integer.toString(countryId.getSelectionModel().getSelectedItem().getArmyCount()));
                         messageObservableList.add("Added " + Armyinput + " Army to " + c.getName());
+                        actions.addAction("Added " + Armyinput + " Army to " + c.getName());
                         break;
                     }
                 }
@@ -204,10 +211,12 @@ public class ReinforcementController implements Initializable {
         if (getReinforcement() > 0)
         {
             messageObservableList.add("place all your army");
+            actions.addAction("place all your army");
         }
         else if (PlayerModel.getPlayerModel().getCurrentPlayer().getCards().size() >= 5)
         {
             messageObservableList.add("you got 5+ cards");
+            actions.addAction("your got 5+ cards");
         }
         else
         {

@@ -10,6 +10,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import com.risk.model.ActionModel;
 import com.risk.model.GamePhaseModel;
 import com.risk.model.PlayerModel;
 import com.risk.model.map.Country;
@@ -50,6 +51,7 @@ public class FortificationController implements Initializable {
 
     private boolean fortification = false;
     ArrayList<Country> CountriesArrivedbyPath;
+    ActionModel actions;
 
     /**
      * This is a constructor of the FortificationController class
@@ -116,6 +118,7 @@ public class FortificationController implements Initializable {
         {
 			fortification=true;
 			messageObservableList.add("You have no accessible countries");
+			actions.addAction("you have no accessible countries");
 		}
 
     }
@@ -166,6 +169,7 @@ public class FortificationController implements Initializable {
             if(Armyinput<=0) 
             {
             	messageObservableList.add("The number does not meet the requirement");
+            	actions.addAction("The number does not meet the requirement");
             	moveField.clear();
             }
             else if (Armyinput <= Territory.getSelectionModel().getSelectedItem().getArmyCount() - 1)
@@ -181,15 +185,18 @@ public class FortificationController implements Initializable {
                 TerritoryArmy.setText(Integer.toString(Territory.getSelectionModel().getSelectedItem().getArmyCount()));
                 fortification = true;
                 messageObservableList.add("Move successfully");
+                actions.addAction("Move Successfully");
             }
             else
             {
                 messageObservableList.add("You don't have that many army");
+                actions.addAction("You don't have that many army");
             }
         }
         else
         {
             messageObservableList.add("Invalid Selection");
+            actions.addAction("Invalid Selection");
         }
     }
 
@@ -308,6 +315,7 @@ public class FortificationController implements Initializable {
         else
         {
             messageObservableList.add("you need to fortify");
+            actions.addAction("You need to fortify");
         }
     }
 }
