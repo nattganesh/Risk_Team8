@@ -55,9 +55,6 @@ public class ReinforcementController implements Initializable {
     TextField inputArmy;
 
     @FXML
-    Label playerId;
-
-    @FXML
     ListView<Country> countryId;
     @FXML
     Button nextPlayer;
@@ -105,13 +102,14 @@ public class ReinforcementController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
-        playerId.setText(PlayerModel.getPlayerModel().getCurrentPlayer().getName());
+
         TotalReinforcement = calculateReinforcementOccupiedTerritory(PlayerModel.getPlayerModel().getCurrentPlayer())
                 + calculateReinforcementContinentControl(PlayerModel.getPlayerModel().getCurrentPlayer());
         if(TotalReinforcement<3) 
         {
 			TotalReinforcement=3;
 		}
+        
         armyAvailable.setText("Army: " + Integer.toString(getReinforcement()));
 
         cardsObservableList.addAll(PlayerModel.getPlayerModel().getCurrentPlayer().getCards());

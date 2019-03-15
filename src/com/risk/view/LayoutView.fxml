@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="mainPane" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="playerID" layoutX="34.0" layoutY="38.0" />
+      <Label fx:id="phaseID" layoutX="451.0" layoutY="72.0" />
+      <Pane fx:id="mainPane" layoutX="386.0" layoutY="207.0" prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <Pane fx:id="content" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

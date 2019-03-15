@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.risk.controller.MapEditorController">
     <children>
         <AnchorPane layoutY="-7.0" prefHeight="800.0" prefWidth="800.0">
             <children>
@@ -34,6 +34,7 @@
                 <ComboBox fx:id="PlayerID" layoutX="495.0" layoutY="722.0" prefWidth="150.0" />
                 <TextField fx:id="ExistingFile" layoutX="47.0" layoutY="73.0" />
                 <ListView fx:id="ValidationError" layoutX="41.0" layoutY="151.0" prefHeight="107.0" prefWidth="702.0" />
+            <RadioButton fx:id="skipRobinID" layoutX="521.0" layoutY="689.0" mnemonicParsing="false" text="Skip Robin" />
             </children>
         </AnchorPane>
     </children>

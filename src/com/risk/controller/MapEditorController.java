@@ -37,6 +37,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
@@ -68,6 +69,9 @@ public class MapEditorController implements Initializable {
 
     @FXML
     ComboBox<String> PlayerID;
+    
+    @FXML
+    RadioButton skipRobinID;
 
     private int validated = 0;
     ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
@@ -438,7 +442,7 @@ public class MapEditorController implements Initializable {
     {
         if (validated == 1)
         {
-            if (PlayerID.getSelectionModel().getSelectedItem() != null)
+            if (PlayerID.getSelectionModel().getSelectedItem() != null && !skipRobinID.isSelected())
             {
                 int numbPlayers = Integer.parseInt(PlayerID.getSelectionModel().getSelectedItem());
                 setPlayers(numbPlayers);
@@ -446,6 +450,15 @@ public class MapEditorController implements Initializable {
                 assignCountriesToPlayers();
                 determinePlayersStartingOrder();
                 GamePhaseModel.getGamePhaseModel().setPhase("setup");
+            } 
+            else 
+            {
+            	int numbPlayers = Integer.parseInt(PlayerID.getSelectionModel().getSelectedItem());
+                setPlayers(numbPlayers);
+                calcStartingArmies();
+                autoAssignCountriesToPlayers();
+                determinePlayersStartingOrder();
+                GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
             }
         }
         else
@@ -569,6 +582,8 @@ public class MapEditorController implements Initializable {
                     MapModel.getMapModel().getCountries().get(random).setRuler(p);
                     MapModel.getMapModel().getCountries().get(random).setIsOccupied(true);
                     MapModel.getMapModel().getCountries().get(random).setArmyCount(1);
+                    
+                    p.setStartingPoints(p.getStartingPoints() - 1);
                     countryOccupied[random] = true;
                     p.getOccupiedCountries().add(MapModel.getMapModel().getCountries().get(random));
                     i++;
@@ -579,11 +594,68 @@ public class MapEditorController implements Initializable {
                 }
             }
         }
-        for(Player p : PlayerModel.getPlayerModel().getPlayers())
-        {
-        	p.armiesLeft();
-        }
+       
     }
+    
+    /**
+     * This method random assigns armies to setup stage
+     */
+	public void autoAssignCountriesToPlayers() {
+		  boolean[] countryOccupied = new boolean[Country.MAX_NUMBER_OF_COUNTRIES];
+	        int i = 0;
+	        while (i < Country.MAX_NUMBER_OF_COUNTRIES)
+	        {
+	            for (Player p : PlayerModel.getPlayerModel().getPlayers())
+	            {	
+	                int random = (int) (Math.random() * Country.MAX_NUMBER_OF_COUNTRIES);
+	                while (countryOccupied[random])
+	                {
+	                    random = (int) (Math.random() * Country.MAX_NUMBER_OF_COUNTRIES);
+	                }
+	                if (!countryOccupied[random])
+	                {
+	                    MapModel.getMapModel().getCountries().get(random).setRuler(p);
+	                    MapModel.getMapModel().getCountries().get(random).setIsOccupied(true);
+	                    MapModel.getMapModel().getCountries().get(random).setArmyCount(1);
+	                    p.setStartingPoints(p.getStartingPoints() - 1);
+	                    countryOccupied[random] = true;
+	                    p.getOccupiedCountries().add(MapModel.getMapModel().getCountries().get(random));
+	                    i++;
+	                }
+	                if (i >= Country.MAX_NUMBER_OF_COUNTRIES)
+	                {
+	                    break;
+	                }
+	            }
+	        }
+	        
+
+		boolean[] armiesRemaining = new boolean[PlayerModel.getPlayerModel().getNumberOfPlayer()];
+		boolean done = false;
+
+		while (!done) {
+			for (int ii = 0; ii < PlayerModel.getPlayerModel().getNumberOfPlayer(); ii++) {
+				if (PlayerModel.getPlayerModel().getPlayers().get(ii).getStartingPoints() > 0) {
+					int random = (int) (Math.random()
+							* PlayerModel.getPlayerModel().getPlayers().get(ii).numbOccupied());
+					PlayerModel.getPlayerModel().getPlayers().get(ii).getOccupiedCountries().get(random)
+							.setArmyCount(1);
+					PlayerModel.getPlayerModel().getPlayers().get(ii).setStartingPoints(PlayerModel.getPlayerModel().getPlayers().get(ii).getStartingPoints() - 1);
+				} else {
+					armiesRemaining[ii] = true;
+				}
+			}
+			int countP = 0;
+			for (boolean d : armiesRemaining) {
+				if (d) {
+					countP++;
+				}
+			}
+			if (countP == PlayerModel.getPlayerModel().getNumberOfPlayer()) {
+				done = true;
+			}
+		}
+	}
 
     /**
      * This method sets the starting armies during initialization based on

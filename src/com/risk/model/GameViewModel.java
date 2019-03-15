@@ -9,15 +9,15 @@ package com.risk.model;
 
 import java.util.Observable;
 
-public class GamePhaseModel extends Observable {
+public class GameViewModel extends Observable {
 
     String phase = "setup";
-    private static GamePhaseModel gamePhaseModel;
+    private static GameViewModel gameViewModel;
 
     /**
      * Constructor for GamePhaseModel class
      */
-    private GamePhaseModel()
+    private GameViewModel()
     {
     }
 
@@ -31,18 +31,22 @@ public class GamePhaseModel extends Observable {
         setChanged();
         notifyObservers(phase);
     }
+    
+    public String getPhase()
+    {
+    	return phase;
+    }
 
-      
     /**
      *
      * @return this returns the GamePhaseModel class as a singleton
      */
-    public static GamePhaseModel getGamePhaseModel()
+    public static GameViewModel getGameViewModel()
     {
-        if (gamePhaseModel == null)
+        if (gameViewModel == null)
         {
-            gamePhaseModel = new GamePhaseModel();
+            gameViewModel = new GameViewModel();
         }
-        return gamePhaseModel;
+        return gameViewModel;
     }
 }

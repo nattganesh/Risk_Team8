@@ -6,11 +6,10 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.risk.controller.AttackController">
     <children>
         <AnchorPane prefHeight="200.0" prefWidth="200.0">
             <children>
-                <Text layoutX="40.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="attack phase" />
                 <Button fx:id="FortificationPhaseID" layoutX="29.0" layoutY="117.0" mnemonicParsing="false" onAction="#goToFortificationPhase" text="Fortification Phase" /> 
             </children>
         </AnchorPane>

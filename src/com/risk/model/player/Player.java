@@ -38,6 +38,17 @@ public class Player {
     {
         this.startingPoints = i;
     }
+    
+    /**
+     * Gets the starting points of armies left
+     * 
+     * @return
+     */
+    public int getStartingPoints()
+    {
+    	return startingPoints;
+    }
+
 
     /**
      * gets the name of player
@@ -145,21 +156,9 @@ public class Player {
     {
         this.playerLost = playerLost;
     }
+    
 
-    /**
-     * Used to calculate armies remaining during setup phase when you assign
-     * initial army counts
-     *
-     * @return The remaining army after assigning army from startingPoint
-     */
-    public void armiesLeft()
-    {
-        int sum = 0;
-        for (Country country : this.occupiedCountries)
-        {
-            sum += country.getArmyCount();
-        }
-
-        this.startingPoints = this.startingPoints - sum;
-    }
+    
+    
+    
 }
