@@ -98,7 +98,6 @@ public class GamePhaseController implements Observer, Initializable{
         		mainPane.getChildren().clear();
 				mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/SetUp.fxml")));
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
         }
@@ -108,8 +107,8 @@ public class GamePhaseController implements Observer, Initializable{
         		playerID.setText(PlayerModel.getPlayerModel().getCurrentPlayer().getName());
         		mainPane.getChildren().clear();
 				mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/Reinforcement.fxml")));
+				
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
         }

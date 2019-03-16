@@ -10,6 +10,8 @@ package com.risk.controller;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.ResourceBundle;
 
 import com.risk.model.map.Continent;
@@ -27,18 +29,23 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
 
 /**
  * @see javafx.fxml.Initializable
  */
-public class ReinforcementController implements Initializable {
+public class ReinforcementController implements Initializable{
 
     public int TotalReinforcement;
     public ArrayList<String> cards = new ArrayList<>();
@@ -81,25 +88,27 @@ public class ReinforcementController implements Initializable {
     @FXML
     ListView<Country> adjacentOwned;
 
+    @FXML
+    Pane CardPane;
     
+    @FXML
+    AnchorPane child;
+   
     
-    
-    
-    ObservableList<Card> cardsObservableList = FXCollections.observableArrayList();
-    ObservableList<Card> tradeObservableList = FXCollections.observableArrayList();
+    @FXML
+    private CardController cardController; 
     
     ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
     ObservableList<Country> adjacentEnemyObservableList = FXCollections.observableArrayList();
     ObservableList<Country> adjacentOwnedObservableList = FXCollections.observableArrayList();
-    
     ActionModel actions;
-//    PlayerModel player;
 
     /**
      * This is the constructor for the reinforcement controller
      */
     public ReinforcementController()
     {
+    	
     }
 
     /**
@@ -115,9 +124,13 @@ public class ReinforcementController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
+    	   	
+    
+    	cardController.addObserver(new cardSkipObserver());
+    	cardController.addObserver(new cardReinforcementObserver());
+    	
     	
     	actions = ActionModel.getActionModel();
-//    	player = PlayerModel.getPlayerModel();
     	
         TotalReinforcement = calculateReinforcementOccupiedTerritory(PlayerModel.getPlayerModel().getCurrentPlayer())
                 + calculateReinforcementContinentControl(PlayerModel.getPlayerModel().getCurrentPlayer());
@@ -127,11 +140,6 @@ public class ReinforcementController implements Initializable {
 		}
         
         armyAvailable.setText("Army: " + Integer.toString(getReinforcement()));
-
-        cardsObservableList.addAll(PlayerModel.getPlayerModel().getCurrentPlayer().getCards());
-
-        yourCard.setItems(cardsObservableList);
-        tradeCard.setItems(tradeObservableList);
 
         territoryObservableList.addAll(PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
         countryId.setItems(territoryObservableList);
@@ -276,87 +284,6 @@ public class ReinforcementController implements Initializable {
     }
 
     /**
-     * This method is used to update the cards the player owned and the cards
-     * the player chooses to exchange
-     */
-    @FXML
-    public void yourCardHandler()
-    {
-        if (yourCard.getSelectionModel().getSelectedItem() != null && tradeCard.getItems().size() < 3)
-        {
-            Card card = yourCard.getSelectionModel().getSelectedItem();
-            tradeCard.getItems().add(card);
-            yourCard.getItems().remove(card);
-        }
-    }
-
-    /**
-     * This method is used to update the cards the player owned and the cards
-     * the player chooses to exchange.
-     */
-    @FXML
-    public void yourTradeHandler()
-    {
-        if (tradeCard.getSelectionModel().getSelectedItem() != null)
-        {
-            Card card = tradeCard.getSelectionModel().getSelectedItem();
-            yourCard.getItems().add(card);
-            tradeCard.getItems().remove(card);
-
-        }
-    }
-
-    /**
-     * This method is used to update the total reinforcement based on the cards
-     * the player chooses And update the cards the player owned.
-     */
-    @FXML
-    public void tradeCard()
-    {
-        if (tradeCard.getItems().size() == 3)
-        {
-            if (cardValidation(tradeCard.getItems()))
-            {
-                TotalReinforcement += calculateReinforcementFromCards();
-                armyAvailable.setText("Army: " + Integer.toString(getReinforcement()));
-                tradeCard.getItems().clear();
-                PlayerModel.getPlayerModel().getCurrentPlayer().getCards().clear();
-
-                for (Card c : yourCard.getItems())
-                {
-                    PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(c);
-                }
-            }
-        }
-    }
-
-    /**
-     * This method is used to validate the cards the player chooses to exchange
-     *
-     * @param selectedCards A list of cards the player chooses to exchange for
-     * armies
-     * @return The result corresponding to the countries the player occupied
-     */
-    public boolean cardValidation(ObservableList<Card> selectedCards)
-    {
-        ObservableList<Card> cards = FXCollections.observableArrayList();
-        cards = selectedCards;
-
-        if (((cards.get(0).getCatagory().equals(cards.get(1).getCatagory()))
-                && (cards.get(0).getCatagory().equals(cards.get(2).getCatagory())))
-                || ((!(cards.get(0).getCatagory().equals(cards.get(1).getCatagory())))
-                && (!(cards.get(0).getCatagory().equals(cards.get(2).getCatagory())))
-                && (!(cards.get(1).getCatagory().equals(cards.get(2).getCatagory())))))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    /**
      * This method is used to calculate the extra armies based on the number of
      * countries the player already occupied
      *
@@ -407,19 +334,6 @@ public class ReinforcementController implements Initializable {
         return reinforcement;
     }
 
-    /**
-     * This method is used to calculate the extra armies earned by exchanging
-     * cards
-     *
-     * @return The result corresponding to the total exchange time.
-     */
-    public int calculateReinforcementFromCards()
-    {
-        int currentExchange = MapModel.getMapModel().getExchangeTime();
-        int reinforcement = (currentExchange + 1) * 5;
-        MapModel.getMapModel().setExchangeTime(currentExchange + 1);
-        return reinforcement;
-    }
 
     /**
      * This method is used to get the number of total armies earned for
@@ -442,4 +356,49 @@ public class ReinforcementController implements Initializable {
     {
         TotalReinforcement = TotalReinforcement - i;
     }
+    
+    
+    /**
+     * This method observes reinforcement calculated by card
+     * @author DKM
+     *
+     */
+    private class cardReinforcementObserver implements Observer
+    {
+
+		@Override
+		public void update(Observable o, Object arg) {
+			if (arg != null) {
+				int reinforcementFromCards = (int)arg;
+				TotalReinforcement += reinforcementFromCards;
+				armyAvailable.setText(Integer.toString(getReinforcement()));
+				if (PlayerModel.getPlayerModel().getCurrentPlayer().getCards().size() < 3)
+				{
+					child.getChildren().clear();
+				}
+			}
+			
+		}
+    	
+    }
+    
+
+    /**
+     * This is method observes for skipping card exchange
+     * 
+     * @author DKM
+     *
+     */
+    private class cardSkipObserver implements Observer 
+    {
+		@Override
+		public void update(Observable o, Object arg) {
+			if (arg == null) {
+				child.getChildren().clear();	
+			}
+		}
+    	
+    }
+    
+
 }
