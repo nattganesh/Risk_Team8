@@ -9,6 +9,9 @@ package com.risk.model.player;
 
 import com.risk.model.card.Card;
 import com.risk.model.map.Country;
+
+import javafx.collections.ObservableList;
+
 import java.util.ArrayList;
 
 public class Player {
@@ -156,6 +159,10 @@ public class Player {
     {
         this.playerLost = playerLost;
     }
+    
+
+    
+    
     
 
     

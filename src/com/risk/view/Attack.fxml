@@ -1,17 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
 <?import javafx.scene.text.*?>
+<?import javafx.scene.*?>
 <?import java.lang.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.risk.controller.AttackController">
+<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.risk.controller.AttackController">
     <children>
-        <AnchorPane prefHeight="200.0" prefWidth="200.0">
-            <children>
-                <Button fx:id="FortificationPhaseID" layoutX="29.0" layoutY="117.0" mnemonicParsing="false" onAction="#goToFortificationPhase" text="Fortification Phase" /> 
-            </children>
-        </AnchorPane>
+         <!--  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+              <children>
+                        <Label fx:id="playerId" layoutX="106.0" layoutY="139.0" text="Player X" />
+                    </children>
+                </AnchorPane> -->
+          <AnchorPane minHeight="0.0" minWidth="0.0" onKeyReleased="#territoryHandler" prefHeight="600.0" prefWidth="900.0">
+              <children>
+                  <Label layoutX="14.0" layoutY="20.0" text="Country Owned" />
+                  <ListView fx:id="countryId" layoutX="337.0" layoutY="125.0" onMouseClicked="#territoryHandler" prefHeight="200.0" prefWidth="206.0" />
+                  <Label fx:id="inputArmyError" layoutX="264.0" layoutY="304.0" />
+                  <Button fx:id="AttackPhaseID" layoutX="779.0" layoutY="26.0" mnemonicParsing="false" onAction="#goToFortificationPhase" text="Fortification" />
+                  <Label fx:id="CardMessage" layoutX="170.0" layoutY="325.0" />
+                  <TextField fx:id="ArmyCount" editable="false" layoutX="436.0" layoutY="331.0" prefHeight="31.0" prefWidth="111.0" />
+                  <Label layoutX="342.0" layoutY="336.0" text="Army Count" />
+            <ListView fx:id="adjacentOwned" layoutX="543.0" layoutY="125.0" prefHeight="200.0" prefWidth="200.0" />
+            <ListView fx:id="adjacentEnemy" layoutX="141.0" layoutY="125.0" onMouseClicked="#adjacentEnemyHandler" prefHeight="200.0" prefWidth="200.0" />
+            <Text layoutX="176.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Surrounding Enemy" />
+            <Text layoutX="551.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Surrounding Reinforcement" />
+            <Text layoutX="371.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Territory Occupied" />
+            <Button layoutX="492.0" layoutY="453.0" mnemonicParsing="false" onAction="#rollDiceHandler" text="Roll" />
+            <ComboBox fx:id="NumberDice" layoutX="341.0" layoutY="453.0" prefWidth="150.0" /> 
+              </children>
+          </AnchorPane>
     </children>
 </AnchorPane>

@@ -10,31 +10,30 @@
     <children>
         <AnchorPane layoutY="-7.0" prefHeight="800.0" prefWidth="800.0">
             <children>
-                <Label layoutX="44.0" layoutY="312.0" text="CONTINENT" />
-                <TextField fx:id="TerritoryInput" layoutX="362.0" layoutY="540.0" prefHeight="25.0" prefWidth="77.0" />
-                <ListView fx:id="TerritoryView" layoutX="280.0" layoutY="339.0" onMouseClicked="#loadAdjacentHandler" prefHeight="200.0" prefWidth="200.0" />
-                <ListView fx:id="ContinentView" layoutX="34.0" layoutY="339.0" onMouseClicked="#loadTerritoryHandler" prefHeight="200.0" prefWidth="200.0" />
-                <Text layoutX="266.0" layoutY="558.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Territory" />
-                <Text layoutX="519.0" layoutY="558.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Neighbour" />
-                <TextField fx:id="AdjacentInput" layoutX="624.0" layoutY="540.0" prefHeight="25.0" prefWidth="77.0" />
-                <Label layoutX="276.0" layoutY="312.0" text="Territory" />
-                <Button layoutX="436.0" layoutY="541.0" mnemonicParsing="false" onAction="#territoryAddHandler" text="ADD" />
-                <Button layoutX="701.0" layoutY="540.0" mnemonicParsing="false" onAction="#adjacentAddHandler" text="ADD" />
-                <ListView fx:id="AdjacentView" layoutX="545.0" layoutY="339.0" prefHeight="200.0" prefWidth="200.0" />
-                <Label layoutX="544.0" layoutY="312.0" text="NEIGHBOURS" />
-                <Text layoutX="42.0" layoutY="558.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select Territory" />
-                <Button layoutX="418.0" layoutY="572.0" mnemonicParsing="false" onAction="#territoryDeleteHandler" text="DELETE" />
-                <Button layoutX="683.0" layoutY="572.0" mnemonicParsing="false" onAction="#adjacentDeleteHandler" text="DELETE" />
-                <Button layoutX="344.0" layoutY="640.0" mnemonicParsing="false" onAction="#saveMapHandler" text="Save Map" />
-                <Label layoutX="51.0" layoutY="45.0" text="Existing File" />
-                <Button layoutX="288.0" layoutY="73.0" mnemonicParsing="false" onAction="#newMapHandler" text="New" />
-                <Button layoutX="235.0" layoutY="73.0" mnemonicParsing="false" onAction="#loadMapHandler" text="Load" />
-                <Label fx:id="AdjacentError" layoutX="536.0" layoutY="273.0" prefHeight="21.0" prefWidth="69.0" />
-                <Button layoutX="645.0" layoutY="722.0" mnemonicParsing="false" onAction="#startGameHandler" text="Start Game" />
-                <ComboBox fx:id="PlayerID" layoutX="495.0" layoutY="722.0" prefWidth="150.0" />
-                <TextField fx:id="ExistingFile" layoutX="47.0" layoutY="73.0" />
-                <ListView fx:id="ValidationError" layoutX="41.0" layoutY="151.0" prefHeight="107.0" prefWidth="702.0" />
-            <RadioButton fx:id="skipRobinID" layoutX="521.0" layoutY="689.0" mnemonicParsing="false" text="Skip Robin" />
+                <Label layoutX="24.0" layoutY="118.0" text="CONTINENT" />
+                <TextField fx:id="TerritoryInput" layoutX="342.0" layoutY="346.0" prefHeight="25.0" prefWidth="77.0" />
+                <ListView fx:id="TerritoryView" layoutX="260.0" layoutY="145.0" onMouseClicked="#loadAdjacentHandler" prefHeight="200.0" prefWidth="200.0" />
+                <ListView fx:id="ContinentView" layoutX="14.0" layoutY="145.0" onMouseClicked="#loadTerritoryHandler" prefHeight="200.0" prefWidth="200.0" />
+                <Text layoutX="246.0" layoutY="364.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Territory" />
+                <Text layoutX="499.0" layoutY="364.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Neighbour" />
+                <TextField fx:id="AdjacentInput" layoutX="604.0" layoutY="346.0" prefHeight="25.0" prefWidth="77.0" />
+                <Label layoutX="256.0" layoutY="118.0" text="Territory" />
+                <Button layoutX="416.0" layoutY="347.0" mnemonicParsing="false" onAction="#territoryAddHandler" text="ADD" />
+                <Button layoutX="681.0" layoutY="346.0" mnemonicParsing="false" onAction="#adjacentAddHandler" text="ADD" />
+                <ListView fx:id="AdjacentView" layoutX="525.0" layoutY="145.0" prefHeight="200.0" prefWidth="200.0" />
+                <Label layoutX="524.0" layoutY="118.0" text="NEIGHBOURS" />
+                <Text layoutX="22.0" layoutY="364.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select Territory" />
+                <Button layoutX="398.0" layoutY="378.0" mnemonicParsing="false" onAction="#territoryDeleteHandler" text="DELETE" />
+                <Button layoutX="663.0" layoutY="378.0" mnemonicParsing="false" onAction="#adjacentDeleteHandler" text="DELETE" />
+                <Button layoutX="324.0" layoutY="446.0" mnemonicParsing="false" onAction="#saveMapHandler" text="Save Map" />
+                <Label layoutX="33.0" layoutY="23.0" text="Existing File" />
+                <Button layoutX="260.0" layoutY="64.0" mnemonicParsing="false" onAction="#newMapHandler" text="New" />
+                <Button layoutX="203.0" layoutY="64.0" mnemonicParsing="false" onAction="#loadMapHandler" text="Load" />
+                <Label fx:id="AdjacentError" layoutX="516.0" layoutY="79.0" prefHeight="21.0" prefWidth="69.0" />
+                <Button layoutX="625.0" layoutY="528.0" mnemonicParsing="false" onAction="#startGameHandler" text="Start Game" />
+                <ComboBox fx:id="PlayerID" layoutX="475.0" layoutY="528.0" prefWidth="150.0" />
+                <TextField fx:id="ExistingFile" layoutX="16.0" layoutY="64.0" />
+            <RadioButton fx:id="skipRobinID" layoutX="501.0" layoutY="495.0" mnemonicParsing="false" text="Skip Robin" />
             </children>
         </AnchorPane>
     </children>

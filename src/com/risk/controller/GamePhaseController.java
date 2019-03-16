@@ -89,9 +89,9 @@ public class GamePhaseController implements Observer, Initializable{
     @Override
     public void update(Observable o, Object phase)
     {
+    	ActionModel.getActionModel().clearAction();
         String view = (String) phase;
         phaseID.setText(view);
-      
         if (view.equals("setup"))
         {
         	try {
@@ -104,9 +104,7 @@ public class GamePhaseController implements Observer, Initializable{
         }
         else if (view.equals("reinforcement"))
         {
-        	
         	try {
-        		ActionModel.getActionModel().clearAction();
         		playerID.setText(PlayerModel.getPlayerModel().getCurrentPlayer().getName());
         		mainPane.getChildren().clear();
 				mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/Reinforcement.fxml")));
@@ -122,7 +120,6 @@ public class GamePhaseController implements Observer, Initializable{
         		mainPane.getChildren().clear();
 				mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/Attack.fxml")));
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
         }

@@ -22,7 +22,6 @@
                 <Text layoutX="274.0" layoutY="321.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Army" />
                 <TextField fx:id="AdjacentArmy" editable="false" layoutX="461.0" layoutY="267.0" prefHeight="31.0" prefWidth="92.0" />
                 <Text layoutX="489.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Army" />
-                <ListView fx:id="messageFortification" layoutX="241.0" layoutY="414.0" prefHeight="200.0" prefWidth="336.0" />
             </children>
         </AnchorPane>
     </children>

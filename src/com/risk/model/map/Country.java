@@ -8,6 +8,8 @@ package com.risk.model.map;
 import com.risk.model.player.Player;
 
 import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 
@@ -150,6 +152,38 @@ public class Country {
             }
         }
         return null;
+    }
+    
+    /**
+     * This is a method for returning countries that are connected and you own
+     */
+    public ObservableList<Country> getConnectedOwned()
+    {
+    	ObservableList<Country> list = FXCollections.observableArrayList();
+    	for (Country country : connectedCountries)
+    	{
+    		if (country.getRuler().getName().equals(ruler.getName()))
+    		{
+    			list.add(country);
+    		}
+    	}
+		return list;
+    }
+    
+    /**
+     * This is a methodn for returning connected countries that you don't own
+     */
+    public ObservableList<Country> getConnectedEnemy()
+    {
+    	ObservableList<Country> list = FXCollections.observableArrayList();
+    	for (Country country : connectedCountries)
+    	{
+    		if (!country.getRuler().getName().equals(ruler.getName()))
+    		{
+    			list.add(country);
+    		}
+    	}
+		return list;
     }
 
 }

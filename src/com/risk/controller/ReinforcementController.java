@@ -76,15 +76,24 @@ public class ReinforcementController implements Initializable {
     TextField ArmyCount;
 
     @FXML
-    ListView<String> reinforcementMessage;
+    ListView<Country> adjacentEnemy;
     
-    
+    @FXML
+    ListView<Country> adjacentOwned;
 
+    
+    
+    
+    
     ObservableList<Card> cardsObservableList = FXCollections.observableArrayList();
     ObservableList<Card> tradeObservableList = FXCollections.observableArrayList();
+    
     ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
-    ObservableList<String> messageObservableList = FXCollections.observableArrayList();
+    ObservableList<Country> adjacentEnemyObservableList = FXCollections.observableArrayList();
+    ObservableList<Country> adjacentOwnedObservableList = FXCollections.observableArrayList();
+    
     ActionModel actions;
+//    PlayerModel player;
 
     /**
      * This is the constructor for the reinforcement controller
@@ -108,6 +117,7 @@ public class ReinforcementController implements Initializable {
     {
     	
     	actions = ActionModel.getActionModel();
+//    	player = PlayerModel.getPlayerModel();
     	
         TotalReinforcement = calculateReinforcementOccupiedTerritory(PlayerModel.getPlayerModel().getCurrentPlayer())
                 + calculateReinforcementContinentControl(PlayerModel.getPlayerModel().getCurrentPlayer());
@@ -124,8 +134,8 @@ public class ReinforcementController implements Initializable {
         tradeCard.setItems(tradeObservableList);
 
         territoryObservableList.addAll(PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
-
         countryId.setItems(territoryObservableList);
+        
         countryId.setCellFactory(param -> new ListCell<Country>() {
             @Override
             protected void updateItem(Country country, boolean empty)
@@ -141,9 +151,43 @@ public class ReinforcementController implements Initializable {
                 }
             }
         });
-
-        reinforcementMessage.setItems(messageObservableList);
-
+        
+        adjacentEnemy.setItems(adjacentEnemyObservableList);
+        adjacentEnemy.setCellFactory(param -> new ListCell<Country>() {
+            @Override
+            protected void updateItem(Country country, boolean empty)
+            {
+                super.updateItem(country, empty);
+                if (empty || country == null || country.getName() == null)
+                {
+                    setText(null);
+                }
+                else
+                {
+                    setText(country.getName() + " ("+ country.getArmyCount() +")");
+                }
+            }
+        });
+        
+        adjacentOwned.setItems(adjacentOwnedObservableList);
+        adjacentOwned.setCellFactory(param -> new ListCell<Country>() {
+            @Override
+            protected void updateItem(Country country, boolean empty)
+            {
+                super.updateItem(country, empty);
+                if (empty || country == null || country.getName() == null)
+                {
+                    setText(null);
+                }
+                else
+                {
+                	 setText(country.getName() + " ("+ country.getArmyCount() +")");
+                }
+            }
+        });
+        
+        
+        
         inputArmy.textProperty().addListener(new ChangeListener<String>() {
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
             {
@@ -160,10 +204,20 @@ public class ReinforcementController implements Initializable {
     {
         if (countryId.getSelectionModel().getSelectedItem() != null)
         {
+        	// i dont' wannt them to be in sync
+            adjacentEnemyObservableList.clear();
+            adjacentOwnedObservableList.clear();
             ArmyCount.setText(Integer.toString(countryId.getSelectionModel().getSelectedItem().getArmyCount()));
+            
+            adjacentEnemyObservableList.addAll(countryId.getSelectionModel().getSelectedItem().getConnectedEnemy());
+               
+            adjacentOwnedObservableList.addAll(countryId.getSelectionModel().getSelectedItem().getConnectedOwned());
+          
         }
     }
-
+    
+    
+  
     /**
      * This method sets the number of available army to your occupied country
      */
@@ -186,7 +240,6 @@ public class ReinforcementController implements Initializable {
                         c.setArmyCount(Armyinput);
                         setReinforcement(Armyinput);
                         ArmyCount.setText(Integer.toString(countryId.getSelectionModel().getSelectedItem().getArmyCount()));
-                        messageObservableList.add("Added " + Armyinput + " Army to " + c.getName());
                         actions.addAction("Added " + Armyinput + " Army to " + c.getName());
                         break;
                     }
@@ -210,12 +263,10 @@ public class ReinforcementController implements Initializable {
     {
         if (getReinforcement() > 0)
         {
-            messageObservableList.add("place all your army");
             actions.addAction("place all your army");
         }
         else if (PlayerModel.getPlayerModel().getCurrentPlayer().getCards().size() >= 5)
         {
-            messageObservableList.add("you got 5+ cards");
             actions.addAction("your got 5+ cards");
         }
         else
@@ -315,6 +366,10 @@ public class ReinforcementController implements Initializable {
     public int calculateReinforcementOccupiedTerritory(Player currentPlayer)
     {
         int reinforcement = (int) Math.floor(currentPlayer.numbOccupied() / 3);
+        if (reinforcement > 0)
+        {
+        	actions.addAction("reinforcement from occupied == " + reinforcement);
+        }
         return reinforcement;
     }
 
@@ -344,6 +399,10 @@ public class ReinforcementController implements Initializable {
             {
                 reinforcement = reinforcement + continent.getPointsWhenFullyOccupied();
             }
+        }
+        if (reinforcement > 0)
+        {
+        	actions.addAction("reinforcement continent control == " + reinforcement);
         }
         return reinforcement;
     }

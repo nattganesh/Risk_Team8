@@ -32,10 +32,7 @@ public class FortificationController implements Initializable {
 
     @FXML
     ListView<Country> Adjacent;
-
-    @FXML
-    ListView<String> messageFortification;
-
+    
     @FXML
     TextField moveField;
 
@@ -47,7 +44,6 @@ public class FortificationController implements Initializable {
 
     ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
     ObservableList<Country> adjacentObservableList = FXCollections.observableArrayList();
-    ObservableList<String> messageObservableList = FXCollections.observableArrayList();
 
     private boolean fortification = false;
     ArrayList<Country> CountriesArrivedbyPath;
@@ -71,9 +67,7 @@ public class FortificationController implements Initializable {
     public void initialize(URL arg0, ResourceBundle arg1)
     {
 
-        // sets observableList for handling game message to UI
-        messageFortification.setItems(messageObservableList);
-
+    	actions = ActionModel.getActionModel();
         // sets occupied country of current player to observableList
         territoryObservableList.addAll(PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
         // sets observableList to the UI
@@ -117,7 +111,6 @@ public class FortificationController implements Initializable {
         if(!isAnyCountriesConnected(PlayerModel.getPlayerModel().getCurrentPlayer())) 
         {
 			fortification=true;
-			messageObservableList.add("You have no accessible countries");
 			actions.addAction("you have no accessible countries");
 		}
 
@@ -168,7 +161,6 @@ public class FortificationController implements Initializable {
             int Armyinput = Integer.parseInt(moveField.getText());
             if(Armyinput<=0) 
             {
-            	messageObservableList.add("The number does not meet the requirement");
             	actions.addAction("The number does not meet the requirement");
             	moveField.clear();
             }
@@ -184,18 +176,15 @@ public class FortificationController implements Initializable {
                 AdjacentArmy.setText(Integer.toString(Adjacent.getSelectionModel().getSelectedItem().getArmyCount()));
                 TerritoryArmy.setText(Integer.toString(Territory.getSelectionModel().getSelectedItem().getArmyCount()));
                 fortification = true;
-                messageObservableList.add("Move successfully");
                 actions.addAction("Move Successfully");
             }
             else
             {
-                messageObservableList.add("You don't have that many army");
                 actions.addAction("You don't have that many army");
             }
         }
         else
         {
-            messageObservableList.add("Invalid Selection");
             actions.addAction("Invalid Selection");
         }
     }
@@ -314,7 +303,6 @@ public class FortificationController implements Initializable {
         }
         else
         {
-            messageObservableList.add("you need to fortify");
             actions.addAction("You need to fortify");
         }
     }
