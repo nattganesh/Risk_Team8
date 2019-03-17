@@ -149,6 +149,7 @@ public class AttackController extends Observable implements Initializable {
          }); 
     }
     
+  
     @FXML
     public void territoryHandler()
     {
@@ -198,7 +199,12 @@ public class AttackController extends Observable implements Initializable {
     		DefenderDice.getItems().clear();
     	}
     }
-
+    @FXML
+    public void goToFortificationPhase()
+    {
+    	
+    }
+    
     /**
      * this method initializes the number of dice roll available
      */

@@ -64,6 +64,7 @@ public class ReinforcementController implements Initializable{
 
     @FXML
     ListView<Country> countryId;
+    
     @FXML
     Button nextPlayer;
 
@@ -124,14 +125,11 @@ public class ReinforcementController implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
-    	   	
-    
+   
+    	actions = ActionModel.getActionModel();
     	cardController.addObserver(new cardSkipObserver());
     	cardController.addObserver(new cardReinforcementObserver());
-    	
-    	
-    	actions = ActionModel.getActionModel();
-    	
+    	    	
         TotalReinforcement = calculateReinforcementOccupiedTerritory(PlayerModel.getPlayerModel().getCurrentPlayer())
                 + calculateReinforcementContinentControl(PlayerModel.getPlayerModel().getCurrentPlayer());
         if(TotalReinforcement<3) 
