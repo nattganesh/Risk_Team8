@@ -73,6 +73,7 @@ public class AttackController extends Observable implements Initializable {
 	    
 	    int [] rollLimit;
 	    ActionModel actions;
+	    boolean occupy=false;
 	    
 
 	
@@ -282,6 +283,7 @@ public class AttackController extends Observable implements Initializable {
 			{
 				defend.setRuler(PlayerModel.getPlayerModel().getCurrentPlayer());
 				actions.addAction("You have already occupied this country!");
+				occupy = true;
 				actions.addAction("Please move armies to your new country!");
 				//update the move army view in here
 				break;
@@ -299,6 +301,7 @@ public class AttackController extends Observable implements Initializable {
     		if(attack.getArmyCount()==1||defend.getArmyCount()==0) {
     			actions.addAction("You have already occupied this country!");
     			defend.setRuler(PlayerModel.getPlayerModel().getCurrentPlayer());
+    			occupy = true;
     			 countryId.setCellFactory(param -> new ListCell<Country>() {
     	             @Override
     	             protected void updateItem(Country country, boolean empty)
@@ -383,6 +386,9 @@ public class AttackController extends Observable implements Initializable {
      */
     public void goToFortificationPhase(ActionEvent event)
     {
+    	if(occupy) {
+    		//there should be added the part of sending cards to player
+    	}
         GamePhaseModel.getGamePhaseModel().setPhase("fortification");
     }
 }

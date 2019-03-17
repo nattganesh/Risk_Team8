@@ -6,16 +6,24 @@
  */
 package com.risk.model.card;
 
+import com.risk.model.player.Player;
+
 public class Card {
 
-    public String category;
-    public String owner;
+    private String category;
+    private Player owner;
 
     /**
      * @param category type of card
      * @param owner player of that card
      */
-    public Card(String category, String owner)
+    public Card(String category)
+    {
+        this.category = category;
+        this.owner = null;
+    }
+    
+    public Card(String category, Player owner)
     {
         this.category = category;
         this.owner = owner;
@@ -44,7 +52,7 @@ public class Card {
      *
      * @return owner returns the owner name of the card
      */
-    public String getOwner()
+    public Player getOwner()
     {
         return owner;
     }
@@ -52,10 +60,15 @@ public class Card {
     /**
      * This method sets the owner for the the type of card
      *
-     * @param owner name of the owner of the card
+     * @param player name of the owner of the card
      */
-    public void setOwner(String owner)
+    public void setOwner(Player player)
     {
-        this.owner = owner;
+        this.owner = player;
+    }
+    
+    public void removeCard(Player player)
+    {
+        this.owner = null;
     }
 }

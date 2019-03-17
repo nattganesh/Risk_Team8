@@ -129,7 +129,19 @@ public class Player {
     {
         return cards;
     }
-
+    public void addCard(Card card) {
+    	cards.add(card);
+    }
+    
+    public void removeCard(Card card) {
+    	for(Card c: cards) {
+    		if(c.getCatagory().equals(card.getCatagory())) {
+    			cards.remove(c);
+    			break;
+    		}
+    	}
+    }
+    
     /**
      *
      * @param cards

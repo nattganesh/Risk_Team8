@@ -6,10 +6,14 @@
  */
 package com.risk.model.card;
 
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.Random;
 
-public class Deck {
+import com.risk.model.player.Player;
 
+public class Deck {
+	private static LinkedList<Card> cards = new LinkedList<>();
     Card card[];
     int n = 44;
     String owner = null;
@@ -24,32 +28,17 @@ public class Deck {
             "Infantry", "Cavalry", "Artillery", "Wild"
         };
 
-        card = new Card[n];
         for (int i = 0; i < n; i++)
         {
-            if (i == 0 || i == 1)
-            {
-                card[i] = new Card(category[3], owner);
-            }
-            else if (i < 16)
-            {
-                card[i] = new Card(category[0], owner);
-            }
-            else if (i < 30)
-            {
-                card[i] = new Card(category[1], owner);
-            }
-            else
-            {
-                card[i] = new Card(category[2], owner);
+            for(int j = 0;j<category.length;j++) {
+            	cards.add(new Card(category[j]));
             }
         }
-        for (int i = 0; i < n; i++)
-        {
-            System.out.print(card[i]);
-        }
-        System.out.print("\n");
-
+        Collections.shuffle(cards);
+    }
+    
+    public static LinkedList<Card> getCards() {
+    	return cards;
     }
 
     /**
@@ -77,19 +66,17 @@ public class Deck {
      *
      * @param player The name of the player
      */
-    public void sendCard(String player)
+    public void sendCard(Player player)
     {
-        Card cardforp = card[0];
-        cardforp.setOwner(player);
-        for (int i = 0; i < n - 1; i++)
-        {
-            card[i] = card[i + 1];
+        while(true) {
+        	int i =0;
+        	Card tmp = cards.get(i);
+        	if(tmp.getOwner()==null) {
+        		tmp.setOwner(player);
+        		player.addCard(tmp);
+        		break;
+        	}
+        	i++;
         }
-        card[n - 1] = cardforp;
-        for (int i = 0; i < n; i++)
-        {
-            System.out.print(card[i]);
-        }
-        System.out.print("\n");
     }
 }
