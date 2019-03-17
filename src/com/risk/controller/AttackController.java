@@ -342,5 +342,14 @@ public class AttackController extends Observable implements Initializable {
 		result[1] = dicerange_defend;
 		return result;
 	}
-    
+    /**
+     * This method sets the GamePhaseModel to fortification, which notifies the
+     * subscribed GameController to set new scene
+     *
+     * @param event listens for click event
+     */
+    public void goToFortificationPhase(ActionEvent event)
+    {
+        GamePhaseModel.getGamePhaseModel().setPhase("fortification");
+    }
 }
