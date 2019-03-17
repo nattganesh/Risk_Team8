@@ -10,6 +10,7 @@ package com.risk.controller;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Observable;
+import java.util.Observer;
 import java.util.ResourceBundle;
 
 import com.risk.model.ActionModel;
@@ -22,6 +23,7 @@ import com.risk.model.map.Country;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -32,9 +34,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 
-public class AttackController extends Observable implements Initializable {
+public class AttackController implements Initializable, Observer {
 
 	    @FXML
 	    ListView<Country> countryId;
@@ -66,6 +69,11 @@ public class AttackController extends Observable implements Initializable {
 	    @FXML
 	    Button AllOut;
 
+	    @FXML
+	    private ConqueredController conqueringController;
+	    
+	    @FXML 
+	    AnchorPane child;
 	    
 	    ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
 	    ObservableList<Country> adjacentEnemyObservableList = FXCollections.observableArrayList();
@@ -77,12 +85,11 @@ public class AttackController extends Observable implements Initializable {
 
 	
     /**
-     * This is the constructor for AttackController class
+     * This is the constructor for AttackController classs
      */
     public AttackController()
     {
-
-       
+    	
     }
 
     /**
@@ -94,9 +101,10 @@ public class AttackController extends Observable implements Initializable {
     @Override
     public void initialize(URL arg0, ResourceBundle arg1)
     {
+    	conqueringController.addObserver(this);
     	 actions = ActionModel.getActionModel();
     	 territoryObservableList.addAll(PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
-         countryId.setItems(territoryObservableList);
+         countryId.setItems(territoryObservableList);         
          
          countryId.setCellFactory(param -> new ListCell<Country>() {
              @Override
@@ -157,7 +165,8 @@ public class AttackController extends Observable implements Initializable {
         if (countryId.getSelectionModel().getSelectedItem() != null)
         {
         	// i dont' wannt them to be in sync
-        	AttackerDice.getItems().clear();
+        	clearDiceRolls();
+    
             adjacentEnemyObservableList.clear();
             adjacentOwnedObservableList.clear();
                        
@@ -180,6 +189,14 @@ public class AttackController extends Observable implements Initializable {
         
     }
     
+    public void clearDiceRolls()
+    {
+    	AttackerDice.getItems().clear();
+    	DefenderDice.getItems().clear();
+    	AttackerDice.getSelectionModel().clearSelection();
+    	DefenderDice.getSelectionModel().clearSelection();
+    }
+    
     /**
      * This is a method to fill in surrounding enemy in the ListView
      */
@@ -189,7 +206,6 @@ public class AttackController extends Observable implements Initializable {
     	if (adjacentEnemy.getSelectionModel().getSelectedItem() != null && countryId.getSelectionModel().getSelectedItem().getArmyCount() > 1)
     	{
     		actions.addAction("defender == " + adjacentEnemy.getSelectionModel().getSelectedItem().getName());
-    		rollLimit = setRollLimit(countryId.getSelectionModel().getSelectedItem(), adjacentEnemy.getSelectionModel().getSelectedItem());
     		initializeDice();
     		actions.addAction("attacker can roll up to == " + rollLimit[0]);
     		actions.addAction("defender is rolling max == " + rollLimit[1]);
@@ -210,32 +226,74 @@ public class AttackController extends Observable implements Initializable {
      */
     public void initializeDice()
     {
-    	AttackerDice.getItems().clear();
-    	for (int i = 0; i < rollLimit[0]; i++)
-		{
-    		AttackerDice.getItems().add(i+1);
-		}
-    	DefenderDice.getItems().clear();
-    	for (int i = 0; i < rollLimit[1]; i++)
-		{
-    		DefenderDice.getItems().add(i+1);
-		}
+    	if (validateTerritorySelections())
+    	{
+    		rollLimit = setRollLimit(countryId.getSelectionModel().getSelectedItem(), adjacentEnemy.getSelectionModel().getSelectedItem());
+        	AttackerDice.getItems().clear();
+        	for (int i = 0; i < rollLimit[0]; i++)
+    		{
+        		AttackerDice.getItems().add(i+1);
+    		}
+        	DefenderDice.getItems().clear();
+        	for (int i = 0; i < rollLimit[1]; i++)
+    		{
+        		DefenderDice.getItems().add(i+1);
+    		}
+        	if (rollLimit[0] >= 1)
+        	{
+        		AttackerDice.setValue(rollLimit[0]);
+            	DefenderDice.setValue(rollLimit[1]);
+        	}	
+    	}
     }
-   
+    
+    public boolean validateTerritorySelections() 
+    {
+    	boolean valid = false;
+    	if(countryId.getSelectionModel().getSelectedItem() != null && adjacentEnemy.getSelectionModel().getSelectedItem() != null)
+    	{
+    		valid = true;
+    	}
+    	return valid;
+    }
+    
+    public boolean validateDiceSelections()
+    {
+    	boolean valid = false;
+    	if(AttackerDice.getSelectionModel().getSelectedItem() != null && DefenderDice.getSelectionModel().getSelectedItem() != null)
+    	{
+    		valid = true;
+    	}
+    	return valid;
+    }
+     
     /**
      * This is rolls the dice
      */
     @FXML
     public void rollDiceHandler() 
     {
-    
-    	 if (AttackerDice.getSelectionModel().getSelectedItem() != null)
+    	 int attackerArmy = countryId.getSelectionModel().getSelectedItem().getArmyCount();
+    	 
+    	 if (attackerArmy <  2) 
+    	 {
+    		 actions.addAction("you do not have enough army to attack");
+    		 clearDiceRolls();
+    	 }
+    	 else if (validateTerritorySelections() && validateDiceSelections() && attackerArmy > 1)
     	 {
     		 actions.addAction("rolling dice");
     		 int diceAttack = AttackerDice.getSelectionModel().getSelectedItem();
     		 int diceDefender = DefenderDice.getSelectionModel().getSelectedItem();
-    		 rollDice(diceAttack, diceDefender, countryId.getSelectionModel().getSelectedItem(), adjacentEnemy.getSelectionModel().getSelectedItem());
-    		 
+    		 rollDice(diceAttack, diceDefender, countryId.getSelectionModel().getSelectedItem(), adjacentEnemy.getSelectionModel().getSelectedItem()); 
+    		 initializeDice();
+    	 } 
+    	 
+    	 else 
+    	 {
+    		 actions.addAction("select number of rolls");
+    		 AttackerDice.getItems().clear();
+    		 DefenderDice.getItems().clear();
     	 }
     
     }
@@ -278,15 +336,42 @@ public class AttackController extends Observable implements Initializable {
 				if (dattack[diceattack - 1 - i] > ddefend[dicedefend - 1 - i]) 
 				{
 					defend.reduceArmyCount(1);
+					actions.addAction("defender has lost 1 army");
+					if (defend.getArmyCount() == 0) {
+
+						defend.setRuler(PlayerModel.getPlayerModel().getCurrentPlayer());
+						PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries().add(defend);
+						
+						adjacentEnemyObservableList.remove(defend);
+						territoryObservableList.add(defend);
+						adjacentOwnedObservableList.add(defend);
+						child.setVisible(true);
+						conqueringController.setConquringArmy(defend);
+						conqueringController.setDiceRoll(diceattack);
+					}
+					else 
+					{
+						adjacentEnemyObservableList.set(adjacentEnemyObservableList.indexOf(defend),defend);
+					}
+				
 					
-				} else 
+				} 
+				else 
 				{
 					attack.reduceArmyCount(1);
-					ArmyCount.setText(Integer.toString(countryId.getSelectionModel().getSelectedItem().getArmyCount()));
+					actions.addAction("attacker has lost 1 army");					
+					ArmyCount.setText(Integer.toString(countryId.getSelectionModel().getSelectedItem().getArmyCount()));	
 				}
-			} else 
+			} 
+			else 
 			{
 				defend.setRuler(PlayerModel.getPlayerModel().getCurrentPlayer());
+				PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries().add(defend);
+				
+				adjacentEnemyObservableList.remove(defend);
+				territoryObservableList.add(defend);
+				adjacentOwnedObservableList.add(defend);
+				
 				actions.addAction("You have already occupied this country!");
 				actions.addAction("Please move armies to your new country!");
 				//update the move army view in here
@@ -298,31 +383,40 @@ public class AttackController extends Observable implements Initializable {
     public void AllOut() {
     	Country attack=countryId.getSelectionModel().getSelectedItem();
     	Country defend=adjacentEnemy.getSelectionModel().getSelectedItem();
-    	boolean roll = true;
-    	while(roll) {
-    		int result[] = setRollLimit(attack, defend);
-    		rollDice(result[0], result[1],attack, defend);
-    		if(attack.getArmyCount()==1||defend.getArmyCount()==0) {
-    			actions.addAction("You have already occupied this country!");
-    			defend.setRuler(PlayerModel.getPlayerModel().getCurrentPlayer());
-    			 countryId.setCellFactory(param -> new ListCell<Country>() {
-    	             @Override
-    	             protected void updateItem(Country country, boolean empty)
-    	             {
-    	                 super.updateItem(country, empty);
-    	                 if (empty || country == null || country.getName() == null)
-    	                 {
-    	                     setText(null);
-    	                 }
-    	                 else
-    	                 {
-    	                     setText(country.getName());
-    	                 }
-    	             }
-    	         });
-    			roll=false;
-    		}
+    	
+    	if (attack != null && defend != null && attack.getArmyCount() > 1) 
+    	{
+    		boolean roll = true;
+        	while(roll) {
+        		int result[] = setRollLimit(attack, defend);
+        		rollDice(result[0], result[1],attack, defend);
+        		if(attack.getArmyCount()==1||defend.getArmyCount()==0) {
+        			actions.addAction("You have already occupied this country!");
+        			defend.setRuler(PlayerModel.getPlayerModel().getCurrentPlayer());
+        			 countryId.setCellFactory(param -> new ListCell<Country>() {
+        	             @Override
+        	             protected void updateItem(Country country, boolean empty)
+        	             {
+        	                 super.updateItem(country, empty);
+        	                 if (empty || country == null || country.getName() == null)
+        	                 {
+        	                     setText(null);
+        	                 }
+        	                 else
+        	                 {
+        	                     setText(country.getName());
+        	                 }
+        	             }
+        	         });
+        			roll=false;
+        		}
+        	}
     	}
+    	else
+    	{
+    		actions.addAction("invalid move");
+    	}
+    	
     }
 	
     /**
@@ -391,4 +485,16 @@ public class AttackController extends Observable implements Initializable {
     {
         GamePhaseModel.getGamePhaseModel().setPhase("fortification");
     }
+
+	/* (non-Javadoc)
+	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+	 */
+	@Override
+	public void update(Observable o, Object arg) {
+		
+		Country conquered = (Country)arg;
+		child.setVisible(false);
+		adjacentOwnedObservableList.set(adjacentOwnedObservableList.indexOf(conquered),conquered);
+	
+	}
 }

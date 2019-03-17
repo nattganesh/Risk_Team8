@@ -26,7 +26,9 @@ import com.risk.model.card.Card;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.collections.ListChangeListener.Change;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -99,6 +101,7 @@ public class ReinforcementController implements Initializable{
     @FXML
     private CardController cardController; 
     
+    
     ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
     ObservableList<Country> adjacentEnemyObservableList = FXCollections.observableArrayList();
     ObservableList<Country> adjacentOwnedObservableList = FXCollections.observableArrayList();
@@ -140,6 +143,7 @@ public class ReinforcementController implements Initializable{
         armyAvailable.setText("Army: " + Integer.toString(getReinforcement()));
 
         territoryObservableList.addAll(PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
+                
         countryId.setItems(territoryObservableList);
         
         countryId.setCellFactory(param -> new ListCell<Country>() {
@@ -153,7 +157,7 @@ public class ReinforcementController implements Initializable{
                 }
                 else
                 {
-                    setText(country.getName());
+                	setText(country.getName() + " ("+ country.getArmyCount() +")");
                 }
             }
         });
@@ -241,15 +245,22 @@ public class ReinforcementController implements Initializable{
 
                 for (Country c : territoryObservableList)
                 {
+                	
                     if (c.getName().equals(countryId.getSelectionModel().getSelectedItem().getName()))
                     {
+                    	
                         c.setArmyCount(Armyinput);
                         setReinforcement(Armyinput);
+                        territoryObservableList.set(territoryObservableList.indexOf(c), c);
                         ArmyCount.setText(Integer.toString(countryId.getSelectionModel().getSelectedItem().getArmyCount()));
                         actions.addAction("Added " + Armyinput + " Army to " + c.getName());
                         break;
                     }
+                 
                 }
+            }
+            else {
+            	actions.addAction("you don't have that many reinforcements");
             }
         }
         armyAvailable.setText(
@@ -393,6 +404,7 @@ public class ReinforcementController implements Initializable{
 		public void update(Observable o, Object arg) {
 			if (arg == null) {
 				child.getChildren().clear();	
+				
 			}
 		}
     	

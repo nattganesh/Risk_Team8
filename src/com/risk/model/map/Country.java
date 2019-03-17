@@ -7,13 +7,14 @@ package com.risk.model.map;
 
 import com.risk.model.player.Player;
 
-import javafx.beans.Observable;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
+import java.util.Observable;
 
-public class Country {
+public class Country extends Observable {
 
     public static final int MAX_NUMBER_OF_COUNTRIES = Continent.MAX_NUMBER_OF_COUNTRIES_IN_NORTH_AMERICA
             + Continent.MAX_NUMBER_OF_COUNTRIES_IN_SOUTH_AMERICA

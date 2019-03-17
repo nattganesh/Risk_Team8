@@ -10,10 +10,11 @@ package com.risk.model;
 
 import java.util.ArrayList;
 import java.util.Observable;
+import java.util.Observer;
 
 import com.risk.model.player.Player;
 
-public class PlayerModel extends Observable {
+public class PlayerModel extends Observable  {
 
     private ArrayList<Player> playerList = new ArrayList<Player>();
     public static final String[] PLAYERCOLOR =
@@ -29,6 +30,7 @@ public class PlayerModel extends Observable {
      */
     private PlayerModel()
     {
+    	
     }
 
     /**

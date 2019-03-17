@@ -49,20 +49,6 @@ public class GamePhaseController implements Observer, Initializable{
     @FXML
     ListView<String> actionMessage;
     
-//    private class playerObserver implements Observer
-//    {
-//
-//		/* (non-Javadoc)
-//		 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
-//		 */
-//		@Override
-//		public void update(Observable arg0, Object arg1) {
-//			// TODO Auto-generated method stub
-//			String name = (String)arg1;
-//			playerID.setText(name);
-//		}
-//    }
-
     /**
      * This is a constructor for GamePhaseController
      *
@@ -71,16 +57,8 @@ public class GamePhaseController implements Observer, Initializable{
     public GamePhaseController(Stage s)
     {
         GamePhaseModel.getGamePhaseModel().addObserver(this);
-//        ActionModel.getActionModel().addObserver(new actionObserver());
         this.stage = s;
     }
-//    public class actionObserver implements Observer{
-//		@Override
-//		public void update(Observable arg0, Object arg1) {
-//			
-//		}
-//    	
-//    }
     
     /**
      * This method receives notification from the changes in the state from the
@@ -129,16 +107,23 @@ public class GamePhaseController implements Observer, Initializable{
         		mainPane.getChildren().clear();
 				mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/Fortification.fxml")));
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        }
+        else if (view.equals("Conquering"))
+        {
+        	try {
+        		playerID.setText(PlayerModel.getPlayerModel().getCurrentPlayer().getName());
+        		mainPane.getChildren().clear();
+				mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/ConqueringTerritoryView.fxml")));
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
         }
 
     }
 
-	/* (non-Javadoc)
-	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
-	 */
+    
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		actionMessage.setItems(ActionModel.getActionModel().getActions());

@@ -14,7 +14,6 @@
                 </AnchorPane> -->
           <AnchorPane minHeight="0.0" minWidth="0.0" onKeyReleased="#territoryHandler" prefHeight="600.0" prefWidth="900.0">
               <children>
-                  <Label layoutX="14.0" layoutY="20.0" text="Country Owned" />
                   <ListView fx:id="countryId" layoutX="337.0" layoutY="125.0" onMouseClicked="#territoryHandler" prefHeight="200.0" prefWidth="206.0" />
                   <Label fx:id="inputArmyError" layoutX="264.0" layoutY="304.0" />
                   <Button fx:id="AttackPhaseID" layoutX="779.0" layoutY="26.0" mnemonicParsing="false" onAction="#goToFortificationPhase" text="Fortification" />
@@ -30,12 +29,17 @@
             <Label layoutX="276.0" layoutY="457.0" text="Attacker" />
             <Label layoutX="273.0" layoutY="484.0" text="Defender" />
             <ComboBox fx:id="DefenderDice" layoutX="341.0" layoutY="480.0" prefWidth="150.0" />
-            <Button layoutX="341.0" layoutY="507.0" mnemonicParsing="false" onAction="#rollDiceHandler" text="Roll" />
+            <Button layoutX="341.0" layoutY="526.0" mnemonicParsing="false" onAction="#rollDiceHandler" text="Roll" />
             <Button fx:id="AllOut" layoutX="342.0" layoutY="383.0" mnemonicParsing="false" onMouseClicked="#AllOut" text="All-out" />
             <Button layoutX="406.0" layoutY="383.0" mnemonicParsing="false" onAction="#rollDiceHandler" text="Manual" />
             <TextField fx:id="inputArmy" layoutX="603.0" layoutY="475.0" prefHeight="31.0" prefWidth="132.0" />
             <Label fx:id="armyAvailable" layoutX="603.0" layoutY="458.0" text="Army Available" />
-            <Button fx:id="addArmy" layoutX="603.0" layoutY="510.0" mnemonicParsing="false" onAction="#setArmy" text="Add Army" /> 
+            <Button fx:id="addArmy" layoutX="603.0" layoutY="510.0" mnemonicParsing="false" onAction="#setArmy" text="Add Army" />
+            <AnchorPane fx:id="child" layoutX="141.0" prefHeight="419.0" prefWidth="600.0" style="-fx-background-color: lightgrey; visibility: hidden;">
+               <children>
+                  <fx:include fx:id="conquering" source="ConqueringTerritoryView.fxml" />
+               </children>
+            </AnchorPane> 
               </children>
           </AnchorPane>
     </children>

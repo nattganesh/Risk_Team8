@@ -44,15 +44,15 @@ public class CardController extends Observable implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
-		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category1", "blue"));
-    	PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category2", "blue"));
-    	PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category3", "blue"));
-    	PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category4", "blue"));
-    	PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category1", "blue"));
-    	PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category2", "blue"));
-    	PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category3", "blue"));
-    	PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category4", "blue"));
-    	PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category4", "blue"));
+//		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category1", "blue"));
+//    	PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category2", "blue"));
+//    	PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category3", "blue"));
+//    	PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category4", "blue"));
+//    	PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category1", "blue"));
+//    	PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category2", "blue"));
+//    	PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category3", "blue"));
+//    	PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category4", "blue"));
+//    	PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category4", "blue"));
     	
       cardsObservableList.addAll(PlayerModel.getPlayerModel().getCurrentPlayer().getCards());
       actions = ActionModel.getActionModel();
@@ -114,6 +114,12 @@ public class CardController extends Observable implements Initializable {
                 setChanged();
             	notifyObservers(reinforcement);
             }
+            else {
+            	actions.addAction("Invalid Cards");
+            }
+        } 
+        else {
+        	actions.addAction("Invalid Trade");
         }
     }
     
