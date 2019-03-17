@@ -1,5 +1,8 @@
 /**
+ * Necessary for handling card exchange logic for reinforcement phase
  * 
+ * @author DKM
+ * @author Tianyi
  */
 package com.risk.controller;
 
@@ -44,15 +47,15 @@ public class CardController extends Observable implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
-//		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category1", "blue"));
-//    	PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category2", "blue"));
-//    	PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category3", "blue"));
-//    	PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category4", "blue"));
-//    	PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category1", "blue"));
-//    	PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category2", "blue"));
-//    	PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category3", "blue"));
-//    	PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category4", "blue"));
-//    	PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category4", "blue"));
+		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category1"));
+    	PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category2"));
+    	PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category3"));
+    	PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category4"));
+    	PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category1"));
+    	PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category2"));
+    	PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category3"));
+    	PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category4"));
+    	PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category4"));
     	
       cardsObservableList.addAll(PlayerModel.getPlayerModel().getCurrentPlayer().getCards());
       actions = ActionModel.getActionModel();
@@ -115,11 +118,20 @@ public class CardController extends Observable implements Initializable {
             	notifyObservers(reinforcement);
             }
             else {
-            	actions.addAction("Invalid Cards");
+            	 PlayerModel.getPlayerModel().getCurrentPlayer().getCards().clear();
+            	 for (Card c : yourCard.getItems())
+                 {
+                     PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(c);
+                 }
+            	 for(Card card: tradeCard.getItems()) {
+            		 PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(card);
+            		 yourCard.getItems().add(card);
+            	 }
+            	 
+            	 tradeCard.getItems().clear();
+            	 actions.addAction("Invalid cards");
+            	 setChanged();
             }
-        } 
-        else {
-        	actions.addAction("Invalid Trade");
         }
     }
     

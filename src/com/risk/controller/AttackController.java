@@ -81,6 +81,7 @@ public class AttackController implements Initializable, Observer {
 	    
 	    int [] rollLimit;
 	    ActionModel actions;
+	    boolean occupy=false;
 	    
 
 	
@@ -373,6 +374,7 @@ public class AttackController implements Initializable, Observer {
 				adjacentOwnedObservableList.add(defend);
 				
 				actions.addAction("You have already occupied this country!");
+				occupy = true;
 				actions.addAction("Please move armies to your new country!");
 				//update the move army view in here
 				break;
@@ -383,34 +385,31 @@ public class AttackController implements Initializable, Observer {
     public void AllOut() {
     	Country attack=countryId.getSelectionModel().getSelectedItem();
     	Country defend=adjacentEnemy.getSelectionModel().getSelectedItem();
-    	
-    	if (attack != null && defend != null && attack.getArmyCount() > 1) 
-    	{
-    		boolean roll = true;
-        	while(roll) {
-        		int result[] = setRollLimit(attack, defend);
-        		rollDice(result[0], result[1],attack, defend);
-        		if(attack.getArmyCount()==1||defend.getArmyCount()==0) {
-        			actions.addAction("You have already occupied this country!");
-        			defend.setRuler(PlayerModel.getPlayerModel().getCurrentPlayer());
-        			 countryId.setCellFactory(param -> new ListCell<Country>() {
-        	             @Override
-        	             protected void updateItem(Country country, boolean empty)
-        	             {
-        	                 super.updateItem(country, empty);
-        	                 if (empty || country == null || country.getName() == null)
-        	                 {
-        	                     setText(null);
-        	                 }
-        	                 else
-        	                 {
-        	                     setText(country.getName());
-        	                 }
-        	             }
-        	         });
-        			roll=false;
-        		}
-        	}
+    	boolean roll = true;
+    	while(roll) {
+    		int result[] = setRollLimit(attack, defend);
+    		rollDice(result[0], result[1],attack, defend);
+    		if(attack.getArmyCount()==1||defend.getArmyCount()==0) {
+    			actions.addAction("You have already occupied this country!");
+    			defend.setRuler(PlayerModel.getPlayerModel().getCurrentPlayer());
+    			occupy = true;
+    			 countryId.setCellFactory(param -> new ListCell<Country>() {
+    	             @Override
+    	             protected void updateItem(Country country, boolean empty)
+    	             {
+    	                 super.updateItem(country, empty);
+    	                 if (empty || country == null || country.getName() == null)
+    	                 {
+    	                     setText(null);
+    	                 }
+    	                 else
+    	                 {
+    	                     setText(country.getName());
+    	                 }
+    	             }
+    	         });
+    			roll=false;
+    		}
     	}
     	else
     	{
@@ -483,6 +482,9 @@ public class AttackController implements Initializable, Observer {
      */
     public void goToFortificationPhase(ActionEvent event)
     {
+    	if(occupy) {
+    		//there should be added the part of sending cards to player
+    	}
         GamePhaseModel.getGamePhaseModel().setPhase("fortification");
     }
 
