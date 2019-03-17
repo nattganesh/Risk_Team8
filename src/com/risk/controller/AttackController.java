@@ -282,6 +282,8 @@ public class AttackController extends Observable implements Initializable {
 			{
 				defend.setRuler(PlayerModel.getPlayerModel().getCurrentPlayer());
 				actions.addAction("You have already occupied this country!");
+				actions.addAction("Please move armies to your new country!");
+				//update the move army view in here
 				break;
 			}
 		}
@@ -317,7 +319,38 @@ public class AttackController extends Observable implements Initializable {
     	}
     }
 	
+    /**
+     * This method sets the number of available army to your occupied country
+     */
+    //need to be modified
+    @FXML
+    public void setArmy()
+    {
+    	Country country1=countryId.getSelectionModel().getSelectedItem();
+    	//this country 2 need to be modified appropriately
+    	Country country2=adjacentEnemy.getSelectionModel().getSelectedItem();
+        int Armyinput = 0;
+        if (!inputArmy.getText().trim().isEmpty() && country1.getArmyCount() > 1
+                && country1 != null)
+        {
 
+            Armyinput = Integer.parseInt(inputArmy.getText());
+            if (Armyinput < country1.getArmyCount())
+            {
+            	country2.setArmyCount(Armyinput);
+            	country1.reduceArmyCount(Armyinput);
+            	actions.addAction("Added " + Armyinput + " Army from "+ country1.getName()+ " to " + country2.getName());
+            }
+            else {
+            	actions.addAction("Invaid army input");
+            }
+        }
+        else {
+        	actions.addAction("Invaid country");
+        }
+    }
+    
+    
     
     public int[] setRollLimit(Country attack, Country defend)
 	{
