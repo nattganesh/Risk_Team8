@@ -114,6 +114,21 @@ public class CardController extends Observable implements Initializable {
                 setChanged();
             	notifyObservers(reinforcement);
             }
+            else {
+            	 PlayerModel.getPlayerModel().getCurrentPlayer().getCards().clear();
+            	 for (Card c : yourCard.getItems())
+                 {
+                     PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(c);
+                 }
+            	 for(Card card: tradeCard.getItems()) {
+            		 PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(card);
+            		 yourCard.getItems().add(card);
+            	 }
+            	 
+            	 tradeCard.getItems().clear();
+            	 actions.addAction("Invalid cards");
+            	 setChanged();
+            }
         }
     }
     
