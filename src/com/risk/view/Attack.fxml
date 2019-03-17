@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
-<?import javafx.scene.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.risk.controller.AttackController">
     <children>
@@ -28,8 +26,16 @@
             <Text layoutX="176.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Surrounding Enemy" />
             <Text layoutX="551.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Surrounding Reinforcement" />
             <Text layoutX="371.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Territory Occupied" />
-            <Button layoutX="492.0" layoutY="453.0" mnemonicParsing="false" onAction="#rollDiceHandler" text="Roll" />
-            <ComboBox fx:id="NumberDice" layoutX="341.0" layoutY="453.0" prefWidth="150.0" /> 
+            <ComboBox fx:id="AttackerDice" layoutX="341.0" layoutY="453.0" prefWidth="150.0" />
+            <Label layoutX="276.0" layoutY="457.0" text="Attacker" />
+            <Label layoutX="273.0" layoutY="484.0" text="Defender" />
+            <ComboBox fx:id="DefenderDice" layoutX="341.0" layoutY="480.0" prefWidth="150.0" />
+            <Button layoutX="341.0" layoutY="507.0" mnemonicParsing="false" onAction="#rollDiceHandler" text="Roll" />
+            <Button fx:id="AllOut" layoutX="342.0" layoutY="383.0" mnemonicParsing="false" onMouseClicked="#AllOut" text="All-out" />
+            <Button layoutX="406.0" layoutY="383.0" mnemonicParsing="false" onAction="#rollDiceHandler" text="Manual" />
+            <TextField fx:id="inputArmy" layoutX="603.0" layoutY="475.0" prefHeight="31.0" prefWidth="132.0" />
+            <Label fx:id="armyAvailable" layoutX="603.0" layoutY="458.0" text="Army Available" />
+            <Button fx:id="addArmy" layoutX="603.0" layoutY="510.0" mnemonicParsing="false" text="Add Army" /> 
               </children>
           </AnchorPane>
     </children>

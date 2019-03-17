@@ -55,10 +55,16 @@ public class AttackController extends Observable implements Initializable {
 	    TextField inputArmy;
 	    
 	    @FXML
-	    ComboBox<Integer> NumberDice;
+	    ComboBox<Integer> AttackerDice;
+	    
+	    @FXML
+	    ComboBox<Integer> DefenderDice;
 	    
 	    @FXML
 	    Button rollDiceHandler;
+	    
+	    @FXML
+	    Button AllOut;
 
 	    
 	    ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
@@ -150,7 +156,7 @@ public class AttackController extends Observable implements Initializable {
         if (countryId.getSelectionModel().getSelectedItem() != null)
         {
         	// i dont' wannt them to be in sync
-        	NumberDice.getItems().clear();
+        	AttackerDice.getItems().clear();
             adjacentEnemyObservableList.clear();
             adjacentOwnedObservableList.clear();
                        
@@ -188,7 +194,8 @@ public class AttackController extends Observable implements Initializable {
     		actions.addAction("defender is rolling max == " + rollLimit[1]);
     	} 
     	else {
-    		NumberDice.getItems().clear();
+    		AttackerDice.getItems().clear();
+    		DefenderDice.getItems().clear();
     	}
     }
 
@@ -197,10 +204,15 @@ public class AttackController extends Observable implements Initializable {
      */
     public void initializeDice()
     {
-    	NumberDice.getItems().clear();
+    	AttackerDice.getItems().clear();
     	for (int i = 0; i < rollLimit[0]; i++)
 		{
-			NumberDice.getItems().add(i+1);
+    		AttackerDice.getItems().add(i+1);
+		}
+    	DefenderDice.getItems().clear();
+    	for (int i = 0; i < rollLimit[1]; i++)
+		{
+    		DefenderDice.getItems().add(i+1);
 		}
     }
    
@@ -211,10 +223,12 @@ public class AttackController extends Observable implements Initializable {
     public void rollDiceHandler() 
     {
     
-    	 if (NumberDice.getSelectionModel().getSelectedItem() != null)
+    	 if (AttackerDice.getSelectionModel().getSelectedItem() != null)
     	 {
     		 actions.addAction("rolling dice");
-    		 rollDice(rollLimit[0], rollLimit[1], countryId.getSelectionModel().getSelectedItem(), adjacentEnemy.getSelectionModel().getSelectedItem());
+    		 int diceAttack = AttackerDice.getSelectionModel().getSelectedItem();
+    		 int diceDefender = DefenderDice.getSelectionModel().getSelectedItem();
+    		 rollDice(diceAttack, diceDefender, countryId.getSelectionModel().getSelectedItem(), adjacentEnemy.getSelectionModel().getSelectedItem());
     		 
     	 }
     
@@ -258,17 +272,50 @@ public class AttackController extends Observable implements Initializable {
 				if (dattack[diceattack - 1 - i] > ddefend[dicedefend - 1 - i]) 
 				{
 					defend.reduceArmyCount(1);
+					
 				} else 
 				{
 					attack.reduceArmyCount(1);
+					ArmyCount.setText(Integer.toString(countryId.getSelectionModel().getSelectedItem().getArmyCount()));
 				}
 			} else 
 			{
+				defend.setRuler(PlayerModel.getPlayerModel().getCurrentPlayer());
 				actions.addAction("You have already occupied this country!");
 				break;
 			}
 		}
 	}
+    @FXML
+    public void AllOut() {
+    	Country attack=countryId.getSelectionModel().getSelectedItem();
+    	Country defend=adjacentEnemy.getSelectionModel().getSelectedItem();
+    	boolean roll = true;
+    	while(roll) {
+    		int result[] = setRollLimit(attack, defend);
+    		rollDice(result[0], result[1],attack, defend);
+    		if(attack.getArmyCount()==1||defend.getArmyCount()==0) {
+    			actions.addAction("You have already occupied this country!");
+    			defend.setRuler(PlayerModel.getPlayerModel().getCurrentPlayer());
+    			 countryId.setCellFactory(param -> new ListCell<Country>() {
+    	             @Override
+    	             protected void updateItem(Country country, boolean empty)
+    	             {
+    	                 super.updateItem(country, empty);
+    	                 if (empty || country == null || country.getName() == null)
+    	                 {
+    	                     setText(null);
+    	                 }
+    	                 else
+    	                 {
+    	                     setText(country.getName());
+    	                 }
+    	             }
+    	         });
+    			roll=false;
+    		}
+    	}
+    }
 	
 
     
@@ -296,14 +343,4 @@ public class AttackController extends Observable implements Initializable {
 		return result;
 	}
     
-    /**
-     * This method sets the GamePhaseModel to fortification, which notifies the
-     * subscribed GameController to set new scene
-     *
-     * @param event listens for click event
-     */
-    public void goToFortificationPhase(ActionEvent event)
-    {
-        GamePhaseModel.getGamePhaseModel().setPhase("fortification");
-    }
 }
