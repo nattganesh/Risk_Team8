@@ -285,26 +285,26 @@ public class AttackController implements Initializable, Observer {
     {
     	 int attackerArmy = countryId.getSelectionModel().getSelectedItem().getArmyCount();
     	 
-    	 if (attackerArmy <  2) 
+    	 if (validateTerritorySelections() && validateDiceSelections() && attackerArmy > 1)
     	 {
-    		 actions.addAction("you do not have enough army to attack");
-    		 clearDiceRolls();
-    	 }
-    	 else if (validateTerritorySelections() && validateDiceSelections() && attackerArmy > 1)
-    	 {
+    		 
     		 actions.addAction("rolling dice");
     		 int diceAttack = AttackerDice.getSelectionModel().getSelectedItem();
     		 int diceDefender = DefenderDice.getSelectionModel().getSelectedItem();
     		 rollDice(diceAttack, diceDefender, countryId.getSelectionModel().getSelectedItem(), adjacentEnemy.getSelectionModel().getSelectedItem()); 
     		 initializeDice();
-    	 } 
-    	 
-    	 else 
-    	 {
+    	 } else if(!validateTerritorySelections()) {
+    		 actions.addAction("select attacker and defender");
+    	 } else if(!validateDiceSelections()) {
     		 actions.addAction("select number of rolls");
     		 AttackerDice.getItems().clear();
     		 DefenderDice.getItems().clear();
+    	 } else {
+    		 actions.addAction("you do not have enough army to attack");
+    		 clearDiceRolls();
     	 }
+    	 
+    	
     
     }
     
@@ -345,8 +345,35 @@ public class AttackController implements Initializable, Observer {
 			{
 				if (dattack[diceattack - 1 - i] > ddefend[dicedefend - 1 - i]) 
 				{
-					defend.reduceArmyCount(1);
-					actions.addAction("defender has lost 1 army");
+					
+					for (Country c : adjacentEnemyObservableList)
+	                {
+	                	
+	                    if (c.getName().equals(adjacentEnemy.getSelectionModel().getSelectedItem().getName()))
+	                    {
+	                    	c.reduceArmyCount(1);
+	                    	adjacentEnemyObservableList.set(adjacentEnemyObservableList.indexOf(c), c);
+	                    	adjacentEnemy.setCellFactory(param -> new ListCell<Country>() {
+	                            @Override
+	                            protected void updateItem(Country country, boolean empty)
+	                            {
+	                                super.updateItem(country, empty);
+	                                if (empty || country == null || country.getName() == null)
+	                                {
+	                                    setText(null);
+	                                }
+	                                else
+	                                {
+	                                    setText(country.getName() + " ("+ country.getArmyCount() +")");
+	                                }
+	                            }
+	                        });
+	                        actions.addAction("defender has lost 1 army");
+	                        break;
+	                    }
+	                 
+	                }
+					
 					if (defend.getArmyCount() == 0) {
 
 						actions.addAction("You have already occupied this country!");
@@ -371,9 +398,19 @@ public class AttackController implements Initializable, Observer {
 				} 
 				else 
 				{
-					attack.reduceArmyCount(1);
-					actions.addAction("attacker has lost 1 army");					
-					ArmyCount.setText(Integer.toString(countryId.getSelectionModel().getSelectedItem().getArmyCount()));	
+					for (Country c : territoryObservableList)
+	                {
+	                	
+	                    if (c.getName().equals(countryId.getSelectionModel().getSelectedItem().getName()))
+	                    {
+	                    	c.reduceArmyCount(1);
+	                    	territoryObservableList.set(territoryObservableList.indexOf(c), c);
+	                        ArmyCount.setText(Integer.toString(countryId.getSelectionModel().getSelectedItem().getArmyCount()));
+	                        actions.addAction("attacker has lost 1 army");	
+	                        break;
+	                    }
+	                 
+	                }
 				}
 			} 
 		}
