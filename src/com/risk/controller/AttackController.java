@@ -349,9 +349,9 @@ public class AttackController implements Initializable, Observer {
 					actions.addAction("defender has lost 1 army");
 					if (defend.getArmyCount() == 0) {
 
-						defend.getRuler().getOccupiedCountries().remove(defend);
-						defend.setRuler(PlayerModel.getPlayerModel().getCurrentPlayer());
-						PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries().add(defend);
+						defend.getRuler().removeCountry(defend);
+						defend.setRuler(attack.getRuler());
+						attack.getRuler().addCountry(defend);
 						
 						adjacentEnemyObservableList.remove(defend);
 						territoryObservableList.add(defend);
@@ -360,6 +360,7 @@ public class AttackController implements Initializable, Observer {
 						child.setVisible(true);
 						conqueringController.setConquringArmy(defend);
 						conqueringController.setDiceRoll(diceattack);
+						
 					}
 					else 
 					{

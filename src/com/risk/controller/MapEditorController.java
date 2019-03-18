@@ -626,7 +626,7 @@ public class MapEditorController implements Initializable {
 	                    MapModel.getMapModel().getCountries().get(random).setArmyCount(1);
 	                    p.setStartingPoints(p.getStartingPoints() - 1);
 	                    countryOccupied[random] = true;
-	                    p.getOccupiedCountries().add(MapModel.getMapModel().getCountries().get(random));
+	                    p.addCountry(MapModel.getMapModel().getCountries().get(random));
 	                    i++;
 	                }
 	                if (i >= Country.MAX_NUMBER_OF_COUNTRIES)
@@ -635,7 +635,6 @@ public class MapEditorController implements Initializable {
 	                }
 	            }
 	        }
-	        
 
 		boolean[] armiesRemaining = new boolean[PlayerModel.getPlayerModel().getNumberOfPlayer()];
 		boolean done = false;

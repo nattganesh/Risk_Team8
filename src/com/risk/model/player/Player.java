@@ -13,14 +13,17 @@ import com.risk.model.map.Country;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
+import java.util.Observable;
 
-public class Player {
+public class Player extends Observable  {
 
     private String name;
     private ArrayList<Country> occupiedCountries = new ArrayList<>();
     private ArrayList<Card> cards = new ArrayList<>();
     private int startingPoints;
     private boolean playerLost = false;
+    
+
 
     /**
      * Constructor for Player class
@@ -72,7 +75,29 @@ public class Player {
     {
         return occupiedCountries;
     }
+    
+    /** 
+     * 
+     * @param country country to be added in the player's occupied territories
+     */
+    public void addCountry(Country country)
+    {
+    	occupiedCountries.add(country);
+    	setChanged();
+    	notifyObservers(this);
+    }
 
+    /** 
+     * 
+     * @param country country to be removed in the player's occupied territories
+     */
+    public void removeCountry(Country country)
+    {
+    	occupiedCountries.remove(country);
+    	setChanged();
+    	notifyObservers(this);
+    }
+    
     /**
      * gets the size of occupied country
      *

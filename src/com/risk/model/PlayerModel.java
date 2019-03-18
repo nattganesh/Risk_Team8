@@ -14,7 +14,7 @@ import java.util.Observer;
 
 import com.risk.model.player.Player;
 
-public class PlayerModel extends Observable  {
+public class PlayerModel extends Observable implements Observer {
 
     private ArrayList<Player> playerList = new ArrayList<Player>();
     public static final String[] PLAYERCOLOR =
@@ -92,6 +92,7 @@ public class PlayerModel extends Observable  {
     public void addPlayer(Player player)
     {
         playerList.add(player);
+        player.addObserver(this);
     }
 
     /**
@@ -116,5 +117,14 @@ public class PlayerModel extends Observable  {
         }
         return playerModel;
     }
+
+	/* (non-Javadoc)
+	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+	 */
+	@Override
+	public void update(Observable o, Object player) {
+		setChanged();
+		notifyObservers((Player)player);
+	}
 
 }

@@ -14,7 +14,7 @@ import javafx.collections.ObservableList;
 import java.util.ArrayList;
 import java.util.Observable;
 
-public class Country extends Observable {
+public class Country{
 
     public static final int MAX_NUMBER_OF_COUNTRIES = Continent.MAX_NUMBER_OF_COUNTRIES_IN_NORTH_AMERICA
             + Continent.MAX_NUMBER_OF_COUNTRIES_IN_SOUTH_AMERICA
@@ -115,6 +115,8 @@ public class Country extends Observable {
         return ruler;
     }
 
+    
+    
     /**
      *
      * @param ruler sets the ruler of the country
@@ -122,6 +124,7 @@ public class Country extends Observable {
     public void setRuler(Player ruler)
     {
         this.ruler = ruler;
+ 
     }
 
     /**
