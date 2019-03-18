@@ -87,6 +87,7 @@ public class ConqueredController extends Observable implements Initializable{
     {
     	if (countryOwnedID.getSelectionModel().getSelectedItem() != null)
     	{
+//    		armyCount.getItems().clear
 			if (countryOwnedID.getSelectionModel().getSelectedItem().getArmyCount() <= diceRolled) 
 			{
 				actions.addAction("Does not have enough armies");
@@ -101,6 +102,11 @@ public class ConqueredController extends Observable implements Initializable{
     	}
     }
 	
+	@FXML
+	public void territoryToMoveFromHandler()
+	{
+		initializeArmy();
+	}
 	
 	/**
 	 * this method is necessary for moving army into conquered country
@@ -111,7 +117,7 @@ public class ConqueredController extends Observable implements Initializable{
 		
 		if (countryOwnedID.getSelectionModel().getSelectedItem() != null && conqueredID.getSelectionModel().getSelectedItem() != null && armyCount.getSelectionModel().getSelectedItem() != null)
 		{
-			initializeArmy();
+			
 			Country reinforcement = countryOwnedID.getSelectionModel().getSelectedItem();
 			Country conquered = conqueredID.getSelectionModel().getSelectedItem();
 			int army = armyCount.getSelectionModel().getSelectedItem();
