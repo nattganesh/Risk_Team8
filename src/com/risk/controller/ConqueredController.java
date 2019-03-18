@@ -40,9 +40,6 @@ public class ConqueredController extends Observable implements Initializable{
 	  @FXML
 	  ComboBox <Integer> armyCount;
 
-	/* (non-Javadoc)
-	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
-	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub

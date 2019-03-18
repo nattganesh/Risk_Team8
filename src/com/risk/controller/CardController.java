@@ -49,13 +49,7 @@ public class CardController extends Observable implements Initializable {
 		
 		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category1"));
     	PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category2"));
-    	PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category3"));
-    	PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category4"));
-    	PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category1"));
-    	PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category2"));
-    	PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category3"));
-    	PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category4"));
-    	PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category4"));
+
     	
       cardsObservableList.addAll(PlayerModel.getPlayerModel().getCurrentPlayer().getCards());
       actions = ActionModel.getActionModel();

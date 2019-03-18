@@ -55,9 +55,6 @@ public class AttackController implements Initializable, Observer {
 	    ListView<Country> adjacentOwned;
 	    
 	    @FXML
-	    TextField inputArmy;
-	    
-	    @FXML
 	    ComboBox<Integer> AttackerDice;
 	    
 	    @FXML
@@ -352,12 +349,14 @@ public class AttackController implements Initializable, Observer {
 					actions.addAction("defender has lost 1 army");
 					if (defend.getArmyCount() == 0) {
 
+						defend.getRuler().getOccupiedCountries().remove(defend);
 						defend.setRuler(PlayerModel.getPlayerModel().getCurrentPlayer());
 						PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries().add(defend);
 						
 						adjacentEnemyObservableList.remove(defend);
 						territoryObservableList.add(defend);
 						adjacentOwnedObservableList.add(defend);
+						
 						child.setVisible(true);
 						conqueringController.setConquringArmy(defend);
 						conqueringController.setDiceRoll(diceattack);
@@ -366,8 +365,6 @@ public class AttackController implements Initializable, Observer {
 					{
 						adjacentEnemyObservableList.set(adjacentEnemyObservableList.indexOf(defend),defend);
 					}
-				
-					
 				} 
 				else 
 				{
@@ -434,39 +431,7 @@ public class AttackController implements Initializable, Observer {
     	}
     	
     }
-	
-    /**
-     * This method sets the number of available army to your occupied country
-     */
-    //need to be modified
-    @FXML
-    public void setArmy()
-    {
-    	Country country1=countryId.getSelectionModel().getSelectedItem();
-    	//this country 2 need to be modified appropriately
-    	Country country2=adjacentEnemy.getSelectionModel().getSelectedItem();
-        int Armyinput = 0;
-        if (!inputArmy.getText().trim().isEmpty() && country1.getArmyCount() > 1
-                && country1 != null)
-        {
-
-            Armyinput = Integer.parseInt(inputArmy.getText());
-            if (Armyinput < country1.getArmyCount())
-            {
-            	country2.setArmyCount(Armyinput);
-            	country1.reduceArmyCount(Armyinput);
-            	actions.addAction("Added " + Armyinput + " Army from "+ country1.getName()+ " to " + country2.getName());
-            }
-            else {
-            	actions.addAction("Invalid army input");
-            }
-        }
-        else {
-        	actions.addAction("Invaid country");
-        }
-    }
-    
-    
+	    
     
     public int[] setRollLimit(Country attack, Country defend)
 	{
