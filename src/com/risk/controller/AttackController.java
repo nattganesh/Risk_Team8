@@ -158,7 +158,9 @@ public class AttackController implements Initializable, Observer {
          }); 
     }
     
-  
+   /**
+    * this method is responsible for populating adjacent territories 
+    */
     @FXML
     public void territoryHandler()
     {
@@ -190,6 +192,9 @@ public class AttackController implements Initializable, Observer {
         
     }
     
+    /**
+     * this method is necessary for clearing combobox for dice roll
+     */
     public void clearDiceRolls()
     {
     	AttackerDice.getItems().clear();
@@ -248,6 +253,10 @@ public class AttackController implements Initializable, Observer {
     	}
     }
     
+    /**
+     * 
+     * @return returns true if attacker and defender has been selected
+     */
     public boolean validateTerritorySelections() 
     {
     	boolean valid = false;
@@ -258,6 +267,9 @@ public class AttackController implements Initializable, Observer {
     	return valid;
     }
     
+    /**
+     * @return returns true if defender and attacker both selected dice roll
+     */
     public boolean validateDiceSelections()
     {
     	boolean valid = false;
@@ -381,35 +393,40 @@ public class AttackController implements Initializable, Observer {
 			}
 		}
 	}
+    
+ 
     @FXML
     public void AllOut() {
     	Country attack=countryId.getSelectionModel().getSelectedItem();
     	Country defend=adjacentEnemy.getSelectionModel().getSelectedItem();
-    	boolean roll = true;
-    	while(roll) {
-    		int result[] = setRollLimit(attack, defend);
-    		rollDice(result[0], result[1],attack, defend);
-    		if(attack.getArmyCount()==1||defend.getArmyCount()==0) {
-    			actions.addAction("You have already occupied this country!");
-    			defend.setRuler(PlayerModel.getPlayerModel().getCurrentPlayer());
-    			occupy = true;
-    			 countryId.setCellFactory(param -> new ListCell<Country>() {
-    	             @Override
-    	             protected void updateItem(Country country, boolean empty)
-    	             {
-    	                 super.updateItem(country, empty);
-    	                 if (empty || country == null || country.getName() == null)
-    	                 {
-    	                     setText(null);
-    	                 }
-    	                 else
-    	                 {
-    	                     setText(country.getName());
-    	                 }
-    	             }
-    	         });
-    			roll=false;
-    		}
+    	if (attack != null && defend != null && attack.getArmyCount() > 1) 
+    	{
+	    	boolean roll = true;
+	    	while(roll) {
+	    		int result[] = setRollLimit(attack, defend);
+	    		rollDice(result[0], result[1],attack, defend);
+	    		if(attack.getArmyCount()==1||defend.getArmyCount()==0) {
+	    			actions.addAction("You have already occupied this country!");
+	    			defend.setRuler(PlayerModel.getPlayerModel().getCurrentPlayer());
+	    			occupy = true;
+	    			 countryId.setCellFactory(param -> new ListCell<Country>() {
+	    	             @Override
+	    	             protected void updateItem(Country country, boolean empty)
+	    	             {
+	    	                 super.updateItem(country, empty);
+	    	                 if (empty || country == null || country.getName() == null)
+	    	                 {
+	    	                     setText(null);
+	    	                 }
+	    	                 else
+	    	                 {
+	    	                     setText(country.getName());
+	    	                 }
+	    	             }
+	    	         });
+	    			roll=false;
+	    		}
+	    	}
     	}
     	else
     	{
@@ -441,7 +458,7 @@ public class AttackController implements Initializable, Observer {
             	actions.addAction("Added " + Armyinput + " Army from "+ country1.getName()+ " to " + country2.getName());
             }
             else {
-            	actions.addAction("Invaid army input");
+            	actions.addAction("Invalid army input");
             }
         }
         else {

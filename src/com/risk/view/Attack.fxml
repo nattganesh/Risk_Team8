@@ -31,7 +31,7 @@
             <ComboBox fx:id="DefenderDice" layoutX="341.0" layoutY="480.0" prefWidth="150.0" />
             <Button layoutX="341.0" layoutY="526.0" mnemonicParsing="false" onAction="#rollDiceHandler" text="Roll" />
             <Button fx:id="AllOut" layoutX="342.0" layoutY="383.0" mnemonicParsing="false" onMouseClicked="#AllOut" text="All-out" />
-            <Button layoutX="406.0" layoutY="383.0" mnemonicParsing="false" onAction="#rollDiceHandler" text="Manual" />
+         <!--   <Button layoutX="406.0" layoutY="383.0" mnemonicParsing="false" onAction="#rollDiceHandler" text="Manual" /> -->
             <TextField fx:id="inputArmy" layoutX="603.0" layoutY="475.0" prefHeight="31.0" prefWidth="132.0" />
             <Label fx:id="armyAvailable" layoutX="603.0" layoutY="458.0" text="Army Available" />
             <Button fx:id="addArmy" layoutX="603.0" layoutY="510.0" mnemonicParsing="false" onAction="#setArmy" text="Add Army" />

@@ -85,6 +85,9 @@ public class ConqueredController extends Observable implements Initializable{
 	}
 	
 	
+	/**
+	 * this method is necessary for moving army into conquered country
+	 */
 	@FXML
 	public void moveArmyHandler()
 	{
@@ -103,19 +106,28 @@ public class ConqueredController extends Observable implements Initializable{
 	}
 	
 
-	
+	/**
+	 * this  method sets the conquered country into listview
+	 * 
+	 * @param c country that is conquered
+	 */
 	public void setConquringArmy(Country c)
 	{
 		conqueredObservableList.clear();
 		conqueredObservableList.add(c);
 	}
 	
+	/**
+	 * This method sets the number of army to move in ComboBox
+	 * 
+	 * @param roll number of dice rolled to conquer
+	 */
 	public void setDiceRoll(int roll)
 	{
-		
+		armyCount.getItems().clear();
 		for (int i = 0; i < roll; i++)
 		{
-			armyCount.getItems().add(i);
+			armyCount.getItems().add(i+1);
 		}
 	}
 }
