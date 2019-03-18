@@ -349,6 +349,8 @@ public class AttackController implements Initializable, Observer {
 					actions.addAction("defender has lost 1 army");
 					if (defend.getArmyCount() == 0) {
 
+						actions.addAction("You have already occupied this country!");
+						actions.addAction("Please move armies to your new country!");
 						defend.getRuler().removeCountry(defend);
 						defend.setRuler(attack.getRuler());
 						attack.getRuler().addCountry(defend);
@@ -360,7 +362,7 @@ public class AttackController implements Initializable, Observer {
 						child.setVisible(true);
 						conqueringController.setConquringArmy(defend);
 						conqueringController.setDiceRoll(diceattack);
-						
+						break;
 					}
 					else 
 					{
@@ -374,21 +376,6 @@ public class AttackController implements Initializable, Observer {
 					ArmyCount.setText(Integer.toString(countryId.getSelectionModel().getSelectedItem().getArmyCount()));	
 				}
 			} 
-			else 
-			{
-				defend.setRuler(PlayerModel.getPlayerModel().getCurrentPlayer());
-				PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries().add(defend);
-				
-				adjacentEnemyObservableList.remove(defend);
-				territoryObservableList.add(defend);
-				adjacentOwnedObservableList.add(defend);
-				
-				actions.addAction("You have already occupied this country!");
-				occupy = true;
-				actions.addAction("Please move armies to your new country!");
-				//update the move army view in here
-				break;
-			}
 		}
 	}
     
@@ -404,24 +391,6 @@ public class AttackController implements Initializable, Observer {
 	    		int result[] = setRollLimit(attack, defend);
 	    		rollDice(result[0], result[1],attack, defend);
 	    		if(attack.getArmyCount()==1||defend.getArmyCount()==0) {
-	    			actions.addAction("You have already occupied this country!");
-	    			defend.setRuler(PlayerModel.getPlayerModel().getCurrentPlayer());
-	    			occupy = true;
-	    			 countryId.setCellFactory(param -> new ListCell<Country>() {
-	    	             @Override
-	    	             protected void updateItem(Country country, boolean empty)
-	    	             {
-	    	                 super.updateItem(country, empty);
-	    	                 if (empty || country == null || country.getName() == null)
-	    	                 {
-	    	                     setText(null);
-	    	                 }
-	    	                 else
-	    	                 {
-	    	                     setText(country.getName());
-	    	                 }
-	    	             }
-	    	         });
 	    			roll=false;
 	    		}
 	    	}
