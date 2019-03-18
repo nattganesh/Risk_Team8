@@ -48,13 +48,14 @@ public class CardController extends Observable implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		
 		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category1"));
-    	PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category2"));
+		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category2"));
 
     	
       cardsObservableList.addAll(PlayerModel.getPlayerModel().getCurrentPlayer().getCards());
       actions = ActionModel.getActionModel();
       yourCard.setItems(cardsObservableList);
       tradeCard.setItems(tradeObservableList);
+      
 	}
     /**
      * This method is used to update the cards the player owned and the cards

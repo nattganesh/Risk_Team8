@@ -31,6 +31,10 @@ public class ConqueredController extends Observable implements Initializable{
 	  ObservableList<Country> conqueredObservableList = FXCollections.observableArrayList();
 	  
 	  int diceRolled;
+	  int moved = 0;
+	
+	  
+	  
 	  ActionModel actions;
 	  @FXML
 	  ListView<Country> countryOwnedID;
@@ -39,7 +43,7 @@ public class ConqueredController extends Observable implements Initializable{
 	  ListView<Country> conqueredID;
 	  
 	  @FXML
-	  ComboBox <Integer> armyCount;
+	  TextField armyCount;
 	  
 
 	@Override
@@ -82,32 +86,7 @@ public class ConqueredController extends Observable implements Initializable{
          });
         
 	}
-	
-	public void initializeArmy()
-    {
-    	if (countryOwnedID.getSelectionModel().getSelectedItem() != null)
-    	{
-//    		armyCount.getItems().clear
-			if (countryOwnedID.getSelectionModel().getSelectedItem().getArmyCount() <= diceRolled) 
-			{
-				actions.addAction("Does not have enough armies");
-			} else 
-			{
-				armyCount.getItems().clear();
-				for (int i = diceRolled; i < countryOwnedID.getSelectionModel().getSelectedItem().getArmyCount(); i++) 
-				{
-					armyCount.getItems().add(i);
-				}
-			}
-    	}
-    }
-	
-	@FXML
-	public void territoryToMoveFromHandler()
-	{
-		initializeArmy();
-	}
-	
+
 	/**
 	 * this method is necessary for moving army into conquered country
 	 */
@@ -115,17 +94,31 @@ public class ConqueredController extends Observable implements Initializable{
 	public void moveArmyHandler()
 	{
 		
-		if (countryOwnedID.getSelectionModel().getSelectedItem() != null && conqueredID.getSelectionModel().getSelectedItem() != null && armyCount.getSelectionModel().getSelectedItem() != null)
+		if (countryOwnedID.getSelectionModel().getSelectedItem() != null && conqueredID.getSelectionModel().getSelectedItem() != null && !armyCount.getText().trim().isEmpty())
 		{
 			
 			Country reinforcement = countryOwnedID.getSelectionModel().getSelectedItem();
 			Country conquered = conqueredID.getSelectionModel().getSelectedItem();
-			int army = armyCount.getSelectionModel().getSelectedItem();
+			int army = Integer.parseInt(armyCount.getText());
+			if (army+1 < reinforcement.getArmyCount())
+			{
+				moved = moved + army;
+				System.out.println("army to move : " + army);
+				if (moved > diceRolled)
+				{
+					setChanged();
+					notifyObservers(conquered);
+				}
+				reinforcement.reduceArmyCount(army);
+				conquered.setArmyCount(army);
+			}
+			else 
+			{
+				actions.addAction("invalid move");
+			}
 			
-			reinforcement.reduceArmyCount(army);
-			conquered.setArmyCount(army);
-			setChanged();
-			notifyObservers(conquered);
+			
+			
 		}
 	}
 	
@@ -149,10 +142,5 @@ public class ConqueredController extends Observable implements Initializable{
 	public void setDiceRoll(int roll)
 	{
 		this.diceRolled = roll;
-//		armyCount.getItems().clear();
-//		for (int i = 0; i < roll; i++)
-//		{
-//			armyCount.getItems().add(i+1);
-//		}
 	}
 }

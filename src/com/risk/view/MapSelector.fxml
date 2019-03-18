@@ -22,10 +22,10 @@
                 <Label layoutX="525.0" layoutY="118.0" text="NEIGHBOURS" />
                 <Button layoutX="332.0" layoutY="385.0" mnemonicParsing="false" onAction="#territoryDeleteHandler" text="DELETE" />
                 <Button layoutX="565.0" layoutY="385.0" mnemonicParsing="false" onAction="#adjacentDeleteHandler" text="DELETE" />
-                <Button layoutX="317.0" layoutY="64.0" mnemonicParsing="false" onAction="#saveMapHandler" text="Save Map" />
+                <Button layoutX="312.0" layoutY="64.0" mnemonicParsing="false" onAction="#saveMapHandler" text="Save Map" />
                 <Label layoutX="33.0" layoutY="23.0" text="Existing File" />
-                <Button layoutX="260.0" layoutY="64.0" mnemonicParsing="false" onAction="#newMapHandler" text="New" />
-                <Button layoutX="203.0" layoutY="64.0" mnemonicParsing="false" onAction="#loadMapHandler" text="Load" />
+                <Button layoutX="209.0" layoutY="64.0" mnemonicParsing="false" onAction="#newMapHandler" text="New" />
+                <Button layoutX="259.0" layoutY="64.0" mnemonicParsing="false" onAction="#loadMapHandler" text="Load" />
                 <Label fx:id="AdjacentError" layoutX="516.0" layoutY="79.0" prefHeight="21.0" prefWidth="69.0" />
                 <Button layoutX="171.0" layoutY="464.0" mnemonicParsing="false" onAction="#startGameHandler" text="Start Game" />
                 <ComboBox fx:id="PlayerID" layoutX="21.0" layoutY="464.0" prefWidth="150.0" />

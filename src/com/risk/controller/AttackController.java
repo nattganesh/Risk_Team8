@@ -99,7 +99,7 @@ public class AttackController implements Initializable, Observer {
     @Override
     public void initialize(URL arg0, ResourceBundle arg1)
     {
-    	conqueringController.addObserver(this);
+    	 conqueringController.addObserver(this);
     	 actions = ActionModel.getActionModel();
     	 territoryObservableList.addAll(PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
          countryId.setItems(territoryObservableList);         
@@ -166,25 +166,18 @@ public class AttackController implements Initializable, Observer {
         {
         	// i dont' wannt them to be in sync
         	clearDiceRolls();
+        	
+        	Country attacker = countryId.getSelectionModel().getSelectedItem();
     
             adjacentEnemyObservableList.clear();
             adjacentOwnedObservableList.clear();
                        
-            adjacentEnemyObservableList.addAll(countryId.getSelectionModel().getSelectedItem().getConnectedEnemy());
+            adjacentEnemyObservableList.addAll(attacker.getConnectedEnemy());
                
-            adjacentOwnedObservableList.addAll(countryId.getSelectionModel().getSelectedItem().getConnectedOwned());
-            ArmyCount.setText(Integer.toString(countryId.getSelectionModel().getSelectedItem().getArmyCount()));
-            
-            
-            if (countryId.getSelectionModel().getSelectedItem().getArmyCount() > 1)
-            {
-            	actions.addAction("("+ countryId.getSelectionModel().getSelectedItem().getName() + ") == ENOUGH ARMY" );
-            }
-            if (countryId.getSelectionModel().getSelectedItem().getArmyCount() == 1)
-            {
-            	actions.addAction("("+ countryId.getSelectionModel().getSelectedItem().getName() + ") == NOT ENOUGH ARMY" );
-            }
+            adjacentOwnedObservableList.addAll(attacker.getConnectedOwned());
+            ArmyCount.setText(Integer.toString(attacker.getArmyCount()));
           
+        
         }
         
     }
@@ -208,10 +201,13 @@ public class AttackController implements Initializable, Observer {
     {
     	if (adjacentEnemy.getSelectionModel().getSelectedItem() != null && countryId.getSelectionModel().getSelectedItem().getArmyCount() > 1)
     	{
-    		actions.addAction("defender == " + adjacentEnemy.getSelectionModel().getSelectedItem().getName());
+    		Country defender = adjacentEnemy.getSelectionModel().getSelectedItem();
+    		Country attacker = countryId.getSelectionModel().getSelectedItem();
+    		
+    		actions.addAction("attacker == "+ attacker.getName() + " (" + attacker.getArmyCount() + ")");
+    		actions.addAction("defender == " + defender.getName() + " (" + defender.getArmyCount() + ")");
     		initializeDice();
-    		actions.addAction("attacker can roll up to == " + rollLimit[0]);
-    		actions.addAction("defender is rolling max == " + rollLimit[1]);
+
     	} 
     	else {
     		AttackerDice.getItems().clear();
@@ -291,6 +287,10 @@ public class AttackController implements Initializable, Observer {
     		 actions.addAction("rolling dice");
     		 int diceAttack = AttackerDice.getSelectionModel().getSelectedItem();
     		 int diceDefender = DefenderDice.getSelectionModel().getSelectedItem();
+    		 
+    		 actions.addAction("attacker rolled " + diceAttack + " dice");
+    		 actions.addAction("defender rolled " + diceDefender + " dice");
+    		 
     		 rollDice(diceAttack, diceDefender, countryId.getSelectionModel().getSelectedItem(), adjacentEnemy.getSelectionModel().getSelectedItem()); 
     		 initializeDice();
     	 } else if(!validateTerritorySelections()) {
@@ -371,7 +371,7 @@ public class AttackController implements Initializable, Observer {
 	                        actions.addAction("defender has lost 1 army");
 	                        break;
 	                    }
-	                 
+	        
 	                }
 					
 					if (defend.getArmyCount() == 0) {
@@ -398,19 +398,13 @@ public class AttackController implements Initializable, Observer {
 				} 
 				else 
 				{
-					for (Country c : territoryObservableList)
-	                {
-	                	
-	                    if (c.getName().equals(countryId.getSelectionModel().getSelectedItem().getName()))
-	                    {
-	                    	c.reduceArmyCount(1);
-	                    	territoryObservableList.set(territoryObservableList.indexOf(c), c);
+				
+	                    	attack.reduceArmyCount(1);
+	                    	territoryObservableList.set(territoryObservableList.indexOf(attack), attack);
 	                        ArmyCount.setText(Integer.toString(countryId.getSelectionModel().getSelectedItem().getArmyCount()));
 	                        actions.addAction("attacker has lost 1 army");	
 	                        break;
-	                    }
-	                 
-	                }
+	           
 				}
 			} 
 		}

@@ -9,15 +9,15 @@
 
 <AnchorPane fx:id="mainPane" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ListView fx:id="actionMessage" layoutX="708.0" layoutY="108.0" prefHeight="211.0" prefWidth="269.0" />
+      <ListView fx:id="actionMessage" layoutX="708.0" layoutY="108.0" prefHeight="211.0" prefWidth="287.0" />
       <Pane fx:id="mainPane" layoutX="14.0" layoutY="16.0" prefHeight="27.0" prefWidth="200.0">
          <children>
             <Pane fx:id="content" />
          </children>
       </Pane>
-      <TextField fx:id="playerID" editable="false" layoutX="790.0" layoutY="60.0" />
-      <TextField fx:id="phaseID" editable="false" layoutX="790.0" layoutY="12.0" />
-      <BarChart fx:id="worldDomination" layoutX="669.0" layoutY="334.0" prefHeight="252.0" prefWidth="317.0" title="WORLD DOMINATION">
+      <TextField fx:id="playerID" editable="false" layoutX="808.0" layoutY="60.0" />
+      <TextField fx:id="phaseID" editable="false" layoutX="808.0" layoutY="14.0" />
+      <BarChart fx:id="worldDomination" layoutX="643.0" layoutY="334.0" prefHeight="265.0" prefWidth="343.0" title="WORLD DOMINATION">
         <xAxis>
           <CategoryAxis fx:id="X" animated="false" label="PLAYER" side="BOTTOM" />
         </xAxis>
