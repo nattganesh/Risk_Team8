@@ -7,7 +7,9 @@
  */
 package com.risk.model.player;
 
+import com.risk.model.MapModel;
 import com.risk.model.card.Card;
+import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
 
 import javafx.collections.ObservableList;
@@ -19,6 +21,7 @@ public class Player extends Observable  {
 
     private String name;
     private ArrayList<Country> occupiedCountries = new ArrayList<>();
+    private ArrayList<Continent> occupiedContinents = new ArrayList<>();
     private ArrayList<Card> cards = new ArrayList<>();
     private int startingPoints;
     private boolean playerLost = false;
@@ -197,7 +200,56 @@ public class Player extends Observable  {
         this.playerLost = playerLost;
     }
     
+    /**
+     * This method is used to calculate the extra armies earned if the player
+     * has occupied continents
+     *
+     * @param currentPlayer The player who is in his reinforcement round
+     * @return The result corresponding to the countries the player occupied
+     */
+    public int calculateReinforcementContinentControl()
+    {
+        String currentRuler = getName();
+        int reinforcement = 0;
+        for (Continent continent : MapModel.getMapModel().getContinents())
+        {
+            boolean control = true;
+            for (Country country : continent.getCountries())
+            {
+                if (country.getRuler().getName() != currentRuler)
+                {
+                    control = false;
+                    break;
+                }
+            }
+            if (control)
+            {
+                reinforcement = reinforcement + continent.getPointsWhenFullyOccupied();
+            }
+        }
+//        if (reinforcement > 0)
+//        {
+//        	addAction("reinforcement continent control == " + reinforcement);
+//        }
+        return reinforcement;
+    }
 
+    /**
+     * This method is used to calculate the extra armies based on the number of
+     * countries the player already occupied
+     *
+     * @param currentPlayer The player who is in his reinforcement round
+     * @return The result corresponding to the countries the player occupied
+     */
+    public int calculateReinforcementOccupiedTerritory()
+    {
+        int reinforcement = (int) Math.floor(numbOccupied() / 3);
+//        if (reinforcement > 0)
+//        {
+//        	actions.addAction("reinforcement from occupied == " + reinforcement);
+//        }
+        return reinforcement;
+    }
     
     
     

@@ -32,9 +32,7 @@ public class ConqueredController extends Observable implements Initializable{
 	  
 	  int diceRolled;
 	  int moved = 0;
-	
-	  
-	  
+		  
 	  ActionModel actions;
 	  @FXML
 	  ListView<Country> countryOwnedID;

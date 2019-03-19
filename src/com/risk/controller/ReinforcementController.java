@@ -133,11 +133,19 @@ public class ReinforcementController implements Initializable{
     	cardController.addObserver(new cardSkipObserver());
     	cardController.addObserver(new cardReinforcementObserver());
     	    	
-        TotalReinforcement = calculateReinforcementOccupiedTerritory(PlayerModel.getPlayerModel().getCurrentPlayer())
-                + calculateReinforcementContinentControl(PlayerModel.getPlayerModel().getCurrentPlayer());
+        int reinforcementOccupied = PlayerModel.getPlayerModel().getCurrentPlayer().calculateReinforcementOccupiedTerritory();
+        int reinforcementContinent =  PlayerModel.getPlayerModel().getCurrentPlayer().calculateReinforcementContinentControl();
+        if (reinforcementOccupied > 0)
+        {
+        	actions.addAction("occupied territory reinforcement == " + reinforcementOccupied);
+        }
+        if (reinforcementContinent > 0)
+        {
+        	actions.addAction("continent control reinforcement == " + reinforcementContinent);
+        }
         if(TotalReinforcement<3) 
         {
-			TotalReinforcement=3;
+			TotalReinforcement = 3;
 		}
         
         armyAvailable.setText("Army: " + Integer.toString(getReinforcement()));
@@ -291,58 +299,6 @@ public class ReinforcementController implements Initializable{
             GamePhaseModel.getGamePhaseModel().setPhase("attack");
         }
     }
-
-    /**
-     * This method is used to calculate the extra armies based on the number of
-     * countries the player already occupied
-     *
-     * @param currentPlayer The player who is in his reinforcement round
-     * @return The result corresponding to the countries the player occupied
-     */
-    public int calculateReinforcementOccupiedTerritory(Player currentPlayer)
-    {
-        int reinforcement = (int) Math.floor(currentPlayer.numbOccupied() / 3);
-        if (reinforcement > 0)
-        {
-        	actions.addAction("reinforcement from occupied == " + reinforcement);
-        }
-        return reinforcement;
-    }
-
-    /**
-     * This method is used to calculate the extra armies earned if the player
-     * has occupied continents
-     *
-     * @param currentPlayer The player who is in his reinforcement round
-     * @return The result corresponding to the countries the player occupied
-     */
-    public int calculateReinforcementContinentControl(Player currentPlayer)
-    {
-        String currentRuler = currentPlayer.getName();
-        int reinforcement = 0;
-        for (Continent continent : MapModel.getMapModel().getContinents())
-        {
-            boolean control = true;
-            for (Country country : continent.getCountries())
-            {
-                if (country.getRuler().getName() != currentRuler)
-                {
-                    control = false;
-                    break;
-                }
-            }
-            if (control)
-            {
-                reinforcement = reinforcement + continent.getPointsWhenFullyOccupied();
-            }
-        }
-        if (reinforcement > 0)
-        {
-        	actions.addAction("reinforcement continent control == " + reinforcement);
-        }
-        return reinforcement;
-    }
-
 
     /**
      * This method is used to get the number of total armies earned for
