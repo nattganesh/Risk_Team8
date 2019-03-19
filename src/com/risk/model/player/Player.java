@@ -24,6 +24,7 @@ public class Player extends Observable {
     private String name;
     private ArrayList<Country> occupiedCountries = new ArrayList<>();
 //    private ArrayList<Continent> occupiedContinents = new ArrayList<>();
+    
 //    private ArrayList<Card> cards = new ArrayList<>();
     private ObservableList<Card> cards = FXCollections.observableArrayList();
     

@@ -19,7 +19,7 @@ public class PlayerModel extends Observable implements Observer {
     private ArrayList<Player> playerList = new ArrayList<Player>();
     public static final String[] PLAYERCOLOR =
     {
-        "Red", "Blue", "Green", "Yellow", "Orange", "Purple"
+        "Player1", "Player2", "Player3", "Player4", "Player5", "Player6"
     };
     private int currentPlayerIndex = 0;
     private Player playerWins = null;

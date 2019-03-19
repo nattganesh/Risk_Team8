@@ -51,7 +51,6 @@ public class GamePhaseController implements Observer, Initializable{
     XYChart.Series<String, Integer> army = new XYChart.Series<>();
     ObservableList<PieChart.Data> playerPieChart = FXCollections.observableArrayList();
     ArrayList<Player> piePlayersList = new ArrayList<>();
-//    ObservableList<Player> playerBarGraph = FXCollections.observableArrayList();
     ArrayList<Player> barPlayersList = new ArrayList<>();
     
     
@@ -74,8 +73,6 @@ public class GamePhaseController implements Observer, Initializable{
     
     @FXML
     private BarChart<String, Integer> worldDomination2;
-    
-   
 
     @FXML
     private CategoryAxis X;

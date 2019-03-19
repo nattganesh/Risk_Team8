@@ -19,6 +19,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
 /**
@@ -27,7 +28,7 @@ import javafx.scene.control.TextField;
  */
 public class ConqueredController extends Observable implements Initializable{
 	
-	  ObservableList<Country> territoryObservableList1 = FXCollections.observableArrayList();
+	  ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
 	  ObservableList<Country> conqueredObservableList = FXCollections.observableArrayList();
 	  
 	  int diceRolled;
@@ -38,7 +39,7 @@ public class ConqueredController extends Observable implements Initializable{
 	  ListView<Country> countryOwnedID;
 	  
 	  @FXML
-	  ListView<Country> conqueredID;
+	  ListView<Country> conqueredID;	  
 	  
 	  @FXML
 	  TextField armyCount;
@@ -46,12 +47,25 @@ public class ConqueredController extends Observable implements Initializable{
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
-		for(Country c: PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries()) {
-			System.out.println(c.getName()+c.getArmyCount());
-		}
-		 territoryObservableList1.addAll(PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
-		 actions = ActionModel.getActionModel();
+		
+	     actions = ActionModel.getActionModel();
+		 countryOwnedID.setItems(territoryObservableList);         
+		 countryOwnedID.setCellFactory(param -> new ListCell<Country>() {
+             @Override
+             protected void updateItem(Country country, boolean empty)
+             {
+                 super.updateItem(country, empty);
+                 if (empty || country == null || country.getName() == null)
+                 {
+                     setText(null);
+                 }
+                 else
+                 {
+                	 setText(country.getName() + " ("+ country.getArmyCount() +")");
+                 }
+             }
+         });
+		 
 		 conqueredID.setItems(conqueredObservableList);
 		 conqueredID.setCellFactory(param -> new ListCell<Country>() {
              @Override
@@ -69,22 +83,7 @@ public class ConqueredController extends Observable implements Initializable{
              }
          });
 		 
-		 countryOwnedID.setItems(territoryObservableList1);         
-		 countryOwnedID.setCellFactory(param -> new ListCell<Country>() {
-             @Override
-             protected void updateItem(Country country, boolean empty)
-             {
-                 super.updateItem(country, empty);
-                 if (empty || country == null || country.getName() == null)
-                 {
-                     setText(null);
-                 }
-                 else
-                 {
-                	 setText(country.getName() + " ("+ country.getArmyCount() +")");
-                 }
-             }
-         });
+		 
         
 	}
 
@@ -94,42 +93,26 @@ public class ConqueredController extends Observable implements Initializable{
 	@FXML
 	public void moveArmyHandler()
 	{
-		
-		if (countryOwnedID.getSelectionModel().getSelectedItem() != null && conqueredID.getSelectionModel().getSelectedItem() != null && !armyCount.getText().trim().isEmpty())
-		{
-			
-			Country reinforcement = countryOwnedID.getSelectionModel().getSelectedItem();
-			Country conquered = conqueredID.getSelectionModel().getSelectedItem();
-			int army = Integer.parseInt(armyCount.getText());
-			if (army <= reinforcement.getArmyCount()-1)
+		Country reinforcement = countryOwnedID.getSelectionModel().getSelectedItem();
+		Country conquered = conqueredID.getSelectionModel().getSelectedItem();	
+		if (reinforcement != null && conquered != null && !armyCount.getText().trim().isEmpty())
+		{	
+			int army = Integer.parseInt(armyCount.getText()); 
+			// 7 army and 3 dice rolled - you need to move at least 3 but less than 6 for that country			
+			if (army < reinforcement.getArmyCount())
 			{
 				moved = moved + army;
-				System.out.println("army to move : " + army);
-				for (Country c : PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries()) 
-				{
-
-					if (c.getName().equals(reinforcement.getName())) 
-					{
-						c.reduceArmyCount(army);
-						territoryObservableList1.set(territoryObservableList1.indexOf(c), c);
-						break;
-					}
-				}
-				for (Country c : PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries()) 
-				{
-
-					if (c.getName().equals(conquered.getName())) 
-					{
-						c.setArmyCount(army);
-						conqueredObservableList.set(conqueredObservableList.indexOf(c), c);
-						break;
-					}
-				}
-				actions.addAction("army to move : " + army);
+				reinforcement.reduceArmyCount(army);
+				conquered.setArmyCount(army);		
+				actions.addAction("moving army");				
+				conqueredObservableList.set(conqueredObservableList.indexOf(conquered), conquered);
+				territoryObservableList.set(territoryObservableList.indexOf(reinforcement), reinforcement);
+				
 				if (moved >= diceRolled)
 				{
+					moved = 0;
 					setChanged();
-					notifyObservers(conquered);
+					notifyObservers(conquered);	
 				}
 			}
 			else 
@@ -152,6 +135,7 @@ public class ConqueredController extends Observable implements Initializable{
 	{
 		conqueredObservableList.clear();
 		conqueredObservableList.add(c);
+		territoryObservableList.addAll(PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
 	}
 	
 	/**
@@ -162,5 +146,6 @@ public class ConqueredController extends Observable implements Initializable{
 	public void setDiceRoll(int roll)
 	{
 		this.diceRolled = roll;
+		actions.addAction(diceRolled + " dice rolled");
 	}
 }

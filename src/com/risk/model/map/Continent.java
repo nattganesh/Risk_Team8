@@ -7,6 +7,8 @@ package com.risk.model.map;
 
 import java.util.ArrayList;
 
+import com.risk.model.player.Player;
+
 public class Continent {
 
     public static final int MAX_NUMBER_OF_COUNTRIES_IN_NORTH_AMERICA = 9;

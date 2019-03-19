@@ -363,16 +363,11 @@ public class AttackController implements Initializable, Observer {
 
 			if (dattack[i] > ddefend[i]) 
 			{
-				for (Country c : adjacentEnemyObservableList) {
-					if (c.getName().equals(adjacentEnemy.getSelectionModel().getSelectedItem().getName())) 
-					{
-						c.reduceArmyCount(1);
-						adjacentEnemyObservableList.set(adjacentEnemyObservableList.indexOf(c), c);
-						actions.addAction("defender has lost 1 army");
-						break;
-					}
-
-				}
+				
+				defend.reduceArmyCount(1);
+				adjacentEnemyObservableList.set(adjacentEnemyObservableList.indexOf(defend), defend);
+				actions.addAction("defender has lost 1 army");
+				
 
 				if (defend.getArmyCount() == 0) 
 				{
@@ -436,8 +431,7 @@ public class AttackController implements Initializable, Observer {
     	else
     	{
     		actions.addAction("invalid move");
-    	}
-    	
+    	}	
     }
 	    
     
@@ -478,15 +472,20 @@ public class AttackController implements Initializable, Observer {
         GamePhaseModel.getGamePhaseModel().setPhase("fortification");
     }
 
-	/* (non-Javadoc)
+	/* (non-Javadoc)s
 	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
 		
 		Country conquered = (Country)arg;
+		
 		child.setVisible(false);
-		adjacentOwnedObservableList.set(adjacentOwnedObservableList.indexOf(conquered),conquered);
-	
+		adjacentOwned.getItems().clear();
+		ArmyCount.setText(Integer.toString(countryId.getSelectionModel().getSelectedItem().getArmyCount()));
+		System.out.println(conquered.getName() + conquered.getArmyCount());
+		adjacentOwned.getItems().addAll(countryId.getSelectionModel().getSelectedItem().getConnectedCountries());
+//		adjacentOwnedObservableList.set(adjacentOwnedObservableList.indexOf(conquered),conquered);
+		
 	}
 }

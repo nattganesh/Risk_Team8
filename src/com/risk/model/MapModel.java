@@ -112,6 +112,5 @@ public class MapModel extends Observable implements Observer{
 		Country country = (Country)arg;
 		setChanged();
 		notifyObservers(country);
-		
 	}
 }
