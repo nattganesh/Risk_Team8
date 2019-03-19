@@ -8,6 +8,7 @@ package com.risk.controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
@@ -16,6 +17,7 @@ import com.risk.model.ActionModel;
 import com.risk.model.GamePhaseModel;
 import com.risk.model.MapModel;
 import com.risk.model.PlayerModel;
+import com.risk.model.map.Country;
 import com.risk.model.player.Player;
 
 import javafx.collections.FXCollections;
@@ -28,8 +30,10 @@ import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
+import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -43,8 +47,12 @@ public class GamePhaseController implements Observer, Initializable{
     FortificationController fController;
     SetUpController sController;
     
-    XYChart.Series set1 = new XYChart.Series<>();
-    ObservableList<Player> playerBar = FXCollections.observableArrayList();
+
+    XYChart.Series<String, Integer> army = new XYChart.Series<>();
+    ObservableList<PieChart.Data> playerPieChart = FXCollections.observableArrayList();
+    ArrayList<Player> piePlayersList = new ArrayList<>();
+//    ObservableList<Player> playerBarGraph = FXCollections.observableArrayList();
+    ArrayList<Player> barPlayersList = new ArrayList<>();
     
     
     Scene scene;
@@ -62,7 +70,12 @@ public class GamePhaseController implements Observer, Initializable{
     
 
     @FXML
-    private BarChart<?, ?> worldDomination;
+    private PieChart worldDomination1;
+    
+    @FXML
+    private BarChart<String, Integer> worldDomination2;
+    
+   
 
     @FXML
     private CategoryAxis X;
@@ -138,86 +151,70 @@ public class GamePhaseController implements Observer, Initializable{
         }
     }
     
-    
+    /**
+     * This class observes players
+     * @author DKM
+     *
+     */
     private class playerObserver implements Observer
     {
 		@Override
 		public void update(Observable o, Object arg) {
 			Player player = (Player)arg;
-			
-//			ObservableList<XYChart.Series<String, Integer>> answer = FXCollections.observableArrayList();
-//			System.out.println(player.getName() + " occupied territory:  " + player.getOccupiedCountries().size());
-			
-		
-			int index = playerBar.indexOf(player);
+			System.out.println("here");
+			int index = piePlayersList.indexOf(player);
 			if (index == -1)
 			{
-				playerBar.add(player);
+				piePlayersList.add(player);
+				
+				playerPieChart.add(new PieChart.Data(player.getName(), player.getOccupiedCountries().size() * 100.0/42));
 			}
 			else
 			{
-				playerBar.set(index, player);
+				piePlayersList.set(index, player);
+				playerPieChart.get(index).setName(player.getName());
+				playerPieChart.get(index).setPieValue(player.getOccupiedCountries().size() * 100.0/42);
 				
 			}
-			
-			
-			initializeBar();
-//			
-		  	
-//		  	for (Data<String, Integer> data : set1.getData())
-//		  	{
-//		  		if (data.getXValue().equals(player.getName())) {
-//		  			data.setYValue(data.getYValue().intValue()+1);
-//		  		}
-//		  		else 
-//		  		{
-//		  			set1.getData().add(new XYChart.Data(player.getName(), 1));
-//		  			System.out.println("hello");
-//		  		}
-//		  		System.out.println("WTF? " + data.getXValue());
-//		  	}
-//		  	System.out.println(set1.getData());
-//		  	set1.getData()set.
-		  	
-		  	
-//		  	System.out.println(playerBar.size());
-		  	
-		  	
-		
-		  	
-		  	
-//		    else 
-//		    {
-//		    	(Player)set1.getData().get(index);
-//		    }
-//			set1.getData().add(new XYChart.Data(player.getName(), 1));
-//			worldDomination.getData().addAll(set1);
-			
-		}
-		
-		public void initializeBar()
-		{
-			set1.getData().clear();
-			worldDomination.getData().clear();
-			for (Player p : playerBar)
-			{
-				System.out.println(p.getName() + " : " + p.getOccupiedCountries().size());
-				set1.getData().add(new XYChart.Data(p.getName(), (	p.getOccupiedCountries().size() * 100.0/42)));
-				
-			}
-
-			worldDomination.getData().addAll(set1);
-			System.out.println("=====");
-		}
-		
+			System.out.println("initializing bar");		
+		}	
     }
     
+    
+    private class mapObserver implements Observer
+    {
+
+		@Override
+		public void update(Observable o, Object arg) {
+			Country country = (Country)arg;
+			System.out.println("army count changed for " + country.getName() + " (" + country.getArmyCount() + ")");
+			Player player = country.getRuler();
+			int index = barPlayersList.indexOf(player);
+			if (index == -1)
+			{
+				barPlayersList.add(player);
+				army.getData().add(new Data<String, Integer>(player.getName(), player.getTotalArmy()));	
+			}
+			else
+			{
+				barPlayersList.set(index, player);
+				army.getData().get(index).setXValue(player.getName());
+				army.getData().get(index).setYValue(player.getTotalArmy());
+			}
+			worldDomination2.getData().clear();
+			worldDomination2.getData().add(army);	
+			
+		}   
+    }
+    
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		PlayerModel.getPlayerModel().addObserver(new playerObserver());
+		MapModel.getMapModel().addObserver(new mapObserver());
 		actionMessage.setItems(ActionModel.getActionModel().getActions());
-	
-
+		
+		worldDomination1.setData(playerPieChart);
 		
 		try {
 			mainPane.getChildren().clear();

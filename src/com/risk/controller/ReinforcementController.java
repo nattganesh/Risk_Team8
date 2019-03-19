@@ -105,6 +105,8 @@ public class ReinforcementController implements Initializable{
     ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
     ObservableList<Country> adjacentEnemyObservableList = FXCollections.observableArrayList();
     ObservableList<Country> adjacentOwnedObservableList = FXCollections.observableArrayList();
+    
+    PlayerModel player;
     ActionModel actions;
 
     /**
@@ -135,6 +137,8 @@ public class ReinforcementController implements Initializable{
     	    	
         int reinforcementOccupied = PlayerModel.getPlayerModel().getCurrentPlayer().calculateReinforcementOccupiedTerritory();
         int reinforcementContinent =  PlayerModel.getPlayerModel().getCurrentPlayer().calculateReinforcementContinentControl();
+        TotalReinforcement = reinforcementOccupied + reinforcementContinent;
+        
         if (reinforcementOccupied > 0)
         {
         	actions.addAction("occupied territory reinforcement == " + reinforcementOccupied);
@@ -143,7 +147,7 @@ public class ReinforcementController implements Initializable{
         {
         	actions.addAction("continent control reinforcement == " + reinforcementContinent);
         }
-        if(TotalReinforcement<3) 
+        if(TotalReinforcement < 3) 
         {
 			TotalReinforcement = 3;
 		}
@@ -330,13 +334,14 @@ public class ReinforcementController implements Initializable{
      */
     private class cardReinforcementObserver implements Observer
     {
-
 		@Override
 		public void update(Observable o, Object arg) {
 			if (arg != null) {
 				int reinforcementFromCards = (int)arg;
 				TotalReinforcement += reinforcementFromCards;
-				armyAvailable.setText(Integer.toString(getReinforcement()));
+				 armyAvailable.setText(
+			                "Army: " + Integer.toString(getReinforcement()));
+				 
 				if (PlayerModel.getPlayerModel().getCurrentPlayer().getCards().size() < 3)
 				{
 					child.getChildren().clear();

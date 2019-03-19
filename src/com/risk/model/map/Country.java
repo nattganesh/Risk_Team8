@@ -14,7 +14,7 @@ import javafx.collections.ObservableList;
 import java.util.ArrayList;
 import java.util.Observable;
 
-public class Country{
+public class Country extends Observable{
 
     public static final int MAX_NUMBER_OF_COUNTRIES = Continent.MAX_NUMBER_OF_COUNTRIES_IN_NORTH_AMERICA
             + Continent.MAX_NUMBER_OF_COUNTRIES_IN_SOUTH_AMERICA
@@ -41,6 +41,7 @@ public class Country{
         this.continentName = continentName;
         this.isOccupied = false;
         this.ruler = null;
+      
     }
 
     /**
@@ -76,7 +77,12 @@ public class Country{
      */
     public void setArmyCount(int armyCount)
     {
+    	System.out.println("added army");
         this.armyCount += armyCount;
+        ruler.setTotalArmy(armyCount);
+        setChanged();
+        notifyObservers(this);
+        
     }
 
     /**
@@ -85,7 +91,11 @@ public class Country{
      */
     public void reduceArmyCount(int armyCount)
     {
+    	System.out.println("added army");
         this.armyCount -= armyCount;
+        ruler.reduceTotalArmy(armyCount);
+        setChanged();
+        notifyObservers(this);
     }
 
     /**
@@ -124,9 +134,10 @@ public class Country{
     public void setRuler(Player ruler)
     {
         this.ruler = ruler;
- 
+//        this.addObserver(ruler);
+        
     }
-
+    
     /**
      *
      * @return connectedCountries connected countries for the country

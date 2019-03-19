@@ -118,9 +118,9 @@ public class PlayerModel extends Observable implements Observer {
         return playerModel;
     }
 
-	/* (non-Javadoc)
-	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
-	 */
+    /**
+     * This method notifies GamePhaseModel, updating world domination phase
+     */
 	@Override
 	public void update(Observable o, Object player) {
 		setChanged();

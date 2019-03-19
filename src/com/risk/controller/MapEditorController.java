@@ -623,10 +623,12 @@ public class MapEditorController implements Initializable {
 	                {
 	                    MapModel.getMapModel().getCountries().get(random).setRuler(p);
 	                    MapModel.getMapModel().getCountries().get(random).setIsOccupied(true);
+	                    System.out.println("setting army count by 1 from mapModel");
 	                    MapModel.getMapModel().getCountries().get(random).setArmyCount(1);
 	                    p.setStartingPoints(p.getStartingPoints() - 1);
 	                    countryOccupied[random] = true;
 	                    p.addCountry(MapModel.getMapModel().getCountries().get(random));
+	                    
 	                    i++;
 	                }
 	                if (i >= Country.MAX_NUMBER_OF_COUNTRIES)
@@ -644,6 +646,8 @@ public class MapEditorController implements Initializable {
 				if (PlayerModel.getPlayerModel().getPlayers().get(ii).getStartingPoints() > 0) {
 					int random = (int) (Math.random()
 							* PlayerModel.getPlayerModel().getPlayers().get(ii).numbOccupied());
+					
+					System.out.println("setting army count by 1 from playerModel");
 					PlayerModel.getPlayerModel().getPlayers().get(ii).getOccupiedCountries().get(random)
 							.setArmyCount(1);
 					PlayerModel.getPlayerModel().getPlayers().get(ii).setStartingPoints(PlayerModel.getPlayerModel().getPlayers().get(ii).getStartingPoints() - 1);

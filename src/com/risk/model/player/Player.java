@@ -12,22 +12,42 @@ import com.risk.model.card.Card;
 import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 import java.util.Observable;
+import java.util.Observer;
 
-public class Player extends Observable  {
+public class Player extends Observable {
 
     private String name;
     private ArrayList<Country> occupiedCountries = new ArrayList<>();
-    private ArrayList<Continent> occupiedContinents = new ArrayList<>();
-    private ArrayList<Card> cards = new ArrayList<>();
+//    private ArrayList<Continent> occupiedContinents = new ArrayList<>();
+//    private ArrayList<Card> cards = new ArrayList<>();
+    private ObservableList<Card> cards = FXCollections.observableArrayList();
+    
+    
+    private int totalArmy;
     private int startingPoints;
+   
     private boolean playerLost = false;
     
-
-
+    public void setTotalArmy(int count)
+    {
+    	totalArmy  = totalArmy + count;
+    }
+    
+    public void reduceTotalArmy(int count)
+    {
+    	totalArmy  =  totalArmy - count;
+    }
+    
+    public int getTotalArmy()
+    {
+    	return totalArmy;
+    }
+    
     /**
      * Constructor for Player class
      *
@@ -36,7 +56,10 @@ public class Player extends Observable  {
     public Player(String name)
     {
         this.name = name;
-    }
+        
+    }	
+    
+
 
     /**
      * Sets the number of armies needed to start the game for a player
@@ -85,6 +108,7 @@ public class Player extends Observable  {
      */
     public void addCountry(Country country)
     {
+    	System.out.println("notify from addCountry");
     	occupiedCountries.add(country);
     	setChanged();
     	notifyObservers(this);
@@ -96,6 +120,7 @@ public class Player extends Observable  {
      */
     public void removeCountry(Country country)
     {
+    	System.out.println("notify from removeCountry");
     	occupiedCountries.remove(country);
     	setChanged();
     	notifyObservers(this);
@@ -153,7 +178,7 @@ public class Player extends Observable  {
      *
      * @return startingPoints number of armies
      */
-    public ArrayList<Card> getCards()
+    public ObservableList<Card> getCards()
     {
         return cards;
     }
@@ -174,7 +199,7 @@ public class Player extends Observable  {
      *
      * @param cards
      */
-    public void setCards(ArrayList<Card> cards)
+    public void setCards(ObservableList<Card> cards)
     {
         this.cards = cards;
     }
@@ -227,10 +252,6 @@ public class Player extends Observable  {
                 reinforcement = reinforcement + continent.getPointsWhenFullyOccupied();
             }
         }
-//        if (reinforcement > 0)
-//        {
-//        	addAction("reinforcement continent control == " + reinforcement);
-//        }
         return reinforcement;
     }
 
@@ -244,15 +265,27 @@ public class Player extends Observable  {
     public int calculateReinforcementOccupiedTerritory()
     {
         int reinforcement = (int) Math.floor(numbOccupied() / 3);
-//        if (reinforcement > 0)
-//        {
-//        	actions.addAction("reinforcement from occupied == " + reinforcement);
-//        }
         return reinforcement;
     }
     
     
-    
+    /**
+     * This method is used to calculate the extra armies earned by exchanging
+     * cards
+     *
+     * @return The result corresponding to the total exchange time.
+     */
+    public int calculateReinforcementFromCards()
+    {
+        int currentExchange = MapModel.getMapModel().getExchangeTime();
+        int reinforcement = (currentExchange + 1) * 5;
+        MapModel.getMapModel().setExchangeTime(currentExchange + 1);
+        return reinforcement;
+    }
+
+
+
+
 
     
     

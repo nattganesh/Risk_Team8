@@ -40,7 +40,7 @@ public class CardController extends Observable implements Initializable {
     ActionModel actions;
     
  
-  ObservableList<Card> cardsObservableList = FXCollections.observableArrayList();
+
   ObservableList<Card> tradeObservableList = FXCollections.observableArrayList();
 	
 
@@ -49,11 +49,11 @@ public class CardController extends Observable implements Initializable {
 		
 		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category1"));
 		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category2"));
-
+		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category3"));
     	
-      cardsObservableList.addAll(PlayerModel.getPlayerModel().getCurrentPlayer().getCards());
+      
       actions = ActionModel.getActionModel();
-      yourCard.setItems(cardsObservableList);
+      yourCard.setItems(PlayerModel.getPlayerModel().getCurrentPlayer().getCards());
       tradeCard.setItems(tradeObservableList);
       
 	}
@@ -69,6 +69,13 @@ public class CardController extends Observable implements Initializable {
             Card card = yourCard.getSelectionModel().getSelectedItem();
             tradeCard.getItems().add(card);
             yourCard.getItems().remove(card);
+            
+            for (Card c : PlayerModel.getPlayerModel().getCurrentPlayer().getCards())
+            {
+            	System.out.println(c.getCatagory());
+            }
+            
+          
         }
     }
 
@@ -100,33 +107,25 @@ public class CardController extends Observable implements Initializable {
             if (cardValidation(tradeCard.getItems()))
             {
           
-            	reinforcement = calculateReinforcementFromCards();   
+            	reinforcement = PlayerModel.getPlayerModel().getCurrentPlayer().calculateReinforcementFromCards();   
+            	
                 tradeCard.getItems().clear();
-                PlayerModel.getPlayerModel().getCurrentPlayer().getCards().clear();
-
-                for (Card c : yourCard.getItems())
-                {
-                    PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(c);
-                }
-                actions.addAction("you exchanged cards");
+                actions.addAction("you exchanged cards");            
                 setChanged();
             	notifyObservers(reinforcement);
             }
             else {
-            	 PlayerModel.getPlayerModel().getCurrentPlayer().getCards().clear();
-            	 for (Card c : yourCard.getItems())
-                 {
-                     PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(c);
-                 }
             	 for(Card card: tradeCard.getItems()) {
-            		 PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(card);
             		 yourCard.getItems().add(card);
             	 }
-            	 
             	 tradeCard.getItems().clear();
             	 actions.addAction("Invalid cards");
-            	 setChanged();
+            	 
             }
+        } 
+        else 
+        {
+        	actions.addAction("you have less than 3 cards");
         }
     }
     
@@ -141,20 +140,6 @@ public class CardController extends Observable implements Initializable {
     		setChanged();
     		notifyObservers();
     	}
-    }
-
-    /**
-     * This method is used to calculate the extra armies earned by exchanging
-     * cards
-     *
-     * @return The result corresponding to the total exchange time.
-     */
-    public int calculateReinforcementFromCards()
-    {
-        int currentExchange = MapModel.getMapModel().getExchangeTime();
-        int reinforcement = (currentExchange + 1) * 5;
-        MapModel.getMapModel().setExchangeTime(currentExchange + 1);
-        return reinforcement;
     }
 
     /**
