@@ -27,7 +27,7 @@ import javafx.scene.control.TextField;
  */
 public class ConqueredController extends Observable implements Initializable{
 	
-	  ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
+	  ObservableList<Country> territoryObservableList1 = FXCollections.observableArrayList();
 	  ObservableList<Country> conqueredObservableList = FXCollections.observableArrayList();
 	  
 	  int diceRolled;
@@ -42,12 +42,15 @@ public class ConqueredController extends Observable implements Initializable{
 	  
 	  @FXML
 	  TextField armyCount;
-	  
+	  boolean move=false;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
-		 territoryObservableList.addAll(PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
+		for(Country c: PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries()) {
+			System.out.println(c.getName()+c.getArmyCount());
+		}
+		 territoryObservableList1.addAll(PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
 		 actions = ActionModel.getActionModel();
 		 conqueredID.setItems(conqueredObservableList);
 		 conqueredID.setCellFactory(param -> new ListCell<Country>() {
@@ -66,7 +69,7 @@ public class ConqueredController extends Observable implements Initializable{
              }
          });
 		 
-		 countryOwnedID.setItems(territoryObservableList);         
+		 countryOwnedID.setItems(territoryObservableList1);         
 		 countryOwnedID.setCellFactory(param -> new ListCell<Country>() {
              @Override
              protected void updateItem(Country country, boolean empty)
@@ -98,12 +101,13 @@ public class ConqueredController extends Observable implements Initializable{
 			Country reinforcement = countryOwnedID.getSelectionModel().getSelectedItem();
 			Country conquered = conqueredID.getSelectionModel().getSelectedItem();
 			int army = Integer.parseInt(armyCount.getText());
-			if (army+1 < reinforcement.getArmyCount())
+			if (army < reinforcement.getArmyCount()-1)
 			{
 				moved = moved + army;
 				System.out.println("army to move : " + army);
-				if (moved > diceRolled)
+				if (moved >= diceRolled)
 				{
+					move = true;
 					setChanged();
 					notifyObservers(conquered);
 				}
