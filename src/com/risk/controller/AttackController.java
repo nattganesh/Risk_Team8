@@ -15,10 +15,12 @@ import java.util.ResourceBundle;
 
 import com.risk.model.ActionModel;
 import com.risk.model.GamePhaseModel;
+import com.risk.model.MapModel;
 import com.risk.model.PlayerModel;
 import com.risk.model.card.Card;
 import com.risk.model.dice.Dice;
 import com.risk.model.map.Country;
+import com.risk.model.player.Player;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -79,7 +81,7 @@ public class AttackController implements Initializable, Observer {
 	    int [] rollLimit;
 	    ActionModel actions;
 	    boolean occupy=false;
-	    
+	    Player p = PlayerModel.getPlayerModel().getCurrentPlayer();
 
 	
     /**
@@ -330,8 +332,25 @@ public class AttackController implements Initializable, Observer {
 		{
 			ddefend[i] = Dice.roll();
 		}
-		Arrays.sort(dattack);
-		Arrays.sort(ddefend);
+		int tmp;
+		for(int i =0;i<diceattack;i++) {
+			for(int j =i+1;j<diceattack;j++) {
+				if(dattack[i]<dattack[j]) {
+					tmp = dattack[i];
+					dattack[i]=dattack[j];
+					dattack[j]=tmp;
+				}
+			}
+		}
+		for(int i =0;i<dicedefend;i++) {
+			for(int j =i+1;j<dicedefend;j++) {
+				if(ddefend[i]<ddefend[j]) {
+					tmp = ddefend[i];
+					ddefend[i]=ddefend[j];
+					ddefend[j]=tmp;
+				}
+			}
+		}
 		if (diceattack >= dicedefend)
 		{
 			rolltime = dicedefend;
@@ -339,75 +358,62 @@ public class AttackController implements Initializable, Observer {
 		{
 			rolltime = diceattack;
 		}
-		for (int i = 0; i < rolltime; i++)
+		for (int i = 0; i < rolltime; i++) 
 		{
-			if (defend.getArmyCount() != 0) 
-			{
-				if (dattack[diceattack - 1 - i] > ddefend[dicedefend - 1 - i]) 
-				{
-					
-					for (Country c : adjacentEnemyObservableList)
-	                {
-	                	
-	                    if (c.getName().equals(adjacentEnemy.getSelectionModel().getSelectedItem().getName()))
-	                    {
-	                    	c.reduceArmyCount(1);
-	                    	adjacentEnemyObservableList.set(adjacentEnemyObservableList.indexOf(c), c);
-	                    	adjacentEnemy.setCellFactory(param -> new ListCell<Country>() {
-	                            @Override
-	                            protected void updateItem(Country country, boolean empty)
-	                            {
-	                                super.updateItem(country, empty);
-	                                if (empty || country == null || country.getName() == null)
-	                                {
-	                                    setText(null);
-	                                }
-	                                else
-	                                {
-	                                    setText(country.getName() + " ("+ country.getArmyCount() +")");
-	                                }
-	                            }
-	                        });
-	                        actions.addAction("defender has lost 1 army");
-	                        break;
-	                    }
-	        
-	                }
-					
-					if (defend.getArmyCount() == 0) {
 
-						actions.addAction("You have already occupied this country!");
-						actions.addAction("Please move armies to your new country!");
-						defend.getRuler().removeCountry(defend);
-						defend.setRuler(attack.getRuler());
-						attack.getRuler().addCountry(defend);
-						
-						adjacentEnemyObservableList.remove(defend);
-						territoryObservableList.add(defend);
-						adjacentOwnedObservableList.add(defend);
-						
-						child.setVisible(true);
-						conqueringController.setConquringArmy(defend);
-						conqueringController.setDiceRoll(diceattack);
+			if (dattack[i] > ddefend[i]) 
+			{
+				for (Country c : adjacentEnemyObservableList) {
+					if (c.getName().equals(adjacentEnemy.getSelectionModel().getSelectedItem().getName())) 
+					{
+						c.reduceArmyCount(1);
+						adjacentEnemyObservableList.set(adjacentEnemyObservableList.indexOf(c), c);
+						actions.addAction("defender has lost 1 army");
 						break;
 					}
-					else 
-					{
-						adjacentEnemyObservableList.set(adjacentEnemyObservableList.indexOf(defend),defend);
-					}
-				} 
-				else 
-				{
-				
-	                    	attack.reduceArmyCount(1);
-	                    	territoryObservableList.set(territoryObservableList.indexOf(attack), attack);
-	                        ArmyCount.setText(Integer.toString(countryId.getSelectionModel().getSelectedItem().getArmyCount()));
-	                        actions.addAction("attacker has lost 1 army");	
-	                        break;
-	           
+
 				}
-			} 
+
+				if (defend.getArmyCount() == 0) 
+				{
+					actions.addAction("You have already occupied this country!");
+					actions.addAction("Please move armies to your new country!");
+					defend.getRuler().removeCountry(defend);
+					defend.setRuler(attack.getRuler());
+					attack.getRuler().addCountry(defend);
+
+					adjacentEnemyObservableList.remove(defend);
+					territoryObservableList.add(defend);
+					adjacentOwnedObservableList.add(defend);
+					for(Country c: PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries()) {
+						System.out.println(c.getName()+c.getArmyCount());
+					}
+					child.setVisible(true);
+					conqueringController.setConquringArmy(defend);
+					conqueringController.setDiceRoll(diceattack);
+					break;
+				} else 
+				{
+					adjacentEnemyObservableList.set(adjacentEnemyObservableList.indexOf(defend), defend);
+				}
+			} else {
+
+				for (Country c : PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries()) 
+				{
+
+					if (c.getName().equals(countryId.getSelectionModel().getSelectedItem().getName())) 
+					{
+						c.reduceArmyCount(1);
+						territoryObservableList.set(territoryObservableList.indexOf(c), c);
+						ArmyCount.setText(
+								Integer.toString(countryId.getSelectionModel().getSelectedItem().getArmyCount()));
+						actions.addAction("attacker has lost 1 army");
+						break;
+					}
+				}
+			}
 		}
+
 	}
     
  
@@ -423,6 +429,7 @@ public class AttackController implements Initializable, Observer {
 	    		rollDice(result[0], result[1],attack, defend);
 	    		if(attack.getArmyCount()==1||defend.getArmyCount()==0) {
 	    			roll=false;
+	    			clearDiceRolls();
 	    		}
 	    	}
     	}
