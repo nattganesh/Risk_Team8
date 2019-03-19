@@ -101,18 +101,36 @@ public class ConqueredController extends Observable implements Initializable{
 			Country reinforcement = countryOwnedID.getSelectionModel().getSelectedItem();
 			Country conquered = conqueredID.getSelectionModel().getSelectedItem();
 			int army = Integer.parseInt(armyCount.getText());
-			if (army < reinforcement.getArmyCount()-1)
+			if (army <= reinforcement.getArmyCount()-1)
 			{
 				moved = moved + army;
 				System.out.println("army to move : " + army);
+				for (Country c : PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries()) 
+				{
+
+					if (c.getName().equals(reinforcement.getName())) 
+					{
+						c.reduceArmyCount(army);
+						territoryObservableList1.set(territoryObservableList1.indexOf(c), c);
+						break;
+					}
+				}
+				for (Country c : PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries()) 
+				{
+
+					if (c.getName().equals(conquered.getName())) 
+					{
+						c.setArmyCount(army);
+						conqueredObservableList.set(conqueredObservableList.indexOf(c), c);
+						break;
+					}
+				}
+				actions.addAction("army to move : " + army);
 				if (moved >= diceRolled)
 				{
-					move = true;
 					setChanged();
 					notifyObservers(conquered);
 				}
-				reinforcement.reduceArmyCount(army);
-				conquered.setArmyCount(army);
 			}
 			else 
 			{
