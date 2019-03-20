@@ -1,22 +1,42 @@
 /**
- * Necessary for creating deck owned by each player
- *
- * @author Tianyi
- *
+ * 
  */
-package com.risk.model.card;
+package com.risk.model;
 
 import java.util.Collections;
 import java.util.LinkedList;
-import java.util.Random;
+import java.util.Observable;
 
+import com.risk.model.card.Card;
 import com.risk.model.player.Player;
 
-public class Deck {
+/**
+ * @author DKM
+ *
+ */
+public class DeckModel extends Observable {
+
+	private static DeckModel deckModel;
 	private static LinkedList<Card> cards = new LinkedList<>();
     Card card[];
     int n = 44;
     String owner = null;
+
+	
+	
+	/**
+	 * singleton pattern for returning only once instance of object
+	 * 
+	 * @return actionModel object
+	 */
+    public static DeckModel getCardModel()
+    {
+        if (deckModel == null)
+        {
+        	deckModel = new DeckModel();
+        }
+        return deckModel;
+    }
 
     /**
      * This method is used to initialize the deck with 44 cards.
@@ -39,30 +59,6 @@ public class Deck {
         Collections.shuffle(cards);
     }
     
-    public static LinkedList<Card> getCards() {
-    	return cards;
-    }
-
-    /**
-     * This method is used to shuffle the deck randomly.
-     */
-    public void shuffleCard()
-    {
-        Random r = new Random();
-        for (int i = 0; i < n; i++)
-        {
-            int ran = r.nextInt(n);
-            Card tmp = card[i];
-            card[i] = card[ran];
-            card[ran] = tmp;
-        }
-        for (int i = 0; i < n; i++)
-        {
-            System.out.print(card[i]);
-        }
-        System.out.print("\n");
-    }
-
     /**
      * This method is used to send the card to a player.
      *

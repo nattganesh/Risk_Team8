@@ -14,6 +14,7 @@ import java.util.Observer;
 import java.util.ResourceBundle;
 
 import com.risk.model.ActionModel;
+import com.risk.model.DeckModel;
 import com.risk.model.GamePhaseModel;
 import com.risk.model.MapModel;
 import com.risk.model.PlayerModel;
@@ -367,8 +368,6 @@ public class AttackController implements Initializable, Observer {
 				defend.reduceArmyCount(1);
 				adjacentEnemyObservableList.set(adjacentEnemyObservableList.indexOf(defend), defend);
 				actions.addAction("defender has lost 1 army");
-				
-
 				if (defend.getArmyCount() == 0) 
 				{
 					actions.addAction("You have already occupied this country!");
@@ -376,7 +375,7 @@ public class AttackController implements Initializable, Observer {
 					defend.getRuler().removeCountry(defend);
 					defend.setRuler(attack.getRuler());
 					attack.getRuler().addCountry(defend);
-
+					occupy=true;
 					adjacentEnemyObservableList.remove(defend);
 					territoryObservableList.add(defend);
 					adjacentOwnedObservableList.add(defend);
@@ -467,7 +466,8 @@ public class AttackController implements Initializable, Observer {
     public void goToFortificationPhase(ActionEvent event)
     {
     	if(occupy) {
-    		//there should be added the part of sending cards to player
+    		DeckModel.getCardModel().sendCard(PlayerModel.getPlayerModel().getCurrentPlayer());
+    		System.out.println(p.getCards());
     	}
         GamePhaseModel.getGamePhaseModel().setPhase("fortification");
     }

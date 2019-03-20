@@ -108,7 +108,10 @@ public class CardController extends Observable implements Initializable {
             {
           
             	reinforcement = PlayerModel.getPlayerModel().getCurrentPlayer().calculateReinforcementFromCards();   
-            	
+            	for(Card c: tradeCard.getItems()) {
+            		c.removeCard(PlayerModel.getPlayerModel().getCurrentPlayer());
+            	}
+            	System.out.println(PlayerModel.getPlayerModel().getCurrentPlayer().getCards());
                 tradeCard.getItems().clear();
                 actions.addAction("you exchanged cards");            
                 setChanged();

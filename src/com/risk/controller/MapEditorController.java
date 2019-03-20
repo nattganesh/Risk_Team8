@@ -15,6 +15,7 @@ import java.util.ResourceBundle;
 import java.util.Scanner;
 
 import com.risk.model.ActionModel;
+import com.risk.model.DeckModel;
 import com.risk.model.GamePhaseModel;
 import com.risk.model.MapModel;
 
@@ -453,6 +454,7 @@ public class MapEditorController implements Initializable {
             {
                 int numbPlayers = Integer.parseInt(PlayerID.getSelectionModel().getSelectedItem());
                 setPlayers(numbPlayers);
+                setDeck();
                 calcStartingArmies();
                 assignCountriesToPlayers();
                 determinePlayersStartingOrder();
@@ -462,6 +464,7 @@ public class MapEditorController implements Initializable {
             {
             	int numbPlayers = Integer.parseInt(PlayerID.getSelectionModel().getSelectedItem());
                 setPlayers(numbPlayers);
+                setDeck();
                 calcStartingArmies();
                 autoAssignCountriesToPlayers();
                 determinePlayersStartingOrder();
@@ -523,6 +526,12 @@ public class MapEditorController implements Initializable {
             numberOfPlayer--;
         }
     }
+    
+    public void setDeck()
+    {
+        DeckModel.getCardModel().initialize();
+    }
+    
 
     /**
      * This method calculates the round robin. It first roll the dice to

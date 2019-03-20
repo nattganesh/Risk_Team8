@@ -110,9 +110,8 @@ public class ConqueredController extends Observable implements Initializable{
 				
 				if (moved >= diceRolled)
 				{
-					moved = 0;
-					setChanged();
-					notifyObservers(conquered);	
+					move=true;
+					
 				}
 			}
 			else 
@@ -125,6 +124,22 @@ public class ConqueredController extends Observable implements Initializable{
 		}
 	}
 	
+	@FXML
+	public void moveComplete()
+	{
+		if(move) 
+		{
+			Country conquered = conqueredID.getSelectionModel().getSelectedItem();
+			moved = 0;
+			setChanged();
+			notifyObservers(conquered);	
+		}
+		else
+		{
+			actions.addAction("please move enough army first");
+		}
+			
+	}
 
 	/**
 	 * this  method sets the conquered country into listview
