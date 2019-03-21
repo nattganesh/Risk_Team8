@@ -68,7 +68,7 @@ public class Run extends Application {
         Rectangle2D bounds = screen.getVisualBounds();
         primaryStage.setX((bounds.getWidth() - primaryStage.getWidth()));
         primaryStage.setY((bounds.getHeight() - primaryStage.getHeight()));
-        primaryStage.setWidth(bounds.getWidth() / 1.7);
+        primaryStage.setWidth(bounds.getWidth() / 1.25);
         primaryStage.setHeight(bounds.getHeight() / 1.5);
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();

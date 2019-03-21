@@ -21,6 +21,7 @@ import com.risk.model.map.Country;
 import com.risk.model.player.Player;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -48,8 +49,12 @@ public class GamePhaseController implements Observer, Initializable{
     SetUpController sController;
     
 
-    XYChart.Series<String, Integer> army = new XYChart.Series<>();
-    ObservableList<PieChart.Data> playerPieChart = FXCollections.observableArrayList();
+    ObservableList<XYChart.Series<String, Integer>> barData =  FXCollections.observableArrayList();
+    XYChart.Series<String, Integer> serie = new XYChart.Series<String, Integer>();
+    
+    ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+    
+    
     ArrayList<Player> piePlayersList = new ArrayList<>();
     ArrayList<Player> barPlayersList = new ArrayList<>();
     
@@ -91,7 +96,6 @@ public class GamePhaseController implements Observer, Initializable{
     public GamePhaseController(Stage s)
     {
         GamePhaseModel.getGamePhaseModel().addObserver(this);
-              
         this.stage = s;
     }
     
@@ -136,6 +140,7 @@ public class GamePhaseController implements Observer, Initializable{
 				e.printStackTrace();
 			}
         }
+        
         else if (view.equals("fortification"))
         {
         	try {
@@ -164,22 +169,26 @@ public class GamePhaseController implements Observer, Initializable{
 			{
 				piePlayersList.add(player);
 				
-				playerPieChart.add(new PieChart.Data(player.getName(), player.getOccupiedCountries().size() * 100.0/42));
+				pieChartData.add(new PieChart.Data(player.getName()+" ("+Math.round(player.getOccupiedCountries().size() * 100.0/42) + "%)", 
+						player.getOccupiedCountries().size() * 100.0/42));
 			}
 			else
 			{
 				piePlayersList.set(index, player);
-				playerPieChart.get(index).setName(player.getName());
-				playerPieChart.get(index).setPieValue(player.getOccupiedCountries().size() * 100.0/42);
+				pieChartData.get(index).setName(player.getName()+" ("+Math.round(player.getOccupiedCountries().size() * 100.0/42) + "%)");
+				pieChartData.get(index).setPieValue(player.getOccupiedCountries().size() * 100.0/42);
+				
+				
 				
 			}
-			System.out.println("initializing bar");		
-		}	
+			
+		}
+		
     }
     
     
     private class mapObserver implements Observer
-    {
+    {	
 
 		@Override
 		public void update(Observable o, Object arg) {
@@ -190,17 +199,16 @@ public class GamePhaseController implements Observer, Initializable{
 			if (index == -1)
 			{
 				barPlayersList.add(player);
-				army.getData().add(new Data<String, Integer>(player.getName(), player.getTotalArmy()));	
+				Data<String, Integer> data = new Data<String, Integer>(player.getName()+" ("+player.getTotalArmy()+")", player.getTotalArmy());
+				serie.getData().add(data);	
+				System.out.println("exception");
 			}
 			else
 			{
 				barPlayersList.set(index, player);
-				army.getData().get(index).setXValue(player.getName());
-				army.getData().get(index).setYValue(player.getTotalArmy());
+				serie.getData().get(index).setXValue(player.getName()+" ("+player.getTotalArmy()+")");
+				serie.getData().get(index).setYValue(player.getTotalArmy());
 			}
-			worldDomination2.getData().clear();
-			worldDomination2.getData().add(army);	
-			
 		}   
     }
     
@@ -210,8 +218,11 @@ public class GamePhaseController implements Observer, Initializable{
 		PlayerModel.getPlayerModel().addObserver(new playerObserver());
 		MapModel.getMapModel().addObserver(new mapObserver());
 		actionMessage.setItems(ActionModel.getActionModel().getActions());
+		worldDomination1.setData(pieChartData);
+		barData.add(serie);
+		worldDomination2.setData(barData);	
 		
-		worldDomination1.setData(playerPieChart);
+		
 		
 		try {
 			mainPane.getChildren().clear();
@@ -221,4 +232,5 @@ public class GamePhaseController implements Observer, Initializable{
 			e.printStackTrace();
 		}
 	}
+
 }

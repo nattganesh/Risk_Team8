@@ -82,8 +82,6 @@ public class ReinforcementController implements Initializable{
     @FXML
     ListView<Card> tradeCard;
 
-    @FXML
-    TextField ArmyCount;
 
     @FXML
     ListView<Country> adjacentEnemy;
@@ -106,6 +104,8 @@ public class ReinforcementController implements Initializable{
     ObservableList<Country> adjacentEnemyObservableList = FXCollections.observableArrayList();
     ObservableList<Country> adjacentOwnedObservableList = FXCollections.observableArrayList();
     
+  
+  
     PlayerModel player;
     ActionModel actions;
 
@@ -130,7 +130,8 @@ public class ReinforcementController implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
-   
+    	
+    	
     	actions = ActionModel.getActionModel();
     	cardController.addObserver(new cardSkipObserver());
     	cardController.addObserver(new cardReinforcementObserver());
@@ -141,7 +142,7 @@ public class ReinforcementController implements Initializable{
         
         if (reinforcementOccupied > 0)
         {
-        	actions.addAction("occupied territory reinforcement == " + reinforcementOccupied);
+        	actions.addAction("occupied territory == " + reinforcementOccupied);
         }
         if (reinforcementContinent > 0)
         {
@@ -151,65 +152,11 @@ public class ReinforcementController implements Initializable{
         {
 			TotalReinforcement = 3;
 		}
-        
         armyAvailable.setText("Army: " + Integer.toString(getReinforcement()));
-
-        territoryObservableList.addAll(PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
-                
+        territoryObservableList.addAll(PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());   
         countryId.setItems(territoryObservableList);
-        
-        countryId.setCellFactory(param -> new ListCell<Country>() {
-            @Override
-            protected void updateItem(Country country, boolean empty)
-            {
-                super.updateItem(country, empty);
-                if (empty || country == null || country.getName() == null)
-                {
-                    setText(null);
-                }
-                else
-                {
-                	setText(country.getName() + " ("+ country.getArmyCount() +")");
-                }
-            }
-        });
-        
         adjacentEnemy.setItems(adjacentEnemyObservableList);
-        adjacentEnemy.setCellFactory(param -> new ListCell<Country>() {
-            @Override
-            protected void updateItem(Country country, boolean empty)
-            {
-                super.updateItem(country, empty);
-                if (empty || country == null || country.getName() == null)
-                {
-                    setText(null);
-                }
-                else
-                {
-                    setText(country.getName() + " ("+ country.getArmyCount() +")");
-                }
-            }
-        });
-        
         adjacentOwned.setItems(adjacentOwnedObservableList);
-        adjacentOwned.setCellFactory(param -> new ListCell<Country>() {
-            @Override
-            protected void updateItem(Country country, boolean empty)
-            {
-                super.updateItem(country, empty);
-                if (empty || country == null || country.getName() == null)
-                {
-                    setText(null);
-                }
-                else
-                {
-                	 setText(country.getName() + " ("+ country.getArmyCount() +")");
-                }
-            }
-        });
-        
-        
-        
         inputArmy.textProperty().addListener(new ChangeListener<String>() {
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
             {
@@ -219,26 +166,23 @@ public class ReinforcementController implements Initializable{
                 }
             }
         });
+        updateList();
     }
-
+   
     @FXML
     public void territoryHandler()
     {
         if (countryId.getSelectionModel().getSelectedItem() != null)
         {
-        	// i dont' wannt them to be in sync
             adjacentEnemyObservableList.clear();
             adjacentOwnedObservableList.clear();
-            ArmyCount.setText(Integer.toString(countryId.getSelectionModel().getSelectedItem().getArmyCount()));
-            
             adjacentEnemyObservableList.addAll(countryId.getSelectionModel().getSelectedItem().getConnectedEnemy());
-               
             adjacentOwnedObservableList.addAll(countryId.getSelectionModel().getSelectedItem().getConnectedOwned());
           
         }
     }
     
-    
+ 
   
     /**
      * This method sets the number of available army to your occupied country
@@ -250,26 +194,14 @@ public class ReinforcementController implements Initializable{
         if (!inputArmy.getText().trim().isEmpty() && getReinforcement() != 0
                 && countryId.getSelectionModel().getSelectedItem() != null)
         {
-
+        	Country selectedCountry = countryId.getSelectionModel().getSelectedItem();
             Armyinput = Integer.parseInt(inputArmy.getText());
             if (Armyinput <= getReinforcement())
-            {
-
-                for (Country c : territoryObservableList)
-                {
-                	
-                    if (c.getName().equals(countryId.getSelectionModel().getSelectedItem().getName()))
-                    {
-                    	
-                        c.setArmyCount(Armyinput);
-                        setReinforcement(Armyinput);
-                        territoryObservableList.set(territoryObservableList.indexOf(c), c);
-                        ArmyCount.setText(Integer.toString(countryId.getSelectionModel().getSelectedItem().getArmyCount()));
-                        actions.addAction("Added " + Armyinput + " Army to " + c.getName());
-                        break;
-                    }
-                 
-                }
+            {                
+                selectedCountry.setArmyCount(Armyinput);
+                setReinforcement(Armyinput);
+                updateList();
+                actions.addAction("Added " + Armyinput + " Army to " + selectedCountry.getName());         
             }
             else {
             	actions.addAction("you don't have that many reinforcements");
@@ -348,8 +280,7 @@ public class ReinforcementController implements Initializable{
 				}
 			}
 			
-		}
-    	
+		}	
     }
     
 
@@ -369,6 +300,57 @@ public class ReinforcementController implements Initializable{
 			}
 		}
     	
+    }
+    
+    public void updateList()
+    {
+        countryId.setCellFactory(param -> new ListCell<Country>() {
+            @Override
+            protected void updateItem(Country country, boolean empty)
+            {
+                super.updateItem(country, empty);
+                if (empty || country == null || country.getName() == null)
+                {
+                    setText(null);
+                }
+                else
+                {
+                	setText(country.getName() + " ("+ country.getArmyCount() +")");
+                }
+            }
+        });
+        adjacentOwned.setCellFactory(param -> new ListCell<Country>() {
+            @Override
+            protected void updateItem(Country country, boolean empty)
+            {
+                super.updateItem(country, empty);
+                if (empty || country == null || country.getName() == null)
+                {
+                    setText(null);
+                }
+                else
+                {
+                
+                	 setText(country.getName() + " ("+ country.getArmyCount() +")");
+                }
+            }
+        });
+        adjacentEnemy.setCellFactory(param -> new ListCell<Country>() {
+            @Override
+            protected void updateItem(Country country, boolean empty)
+            {
+                super.updateItem(country, empty);
+                if (empty || country == null || country.getName() == null)
+                {
+                    setText(null);
+                }
+                else
+                {
+                
+                	 setText(country.getName() + " ("+ country.getArmyCount() +")");
+                }
+            }
+        });
     }
     
 

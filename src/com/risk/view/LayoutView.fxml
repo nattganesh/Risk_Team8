@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="mainPane" prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="mainPane" prefHeight="600.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ListView fx:id="actionMessage" layoutX="708.0" layoutY="108.0" prefHeight="211.0" prefWidth="230.0" />
       <Pane fx:id="mainPane" layoutX="14.0" layoutY="16.0" prefHeight="27.0" prefWidth="200.0">
@@ -17,13 +17,13 @@
       </Pane>
       <TextField fx:id="playerID" editable="false" layoutX="715.0" layoutY="67.0" />
       <TextField fx:id="phaseID" editable="false" layoutX="715.0" layoutY="28.0" />
-      <PieChart fx:id="worldDomination1" layoutX="708.0" layoutY="331.0" prefHeight="272.0" prefWidth="246.0" title="Percentage" />
-      <BarChart fx:id="worldDomination2" animated="false" layoutX="940.0" layoutY="331.0" prefHeight="265.0" prefWidth="246.0" title="Army count">
+      <PieChart fx:id="worldDomination1" animated="false" layoutX="1005.0" layoutY="309.0" prefHeight="272.0" prefWidth="326.0" title="Percentage" />
+      <BarChart fx:id="worldDomination2" animated="false" layoutX="946.0" layoutY="44.0" prefHeight="265.0" prefWidth="361.0" title="Army count">
          <xAxis>
-            <CategoryAxis fx:id="X1" animated="false" label="PLAYER" side="BOTTOM" />
+            <CategoryAxis fx:id="X1" label="PLAYER" side="BOTTOM" />
          </xAxis>
          <yAxis>
-            <NumberAxis fx:id="y1" animated="false" label="army" side="LEFT" />
+            <NumberAxis fx:id="y1" label="army" side="LEFT" />
          </yAxis>
       </BarChart> 
    </children>

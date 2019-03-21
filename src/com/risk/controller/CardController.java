@@ -46,10 +46,7 @@ public class CardController extends Observable implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
-		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category1"));
-		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category2"));
-		PlayerModel.getPlayerModel().getCurrentPlayer().getCards().add(new Card("category3"));
+	
     	
       
       actions = ActionModel.getActionModel();

@@ -106,56 +106,59 @@ public class AttackController implements Initializable, Observer {
     	 actions = ActionModel.getActionModel();
     	 territoryObservableList.addAll(PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
          countryId.setItems(territoryObservableList);         
-         
-         countryId.setCellFactory(param -> new ListCell<Country>() {
-             @Override
-             protected void updateItem(Country country, boolean empty)
-             {
-                 super.updateItem(country, empty);
-                 if (empty || country == null || country.getName() == null)
-                 {
-                     setText(null);
-                 }
-                 else
-                 {
-                     setText(country.getName());
-                 }
-             }
-         });
-         
-         adjacentEnemy.setItems(adjacentEnemyObservableList);
-         adjacentEnemy.setCellFactory(param -> new ListCell<Country>() {
-             @Override
-             protected void updateItem(Country country, boolean empty)
-             {
-                 super.updateItem(country, empty);
-                 if (empty || country == null || country.getName() == null)
-                 {
-                     setText(null);
-                 }
-                 else
-                 {
-                     setText(country.getName() + " ("+ country.getArmyCount() +")");
-                 }
-             }
-         });
-         
+         adjacentEnemy.setItems(adjacentEnemyObservableList);    
          adjacentOwned.setItems(adjacentOwnedObservableList);
-         adjacentOwned.setCellFactory(param -> new ListCell<Country>() {
-             @Override
-             protected void updateItem(Country country, boolean empty)
-             {
-                 super.updateItem(country, empty);
-                 if (empty || country == null || country.getName() == null)
-                 {
-                     setText(null);
-                 }
-                 else
-                 {
-                 	 setText(country.getName() + " ("+ country.getArmyCount() +")");
-                 }
-             }
-         }); 
+
+         updateView();
+         
+    }
+    public void updateView()
+    {
+    	  countryId.setCellFactory(param -> new ListCell<Country>() {
+              @Override
+              protected void updateItem(Country country, boolean empty)
+              {
+                  super.updateItem(country, empty);
+                  if (empty || country == null || country.getName() == null)
+                  {
+                      setText(null);
+                  }
+                  else
+                  {
+                      setText(country.getName()  + " ("+ country.getArmyCount() +")");
+                  }
+              }
+          });
+    	  adjacentEnemy.setCellFactory(param -> new ListCell<Country>() {
+              @Override
+              protected void updateItem(Country country, boolean empty)
+              {
+                  super.updateItem(country, empty);
+                  if (empty || country == null || country.getName() == null)
+                  {
+                      setText(null);
+                  }
+                  else
+                  {
+                      setText(country.getName() + " ("+ country.getArmyCount() +")");
+                  }
+              }
+          });
+    	  adjacentOwned.setCellFactory(param -> new ListCell<Country>() {
+              @Override
+              protected void updateItem(Country country, boolean empty)
+              {
+                  super.updateItem(country, empty);
+                  if (empty || country == null || country.getName() == null)
+                  {
+                      setText(null);
+                  }
+                  else
+                  {
+                  	 setText(country.getName() + " ("+ country.getArmyCount() +")");
+                  }
+              }
+          });     
     }
     
    /**
@@ -290,7 +293,6 @@ public class AttackController implements Initializable, Observer {
     		 actions.addAction("rolling dice");
     		 int diceAttack = AttackerDice.getSelectionModel().getSelectedItem();
     		 int diceDefender = DefenderDice.getSelectionModel().getSelectedItem();
-    		 
     		 actions.addAction("attacker rolled " + diceAttack + " dice");
     		 actions.addAction("defender rolled " + diceDefender + " dice");
     		 
@@ -376,12 +378,6 @@ public class AttackController implements Initializable, Observer {
 					defend.setRuler(attack.getRuler());
 					attack.getRuler().addCountry(defend);
 					occupy=true;
-					adjacentEnemyObservableList.remove(defend);
-					territoryObservableList.add(defend);
-					adjacentOwnedObservableList.add(defend);
-					for(Country c: PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries()) {
-						System.out.println(c.getName()+c.getArmyCount());
-					}
 					child.setVisible(true);
 					conqueringController.setConquringArmy(defend);
 					conqueringController.setDiceRoll(diceattack);
@@ -390,21 +386,14 @@ public class AttackController implements Initializable, Observer {
 				{
 					adjacentEnemyObservableList.set(adjacentEnemyObservableList.indexOf(defend), defend);
 				}
-			} else {
+			} 
+			else
+			{
 
-				for (Country c : PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries()) 
-				{
-
-					if (c.getName().equals(countryId.getSelectionModel().getSelectedItem().getName())) 
-					{
-						c.reduceArmyCount(1);
-						territoryObservableList.set(territoryObservableList.indexOf(c), c);
-						ArmyCount.setText(
-								Integer.toString(countryId.getSelectionModel().getSelectedItem().getArmyCount()));
+						attack.reduceArmyCount(1);
 						actions.addAction("attacker has lost 1 army");
-						break;
-					}
-				}
+						updateView();
+						
 			}
 		}
 

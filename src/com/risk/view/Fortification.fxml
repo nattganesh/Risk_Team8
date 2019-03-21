@@ -10,8 +10,6 @@
     <children>
         <AnchorPane prefHeight="800.0" prefWidth="800.0">
             <children>
-            
-                <Button fx:id="nextPlayerID" layoutX="321.0" layoutY="356.0" mnemonicParsing="false" onAction="#onNextPlayer" text="reinforcement" />
                 <ListView fx:id="Territory" layoutX="23.0" layoutY="53.0" onMouseClicked="#territoryHandler" prefHeight="200.0" prefWidth="200.0" />
                 <ListView fx:id="Adjacent" layoutX="231.0" layoutY="53.0" onMouseClicked="#adjacentHandler" prefHeight="200.0" prefWidth="200.0" />
                 <TextField fx:id="moveField" layoutX="194.0" layoutY="325.0" prefHeight="31.0" prefWidth="58.0" />

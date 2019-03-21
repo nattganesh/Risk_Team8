@@ -32,6 +32,7 @@ public class ConqueredController extends Observable implements Initializable{
 	  ObservableList<Country> conqueredObservableList = FXCollections.observableArrayList();
 	  
 	  int diceRolled;
+	  Country conquered;
 	  int moved = 0;
 		  
 	  ActionModel actions;
@@ -111,16 +112,12 @@ public class ConqueredController extends Observable implements Initializable{
 				if (moved >= diceRolled)
 				{
 					move=true;
-					
 				}
 			}
 			else 
 			{
 				actions.addAction("invalid move");
-			}
-			
-			
-			
+			}	
 		}
 	}
 	
@@ -129,7 +126,6 @@ public class ConqueredController extends Observable implements Initializable{
 	{
 		if(move) 
 		{
-			Country conquered = conqueredID.getSelectionModel().getSelectedItem();
 			moved = 0;
 			setChanged();
 			notifyObservers(conquered);	
@@ -150,6 +146,7 @@ public class ConqueredController extends Observable implements Initializable{
 	{
 		conqueredObservableList.clear();
 		conqueredObservableList.add(c);
+		conquered = c;
 		territoryObservableList.addAll(PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
 	}
 	

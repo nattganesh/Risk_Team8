@@ -52,8 +52,6 @@ public class PlayerModel extends Observable implements Observer {
     public void setPlayerIndex(int increment)
     {
         currentPlayerIndex = increment;
-        setChanged();
-        notifyObservers(playerList.get(currentPlayerIndex).getName());
     }
 
     /**

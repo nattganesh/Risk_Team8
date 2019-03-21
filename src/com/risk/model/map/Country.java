@@ -25,6 +25,7 @@ public class Country extends Observable{
     private String name;
     private boolean isOccupied;
     private Player ruler;
+   
     private ArrayList<Country> connectedCountries = new ArrayList<>();
     private String continentName;
     private int armyCount = 0;

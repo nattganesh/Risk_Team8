@@ -31,7 +31,9 @@ import com.risk.model.utilities.FileParser;
 import com.risk.model.utilities.Validate;
 import com.risk.model.utilities.generateOutputFile.Output;
 
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -76,7 +78,7 @@ public class MapEditorController implements Initializable {
     private int validated = 0;
     ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
     ObservableList<Country> adjacentObservableList = FXCollections.observableArrayList();
-//    public static ObservableList<String> messageObservableList = FXCollections.observableArrayList();
+    
     ActionModel actions;
     
     /**
@@ -89,7 +91,6 @@ public class MapEditorController implements Initializable {
     public void initialize(URL arg0, ResourceBundle arg1)
     {
     	actions = ActionModel.getActionModel();
-
         ContinentView.setItems(MapModel.getMapModel().getContinents());
         ContinentView.setCellFactory(param -> new ListCell<Continent>() {
             @Override
@@ -139,6 +140,7 @@ public class MapEditorController implements Initializable {
                 }
             }
         });
+       
 
     }
 
@@ -191,8 +193,6 @@ public class MapEditorController implements Initializable {
                 territoryObservableList.clear();
                 territoryObservableList.addAll(ContinentView.getSelectionModel().getSelectedItem().getCountries());
                 actions.addAction("added a territory to the continent");
-                
-
             }
         }
     }
@@ -633,7 +633,7 @@ public class MapEditorController implements Initializable {
 	                    MapModel.getMapModel().getCountries().get(random).setRuler(p);
 	                    MapModel.getMapModel().getCountries().get(random).setIsOccupied(true);
 	                    System.out.println("setting army count by 1 from mapModel");
-	                    MapModel.getMapModel().getCountries().get(random).setArmyCount(1);
+	                    MapModel.getMapModel().getCountries().get(random).setArmyCount(1); //added army
 	                    p.setStartingPoints(p.getStartingPoints() - 1);
 	                    countryOccupied[random] = true;
 	                    p.addCountry(MapModel.getMapModel().getCountries().get(random));

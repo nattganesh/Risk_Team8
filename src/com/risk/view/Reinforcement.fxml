@@ -22,16 +22,6 @@
 				<Button fx:id="addArmy" layoutX="441.0" layoutY="473.0" mnemonicParsing="false" onMouseClicked="#setArmy" text="Add Army" />
 				<Label fx:id="inputArmyError" layoutX="141.0" layoutY="215.0" />
 				<Button fx:id="AttackPhaseID" layoutX="566.0" layoutY="473.0" mnemonicParsing="false" onAction="#goToAttackPhase" text="Attack" />
-				<!-- <Button layoutX="215.0" layoutY="545.0" mnemonicParsing="false" 
-					onAction="#tradeCard" text="Trade Cards" /> <Label fx:id="CardMessage" layoutX="170.0" 
-					layoutY="325.0" /> <ListView fx:id="yourCard" layoutX="55.0" layoutY="391.0" 
-					onMouseClicked="#yourCardHandler" prefHeight="111.0" prefWidth="172.0" /> 
-					<ListView fx:id="tradeCard" layoutX="256.0" layoutY="391.0" onMouseClicked="#yourTradeHandler" 
-					prefHeight="111.0" prefWidth="172.0" /> <Label layoutX="113.0" layoutY="516.0" 
-					text="Your cards" /> <Label layoutX="314.0" layoutY="516.0" text="Trade in 
-					cards" /> -->
-				<TextField fx:id="ArmyCount" editable="false" layoutX="313.0" layoutY="242.0" prefHeight="31.0" prefWidth="111.0" />
-				<Label layoutX="219.0" layoutY="247.0" text="Army Count" />
 				<ListView fx:id="adjacentOwned" layoutX="420.0" layoutY="36.0" prefHeight="200.0" prefWidth="200.0" />
 				<ListView fx:id="adjacentEnemy" layoutX="18.0" layoutY="36.0" prefHeight="200.0" prefWidth="200.0" />
 				<Text layoutX="53.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Surrounding Enemy" />

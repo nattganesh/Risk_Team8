@@ -23,12 +23,11 @@ public class Player extends Observable {
 
     private String name;
     private ArrayList<Country> occupiedCountries = new ArrayList<>();
-//    private ArrayList<Continent> occupiedContinents = new ArrayList<>();
+    
     
 //    private ArrayList<Card> cards = new ArrayList<>();
     private ObservableList<Card> cards = FXCollections.observableArrayList();
-    
-    
+        
     private int totalArmy;
     private int startingPoints;
    
@@ -109,6 +108,7 @@ public class Player extends Observable {
      */
     public void addCountry(Country country)
     {
+    	
     	System.out.println("notify from addCountry");
     	occupiedCountries.add(country);
     	setChanged();
@@ -121,10 +121,19 @@ public class Player extends Observable {
      */
     public void removeCountry(Country country)
     {
+    	
     	System.out.println("notify from removeCountry");
     	occupiedCountries.remove(country);
     	setChanged();
     	notifyObservers(this);
+    }
+    
+    public void isContinentOccupied()
+    {
+    	boolean isOccupied = true;
+    	
+    	
+    	
     }
     
     /**

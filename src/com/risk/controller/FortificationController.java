@@ -68,52 +68,54 @@ public class FortificationController implements Initializable {
     {
 
     	actions = ActionModel.getActionModel();
-        // sets occupied country of current player to observableList
         territoryObservableList.addAll(PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
-        // sets observableList to the UI
         Territory.setItems(territoryObservableList);
-        // This method extracts the country name in the ObservableList and outputs to UI
-        Territory.setCellFactory(param -> new ListCell<Country>() {
-            @Override
-            protected void updateItem(Country country, boolean empty)
-            {
-                super.updateItem(country, empty);
-                if (empty || country == null || country.getName() == null)
-                {
-                    setText(null);
-                }
-                else
-                {
-                    setText(country.getName());
-                }
-            }
-        });
-
-        // sets observableList to the UI
         Adjacent.setItems(adjacentObservableList);
-        // This method extracts the country name in the ObservableList and outputs to UI
-        Adjacent.setCellFactory(param -> new ListCell<Country>() {
-            @Override
-            protected void updateItem(Country country, boolean empty)
-            {
-                super.updateItem(country, empty);
-                if (empty || country == null || country.getName() == null)
-                {
-                    setText(null);
-                }
-                else
-                {
-                    setText(country.getName());
-                }
-            }
-        });
+        updateView();
         
         if(!isAnyCountriesConnected(PlayerModel.getPlayerModel().getCurrentPlayer())) 
         {
-			fortification=true;
-			actions.addAction("you have no accessible countries");
+        	  int currentIndex = PlayerModel.getPlayerModel().getPlayerIndex();
+              PlayerModel.getPlayerModel().setPlayerIndex((currentIndex + 1) % PlayerModel.getPlayerModel().getNumberOfPlayer());
+              GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
 		}
 
+    }
+    
+    public void updateView()
+    {
+    	 Territory.setCellFactory(param -> new ListCell<Country>() {
+             @Override
+             protected void updateItem(Country country, boolean empty)
+             {
+                 super.updateItem(country, empty);
+                 if (empty || country == null || country.getName() == null)
+                 {
+                     setText(null);
+                 }
+                 else
+                 {
+                     setText(country.getName());
+                 }
+             }
+         });
+
+    	 Adjacent.setCellFactory(param -> new ListCell<Country>() {
+             @Override
+             protected void updateItem(Country country, boolean empty)
+             {
+                 super.updateItem(country, empty);
+                 if (empty || country == null || country.getName() == null)
+                 {
+                     setText(null);
+                 }
+                 else
+                 {
+                     setText(country.getName());
+                 }
+             }
+         });
+    	
     }
 
     /**
@@ -126,7 +128,6 @@ public class FortificationController implements Initializable {
         if (Territory.getSelectionModel().getSelectedItem() != null)
         {
             Adjacent.getItems().clear();
-
             AdjacentArmy.setText("");
             CountriesArrivedbyPath = new ArrayList<>();
             Adjacent.getItems().addAll(getCountriesArrivedbyPath(Territory.getSelectionModel().getSelectedItem(), Territory.getSelectionModel().getSelectedItem(), CountriesArrivedbyPath));
@@ -175,8 +176,11 @@ public class FortificationController implements Initializable {
 
                 AdjacentArmy.setText(Integer.toString(Adjacent.getSelectionModel().getSelectedItem().getArmyCount()));
                 TerritoryArmy.setText(Integer.toString(Territory.getSelectionModel().getSelectedItem().getArmyCount()));
-                fortification = true;
                 actions.addAction("Move Successfully");
+                
+                int currentIndex = PlayerModel.getPlayerModel().getPlayerIndex();
+                PlayerModel.getPlayerModel().setPlayerIndex((currentIndex + 1) % PlayerModel.getPlayerModel().getNumberOfPlayer());
+                GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
             }
             else
             {
@@ -283,27 +287,7 @@ public class FortificationController implements Initializable {
         	return false;
         }
     }
-    
-    /**
-     * This method sets the GamePhaseModel to reinforcement, which notifies the
-     * subscribed GameController to set new scene. This method also updates the
-     * index of current player to the next player
-     *
-     * @param event listens for click event
-     */
-    public void onNextPlayer(ActionEvent event)
-    {
-        if (fortification == true)
-        {
-            PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries().clear();
-            PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries().addAll(territoryObservableList);
-            int currentIndex = PlayerModel.getPlayerModel().getPlayerIndex();
-            PlayerModel.getPlayerModel().setPlayerIndex((currentIndex + 1) % PlayerModel.getPlayerModel().getNumberOfPlayer());
-            GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
-        }
-        else
-        {
-            actions.addAction("You need to fortify");
-        }
-    }
+	
+
+  
 }
