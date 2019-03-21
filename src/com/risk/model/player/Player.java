@@ -16,16 +16,19 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Set;
 
 public class Player extends Observable {
 
     private String name;
     private ArrayList<Country> occupiedCountries = new ArrayList<>();
-    
-    
-//    private ArrayList<Card> cards = new ArrayList<>();
+    private ObservableList<Continent> occupiedContinents = FXCollections.observableArrayList();
+	Set<String> continents = new HashSet<String>();
     private ObservableList<Card> cards = FXCollections.observableArrayList();
         
     private int totalArmy;
@@ -81,7 +84,6 @@ public class Player extends Observable {
     	return startingPoints;
     }
 
-
     /**
      * gets the name of player
      *
@@ -102,6 +104,11 @@ public class Player extends Observable {
         return occupiedCountries;
     }
     
+    public ObservableList<Continent> getOccupiedContinents()
+    {
+    	return occupiedContinents;
+    }
+    
     /** 
      * 
      * @param country country to be added in the player's occupied territories
@@ -111,6 +118,8 @@ public class Player extends Observable {
     	
     	System.out.println("notify from addCountry");
     	occupiedCountries.add(country);
+    	updateContinentsOccupied(country);
+    	System.out.println("[["+ occupiedContinents.size() +"]]");
     	setChanged();
     	notifyObservers(this);
     }
@@ -124,18 +133,34 @@ public class Player extends Observable {
     	
     	System.out.println("notify from removeCountry");
     	occupiedCountries.remove(country);
+    	updateContinentsOccupied(country);
+    	System.out.println("[["+ occupiedContinents.size() +"]]");
     	setChanged();
     	notifyObservers(this);
     }
     
-    public void isContinentOccupied()
-    {
-    	boolean isOccupied = true;
-    	
-    	
-    	
-    }
-    
+    public void updateContinentsOccupied(Country c) 
+    { 	
+    	boolean occupy = false;
+    	for (Continent continent : MapModel.getMapModel().getContinents())
+    	{
+    		System.out.println(continent.getName());
+    		for (Country country : continent.getCountries())
+    		{
+    			
+    			if (country.getRuler() != null && !country.getRuler().getName().equals(c.getRuler().getName())) {
+    				occupy = false;
+    				break;
+    			}
+    		}
+    		if (occupy)
+    		{
+    			occupiedContinents.add(continent);
+    		}
+    		
+    	} 
+    } 
+
     /**
      * gets the size of occupied country
      *

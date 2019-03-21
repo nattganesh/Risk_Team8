@@ -324,49 +324,14 @@ public class AttackController implements Initializable, Observer {
 	 */
     public void rollDice(int diceattack, int dicedefend, Country attack, Country defend) 
     {
-		int[] dattack = new int[diceattack];
-		int[] ddefend = new int[dicedefend];
-		int rolltime;
-		for (int i = 0; i < diceattack; i++) 
-		{
-			dattack[i] = Dice.roll();
-		}
-		for (int i = 0; i < dicedefend; i++)
-		{
-			ddefend[i] = Dice.roll();
-		}
-		int tmp;
-		for(int i =0;i<diceattack;i++) {
-			for(int j =i+1;j<diceattack;j++) {
-				if(dattack[i]<dattack[j]) {
-					tmp = dattack[i];
-					dattack[i]=dattack[j];
-					dattack[j]=tmp;
-				}
-			}
-		}
-		for(int i =0;i<dicedefend;i++) {
-			for(int j =i+1;j<dicedefend;j++) {
-				if(ddefend[i]<ddefend[j]) {
-					tmp = ddefend[i];
-					ddefend[i]=ddefend[j];
-					ddefend[j]=tmp;
-				}
-			}
-		}
-		if (diceattack >= dicedefend)
-		{
-			rolltime = dicedefend;
-		} else 
-		{
-			rolltime = diceattack;
-		}
+		int[] dattack = rollResult(diceattack);
+		int[] ddefend = rollResult(dicedefend);
+		int rolltime = setRollTime(diceattack, dicedefend);
 		for (int i = 0; i < rolltime; i++) 
 		{
 
 			if (dattack[i] > ddefend[i]) 
 			{
-				
 				defend.reduceArmyCount(1);
 				adjacentEnemyObservableList.set(adjacentEnemyObservableList.indexOf(defend), defend);
 				actions.addAction("defender has lost 1 army");
@@ -446,6 +411,40 @@ public class AttackController implements Initializable, Observer {
 		result[1] = dicerange_defend;
 		return result;
 	}
+    
+    
+    public int setRollTime(int diceattack, int dicedefend)
+   	{
+    	int rolltime;
+    	if (diceattack >= dicedefend)
+		{
+			rolltime = dicedefend;
+		} else 
+		{
+			rolltime = diceattack;
+		}
+    	return rolltime;
+   	}
+    
+    public int[] rollResult(int diceNumber) {
+    	int[] result = new int[diceNumber];
+		for (int i = 0; i < diceNumber; i++) 
+		{
+			result[i] = Dice.roll();
+		}
+		int tmp;
+		for(int i =0;i<diceNumber;i++) {
+			for(int j =i+1;j<diceNumber;j++) {
+				if(result[i]<result[j]) {
+					tmp = result[i];
+					result[i]=result[j];
+					result[j]=tmp;
+				}
+			}
+		}
+		return result;
+    }
+    
     /**
      * This method sets the GamePhaseModel to fortification, which notifies the
      * subscribed GameController to set new scene

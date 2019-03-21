@@ -66,8 +66,8 @@ public class DeckModel extends Observable {
      */
     public void sendCard(Player player)
     {
+    	int i=0;
         while(true) {
-        	int i =0;
         	Card tmp = cards.get(i);
         	if(tmp.getOwner()==null) {
         		tmp.setOwner(player);

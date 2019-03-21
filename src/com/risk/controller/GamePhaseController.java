@@ -17,6 +17,7 @@ import com.risk.model.ActionModel;
 import com.risk.model.GamePhaseModel;
 import com.risk.model.MapModel;
 import com.risk.model.PlayerModel;
+import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
 import com.risk.model.player.Player;
 
@@ -36,6 +37,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
@@ -54,7 +56,6 @@ public class GamePhaseController implements Observer, Initializable{
     
     ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
     
-    
     ArrayList<Player> piePlayersList = new ArrayList<>();
     ArrayList<Player> barPlayersList = new ArrayList<>();
     
@@ -71,13 +72,15 @@ public class GamePhaseController implements Observer, Initializable{
     
     @FXML
     TextField phaseID;
-    
 
     @FXML
     private PieChart worldDomination1;
     
     @FXML
     private BarChart<String, Integer> worldDomination2;
+    
+    @FXML
+    private ListView <Continent> worldDomination3;
 
     @FXML
     private CategoryAxis X;
@@ -168,7 +171,6 @@ public class GamePhaseController implements Observer, Initializable{
 			if (index == -1)
 			{
 				piePlayersList.add(player);
-				
 				pieChartData.add(new PieChart.Data(player.getName()+" ("+Math.round(player.getOccupiedCountries().size() * 100.0/42) + "%)", 
 						player.getOccupiedCountries().size() * 100.0/42));
 			}
@@ -176,12 +178,9 @@ public class GamePhaseController implements Observer, Initializable{
 			{
 				piePlayersList.set(index, player);
 				pieChartData.get(index).setName(player.getName()+" ("+Math.round(player.getOccupiedCountries().size() * 100.0/42) + "%)");
-				pieChartData.get(index).setPieValue(player.getOccupiedCountries().size() * 100.0/42);
-				
-				
-				
+				pieChartData.get(index).setPieValue(player.getOccupiedCountries().size() * 100.0/42);				
 			}
-			
+			worldDomination3.setItems(player.getOccupiedContinents());
 		}
 		
     }
@@ -201,7 +200,6 @@ public class GamePhaseController implements Observer, Initializable{
 				barPlayersList.add(player);
 				Data<String, Integer> data = new Data<String, Integer>(player.getName()+" ("+player.getTotalArmy()+")", player.getTotalArmy());
 				serie.getData().add(data);	
-				System.out.println("exception");
 			}
 			else
 			{
@@ -209,6 +207,10 @@ public class GamePhaseController implements Observer, Initializable{
 				serie.getData().get(index).setXValue(player.getName()+" ("+player.getTotalArmy()+")");
 				serie.getData().get(index).setYValue(player.getTotalArmy());
 			}
+			
+			worldDomination2.setAnimated(false);
+			barData.setAll(serie);
+			
 		}   
     }
     
@@ -219,8 +221,27 @@ public class GamePhaseController implements Observer, Initializable{
 		MapModel.getMapModel().addObserver(new mapObserver());
 		actionMessage.setItems(ActionModel.getActionModel().getActions());
 		worldDomination1.setData(pieChartData);
+		
 		barData.add(serie);
 		worldDomination2.setData(barData);	
+		
+		worldDomination3.setItems(MapModel.getMapModel().getContinents());
+		worldDomination3.setCellFactory(param -> new ListCell<Continent>() {
+              @Override
+              protected void updateItem(Continent continent, boolean empty)
+              {
+                  super.updateItem(continent, empty);
+                  if (empty || continent == null || continent.getName() == null)
+                  {
+                      setText(null);
+                  }
+                  else
+                  {
+                	    
+                      setText(continent.getName());
+                  }
+              }
+        });
 		
 		
 		
