@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
 import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
 import com.risk.model.player.Player;
+import com.risk.model.ActionModel;
 import com.risk.model.GamePhaseModel;
 import com.risk.model.MapModel;
 import com.risk.model.PlayerPhaseModel;
@@ -51,9 +52,6 @@ public class SetUpController implements Initializable
 	Label armyAvailable;
 
 	@FXML
-	Label playerId;
-
-	@FXML
 	ListView<Country> countryId;
 	@FXML
 	Button NextRound;
@@ -61,14 +59,8 @@ public class SetUpController implements Initializable
 	@FXML
 	Button addArmy;
 
-	@FXML
-	TextField ArmyCount;
-
-	@FXML
-	ListView<String> setupMessage;
-
+	ActionModel actions;
 	ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
-	ObservableList<String> messageObservableList = FXCollections.observableArrayList();
 
 	/**
 	 * This is the constructor for the setUp controller
@@ -89,37 +81,12 @@ public class SetUpController implements Initializable
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) 
 	{
-		playerId.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
+		actions = ActionModel.getActionModel();
 		TotalArmies = PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getStartingP();
 		armyAvailable.setText("Army: " + Integer.toString(getArmies()));
 		territoryObservableList.addAll(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
 		countryId.setItems(territoryObservableList);
-		countryId.setCellFactory(param -> new ListCell<Country>() 
-		{
-			@Override
-			protected void updateItem(Country country, boolean empty) 
-			{
-				super.updateItem(country, empty);
-				if (empty || country == null || country.getName() == null) 
-				{
-					setText(null);
-				} else {
-					setText(country.getName());
-				}
-			}
-		});
-
-		setupMessage.setItems(messageObservableList);
-
-	}
-
-	@FXML
-	public void territoryHandler() 
-	{
-		if (countryId.getSelectionModel().getSelectedItem() != null) 
-		{
-			ArmyCount.setText(Integer.toString(countryId.getSelectionModel().getSelectedItem().getArmyCount()));
-		}
+		renderView();
 	}
 
 	/**
@@ -130,30 +97,22 @@ public class SetUpController implements Initializable
 	{
 		if (getArmies() == 0) 
 		{
-			messageObservableList.add("You have no armies left");
+			actions.addAction("You have no armies left");
 		} else if (countryId.getSelectionModel().getSelectedItem() == null) 
 		{
-			messageObservableList.add("Please choose a country first");
+			actions.addAction("Please choose a country first");
 		} else if(setUp)
 		{
-			messageObservableList.add("You already place one army");
+			actions.addAction("You already place one army");
 		}
 		else{
-			for (Country c : territoryObservableList) 
+			Country selectedCountry = countryId.getSelectionModel().getSelectedItem();
+			if ((selectedCountry.getArmyCount() == 0) || checkIfEachCountryHasOneArmy()) 
 			{
-				if (c.getName().equals(countryId.getSelectionModel().getSelectedItem().getName())) 
-				{
-					if ((c.getArmyCount() == 0) || checkIfEachCountryHasOneArmy()) 
-					{
-						c.setArmyCount(1);
-						setStartingPoints();
-						ArmyCount.setText(
-								Integer.toString(countryId.getSelectionModel().getSelectedItem().getArmyCount()));
-						messageObservableList.add("Added 1 Army to " + c.getName());
-						setUp = true;
-						break;
-					}
-				}
+				selectedCountry.setArmyCount(1);
+				setStartingPoints();
+				actions.addAction("Added 1 Army to " + selectedCountry.getName());
+				setUp = true;
 			}
 		}
 		armyAvailable.setText("Army: " + Integer.toString(getArmies()));
@@ -240,7 +199,25 @@ public class SetUpController implements Initializable
 		}
 		else
 		{
-			messageObservableList.add("Please place one army in your country");
+			actions.addAction("Please place one army in your country");
 		}
+	}
+	
+	public void renderView()
+	{
+		countryId.setCellFactory(param -> new ListCell<Country>() 
+		{
+			@Override
+			protected void updateItem(Country country, boolean empty) 
+			{
+				super.updateItem(country, empty);
+				if (empty || country == null || country.getName() == null) 
+				{
+					setText(null);
+				} else {
+					 setText(country.getName() + " ("+ country.getArmyCount() +")");
+				}
+			}
+		});
 	}
 }

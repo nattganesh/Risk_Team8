@@ -65,8 +65,7 @@ public class ConqueredController extends Observable implements Initializable{
 		Country conquered = conqueredID.getSelectionModel().getSelectedItem();	
 		if (reinforcement != null && conquered != null && !armyCount.getText().trim().isEmpty())
 		{	
-			int army = Integer.parseInt(armyCount.getText()); 
-			// 7 army and 3 dice rolled - you need to move at least 3 but less than 6 for that country			
+			int army = Integer.parseInt(armyCount.getText()); 			
 			if (army < reinforcement.getArmyCount())
 			{
 				moved = moved + army;

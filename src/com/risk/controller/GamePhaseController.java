@@ -111,6 +111,7 @@ public class GamePhaseController implements Observer, Initializable{
         if (view.equals("setup"))
         {
         	try {
+        		playerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
         		mainPane.getChildren().clear();
 				mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/SetUp.fxml")));
 			} catch (IOException e) {
