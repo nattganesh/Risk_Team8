@@ -12,13 +12,15 @@ import java.util.ResourceBundle;
 
 import com.risk.model.ActionModel;
 import com.risk.model.MapModel;
-import com.risk.model.PlayerModel;
+import com.risk.model.PlayerPhaseModel;
 import com.risk.model.card.Card;
+import com.risk.model.map.Country;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 
@@ -43,16 +45,31 @@ public class CardController extends Observable implements Initializable {
 
   ObservableList<Card> tradeObservableList = FXCollections.observableArrayList();
 	
-
+    public void renderView()
+    {
+    	yourCard.setCellFactory(param -> new ListCell<Card>() {
+            @Override
+            protected void updateItem(Card card, boolean empty)
+            {
+                super.updateItem(card, empty);
+                if (empty || card == null || card.getCatagory() == null)
+                {
+                    setText(null);
+                }
+                else
+                {
+                    setText(card.getCatagory());
+                }
+            }
+        });
+    }
+  	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-	
-    	
-      
       actions = ActionModel.getActionModel();
-      yourCard.setItems(PlayerModel.getPlayerModel().getCurrentPlayer().getCards());
+      yourCard.setItems(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getCards());
       tradeCard.setItems(tradeObservableList);
-      
+      renderView();
 	}
     /**
      * This method is used to update the cards the player owned and the cards
@@ -66,13 +83,7 @@ public class CardController extends Observable implements Initializable {
             Card card = yourCard.getSelectionModel().getSelectedItem();
             tradeCard.getItems().add(card);
             yourCard.getItems().remove(card);
-            
-            for (Card c : PlayerModel.getPlayerModel().getCurrentPlayer().getCards())
-            {
-            	System.out.println(c.getCatagory());
-            }
-            
-          
+ 
         }
     }
 
@@ -103,12 +114,11 @@ public class CardController extends Observable implements Initializable {
         {
             if (cardValidation(tradeCard.getItems()))
             {
-          
-            	reinforcement = PlayerModel.getPlayerModel().getCurrentPlayer().calculateReinforcementFromCards();   
+            	reinforcement = PlayerPhaseModel.getPlayerModel().calculateReinforcementFromCards();   
             	for(Card c: tradeCard.getItems()) {
-            		c.removeCard(PlayerModel.getPlayerModel().getCurrentPlayer());
+            		c.removeCard(PlayerPhaseModel.getPlayerModel().getCurrentPlayer());
             	}
-            	System.out.println(PlayerModel.getPlayerModel().getCurrentPlayer().getCards());
+            	System.out.println(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getCards());
                 tradeCard.getItems().clear();
                 actions.addAction("you exchanged cards");            
                 setChanged();
@@ -119,8 +129,7 @@ public class CardController extends Observable implements Initializable {
             		 yourCard.getItems().add(card);
             	 }
             	 tradeCard.getItems().clear();
-            	 actions.addAction("Invalid cards");
-            	 
+            	 actions.addAction("Invalid cards");	 
             }
         } 
         else 
@@ -132,7 +141,7 @@ public class CardController extends Observable implements Initializable {
     @FXML
     public void skipExchangeHandler()
     {
-    	if (PlayerModel.getPlayerModel().getCurrentPlayer().getCards().size() > 5)
+    	if (PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getCards().size() > 5)
     	{
     		actions.addAction("5+ cards == you must exchange");
     	} 	

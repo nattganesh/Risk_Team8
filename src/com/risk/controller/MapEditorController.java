@@ -19,7 +19,7 @@ import com.risk.model.DeckModel;
 import com.risk.model.GamePhaseModel;
 import com.risk.model.MapModel;
 
-import com.risk.model.PlayerModel;
+import com.risk.model.PlayerPhaseModel;
 import com.risk.model.dice.Dice;
 import com.risk.model.exceptions.CannotFindException;
 import com.risk.model.exceptions.CountLimitException;
@@ -187,8 +187,8 @@ public class MapEditorController implements Initializable {
 
             if (searchTerritory(TerritoryInput.getText()) == null)
             {
-                Country country = new Country(TerritoryInput.getText(),
-                        ContinentView.getSelectionModel().getSelectedItem().getName());
+                Country country = new Country(TerritoryInput.getText());
+                country.setContinent(ContinentView.getSelectionModel().getSelectedItem());
                 ContinentView.getSelectionModel().getSelectedItem().setCountry(country);
                 territoryObservableList.clear();
                 territoryObservableList.addAll(ContinentView.getSelectionModel().getSelectedItem().getCountries());
@@ -468,12 +468,9 @@ public class MapEditorController implements Initializable {
                 calcStartingArmies();
                 autoAssignCountriesToPlayers();
                 determinePlayersStartingOrder();
+	            GamePhaseModel.getGamePhaseModel().setPhase("setup complete");    
                 GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
             }
-        }
-        else
-        {
-           
         }
     }
 
@@ -522,7 +519,7 @@ public class MapEditorController implements Initializable {
     {
         while (numberOfPlayer > 0)
         {
-            PlayerModel.getPlayerModel().addPlayer(new Player(PlayerModel.PLAYERCOLOR[numberOfPlayer - 1]));
+            PlayerPhaseModel.getPlayerModel().addPlayer(new Player(PlayerPhaseModel.PLAYERCOLOR[numberOfPlayer - 1]));
             numberOfPlayer--;
         }
     }
@@ -541,7 +538,7 @@ public class MapEditorController implements Initializable {
      */
     public void determinePlayersStartingOrder()
     {
-        int[] diceRolls = new int[PlayerModel.getPlayerModel().getNumberOfPlayer()];
+        int[] diceRolls = new int[PlayerPhaseModel.getPlayerModel().getNumberOfPlayer()];
 
         for (int i = 0; i < diceRolls.length; i++)
         {
@@ -571,8 +568,8 @@ public class MapEditorController implements Initializable {
         {
             for (int i = 0; i < maxRollIndex; i++)
             {
-                Player temp = PlayerModel.getPlayerModel().getPlayers().remove(0);
-                PlayerModel.getPlayerModel().addPlayer(temp);
+                Player temp = PlayerPhaseModel.getPlayerModel().getPlayers().remove(0);
+                PlayerPhaseModel.getPlayerModel().addPlayer(temp);
             }
         }
     }
@@ -586,7 +583,7 @@ public class MapEditorController implements Initializable {
         int i = 0;
         while (i < Country.MAX_NUMBER_OF_COUNTRIES)
         {
-            for (Player p : PlayerModel.getPlayerModel().getPlayers())
+            for (Player p : PlayerPhaseModel.getPlayerModel().getPlayers())
             {	
                 int random = (int) (Math.random() * Country.MAX_NUMBER_OF_COUNTRIES);
                 while (countryOccupied[random])
@@ -621,7 +618,7 @@ public class MapEditorController implements Initializable {
 	        int i = 0;
 	        while (i < Country.MAX_NUMBER_OF_COUNTRIES)
 	        {
-	            for (Player p : PlayerModel.getPlayerModel().getPlayers())
+	            for (Player p : PlayerPhaseModel.getPlayerModel().getPlayers())
 	            {	
 	                int random = (int) (Math.random() * Country.MAX_NUMBER_OF_COUNTRIES);
 	                while (countryOccupied[random])
@@ -647,19 +644,19 @@ public class MapEditorController implements Initializable {
 	            }
 	        }
 
-		boolean[] armiesRemaining = new boolean[PlayerModel.getPlayerModel().getNumberOfPlayer()];
+		boolean[] armiesRemaining = new boolean[PlayerPhaseModel.getPlayerModel().getNumberOfPlayer()];
 		boolean done = false;
 
 		while (!done) {
-			for (int ii = 0; ii < PlayerModel.getPlayerModel().getNumberOfPlayer(); ii++) {
-				if (PlayerModel.getPlayerModel().getPlayers().get(ii).getStartingPoints() > 0) {
+			for (int ii = 0; ii < PlayerPhaseModel.getPlayerModel().getNumberOfPlayer(); ii++) {
+				if (PlayerPhaseModel.getPlayerModel().getPlayers().get(ii).getStartingPoints() > 0) {
 					int random = (int) (Math.random()
-							* PlayerModel.getPlayerModel().getPlayers().get(ii).numbOccupied());
+							* PlayerPhaseModel.getPlayerModel().getPlayers().get(ii).numbOccupied());
 					
 					System.out.println("setting army count by 1 from playerModel");
-					PlayerModel.getPlayerModel().getPlayers().get(ii).getOccupiedCountries().get(random)
+					PlayerPhaseModel.getPlayerModel().getPlayers().get(ii).getOccupiedCountries().get(random)
 							.setArmyCount(1);
-					PlayerModel.getPlayerModel().getPlayers().get(ii).setStartingPoints(PlayerModel.getPlayerModel().getPlayers().get(ii).getStartingPoints() - 1);
+					PlayerPhaseModel.getPlayerModel().getPlayers().get(ii).setStartingPoints(PlayerPhaseModel.getPlayerModel().getPlayers().get(ii).getStartingPoints() - 1);
 				} else {
 					armiesRemaining[ii] = true;
 				}
@@ -670,7 +667,7 @@ public class MapEditorController implements Initializable {
 					countP++;
 				}
 			}
-			if (countP == PlayerModel.getPlayerModel().getNumberOfPlayer()) {
+			if (countP == PlayerPhaseModel.getPlayerModel().getNumberOfPlayer()) {
 				done = true;
 			}
 		}
@@ -682,9 +679,9 @@ public class MapEditorController implements Initializable {
      */
     public void calcStartingArmies()
     {
-        for (Player player : PlayerModel.getPlayerModel().getPlayers())
+        for (Player player : PlayerPhaseModel.getPlayerModel().getPlayers())
         {
-            player.setStartingPoints(calcStartingArmiesHelper(PlayerModel.getPlayerModel().getNumberOfPlayer()));
+            player.setStartingPoints(calcStartingArmiesHelper(PlayerPhaseModel.getPlayerModel().getNumberOfPlayer()));
         }
     }
 

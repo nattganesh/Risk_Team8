@@ -63,7 +63,7 @@ public class FileParser {
                     {
                         boolean continentExists = false;
 
-                        Country c = new Country(nameOfCountry, nameOfContinent);
+                        Country c = new Country(nameOfCountry);
                         maps.addCountry(c);
 
                         for (Continent cont : maps.getContinents())
@@ -72,6 +72,7 @@ public class FileParser {
                             {
                                 continentExists = true;
                                 cont.getCountries().add(c);
+                                c.setContinent(cont);   
                             }
                         }
 
@@ -79,6 +80,7 @@ public class FileParser {
                         {
                             Continent continent = new Continent(nameOfContinent, 10);
                             continent.setCountry(c);
+                            c.setContinent(continent);
                             maps.addContinent(continent);
                         }
                     }

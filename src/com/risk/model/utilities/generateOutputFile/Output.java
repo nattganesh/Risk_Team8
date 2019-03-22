@@ -39,7 +39,7 @@ public class Output {
             System.out.println("SET COUNTRIES IN CONTINENTS");
             for (Country country : countries)
             {
-                System.out.println(country.getContinentName() + "," + country.getName());
+                System.out.println(country.getContinent().getName() + "," + country.getName());
             }
 
             System.out.println("SET NEIGHBORS");

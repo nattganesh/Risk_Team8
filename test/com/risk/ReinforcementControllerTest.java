@@ -50,7 +50,7 @@ public class ReinforcementControllerTest extends TestCase {
      */
     public void testReinforcementNumbOccupied()
     {
-
+    	
         occupiedCountries = new ArrayList<Country>();
         occupiedCountries.add(new Country("dummy country", "dummy continent"));
         occupiedCountries.add(new Country("dummy country", "dummy continent"));

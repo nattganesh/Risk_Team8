@@ -12,9 +12,11 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
+import com.risk.model.map.Continent;
+import com.risk.model.map.Country;
 import com.risk.model.player.Player;
 
-public class PlayerModel extends Observable implements Observer {
+public class PlayerPhaseModel extends Observable implements Observer {
 
     private ArrayList<Player> playerList = new ArrayList<Player>();
     public static final String[] PLAYERCOLOR =
@@ -23,19 +25,18 @@ public class PlayerModel extends Observable implements Observer {
     };
     private int currentPlayerIndex = 0;
     private Player playerWins = null;
-    private static PlayerModel playerModel;
+    private static PlayerPhaseModel playerModel;
 
     /**
      * Constructor for PlayerModel class
      */
-    private PlayerModel()
+    private PlayerPhaseModel()
     {
-    	
     }
 
     /**
      * Sets the winner of the game
-     *
+     *	
      * @param player player who has won
      * @return playerWins returns the player who has won
      */
@@ -107,11 +108,11 @@ public class PlayerModel extends Observable implements Observer {
      *
      * @return this PlayerModel class as a singleton
      */
-    public static PlayerModel getPlayerModel()
+    public static PlayerPhaseModel getPlayerModel()
     {
         if (playerModel == null)
         {
-            playerModel = new PlayerModel();
+            playerModel = new PlayerPhaseModel();
         }
         return playerModel;
     }
@@ -120,9 +121,67 @@ public class PlayerModel extends Observable implements Observer {
      * This method notifies GamePhaseModel, updating world domination phase
      */
 	@Override
-	public void update(Observable o, Object player) {
+	public void update(Observable o, Object country) {
 		setChanged();
-		notifyObservers((Player)player);
+		notifyObservers((Country)country);
 	}
+	
+    /**
+     * This method is used to calculate the extra armies earned if the player
+     * has occupied continents
+     *
+     * @param currentPlayer The player who is in his reinforcement round
+     * @return The result corresponding to the countries the player occupied
+     */
+    public int calculateReinforcementContinentControl()
+    {
+        
+        int reinforcement = 0;
+        for (Continent continent : MapModel.getMapModel().getContinents())
+        {
+            boolean control = true;
+            for (Country country : continent.getCountries())
+            {
+                if (country.getRuler().getName() != playerList.get(0).getName())
+                {
+                    control = false;
+                    break;
+                }
+            }
+            if (control)
+            {
+                reinforcement = reinforcement + continent.getPointsWhenFullyOccupied();
+            }
+        }
+        return reinforcement;
+    }
+
+    /**
+     * This method is used to calculate the extra armies based on the number of
+     * countries the player already occupied
+     *
+     * @param currentPlayer The player who is in his reinforcement round
+     * @return The result corresponding to the countries the player occupied
+     */
+    public int calculateReinforcementOccupiedTerritory()
+    {
+        int reinforcement = (int) Math.floor(playerList.get(0).numbOccupied() / 3);
+        return reinforcement;
+    }
+    
+    
+    /**
+     * This method is used to calculate the extra armies earned by exchanging
+     * cards
+     *
+     * @return The result corresponding to the total exchange time.
+     */
+    public int calculateReinforcementFromCards()
+    {
+        int currentExchange = MapModel.getMapModel().getExchangeTime();
+        int reinforcement = (currentExchange + 1) * 5;
+        MapModel.getMapModel().setExchangeTime(currentExchange + 1);
+        return reinforcement;
+    }
 
 }

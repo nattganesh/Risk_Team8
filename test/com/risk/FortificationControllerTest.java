@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.risk.controller.FortificationController;
+import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
 import com.risk.model.player.Player;
 
@@ -38,12 +39,12 @@ public class FortificationControllerTest extends TestCase {
     {
         firstPlayer = new Player("Green");
         occupiedCountries1 = new ArrayList<Country>();
-        c1 = new Country("China", "Asia");
-        c2 = new Country("Quebec", "North America");
-        c3 = new Country("Siam", "Asia");
-        c4 = new Country("India", "Asia");
-        c5 = new Country("Congo", "Africa");
-        c6 = new Country("Indonesia", "Australia");
+        c1 = new Country("China");
+        c2 = new Country("Quebec");
+        c3 = new Country("Siam");
+        c4 = new Country("India");
+        c5 = new Country("Congo");
+        c6 = new Country("Indonesia");
         occupiedCountries1.add(c1);
         occupiedCountries1.add(c2);
         occupiedCountries1.add(c3);

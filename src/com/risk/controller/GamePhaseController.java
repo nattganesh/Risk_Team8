@@ -9,6 +9,7 @@ package com.risk.controller;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
@@ -16,13 +17,12 @@ import java.util.ResourceBundle;
 import com.risk.model.ActionModel;
 import com.risk.model.GamePhaseModel;
 import com.risk.model.MapModel;
-import com.risk.model.PlayerModel;
+import com.risk.model.PlayerPhaseModel;
 import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
 import com.risk.model.player.Player;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -35,13 +35,11 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
-import javafx.scene.chart.XYChart.Series;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
+
 
 public class GamePhaseController implements Observer, Initializable{
 
@@ -59,10 +57,9 @@ public class GamePhaseController implements Observer, Initializable{
     ArrayList<Player> piePlayersList = new ArrayList<>();
     ArrayList<Player> barPlayersList = new ArrayList<>();
     
-    
     Scene scene;
     Parent root;
-    private Stage stage;
+    String view = "setup";
     
     @FXML
     Pane mainPane;
@@ -96,10 +93,9 @@ public class GamePhaseController implements Observer, Initializable{
      *
      * @param s Stage of Javafx application to set different phase in the game
      */
-    public GamePhaseController(Stage s)
+    public GamePhaseController()
     {
         GamePhaseModel.getGamePhaseModel().addObserver(this);
-        this.stage = s;
     }
     
     /**
@@ -110,7 +106,7 @@ public class GamePhaseController implements Observer, Initializable{
     public void update(Observable o, Object phase)
     {
     	ActionModel.getActionModel().clearAction();
-        String view = (String) phase;
+        view = (String) phase;
         phaseID.setText(view);
         if (view.equals("setup"))
         {
@@ -121,11 +117,34 @@ public class GamePhaseController implements Observer, Initializable{
 				e.printStackTrace();
 			}
         }
+        else if (view.equals("setup complete"))
+        {
+        	HashSet <String> s = new HashSet <String> ();
+			for (Continent continent: MapModel.getMapModel().getContinents())
+			{
+				for (Country country : continent.getCountries())
+				{
+					s.add(country.getRuler().getName());
+					System.out.println("size of hashset + " + s.size());
+				}
+				if (s.size() == 1)
+				{
+					continent.setRuler(continent.getCountries().get(0).getRuler());
+				}		
+				else
+				{
+					continent.setRuler(null);
+				}
+				s.clear();
+			}
+			worldDomination3.setItems(MapModel.getMapModel().getContinents());
+			updateContinentDominationView();
+        }
         else if (view.equals("reinforcement"))
         {
         	try {
       
-        		playerID.setText(PlayerModel.getPlayerModel().getCurrentPlayer().getName());
+        		playerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
         		mainPane.getChildren().clear();
 				mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/Reinforcement.fxml")));
 				
@@ -136,7 +155,7 @@ public class GamePhaseController implements Observer, Initializable{
         else if (view.equals("attack"))
         {
         	try {
-        		playerID.setText(PlayerModel.getPlayerModel().getCurrentPlayer().getName());
+        		playerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
         		mainPane.getChildren().clear();
 				mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/Attack.fxml")));
 			} catch (IOException e) {
@@ -147,7 +166,7 @@ public class GamePhaseController implements Observer, Initializable{
         else if (view.equals("fortification"))
         {
         	try {
-        		playerID.setText(PlayerModel.getPlayerModel().getCurrentPlayer().getName());
+        		playerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
         		mainPane.getChildren().clear();
 				mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/Fortification.fxml")));
 			} catch (IOException e) {
@@ -157,7 +176,8 @@ public class GamePhaseController implements Observer, Initializable{
     }
     
     /**
-     * This class observes players
+     * This class observes PlayerModel and gets updated
+     * 
      * @author DKM
      *
      */
@@ -165,8 +185,8 @@ public class GamePhaseController implements Observer, Initializable{
     {
 		@Override
 		public void update(Observable o, Object arg) {
-			Player player = (Player)arg;
-			System.out.println("here");
+			Country c = (Country)arg;
+			Player player = c.getRuler();
 			int index = piePlayersList.indexOf(player);
 			if (index == -1)
 			{
@@ -180,9 +200,51 @@ public class GamePhaseController implements Observer, Initializable{
 				pieChartData.get(index).setName(player.getName()+" ("+Math.round(player.getOccupiedCountries().size() * 100.0/42) + "%)");
 				pieChartData.get(index).setPieValue(player.getOccupiedCountries().size() * 100.0/42);				
 			}
-			worldDomination3.setItems(player.getOccupiedContinents());
 		}
 		
+    }
+    
+    private class continentObserver implements Observer
+    {
+
+		/* (non-Javadoc)
+		 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+		 */
+		@Override
+		public void update(Observable arg0, Object arg) {
+			Country country = (Country)arg;
+			
+			if (view.equals("attack"))
+			{
+				boolean occupy = true;
+				for (Country c : country.getContinent().getCountries())
+				{
+					System.out.println(country.getContinent().getName()+"/"+ c.getName()+"(currently owned by)"+c.getRuler().getName() + "/" + country.getName()+"(just occupied)"+country.getRuler().getName());
+					if (!c.getRuler().getName().equals(country.getRuler().getName()))
+					{
+					
+						occupy = false;
+						break;
+					}
+				}
+				
+				if (occupy)
+				{
+					System.out.println("OCCUPIED");
+					country.getContinent().setRuler(country.getRuler());
+					updateContinentDominationView();
+					
+					
+					for (Continent c : worldDomination3.getItems())
+					{
+						if (c.getRuler() != null) {
+							System.out.println(c.getName() + " / "+c.getRuler().getName());
+						}
+					}	
+				}
+			}			
+		}
+    	
     }
     
     
@@ -213,38 +275,38 @@ public class GamePhaseController implements Observer, Initializable{
 			
 		}   
     }
+    public void updateContinentDominationView()
+    {
+    	worldDomination3.setCellFactory(param -> new ListCell<Continent>() {
+            @Override
+            protected void updateItem(Continent continent, boolean empty)
+            {
+                super.updateItem(continent, empty);
+                if (empty || continent == null || continent.getRuler() == null)
+                {
+                	
+                    setText(null);
+                   
+                }
+                else 
+                {
+              	  setText(continent.getName() + "("+ continent.getRuler().getName() +")");
+                }
+            }
+      });
+    }
     
-
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		PlayerModel.getPlayerModel().addObserver(new playerObserver());
+		PlayerPhaseModel.getPlayerModel().addObserver(new playerObserver());
+		PlayerPhaseModel.getPlayerModel().addObserver(new continentObserver());
 		MapModel.getMapModel().addObserver(new mapObserver());
+		
 		actionMessage.setItems(ActionModel.getActionModel().getActions());
 		worldDomination1.setData(pieChartData);
-		
 		barData.add(serie);
 		worldDomination2.setData(barData);	
-		
-		worldDomination3.setItems(MapModel.getMapModel().getContinents());
-		worldDomination3.setCellFactory(param -> new ListCell<Continent>() {
-              @Override
-              protected void updateItem(Continent continent, boolean empty)
-              {
-                  super.updateItem(continent, empty);
-                  if (empty || continent == null || continent.getName() == null)
-                  {
-                      setText(null);
-                  }
-                  else
-                  {
-                	    
-                      setText(continent.getName());
-                  }
-              }
-        });
-		
-		
-		
+				
 		try {
 			mainPane.getChildren().clear();
 			mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/MapSelector.fxml")));

@@ -16,7 +16,7 @@ import com.risk.model.map.Country;
 import com.risk.model.player.Player;
 import com.risk.model.GamePhaseModel;
 import com.risk.model.MapModel;
-import com.risk.model.PlayerModel;
+import com.risk.model.PlayerPhaseModel;
 import com.risk.model.card.Card;
 
 import javafx.beans.value.ChangeListener;
@@ -89,10 +89,10 @@ public class SetUpController implements Initializable
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) 
 	{
-		playerId.setText(PlayerModel.getPlayerModel().getCurrentPlayer().getName());
-		TotalArmies = PlayerModel.getPlayerModel().getCurrentPlayer().getStartingP();
+		playerId.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
+		TotalArmies = PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getStartingP();
 		armyAvailable.setText("Army: " + Integer.toString(getArmies()));
-		territoryObservableList.addAll(PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
+		territoryObservableList.addAll(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
 		countryId.setItems(territoryObservableList);
 		countryId.setCellFactory(param -> new ListCell<Country>() 
 		{
@@ -177,7 +177,7 @@ public class SetUpController implements Initializable
 	public void setStartingPoints() 
 	{
 		TotalArmies--;
-		PlayerModel.getPlayerModel().getCurrentPlayer().setStartingPoints(TotalArmies);
+		PlayerPhaseModel.getPlayerModel().getCurrentPlayer().setStartingPoints(TotalArmies);
 	}
 
 	/**
@@ -217,9 +217,9 @@ public class SetUpController implements Initializable
 	 */
 	public void next(ActionEvent event) throws IOException 
 	{
-		int currentIndex = PlayerModel.getPlayerModel().getPlayerIndex();
+		int currentIndex = PlayerPhaseModel.getPlayerModel().getPlayerIndex();
 		boolean isAnyPlayerPlacedAllArmies = true;
-		for(Player p : PlayerModel.getPlayerModel().getPlayers())
+		for(Player p : PlayerPhaseModel.getPlayerModel().getPlayers())
         {
         	if(p.getStartingP()!=0) 
         		isAnyPlayerPlacedAllArmies = false;
@@ -227,13 +227,14 @@ public class SetUpController implements Initializable
 		if(setUp) {
 			if (isAnyPlayerPlacedAllArmies) 
 			{
-				PlayerModel.getPlayerModel()
-						.setPlayerIndex((currentIndex + 1) % PlayerModel.getPlayerModel().getNumberOfPlayer());
+				PlayerPhaseModel.getPlayerModel()
+						.setPlayerIndex((currentIndex + 1) % PlayerPhaseModel.getPlayerModel().getNumberOfPlayer());
+				GamePhaseModel.getGamePhaseModel().setPhase("setup complete");  
 				GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
 			} else 
 			{
-				PlayerModel.getPlayerModel()
-						.setPlayerIndex((currentIndex + 1) % PlayerModel.getPlayerModel().getNumberOfPlayer());
+				PlayerPhaseModel.getPlayerModel()
+						.setPlayerIndex((currentIndex + 1) % PlayerPhaseModel.getPlayerModel().getNumberOfPlayer());
 				GamePhaseModel.getGamePhaseModel().setPhase("setup");
 			}
 		}

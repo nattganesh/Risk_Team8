@@ -27,7 +27,7 @@ public class Country extends Observable{
     private Player ruler;
    
     private ArrayList<Country> connectedCountries = new ArrayList<>();
-    private String continentName;
+    private Continent continent;
     private int armyCount = 0;
 
     /**
@@ -36,13 +36,17 @@ public class Country extends Observable{
      * @param name this country name
      * @param continentName this continent name
      */
-    public Country(String name, String continentName)
+    public Country(String name)
     {
         this.name = name;
-        this.continentName = continentName;
         this.isOccupied = false;
         this.ruler = null;
       
+    }
+    
+    public void setContinent(Continent continent)
+    {
+    	this.continent = continent;
     }
 
     /**
@@ -58,9 +62,9 @@ public class Country extends Observable{
      *
      * @return continentName returns the continent name
      */
-    public String getContinentName()
+    public Continent getContinent()
     {
-        return continentName;
+        return continent;
     }
 
     /**
@@ -135,8 +139,7 @@ public class Country extends Observable{
     public void setRuler(Player ruler)
     {
         this.ruler = ruler;
-//        this.addObserver(ruler);
-        
+
     }
     
     /**

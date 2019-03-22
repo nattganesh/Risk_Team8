@@ -20,7 +20,9 @@ public class Continent {
     private String name;
     private ArrayList<Country> countries = new ArrayList<>();
     private int pointsWhenFullyOccupied;
+    private Player ruler;
 
+    
     /**
      * This is the constructor for Continent
      *
@@ -33,6 +35,7 @@ public class Continent {
         this.name = name;
         this.pointsWhenFullyOccupied = pointsWhenFullyOccupied;
     }
+    
 
     /**
      * this method is a getter for this continent name
@@ -53,7 +56,17 @@ public class Continent {
     {
         return countries;
     }
-
+    
+    public void setRuler(Player p)
+    {
+    	ruler = p;
+    }
+    
+    public Player getRuler()
+    {
+    	return ruler;
+    }
+    
     /**
      * This method is a setter for adding country to a continent
      *
@@ -82,21 +95,8 @@ public class Continent {
         this.pointsWhenFullyOccupied = pointsWhenFullyOccupied;
     }
 
-    /**
-     * This is a getter method for country given its name
-     *
-     * @param name this country name
-     * @return country returns country object
-     */
-    public Country getCountry(String name)
-    {
-        for (Country country : countries)
-        {
-            if (country.getName().equals(name))
-            {
-                return country;
-            }
-        }
-        return null;
-    }
+
+
+    
+   
 }

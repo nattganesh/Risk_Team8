@@ -60,7 +60,7 @@ public class Run extends Application {
     {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/risk/view/LayoutView.fxml"));
 
-        GamePhaseController gamephase = new GamePhaseController(primaryStage);
+        GamePhaseController gamephase = new GamePhaseController();
         loader.setController(gamephase);
 
         Parent root = loader.load();

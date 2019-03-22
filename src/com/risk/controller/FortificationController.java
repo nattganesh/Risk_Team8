@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
 
 import com.risk.model.ActionModel;
 import com.risk.model.GamePhaseModel;
-import com.risk.model.PlayerModel;
+import com.risk.model.PlayerPhaseModel;
 import com.risk.model.map.Country;
 import com.risk.model.player.Player;
 
@@ -68,15 +68,15 @@ public class FortificationController implements Initializable {
     {
 
     	actions = ActionModel.getActionModel();
-        territoryObservableList.addAll(PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
+        territoryObservableList.addAll(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
         Territory.setItems(territoryObservableList);
         Adjacent.setItems(adjacentObservableList);
         updateView();
         
-        if(!isAnyCountriesConnected(PlayerModel.getPlayerModel().getCurrentPlayer())) 
+        if(!isAnyCountriesConnected(PlayerPhaseModel.getPlayerModel().getCurrentPlayer())) 
         {
-        	  int currentIndex = PlayerModel.getPlayerModel().getPlayerIndex();
-              PlayerModel.getPlayerModel().setPlayerIndex((currentIndex + 1) % PlayerModel.getPlayerModel().getNumberOfPlayer());
+        	  int currentIndex = PlayerPhaseModel.getPlayerModel().getPlayerIndex();
+              PlayerPhaseModel.getPlayerModel().setPlayerIndex((currentIndex + 1) % PlayerPhaseModel.getPlayerModel().getNumberOfPlayer());
               GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
 		}
 
@@ -178,8 +178,8 @@ public class FortificationController implements Initializable {
                 TerritoryArmy.setText(Integer.toString(Territory.getSelectionModel().getSelectedItem().getArmyCount()));
                 actions.addAction("Move Successfully");
                 
-                int currentIndex = PlayerModel.getPlayerModel().getPlayerIndex();
-                PlayerModel.getPlayerModel().setPlayerIndex((currentIndex + 1) % PlayerModel.getPlayerModel().getNumberOfPlayer());
+                int currentIndex = PlayerPhaseModel.getPlayerModel().getPlayerIndex();
+                PlayerPhaseModel.getPlayerModel().setPlayerIndex((currentIndex + 1) % PlayerPhaseModel.getPlayerModel().getNumberOfPlayer());
                 GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
             }
             else

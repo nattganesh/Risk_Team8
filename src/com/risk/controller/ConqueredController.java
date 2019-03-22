@@ -9,7 +9,7 @@ import java.util.Observer;
 import java.util.ResourceBundle;
 
 import com.risk.model.ActionModel;
-import com.risk.model.PlayerModel;
+import com.risk.model.PlayerPhaseModel;
 import com.risk.model.map.Country;
 
 import javafx.collections.FXCollections;
@@ -46,46 +46,13 @@ public class ConqueredController extends Observable implements Initializable{
 	  TextField armyCount;
 	  boolean move=false;
 
+	  
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
 	     actions = ActionModel.getActionModel();
 		 countryOwnedID.setItems(territoryObservableList);         
-		 countryOwnedID.setCellFactory(param -> new ListCell<Country>() {
-             @Override
-             protected void updateItem(Country country, boolean empty)
-             {
-                 super.updateItem(country, empty);
-                 if (empty || country == null || country.getName() == null)
-                 {
-                     setText(null);
-                 }
-                 else
-                 {
-                	 setText(country.getName() + " ("+ country.getArmyCount() +")");
-                 }
-             }
-         });
-		 
 		 conqueredID.setItems(conqueredObservableList);
-		 conqueredID.setCellFactory(param -> new ListCell<Country>() {
-             @Override
-             protected void updateItem(Country country, boolean empty)
-             {
-                 super.updateItem(country, empty);
-                 if (empty || country == null || country.getName() == null)
-                 {
-                     setText(null);
-                 }
-                 else
-                 {
-                	 setText(country.getName() + " ("+ country.getArmyCount() +")");
-                 }
-             }
-         });
-		 
-		 
-        
+		 renderView();
 	}
 
 	/**
@@ -106,8 +73,7 @@ public class ConqueredController extends Observable implements Initializable{
 				reinforcement.reduceArmyCount(army);
 				conquered.setArmyCount(army);		
 				actions.addAction("moving army");				
-				conqueredObservableList.set(conqueredObservableList.indexOf(conquered), conquered);
-				territoryObservableList.set(territoryObservableList.indexOf(reinforcement), reinforcement);
+				renderView();
 				
 				if (moved >= diceRolled)
 				{
@@ -147,7 +113,7 @@ public class ConqueredController extends Observable implements Initializable{
 		conqueredObservableList.clear();
 		conqueredObservableList.add(c);
 		conquered = c;
-		territoryObservableList.addAll(PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
+		territoryObservableList.addAll(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
 	}
 	
 	/**
@@ -159,5 +125,42 @@ public class ConqueredController extends Observable implements Initializable{
 	{
 		this.diceRolled = roll;
 		actions.addAction(diceRolled + " dice rolled");
+	}
+	
+	/**
+	 * This method for re-rendering the listView
+	 */
+	public void renderView()
+	{
+		 countryOwnedID.setCellFactory(param -> new ListCell<Country>() {
+             @Override
+             protected void updateItem(Country country, boolean empty)
+             {
+                 super.updateItem(country, empty);
+                 if (empty || country == null || country.getName() == null)
+                 {
+                     setText(null);
+                 }
+                 else
+                 {
+                	 setText(country.getName() + " ("+ country.getArmyCount() +")");
+                 }
+             }
+         });
+		 conqueredID.setCellFactory(param -> new ListCell<Country>() {
+             @Override
+             protected void updateItem(Country country, boolean empty)
+             {
+                 super.updateItem(country, empty);
+                 if (empty || country == null || country.getName() == null)
+                 {
+                     setText(null);
+                 }
+                 else
+                 {
+                	 setText(country.getName() + " ("+ country.getArmyCount() +")");
+                 }
+             }
+         });
 	}
 }

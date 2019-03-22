@@ -17,7 +17,7 @@ import com.risk.model.ActionModel;
 import com.risk.model.DeckModel;
 import com.risk.model.GamePhaseModel;
 import com.risk.model.MapModel;
-import com.risk.model.PlayerModel;
+import com.risk.model.PlayerPhaseModel;
 import com.risk.model.card.Card;
 import com.risk.model.dice.Dice;
 import com.risk.model.map.Country;
@@ -82,7 +82,7 @@ public class AttackController implements Initializable, Observer {
 	    int [] rollLimit;
 	    ActionModel actions;
 	    boolean occupy=false;
-	    Player p = PlayerModel.getPlayerModel().getCurrentPlayer();
+	    Player p = PlayerPhaseModel.getPlayerModel().getCurrentPlayer();
 
 	
     /**
@@ -90,7 +90,6 @@ public class AttackController implements Initializable, Observer {
      */
     public AttackController()
     {
-    	
     }
 
     /**
@@ -104,11 +103,10 @@ public class AttackController implements Initializable, Observer {
     {
     	 conqueringController.addObserver(this);
     	 actions = ActionModel.getActionModel();
-    	 territoryObservableList.addAll(PlayerModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
+    	 territoryObservableList.addAll(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
          countryId.setItems(territoryObservableList);         
          adjacentEnemy.setItems(adjacentEnemyObservableList);    
          adjacentOwned.setItems(adjacentOwnedObservableList);
-
          updateView();
          
     }
@@ -179,13 +177,10 @@ public class AttackController implements Initializable, Observer {
             adjacentOwnedObservableList.clear();
                        
             adjacentEnemyObservableList.addAll(attacker.getConnectedEnemy());
-               
             adjacentOwnedObservableList.addAll(attacker.getConnectedOwned());
             ArmyCount.setText(Integer.toString(attacker.getArmyCount()));
           
-        
-        }
-        
+        }   
     }
     
     /**
@@ -289,7 +284,6 @@ public class AttackController implements Initializable, Observer {
     	 
     	 if (validateTerritorySelections() && validateDiceSelections() && attackerArmy > 1)
     	 {
-    		 
     		 actions.addAction("rolling dice");
     		 int diceAttack = AttackerDice.getSelectionModel().getSelectedItem();
     		 int diceDefender = DefenderDice.getSelectionModel().getSelectedItem();
@@ -298,13 +292,19 @@ public class AttackController implements Initializable, Observer {
     		 
     		 rollDice(diceAttack, diceDefender, countryId.getSelectionModel().getSelectedItem(), adjacentEnemy.getSelectionModel().getSelectedItem()); 
     		 initializeDice();
-    	 } else if(!validateTerritorySelections()) {
+    	 } 
+    	 else if(!validateTerritorySelections()) 
+    	 {
     		 actions.addAction("select attacker and defender");
-    	 } else if(!validateDiceSelections()) {
+    	 } 
+    	 else if(!validateDiceSelections()) 
+    	 {
     		 actions.addAction("select number of rolls");
     		 AttackerDice.getItems().clear();
     		 DefenderDice.getItems().clear();
-    	 } else {
+    	 } 
+    	 else 
+    	 {
     		 actions.addAction("you do not have enough army to attack");
     		 clearDiceRolls();
     	 }
@@ -329,7 +329,6 @@ public class AttackController implements Initializable, Observer {
 		int rolltime = setRollTime(diceattack, dicedefend);
 		for (int i = 0; i < rolltime; i++) 
 		{
-
 			if (dattack[i] > ddefend[i]) 
 			{
 				defend.reduceArmyCount(1);
@@ -339,8 +338,8 @@ public class AttackController implements Initializable, Observer {
 				{
 					actions.addAction("You have already occupied this country!");
 					actions.addAction("Please move armies to your new country!");
-					defend.getRuler().removeCountry(defend);
 					defend.setRuler(attack.getRuler());
+					defend.getRuler().removeCountry(defend);
 					attack.getRuler().addCountry(defend);
 					occupy=true;
 					child.setVisible(true);
@@ -355,10 +354,9 @@ public class AttackController implements Initializable, Observer {
 			else
 			{
 
-						attack.reduceArmyCount(1);
-						actions.addAction("attacker has lost 1 army");
-						updateView();
-						
+				attack.reduceArmyCount(1);
+				actions.addAction("attacker has lost 1 army");
+				updateView();	
 			}
 		}
 
@@ -454,8 +452,11 @@ public class AttackController implements Initializable, Observer {
     public void goToFortificationPhase(ActionEvent event)
     {
     	if(occupy) {
-    		DeckModel.getCardModel().sendCard(PlayerModel.getPlayerModel().getCurrentPlayer());
-    		System.out.println(p.getCards());
+    		DeckModel.getCardModel().sendCard(PlayerPhaseModel.getPlayerModel().getCurrentPlayer());
+    		for (Card card : p.getCards())
+    		{
+    			System.out.println(card.getCatagory());
+    		}
     	}
         GamePhaseModel.getGamePhaseModel().setPhase("fortification");
     }
@@ -471,9 +472,8 @@ public class AttackController implements Initializable, Observer {
 		child.setVisible(false);
 		adjacentOwned.getItems().clear();
 		ArmyCount.setText(Integer.toString(countryId.getSelectionModel().getSelectedItem().getArmyCount()));
-		System.out.println(conquered.getName() + conquered.getArmyCount());
-		adjacentOwned.getItems().addAll(countryId.getSelectionModel().getSelectedItem().getConnectedCountries());
-//		adjacentOwnedObservableList.set(adjacentOwnedObservableList.indexOf(conquered),conquered);
+		
+		updateView();
 		
 	}
 }

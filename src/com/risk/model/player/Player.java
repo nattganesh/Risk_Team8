@@ -27,7 +27,6 @@ public class Player extends Observable {
 
     private String name;
     private ArrayList<Country> occupiedCountries = new ArrayList<>();
-    private ObservableList<Continent> occupiedContinents = FXCollections.observableArrayList();
 	Set<String> continents = new HashSet<String>();
     private ObservableList<Card> cards = FXCollections.observableArrayList();
         
@@ -104,11 +103,6 @@ public class Player extends Observable {
         return occupiedCountries;
     }
     
-    public ObservableList<Continent> getOccupiedContinents()
-    {
-    	return occupiedContinents;
-    }
-    
     /** 
      * 
      * @param country country to be added in the player's occupied territories
@@ -118,10 +112,8 @@ public class Player extends Observable {
     	
     	System.out.println("notify from addCountry");
     	occupiedCountries.add(country);
-    	updateContinentsOccupied(country);
-    	System.out.println("[["+ occupiedContinents.size() +"]]");
     	setChanged();
-    	notifyObservers(this);
+    	notifyObservers(country);
     }
 
     /** 
@@ -133,33 +125,11 @@ public class Player extends Observable {
     	
     	System.out.println("notify from removeCountry");
     	occupiedCountries.remove(country);
-    	updateContinentsOccupied(country);
-    	System.out.println("[["+ occupiedContinents.size() +"]]");
+    
     	setChanged();
-    	notifyObservers(this);
+    	notifyObservers(country);
     }
     
-    public void updateContinentsOccupied(Country c) 
-    { 	
-    	boolean occupy = false;
-    	for (Continent continent : MapModel.getMapModel().getContinents())
-    	{
-    		System.out.println(continent.getName());
-    		for (Country country : continent.getCountries())
-    		{
-    			
-    			if (country.getRuler() != null && !country.getRuler().getName().equals(c.getRuler().getName())) {
-    				occupy = false;
-    				break;
-    			}
-    		}
-    		if (occupy)
-    		{
-    			occupiedContinents.add(continent);
-    		}
-    		
-    	} 
-    } 
 
     /**
      * gets the size of occupied country
@@ -260,63 +230,9 @@ public class Player extends Observable {
         this.playerLost = playerLost;
     }
     
-    /**
-     * This method is used to calculate the extra armies earned if the player
-     * has occupied continents
-     *
-     * @param currentPlayer The player who is in his reinforcement round
-     * @return The result corresponding to the countries the player occupied
-     */
-    public int calculateReinforcementContinentControl()
-    {
-        String currentRuler = getName();
-        int reinforcement = 0;
-        for (Continent continent : MapModel.getMapModel().getContinents())
-        {
-            boolean control = true;
-            for (Country country : continent.getCountries())
-            {
-                if (country.getRuler().getName() != currentRuler)
-                {
-                    control = false;
-                    break;
-                }
-            }
-            if (control)
-            {
-                reinforcement = reinforcement + continent.getPointsWhenFullyOccupied();
-            }
-        }
-        return reinforcement;
-    }
 
-    /**
-     * This method is used to calculate the extra armies based on the number of
-     * countries the player already occupied
-     *
-     * @param currentPlayer The player who is in his reinforcement round
-     * @return The result corresponding to the countries the player occupied
-     */
-    public int calculateReinforcementOccupiedTerritory()
-    {
-        int reinforcement = (int) Math.floor(numbOccupied() / 3);
-        return reinforcement;
-    }
     
-    
-    /**
-     * This method is used to calculate the extra armies earned by exchanging
-     * cards
-     *
-     * @return The result corresponding to the total exchange time.
-     */
-    public int calculateReinforcementFromCards()
-    {
-        int currentExchange = MapModel.getMapModel().getExchangeTime();
-        int reinforcement = (currentExchange + 1) * 5;
-        MapModel.getMapModel().setExchangeTime(currentExchange + 1);
-        return reinforcement;
-    }
+
 
 
 
