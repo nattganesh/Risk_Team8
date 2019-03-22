@@ -458,6 +458,7 @@ public class MapEditorController implements Initializable {
                 calcStartingArmies();
                 assignCountriesToPlayers();
                 determinePlayersStartingOrder();
+                GamePhaseModel.getGamePhaseModel().setPhase("setup complete");   
                 GamePhaseModel.getGamePhaseModel().setPhase("setup");
             } 
             else 
@@ -598,7 +599,7 @@ public class MapEditorController implements Initializable {
                     
                     p.setStartingPoints(p.getStartingPoints() - 1);
                     countryOccupied[random] = true;
-                    p.getOccupiedCountries().add(MapModel.getMapModel().getCountries().get(random));
+                    p.addCountry(MapModel.getMapModel().getCountries().get(random));
                     i++;
                 }
                 if (i >= Country.MAX_NUMBER_OF_COUNTRIES)
