@@ -81,6 +81,8 @@ public class MapEditorController implements Initializable {
     
     ActionModel actions;
     
+   
+    
     /**
      * (non-Javadoc)
      *
@@ -92,54 +94,10 @@ public class MapEditorController implements Initializable {
     {
     	actions = ActionModel.getActionModel();
         ContinentView.setItems(MapModel.getMapModel().getContinents());
-        ContinentView.setCellFactory(param -> new ListCell<Continent>() {
-            @Override
-            protected void updateItem(Continent continent, boolean empty)
-            {
-                super.updateItem(continent, empty);
-                if (empty || continent == null || continent.getName() == null)
-                {
-                    setText(null);
-                }
-                else
-                {
-                    setText(continent.getName());
-                }
-            }
-        });
-
-        TerritoryView.setItems(territoryObservableList);
-        TerritoryView.setCellFactory(param -> new ListCell<Country>() {
-            @Override
-            protected void updateItem(Country country, boolean empty)
-            {
-                super.updateItem(country, empty);
-                if (empty || country == null || country.getName() == null)
-                {
-                    setText(null);
-                }
-                else
-                {
-                    setText(country.getName());
-                }
-            }
-        });
+        TerritoryView.setItems(territoryObservableList);    
         AdjacentView.setItems(adjacentObservableList);
-        AdjacentView.setCellFactory(param -> new ListCell<Country>() {
-            @Override
-            protected void updateItem(Country country, boolean empty)
-            {
-                super.updateItem(country, empty);
-                if (empty || country == null || country.getName() == null)
-                {
-                    setText(null);
-                }
-                else
-                {
-                    setText(country.getName());
-                }
-            }
-        });
+        renderView();
+       
        
 
     }
@@ -258,16 +216,17 @@ public class MapEditorController implements Initializable {
 
     /**
      *
-     * @param countryName name of the country to be searched in the adjacent
+     * @param addingCountry name of the country to be searched in the adjacent
      * list
      * @return true if the country already exists in the adjacent list, false
      * otherwise
      */
-    private boolean existsInAdjacentList(String countryName)
+    private boolean existsInAdjacentList(String addingCountry)
     {
-        for (Country country : TerritoryView.getSelectionModel().getSelectedItem().getConnectedCountries())
+    	Country selectedCountry = TerritoryView.getSelectionModel().getSelectedItem();
+        for (Country country : selectedCountry.getConnectedCountries())
         {
-            if (country.getName().equals(countryName))
+            if (country.getName().equals(addingCountry))
             {
                 return true;
             }
@@ -284,22 +243,18 @@ public class MapEditorController implements Initializable {
     {
         if (TerritoryView.getSelectionModel().getSelectedItem() != null && ContinentView.getSelectionModel().getSelectedItem() != null)
         {
-            ContinentView.getSelectionModel().getSelectedItem().getCountries()
-                    .remove(TerritoryView.getSelectionModel().getSelectedItem());
-            for (Country c : TerritoryView.getSelectionModel().getSelectedItem().getConnectedCountries())
-            {
-                for (Country connected : c.getConnectedCountries())
-                {
-                    if (connected.getName().equals(TerritoryView.getSelectionModel().getSelectedItem().getName()))
-                    {
-                        c.getConnectedCountries().remove(TerritoryView.getSelectionModel().getSelectedItem());
-                        break;
-                    }
-                }
+        	Country removingTerritory = TerritoryView.getSelectionModel().getSelectedItem();
+        	Continent continent =  ContinentView.getSelectionModel().getSelectedItem();
+            continent.getCountries().remove(removingTerritory);
+            
+            for (Country connected : removingTerritory.getConnectedCountries())
+            {	
+            	  connected.getConnectedCountries().remove(removingTerritory);
             }
+            
             territoryObservableList.clear();
             adjacentObservableList.clear();
-            territoryObservableList.addAll(ContinentView.getSelectionModel().getSelectedItem().getCountries());
+            territoryObservableList.addAll(continent.getCountries());
             actions.addAction("territory deleted along with connections");
         }
     }
@@ -313,18 +268,21 @@ public class MapEditorController implements Initializable {
 
         if (AdjacentView.getSelectionModel().getSelectedItem() != null && TerritoryView.getSelectionModel().getSelectedItem() != null)
         {
-            TerritoryView.getSelectionModel().getSelectedItem().getConnectedCountries()
-                    .remove(AdjacentView.getSelectionModel().getSelectedItem());
+        	
+        	Country selectedTerritory = TerritoryView.getSelectionModel().getSelectedItem();
+        	Country removingTerritory = AdjacentView.getSelectionModel().getSelectedItem();
+        	selectedTerritory.getConnectedCountries().remove(removingTerritory);
+                 
 
             for (Continent continent : ContinentView.getItems())
             {
                 for (Country country : continent.getCountries())
                 {
-                    if (country.getName().equals(AdjacentView.getSelectionModel().getSelectedItem().getName()))
+                    if (country.getName().equals(removingTerritory.getName()))
                     {
                         for (Country adj : country.getConnectedCountries())
                         {
-                            if (adj.getName().equals(TerritoryView.getSelectionModel().getSelectedItem().getName()))
+                            if (adj.getName().equals(selectedTerritory.getName()))
                             {
                                 country.getConnectedCountries().remove(adj);
                                 break;
@@ -362,7 +320,6 @@ public class MapEditorController implements Initializable {
             FileParser fileParser = new FileParser();
             if (fileParser.init(scan))
             {
-
                 Validate.getValidate().validateMap();
                 if (Validate.getValidate().getValidateSize() == MapModel.getMapModel().getCountries().size())
                 {
@@ -377,7 +334,6 @@ public class MapEditorController implements Initializable {
         }
         else
         {
-    
             actions.addAction("file does not exist");
             clearMapEditor();
         }
@@ -473,6 +429,55 @@ public class MapEditorController implements Initializable {
                 GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
             }
         }
+    }
+    
+    public void renderView()
+    {
+    	 ContinentView.setCellFactory(param -> new ListCell<Continent>() {
+             @Override
+             protected void updateItem(Continent continent, boolean empty)
+             {
+                 super.updateItem(continent, empty);
+                 if (empty || continent == null || continent.getName() == null)
+                 {
+                     setText(null);
+                 }
+                 else
+                 {
+                     setText(continent.getName());
+                 }
+             }
+         });
+    	 TerritoryView.setCellFactory(param -> new ListCell<Country>() {
+             @Override
+             protected void updateItem(Country country, boolean empty)
+             {
+                 super.updateItem(country, empty);
+                 if (empty || country == null || country.getName() == null)
+                 {
+                     setText(null);
+                 }
+                 else
+                 {
+                     setText(country.getName());
+                 }
+             }
+         });
+    	 AdjacentView.setCellFactory(param -> new ListCell<Country>() {
+             @Override
+             protected void updateItem(Country country, boolean empty)
+             {
+                 super.updateItem(country, empty);
+                 if (empty || country == null || country.getName() == null)
+                 {
+                     setText(null);
+                 }
+                 else
+                 {
+                     setText(country.getName());
+                 }
+             }
+         });
     }
 
     /**
