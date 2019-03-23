@@ -82,7 +82,7 @@ public class SetUpController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
         actions = ActionModel.getActionModel();
-        TotalArmies = PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getStartingP();
+        TotalArmies = PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getStartingPoints();
         armyAvailable.setText("Army: " + Integer.toString(getArmies()));
         territoryObservableList.addAll(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
         countryId.setItems(territoryObservableList);
@@ -183,7 +183,7 @@ public class SetUpController implements Initializable {
         boolean isAnyPlayerPlacedAllArmies = true;
         for (Player p : PlayerPhaseModel.getPlayerModel().getPlayers())
         {
-            if (p.getStartingP() != 0)
+            if (p.getStartingPoints() != 0)
             {
                 isAnyPlayerPlacedAllArmies = false;
             }

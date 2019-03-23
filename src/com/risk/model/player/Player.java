@@ -138,14 +138,6 @@ public class Player extends Observable {
         return occupiedCountries.size();
     }
 
-    /**
-     *
-     * @return the index of the current player
-     */
-    public int getStartingP()
-    {
-        return startingPoints;
-    }
 
     /**
      * gets country object associated with the name of the string
