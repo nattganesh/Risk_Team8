@@ -22,7 +22,7 @@ public class Card {
         this.category = category;
         this.owner = null;
     }
-    
+
     public Card(String category, Player owner)
     {
         this.category = category;
@@ -66,7 +66,7 @@ public class Card {
     {
         this.owner = player;
     }
-    
+
     public void removeCard(Player player)
     {
         this.owner = null;

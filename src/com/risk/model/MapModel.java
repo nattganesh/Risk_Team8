@@ -18,7 +18,7 @@ import com.risk.model.map.Country;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class MapModel extends Observable implements Observer{
+public class MapModel extends Observable implements Observer {
 
     private ObservableList<Continent> continentsModel = FXCollections.observableArrayList();
     private ArrayList<Country> countriesModel = new ArrayList<>();
@@ -27,7 +27,7 @@ public class MapModel extends Observable implements Observer{
 
     private MapModel()
     {
-    	
+
     }
 
     /**
@@ -104,13 +104,14 @@ public class MapModel extends Observable implements Observer{
         return mapModel;
     }
 
-	/* (non-Javadoc)
+    /* (non-Javadoc)
 	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
-	 */
-	@Override
-	public void update(Observable o, Object arg) {
-		Country country = (Country)arg;
-		setChanged();
-		notifyObservers(country);
-	}
+     */
+    @Override
+    public void update(Observable o, Object arg)
+    {
+        Country country = (Country) arg;
+        setChanged();
+        notifyObservers(country);
+    }
 }

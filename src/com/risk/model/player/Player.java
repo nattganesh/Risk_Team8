@@ -27,29 +27,29 @@ public class Player extends Observable {
 
     private String name;
     private ArrayList<Country> occupiedCountries = new ArrayList<>();
-	Set<String> continents = new HashSet<String>();
+    private Set<String> continents = new HashSet<String>();
     private ObservableList<Card> cards = FXCollections.observableArrayList();
-        
+
     private int totalArmy;
     private int startingPoints;
-   
+
     private boolean playerLost = false;
-    
+
     public void setTotalArmy(int count)
     {
-    	totalArmy  = totalArmy + count;
+        totalArmy = totalArmy + count;
     }
-    
+
     public void reduceTotalArmy(int count)
     {
-    	totalArmy  =  totalArmy - count;
+        totalArmy = totalArmy - count;
     }
-    
+
     public int getTotalArmy()
     {
-    	return totalArmy;
+        return totalArmy;
     }
-    
+
     /**
      * Constructor for Player class
      *
@@ -58,10 +58,8 @@ public class Player extends Observable {
     public Player(String name)
     {
         this.name = name;
-        
-    }	
-    
 
+    }
 
     /**
      * Sets the number of armies needed to start the game for a player
@@ -72,15 +70,15 @@ public class Player extends Observable {
     {
         this.startingPoints = i;
     }
-    
+
     /**
      * Gets the starting points of armies left
-     * 
+     *
      * @return
      */
     public int getStartingPoints()
     {
-    	return startingPoints;
+        return startingPoints;
     }
 
     /**
@@ -102,34 +100,33 @@ public class Player extends Observable {
     {
         return occupiedCountries;
     }
-    
-    /** 
-     * 
+
+    /**
+     *
      * @param country country to be added in the player's occupied territories
      */
     public void addCountry(Country country)
     {
-    	
-    	System.out.println("notify from addCountry");
-    	occupiedCountries.add(country);
-    	setChanged();
-    	notifyObservers(country);
+
+        System.out.println("notify from addCountry");
+        occupiedCountries.add(country);
+        setChanged();
+        notifyObservers(country);
     }
 
-    /** 
-     * 
+    /**
+     *
      * @param country country to be removed in the player's occupied territories
      */
     public void removeCountry(Country country)
     {
-    	
-    	System.out.println("notify from removeCountry");
-    	occupiedCountries.remove(country);
-    
-    	setChanged();
-    	notifyObservers(country);
+
+        System.out.println("notify from removeCountry");
+        occupiedCountries.remove(country);
+
+        setChanged();
+        notifyObservers(country);
     }
-    
 
     /**
      * gets the size of occupied country
@@ -141,7 +138,6 @@ public class Player extends Observable {
         return occupiedCountries.size();
     }
 
-  
     /**
      *
      * @return the index of the current player
@@ -150,6 +146,7 @@ public class Player extends Observable {
     {
         return startingPoints;
     }
+
     /**
      * gets country object associated with the name of the string
      *
@@ -187,19 +184,24 @@ public class Player extends Observable {
     {
         return cards;
     }
-    public void addCard(Card card) {
-    	cards.add(card);
+
+    public void addCard(Card card)
+    {
+        cards.add(card);
     }
-    
-    public void removeCard(Card card) {
-    	for(Card c: cards) {
-    		if(c.getCatagory().equals(card.getCatagory())) {
-    			cards.remove(c);
-    			break;
-    		}
-    	}
+
+    public void removeCard(Card card)
+    {
+        for (Card c : cards)
+        {
+            if (c.getCatagory().equals(card.getCatagory()))
+            {
+                cards.remove(c);
+                break;
+            }
+        }
     }
-    
+
     /**
      *
      * @param cards
@@ -229,13 +231,14 @@ public class Player extends Observable {
     {
         this.playerLost = playerLost;
     }
+
     
-    public void attack(Player enemy, Country enemyCountry, Country myCountry)
+    public void reinforce(Country myCountry)
     {
     	
     }
-
-    public void reinforce(Country myCountry)
+    
+    public void attack(Player enemy, Country enemyCountry, Country myCountry)
     {
     	
     }
@@ -245,16 +248,4 @@ public class Player extends Observable {
     	
     }
 
-   
-
-    
-
-
-
-
-
-
-    
-    
-    
 }

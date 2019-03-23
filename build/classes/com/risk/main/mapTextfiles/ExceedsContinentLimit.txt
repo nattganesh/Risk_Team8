@@ -1,0 +1,122 @@
+SET COUNTRIES IN CONTINENTS
+North America,Alaska
+North America,Alaska2
+North America,Northwest Territory
+North America,Greenland
+North America,Alberta
+North America,Ontario
+North America,Quebec
+North America,Western United States
+North America,Eastern United States
+North America,Central America
+South America,Peru
+South America,Brazil
+South America,Argentina
+Europe,Iceland
+Europe,Scandinavia
+Europe,Ukraine
+Europe,Great Britian
+Europe,Northern Europe
+Europe,Southern Europe
+Europe,Western Europe
+Africa,North Africa
+Africa,Egypt
+Africa,East Africa
+Africa,Congo
+Africa,South Africa
+Africa,Madagascar
+Asia,Siam
+Asia,India
+Asia,China
+Asia,Mongolia
+Asia,Japan
+Asia,Irkutsk
+Asia,Yakutsk
+Asia,Kamchatka
+Asia,Siberia
+Asia,Afghanistan
+Asia,Ural
+Asia,Middle East
+Australia,Indonesia
+Australia,New Guinea
+Australia,Western Australia
+Australia,Eastern Australia
+SET NEIGHBORS
+Alaska,Kamchatka
+Alaska,Alberta
+Alaska,Northwest Territory
+Northwest Territory,Greenland
+Northwest Territory,Ontario
+Northwest Territory,Alberta
+Greenland,Ontario
+Greenland,Quebec
+Greenland,Iceland
+Alberta,Ontario
+Alberta,Western United States
+Ontario,Quebec
+Ontario,Western United States
+Ontario,Eastern United States
+Quebec,Eastern United States
+Central America,Western United States
+Central America,Eastern United States
+Central America,Venezuela
+Venezuela,Peru
+Venezuela,Brazil
+Peru,Brazil
+Peru,Argentina
+Brazil,North Africa
+North Africa,Southern Europe
+North Africa,Western Europe
+North Africa,Congo
+North Africa,Egypt
+North Africa,East Africa
+Egypt,Southern Europe
+Egypt,Middle East
+Egypt,East Africa
+East Africa,Middle East
+East Africa,Congo
+East Africa,Madagascar
+Congo,South Africa
+South Africa,Madagascar
+Iceland,Scandinavia
+Iceland,Great Britian
+Great Britian,Scandinavia
+Great Britian,Western Europe
+Great Britian,Northern Europe
+Scandinavia,Northern Europe
+Scandinavia,Ukraine
+Northern Europe,Southern Europe
+Western Europe,Northern Europe
+Western Europe,Southern Europe
+Ukraine,Northern Europe
+Ukraine,Southern Europe
+Ukraine,Ural
+Ukraine,Afghanistan
+Ukraine,Middle East
+Middle East,Afghanistan
+Middle East,India
+Afghanistan,India
+Afghanistan,Ural
+Afghanistan,China
+Ural,Siberia
+Ural,China
+Siberia,China
+Siberia,Mongolia
+Siberia,Yakutsk
+Siberia,Irkutsk
+India,Siam
+India,China
+China,Siam
+China,Mongolia
+Mongolia,Irkutsk
+Mongolia,Kamchatka
+Mongolia,Japan
+Kamchatka,Japan
+Kamchatka,Irkutsk
+Kamchatka,Yakutsk
+Siam,Indonesia
+Indonesia,Western Australia
+Western Australia,Eastern Australia
+New Guinea,Eastern Australia
+New Guinea,Western Australia
+New Guinea,Indonesia

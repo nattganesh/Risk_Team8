@@ -22,7 +22,6 @@ public class Continent {
     private int pointsWhenFullyOccupied;
     private Player ruler;
 
-    
     /**
      * This is the constructor for Continent
      *
@@ -35,7 +34,6 @@ public class Continent {
         this.name = name;
         this.pointsWhenFullyOccupied = pointsWhenFullyOccupied;
     }
-    
 
     /**
      * this method is a getter for this continent name
@@ -56,17 +54,17 @@ public class Continent {
     {
         return countries;
     }
-    
+
     public void setRuler(Player p)
     {
-    	ruler = p;
+        ruler = p;
     }
-    
+
     public Player getRuler()
     {
-    	return ruler;
+        return ruler;
     }
-    
+
     /**
      * This method is a setter for adding country to a continent
      *
@@ -95,8 +93,4 @@ public class Continent {
         this.pointsWhenFullyOccupied = pointsWhenFullyOccupied;
     }
 
-
-
-    
-   
 }

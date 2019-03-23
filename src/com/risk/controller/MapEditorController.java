@@ -65,24 +65,21 @@ public class MapEditorController implements Initializable {
     @FXML
     TextField ExistingFile;
 
-
     @FXML
     Label AdjacentError;
 
     @FXML
     ComboBox<String> PlayerID;
-    
+
     @FXML
     RadioButton skipRobinID;
 
     private int validated = 0;
     ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
     ObservableList<Country> adjacentObservableList = FXCollections.observableArrayList();
-    
+
     ActionModel actions;
-    
-   
-    
+
     /**
      * (non-Javadoc)
      *
@@ -92,9 +89,9 @@ public class MapEditorController implements Initializable {
     @Override
     public void initialize(URL arg0, ResourceBundle arg1)
     {
-    	actions = ActionModel.getActionModel();
+        actions = ActionModel.getActionModel();
         ContinentView.setItems(MapModel.getMapModel().getContinents());
-        TerritoryView.setItems(territoryObservableList);    
+        TerritoryView.setItems(territoryObservableList);
         AdjacentView.setItems(adjacentObservableList);
         renderView();
     }
@@ -220,7 +217,7 @@ public class MapEditorController implements Initializable {
      */
     private boolean existsInAdjacentList(String addingCountry)
     {
-    	Country selectedCountry = TerritoryView.getSelectionModel().getSelectedItem();
+        Country selectedCountry = TerritoryView.getSelectionModel().getSelectedItem();
         for (Country country : selectedCountry.getConnectedCountries())
         {
             if (country.getName().equals(addingCountry))
@@ -240,15 +237,15 @@ public class MapEditorController implements Initializable {
     {
         if (TerritoryView.getSelectionModel().getSelectedItem() != null && ContinentView.getSelectionModel().getSelectedItem() != null)
         {
-        	Country removingTerritory = TerritoryView.getSelectionModel().getSelectedItem();
-        	Continent continent =  ContinentView.getSelectionModel().getSelectedItem();
+            Country removingTerritory = TerritoryView.getSelectionModel().getSelectedItem();
+            Continent continent = ContinentView.getSelectionModel().getSelectedItem();
             continent.getCountries().remove(removingTerritory);
-            
+
             for (Country connected : removingTerritory.getConnectedCountries())
-            {	
-            	  connected.getConnectedCountries().remove(removingTerritory);
+            {
+                connected.getConnectedCountries().remove(removingTerritory);
             }
-            
+
             territoryObservableList.clear();
             adjacentObservableList.clear();
             territoryObservableList.addAll(continent.getCountries());
@@ -265,11 +262,10 @@ public class MapEditorController implements Initializable {
 
         if (AdjacentView.getSelectionModel().getSelectedItem() != null && TerritoryView.getSelectionModel().getSelectedItem() != null)
         {
-        	
-        	Country selectedTerritory = TerritoryView.getSelectionModel().getSelectedItem();
-        	Country removingTerritory = AdjacentView.getSelectionModel().getSelectedItem();
-        	selectedTerritory.getConnectedCountries().remove(removingTerritory);
-                 
+
+            Country selectedTerritory = TerritoryView.getSelectionModel().getSelectedItem();
+            Country removingTerritory = AdjacentView.getSelectionModel().getSelectedItem();
+            selectedTerritory.getConnectedCountries().remove(removingTerritory);
 
             for (Continent continent : ContinentView.getItems())
             {
@@ -324,7 +320,6 @@ public class MapEditorController implements Initializable {
                 }
                 else
                 {
-             
                     actions.addAction("Disconnected Map. Might want to reassign territories");
                 }
             }
@@ -352,7 +347,7 @@ public class MapEditorController implements Initializable {
             Validate.getValidate().validateMap();
             if (Validate.getValidate().getValidateSize() == MapModel.getMapModel().getCountries().size())
             {
-               
+
                 actions.addAction("saved File");
                 Output.generate(ExistingFile.getText());
                 initializePlayers();
@@ -360,7 +355,6 @@ public class MapEditorController implements Initializable {
             }
             else
             {
-                
                 actions.addAction("Can't Save Map it's an invalid map");
                 validated = 0;
             }
@@ -382,13 +376,13 @@ public class MapEditorController implements Initializable {
             validated = 0;
             clearMapEditor();
             initializeContinents();
-  
+
             actions.addAction("New map");
 
         }
         else
         {
-        	actions.addAction("You need a name for a file");
+            actions.addAction("You need a name for a file");
         }
     }
 
@@ -411,70 +405,70 @@ public class MapEditorController implements Initializable {
                 calcStartingArmies();
                 assignCountriesToPlayers();
                 determinePlayersStartingOrder();
-                GamePhaseModel.getGamePhaseModel().setPhase("setup complete");   
+                GamePhaseModel.getGamePhaseModel().setPhase("setup complete");
                 GamePhaseModel.getGamePhaseModel().setPhase("setup");
-            } 
-            else 
+            }
+            else
             {
-            	int numbPlayers = Integer.parseInt(PlayerID.getSelectionModel().getSelectedItem());
+                int numbPlayers = Integer.parseInt(PlayerID.getSelectionModel().getSelectedItem());
                 setPlayers(numbPlayers);
                 setDeck();
                 calcStartingArmies();
                 autoAssignCountriesToPlayers();
                 determinePlayersStartingOrder();
-	            GamePhaseModel.getGamePhaseModel().setPhase("setup complete");    
+                GamePhaseModel.getGamePhaseModel().setPhase("setup complete");
                 GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
             }
         }
     }
-    
+
     public void renderView()
     {
-    	 ContinentView.setCellFactory(param -> new ListCell<Continent>() {
-             @Override
-             protected void updateItem(Continent continent, boolean empty)
-             {
-                 super.updateItem(continent, empty);
-                 if (empty || continent == null || continent.getName() == null)
-                 {
-                     setText(null);
-                 }
-                 else
-                 {
-                     setText(continent.getName());
-                 }
-             }
-         });
-    	 TerritoryView.setCellFactory(param -> new ListCell<Country>() {
-             @Override
-             protected void updateItem(Country country, boolean empty)
-             {
-                 super.updateItem(country, empty);
-                 if (empty || country == null || country.getName() == null)
-                 {
-                     setText(null);
-                 }
-                 else
-                 {
-                     setText(country.getName());
-                 }
-             }
-         });
-    	 AdjacentView.setCellFactory(param -> new ListCell<Country>() {
-             @Override
-             protected void updateItem(Country country, boolean empty)
-             {
-                 super.updateItem(country, empty);
-                 if (empty || country == null || country.getName() == null)
-                 {
-                     setText(null);
-                 }
-                 else
-                 {
-                     setText(country.getName());
-                 }
-             }
-         });
+        ContinentView.setCellFactory(param -> new ListCell<Continent>() {
+            @Override
+            protected void updateItem(Continent continent, boolean empty)
+            {
+                super.updateItem(continent, empty);
+                if (empty || continent == null || continent.getName() == null)
+                {
+                    setText(null);
+                }
+                else
+                {
+                    setText(continent.getName());
+                }
+            }
+        });
+        TerritoryView.setCellFactory(param -> new ListCell<Country>() {
+            @Override
+            protected void updateItem(Country country, boolean empty)
+            {
+                super.updateItem(country, empty);
+                if (empty || country == null || country.getName() == null)
+                {
+                    setText(null);
+                }
+                else
+                {
+                    setText(country.getName());
+                }
+            }
+        });
+        AdjacentView.setCellFactory(param -> new ListCell<Country>() {
+            @Override
+            protected void updateItem(Country country, boolean empty)
+            {
+                super.updateItem(country, empty);
+                if (empty || country == null || country.getName() == null)
+                {
+                    setText(null);
+                }
+                else
+                {
+                    setText(country.getName());
+                }
+            }
+        });
     }
 
     /**
@@ -526,12 +520,11 @@ public class MapEditorController implements Initializable {
             numberOfPlayer--;
         }
     }
-    
+
     public void setDeck()
     {
         DeckModel.getCardModel().initialize();
     }
-    
 
     /**
      * This method calculates the round robin. It first roll the dice to
@@ -587,7 +580,7 @@ public class MapEditorController implements Initializable {
         while (i < Country.MAX_NUMBER_OF_COUNTRIES)
         {
             for (Player p : PlayerPhaseModel.getPlayerModel().getPlayers())
-            {	
+            {
                 int random = (int) (Math.random() * Country.MAX_NUMBER_OF_COUNTRIES);
                 while (countryOccupied[random])
                 {
@@ -598,7 +591,7 @@ public class MapEditorController implements Initializable {
                     MapModel.getMapModel().getCountries().get(random).setRuler(p);
                     MapModel.getMapModel().getCountries().get(random).setIsOccupied(true);
                     MapModel.getMapModel().getCountries().get(random).setArmyCount(1);
-                    
+
                     p.setStartingPoints(p.getStartingPoints() - 1);
                     countryOccupied[random] = true;
                     p.addCountry(MapModel.getMapModel().getCountries().get(random));
@@ -610,71 +603,80 @@ public class MapEditorController implements Initializable {
                 }
             }
         }
-       
+
     }
-    
+
     /**
      * This method random assigns armies to setup stage
      */
-	public void autoAssignCountriesToPlayers() {
-		  boolean[] countryOccupied = new boolean[Country.MAX_NUMBER_OF_COUNTRIES];
-	        int i = 0;
-	        while (i < Country.MAX_NUMBER_OF_COUNTRIES)
-	        {
-	            for (Player p : PlayerPhaseModel.getPlayerModel().getPlayers())
-	            {	
-	                int random = (int) (Math.random() * Country.MAX_NUMBER_OF_COUNTRIES);
-	                while (countryOccupied[random])
-	                {
-	                    random = (int) (Math.random() * Country.MAX_NUMBER_OF_COUNTRIES);
-	                }
-	                if (!countryOccupied[random])
-	                {
-	                    MapModel.getMapModel().getCountries().get(random).setRuler(p);
-	                    MapModel.getMapModel().getCountries().get(random).setIsOccupied(true);
-	                    System.out.println("setting army count by 1 from mapModel");
-	                    MapModel.getMapModel().getCountries().get(random).setArmyCount(1); //added army
-	                    p.setStartingPoints(p.getStartingPoints() - 1);
-	                    countryOccupied[random] = true;
-	                    p.addCountry(MapModel.getMapModel().getCountries().get(random));
-	                    
-	                    i++;
-	                }
-	                if (i >= Country.MAX_NUMBER_OF_COUNTRIES)
-	                {
-	                    break;
-	                }
-	            }
-	        }
+    public void autoAssignCountriesToPlayers()
+    {
+        boolean[] countryOccupied = new boolean[Country.MAX_NUMBER_OF_COUNTRIES];
+        int i = 0;
+        while (i < Country.MAX_NUMBER_OF_COUNTRIES)
+        {
+            for (Player p : PlayerPhaseModel.getPlayerModel().getPlayers())
+            {
+                int random = (int) (Math.random() * Country.MAX_NUMBER_OF_COUNTRIES);
+                while (countryOccupied[random])
+                {
+                    random = (int) (Math.random() * Country.MAX_NUMBER_OF_COUNTRIES);
+                }
+                if (!countryOccupied[random])
+                {
+                    MapModel.getMapModel().getCountries().get(random).setRuler(p);
+                    MapModel.getMapModel().getCountries().get(random).setIsOccupied(true);
+                    System.out.println("setting army count by 1 from mapModel");
+                    MapModel.getMapModel().getCountries().get(random).setArmyCount(1); //added army
+                    p.setStartingPoints(p.getStartingPoints() - 1);
+                    countryOccupied[random] = true;
+                    p.addCountry(MapModel.getMapModel().getCountries().get(random));
 
-		boolean[] armiesRemaining = new boolean[PlayerPhaseModel.getPlayerModel().getNumberOfPlayer()];
-		boolean done = false;
+                    i++;
+                }
+                if (i >= Country.MAX_NUMBER_OF_COUNTRIES)
+                {
+                    break;
+                }
+            }
+        }
 
-		while (!done) {
-			for (int ii = 0; ii < PlayerPhaseModel.getPlayerModel().getNumberOfPlayer(); ii++) {
-				if (PlayerPhaseModel.getPlayerModel().getPlayers().get(ii).getStartingPoints() > 0) {
-					int random = (int) (Math.random()
-							* PlayerPhaseModel.getPlayerModel().getPlayers().get(ii).numbOccupied());
-					
-					System.out.println("setting army count by 1 from playerModel");
-					PlayerPhaseModel.getPlayerModel().getPlayers().get(ii).getOccupiedCountries().get(random)
-							.setArmyCount(1);
-					PlayerPhaseModel.getPlayerModel().getPlayers().get(ii).setStartingPoints(PlayerPhaseModel.getPlayerModel().getPlayers().get(ii).getStartingPoints() - 1);
-				} else {
-					armiesRemaining[ii] = true;
-				}
-			}
-			int countP = 0;
-			for (boolean d : armiesRemaining) {
-				if (d) {
-					countP++;
-				}
-			}
-			if (countP == PlayerPhaseModel.getPlayerModel().getNumberOfPlayer()) {
-				done = true;
-			}
-		}
-	}
+        boolean[] armiesRemaining = new boolean[PlayerPhaseModel.getPlayerModel().getNumberOfPlayer()];
+        boolean done = false;
+
+        while (!done)
+        {
+            for (int ii = 0; ii < PlayerPhaseModel.getPlayerModel().getNumberOfPlayer(); ii++)
+            {
+                if (PlayerPhaseModel.getPlayerModel().getPlayers().get(ii).getStartingPoints() > 0)
+                {
+                    int random = (int) (Math.random()
+                            * PlayerPhaseModel.getPlayerModel().getPlayers().get(ii).numbOccupied());
+
+                    System.out.println("setting army count by 1 from playerModel");
+                    PlayerPhaseModel.getPlayerModel().getPlayers().get(ii).getOccupiedCountries().get(random)
+                            .setArmyCount(1);
+                    PlayerPhaseModel.getPlayerModel().getPlayers().get(ii).setStartingPoints(PlayerPhaseModel.getPlayerModel().getPlayers().get(ii).getStartingPoints() - 1);
+                }
+                else
+                {
+                    armiesRemaining[ii] = true;
+                }
+            }
+            int countP = 0;
+            for (boolean d : armiesRemaining)
+            {
+                if (d)
+                {
+                    countP++;
+                }
+            }
+            if (countP == PlayerPhaseModel.getPlayerModel().getNumberOfPlayer())
+            {
+                done = true;
+            }
+        }
+    }
 
     /**
      * This method sets the starting armies during initialization based on

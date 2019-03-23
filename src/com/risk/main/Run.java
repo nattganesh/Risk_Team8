@@ -33,12 +33,12 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class Run extends Application {
-	
-	@FXML
-	Pane content;
-	
-	@FXML
-	Pane mainPane;
+
+    @FXML
+    Pane content;
+
+    @FXML
+    Pane mainPane;
 
     public static void main(String[] args)
     {

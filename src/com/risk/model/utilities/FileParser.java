@@ -72,7 +72,7 @@ public class FileParser {
                             {
                                 continentExists = true;
                                 cont.getCountries().add(c);
-                                c.setContinent(cont);   
+                                c.setContinent(cont);
                             }
                         }
 

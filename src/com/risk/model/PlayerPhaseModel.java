@@ -36,7 +36,7 @@ public class PlayerPhaseModel extends Observable implements Observer {
 
     /**
      * Sets the winner of the game
-     *	
+     *
      * @param player player who has won
      * @return playerWins returns the player who has won
      */
@@ -120,12 +120,13 @@ public class PlayerPhaseModel extends Observable implements Observer {
     /**
      * This method notifies GamePhaseModel, updating world domination phase
      */
-	@Override
-	public void update(Observable o, Object country) {
-		setChanged();
-		notifyObservers((Country)country);
-	}
-	
+    @Override
+    public void update(Observable o, Object country)
+    {
+        setChanged();
+        notifyObservers((Country) country);
+    }
+
     /**
      * This method is used to calculate the extra armies earned if the player
      * has occupied continents
@@ -135,7 +136,7 @@ public class PlayerPhaseModel extends Observable implements Observer {
      */
     public int calculateReinforcementContinentControl()
     {
-        
+
         int reinforcement = 0;
         for (Continent continent : MapModel.getMapModel().getContinents())
         {
@@ -168,8 +169,7 @@ public class PlayerPhaseModel extends Observable implements Observer {
         int reinforcement = (int) Math.floor(playerList.get(0).numbOccupied() / 3);
         return reinforcement;
     }
-    
-    
+
     /**
      * This method is used to calculate the extra armies earned by exchanging
      * cards
