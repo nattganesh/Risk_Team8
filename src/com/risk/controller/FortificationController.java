@@ -32,7 +32,7 @@ public class FortificationController implements Initializable {
 
     @FXML
     ListView<Country> Adjacent;
-    
+
     @FXML
     TextField moveField;
 
@@ -67,55 +67,55 @@ public class FortificationController implements Initializable {
     public void initialize(URL arg0, ResourceBundle arg1)
     {
 
-    	actions = ActionModel.getActionModel();
+        actions = ActionModel.getActionModel();
         territoryObservableList.addAll(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
         Territory.setItems(territoryObservableList);
         Adjacent.setItems(adjacentObservableList);
         updateView();
-        
-        if(!isAnyCountriesConnected(PlayerPhaseModel.getPlayerModel().getCurrentPlayer())) 
+
+        if (!isAnyCountriesConnected(PlayerPhaseModel.getPlayerModel().getCurrentPlayer()))
         {
-        	  int currentIndex = PlayerPhaseModel.getPlayerModel().getPlayerIndex();
-              PlayerPhaseModel.getPlayerModel().setPlayerIndex((currentIndex + 1) % PlayerPhaseModel.getPlayerModel().getNumberOfPlayer());
-              GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
-		}
+            int currentIndex = PlayerPhaseModel.getPlayerModel().getPlayerIndex();
+            PlayerPhaseModel.getPlayerModel().setPlayerIndex((currentIndex + 1) % PlayerPhaseModel.getPlayerModel().getNumberOfPlayer());
+            GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
+        }
 
     }
-    
+
     public void updateView()
     {
-    	 Territory.setCellFactory(param -> new ListCell<Country>() {
-             @Override
-             protected void updateItem(Country country, boolean empty)
-             {
-                 super.updateItem(country, empty);
-                 if (empty || country == null || country.getName() == null)
-                 {
-                     setText(null);
-                 }
-                 else
-                 {
-                     setText(country.getName());
-                 }
-             }
-         });
+        Territory.setCellFactory(param -> new ListCell<Country>() {
+            @Override
+            protected void updateItem(Country country, boolean empty)
+            {
+                super.updateItem(country, empty);
+                if (empty || country == null || country.getName() == null)
+                {
+                    setText(null);
+                }
+                else
+                {
+                    setText(country.getName());
+                }
+            }
+        });
 
-    	 Adjacent.setCellFactory(param -> new ListCell<Country>() {
-             @Override
-             protected void updateItem(Country country, boolean empty)
-             {
-                 super.updateItem(country, empty);
-                 if (empty || country == null || country.getName() == null)
-                 {
-                     setText(null);
-                 }
-                 else
-                 {
-                     setText(country.getName());
-                 }
-             }
-         });
-    	
+        Adjacent.setCellFactory(param -> new ListCell<Country>() {
+            @Override
+            protected void updateItem(Country country, boolean empty)
+            {
+                super.updateItem(country, empty);
+                if (empty || country == null || country.getName() == null)
+                {
+                    setText(null);
+                }
+                else
+                {
+                    setText(country.getName());
+                }
+            }
+        });
+
     }
 
     /**
@@ -160,10 +160,10 @@ public class FortificationController implements Initializable {
                 && !moveField.getText().trim().isEmpty() && !fortification)
         {
             int Armyinput = Integer.parseInt(moveField.getText());
-            if(Armyinput<=0) 
+            if (Armyinput <= 0)
             {
-            	actions.addAction("The number does not meet the requirement");
-            	moveField.clear();
+                actions.addAction("The number does not meet the requirement");
+                moveField.clear();
             }
             else if (Armyinput <= Territory.getSelectionModel().getSelectedItem().getArmyCount() - 1)
             {
@@ -177,7 +177,7 @@ public class FortificationController implements Initializable {
                 AdjacentArmy.setText(Integer.toString(Adjacent.getSelectionModel().getSelectedItem().getArmyCount()));
                 TerritoryArmy.setText(Integer.toString(Territory.getSelectionModel().getSelectedItem().getArmyCount()));
                 actions.addAction("Move Successfully");
-                
+
                 int currentIndex = PlayerPhaseModel.getPlayerModel().getPlayerIndex();
                 PlayerPhaseModel.getPlayerModel().setPlayerIndex((currentIndex + 1) % PlayerPhaseModel.getPlayerModel().getNumberOfPlayer());
                 GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
@@ -203,25 +203,25 @@ public class FortificationController implements Initializable {
      * @param countries The list that saves all countries accessible to the
      * country the player chooses
      * @return The list of accessible countries corresponding to the country
-	 *
+     *
      */
-    public static ArrayList<Country> getCountriesArrivedbyPath(Country country, Country firstCountry,ArrayList<Country> countries)
-	{
-		Player p = country.getRuler();
-		for(Country c: country.getConnectedCountries()) 
-		{
-			Player player =c.getRuler();
-			if(player.getName().equals(p.getName())) 
-			{
-				if(isCountryDuplicated(c,firstCountry, countries)) 
-				{
-					countries.add(c);
-					countries = getCountriesArrivedbyPath(c,firstCountry, countries);
-				}
-			}
-		}
-		return countries;
-	}
+    public static ArrayList<Country> getCountriesArrivedbyPath(Country country, Country firstCountry, ArrayList<Country> countries)
+    {
+        Player p = country.getRuler();
+        for (Country c : country.getConnectedCountries())
+        {
+            Player player = c.getRuler();
+            if (player.getName().equals(p.getName()))
+            {
+                if (isCountryDuplicated(c, firstCountry, countries))
+                {
+                    countries.add(c);
+                    countries = getCountriesArrivedbyPath(c, firstCountry, countries);
+                }
+            }
+        }
+        return countries;
+    }
 
     /**
      * This method is used to check if the country accessible is already in the
@@ -261,33 +261,33 @@ public class FortificationController implements Initializable {
     }
 
     /**
-     * This method checks if there is any country has accessible countries 
-     * and the country which has accessible countries has enough armies for move
-     * 
-     * @return true if there is a country which has accessible countries and it has enough armies for move. Otherwise, return false.
+     * This method checks if there is any country has accessible countries and
+     * the country which has accessible countries has enough armies for move
+     *
+     * @return true if there is a country which has accessible countries and it
+     * has enough armies for move. Otherwise, return false.
      */
-	public static boolean isAnyCountriesConnected(Player p) 
-	{
-		int i = 0;
-		
-        for(Country c : p.getOccupiedCountries()) 
+    public static boolean isAnyCountriesConnected(Player p)
+    {
+        int i = 0;
+
+        for (Country c : p.getOccupiedCountries())
         {
-        	ArrayList<Country> result = new ArrayList<>();
-            if((getCountriesArrivedbyPath(c, c,result).size()!=0)&&(c.getArmyCount()>1)) 
+            ArrayList<Country> result = new ArrayList<>();
+            if ((getCountriesArrivedbyPath(c, c, result).size() != 0) && (c.getArmyCount() > 1))
             {
-            	i = 1;
-            	break;
+                i = 1;
+                break;
             }
         }
-        if(i==1) 
+        if (i == 1)
         {
-        	return true;
-        }else 
+            return true;
+        }
+        else
         {
-        	return false;
+            return false;
         }
     }
-	
 
-  
 }

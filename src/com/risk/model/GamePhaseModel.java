@@ -32,7 +32,6 @@ public class GamePhaseModel extends Observable {
         notifyObservers(phase);
     }
 
-      
     /**
      *
      * @return this returns the GamePhaseModel class as a singleton

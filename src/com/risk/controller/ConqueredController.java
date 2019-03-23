@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.risk.controller;
 
@@ -26,140 +26,140 @@ import javafx.scene.control.TextField;
  * @author DKM
  *
  */
-public class ConqueredController extends Observable implements Initializable{
-	
-	  ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
-	  ObservableList<Country> conqueredObservableList = FXCollections.observableArrayList();
-	  
-	  int diceRolled;
-	  Country conquered;
-	  int moved = 0;
-		  
-	  ActionModel actions;
-	  @FXML
-	  ListView<Country> countryOwnedID;
-	  
-	  @FXML
-	  ListView<Country> conqueredID;	  
-	  
-	  @FXML
-	  TextField armyCount;
-	  boolean move=false;
+public class ConqueredController extends Observable implements Initializable {
 
-	  
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-	     actions = ActionModel.getActionModel();
-		 countryOwnedID.setItems(territoryObservableList);         
-		 conqueredID.setItems(conqueredObservableList);
-		 renderView();
-	}
+    ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
+    ObservableList<Country> conqueredObservableList = FXCollections.observableArrayList();
 
-	/**
-	 * this method is necessary for moving army into conquered country
-	 */
-	@FXML
-	public void moveArmyHandler()
-	{
-		Country reinforcement = countryOwnedID.getSelectionModel().getSelectedItem();
-		Country conquered = conqueredID.getSelectionModel().getSelectedItem();	
-		if (reinforcement != null && conquered != null && !armyCount.getText().trim().isEmpty())
-		{	
-			int army = Integer.parseInt(armyCount.getText()); 			
-			if (army < reinforcement.getArmyCount())
-			{
-				moved = moved + army;
-				reinforcement.reduceArmyCount(army);
-				conquered.setArmyCount(army);		
-				actions.addAction("moving army");				
-				renderView();
-				
-				if (moved >= diceRolled)
-				{
-					move=true;
-				}
-			}
-			else 
-			{
-				actions.addAction("invalid move");
-			}	
-		}
-	}
-	
-	@FXML
-	public void moveComplete()
-	{
-		if(move) 
-		{
-			moved = 0;
-			setChanged();
-			notifyObservers(conquered);	
-		}
-		else
-		{
-			actions.addAction("please move enough army first");
-		}
-			
-	}
+    int diceRolled;
+    Country conquered;
+    int moved = 0;
 
-	/**
-	 * this  method sets the conquered country into listview
-	 * 
-	 * @param c country that is conquered
-	 */
-	public void setConquringArmy(Country c)
-	{
-		conqueredObservableList.clear();
-		conqueredObservableList.add(c);
-		conquered = c;
-		territoryObservableList.addAll(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
-	}
-	
-	/**
-	 * This method sets the number of army to move in ComboBox
-	 * 
-	 * @param roll number of dice rolled to conquer
-	 */
-	public void setDiceRoll(int roll)
-	{
-		this.diceRolled = roll;
-		actions.addAction(diceRolled + " dice rolled");
-	}
-	
-	/**
-	 * This method for re-rendering the listView
-	 */
-	public void renderView()
-	{
-		 countryOwnedID.setCellFactory(param -> new ListCell<Country>() {
-             @Override
-             protected void updateItem(Country country, boolean empty)
-             {
-                 super.updateItem(country, empty);
-                 if (empty || country == null || country.getName() == null)
-                 {
-                     setText(null);
-                 }
-                 else
-                 {
-                	 setText(country.getName() + " ("+ country.getArmyCount() +")");
-                 }
-             }
-         });
-		 conqueredID.setCellFactory(param -> new ListCell<Country>() {
-             @Override
-             protected void updateItem(Country country, boolean empty)
-             {
-                 super.updateItem(country, empty);
-                 if (empty || country == null || country.getName() == null)
-                 {
-                     setText(null);
-                 }
-                 else
-                 {
-                	 setText(country.getName() + " ("+ country.getArmyCount() +")");
-                 }
-             }
-         });
-	}
+    ActionModel actions;
+    @FXML
+    ListView<Country> countryOwnedID;
+
+    @FXML
+    ListView<Country> conqueredID;
+
+    @FXML
+    TextField armyCount;
+    boolean move = false;
+
+    @Override
+    public void initialize(URL arg0, ResourceBundle arg1)
+    {
+        actions = ActionModel.getActionModel();
+        countryOwnedID.setItems(territoryObservableList);
+        conqueredID.setItems(conqueredObservableList);
+        renderView();
+    }
+
+    /**
+     * this method is necessary for moving army into conquered country
+     */
+    @FXML
+    public void moveArmyHandler()
+    {
+        Country reinforcement = countryOwnedID.getSelectionModel().getSelectedItem();
+        Country conquered = conqueredID.getSelectionModel().getSelectedItem();
+        if (reinforcement != null && conquered != null && !armyCount.getText().trim().isEmpty())
+        {
+            int army = Integer.parseInt(armyCount.getText());
+            if (army < reinforcement.getArmyCount())
+            {
+                moved = moved + army;
+                reinforcement.reduceArmyCount(army);
+                conquered.setArmyCount(army);
+                actions.addAction("moving army");
+                renderView();
+
+                if (moved >= diceRolled)
+                {
+                    move = true;
+                }
+            }
+            else
+            {
+                actions.addAction("invalid move");
+            }
+        }
+    }
+
+    @FXML
+    public void moveComplete()
+    {
+        if (move)
+        {
+            moved = 0;
+            setChanged();
+            notifyObservers(conquered);
+        }
+        else
+        {
+            actions.addAction("please move enough army first");
+        }
+
+    }
+
+    /**
+     * this method sets the conquered country into listview
+     *
+     * @param c country that is conquered
+     */
+    public void setConquringArmy(Country c)
+    {
+        conqueredObservableList.clear();
+        conqueredObservableList.add(c);
+        conquered = c;
+        territoryObservableList.addAll(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
+    }
+
+    /**
+     * This method sets the number of army to move in ComboBox
+     *
+     * @param roll number of dice rolled to conquer
+     */
+    public void setDiceRoll(int roll)
+    {
+        this.diceRolled = roll;
+        actions.addAction(diceRolled + " dice rolled");
+    }
+
+    /**
+     * This method for re-rendering the listView
+     */
+    public void renderView()
+    {
+        countryOwnedID.setCellFactory(param -> new ListCell<Country>() {
+            @Override
+            protected void updateItem(Country country, boolean empty)
+            {
+                super.updateItem(country, empty);
+                if (empty || country == null || country.getName() == null)
+                {
+                    setText(null);
+                }
+                else
+                {
+                    setText(country.getName() + " (" + country.getArmyCount() + ")");
+                }
+            }
+        });
+        conqueredID.setCellFactory(param -> new ListCell<Country>() {
+            @Override
+            protected void updateItem(Country country, boolean empty)
+            {
+                super.updateItem(country, empty);
+                if (empty || country == null || country.getName() == null)
+                {
+                    setText(null);
+                }
+                else
+                {
+                    setText(country.getName() + " (" + country.getArmyCount() + ")");
+                }
+            }
+        });
+    }
 }

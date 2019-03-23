@@ -37,187 +37,195 @@ import javafx.scene.layout.FlowPane;
 /**
  * @see javafx.fxml.Initializable
  */
-public class SetUpController implements Initializable 
-{
-	public int TotalArmies;
-	public ArrayList<String> cards = new ArrayList<>();
-	private boolean setUp = false;
-	/**
-	 * @see javafx.fxml.XML
-	 */
-	@FXML
-	FlowPane fPane;
+public class SetUpController implements Initializable {
 
-	@FXML
-	Label armyAvailable;
+    public int TotalArmies;
+    public ArrayList<String> cards = new ArrayList<>();
+    private boolean setUp = false;
+    /**
+     * @see javafx.fxml.XML
+     */
+    @FXML
+    FlowPane fPane;
 
-	@FXML
-	ListView<Country> countryId;
-	@FXML
-	Button NextRound;
+    @FXML
+    Label armyAvailable;
 
-	@FXML
-	Button addArmy;
+    @FXML
+    ListView<Country> countryId;
+    @FXML
+    Button NextRound;
 
-	ActionModel actions;
-	ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
+    @FXML
+    Button addArmy;
 
-	/**
-	 * This is the constructor for the setUp controller
-	 */
-	public SetUpController() 
-	{
-	}
+    ActionModel actions;
+    ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
 
-	/**
-	 * This method is data binding for connection between controller and UI. It also
-	 * sets up observable list, in which the view listens for changes and update its
-	 * view.
-	 *
-	 *
-	 * @see javafx.fxml.Initializable.initialize
-	 * @see javafx.beans.value.ObservableValue;
-	 */
-	@Override
-	public void initialize(URL url, ResourceBundle resourceBundle) 
-	{
-		actions = ActionModel.getActionModel();
-		TotalArmies = PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getStartingP();
-		armyAvailable.setText("Army: " + Integer.toString(getArmies()));
-		territoryObservableList.addAll(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
-		countryId.setItems(territoryObservableList);
-		renderView();
-	}
+    /**
+     * This is the constructor for the setUp controller
+     */
+    public SetUpController()
+    {
+    }
 
-	/**
-	 * This method sets the number of available army to your occupied country
-	 */
-	@FXML
-	public void setArmy() 
-	{
-		if (getArmies() == 0) 
-		{
-			actions.addAction("You have no armies left");
-		} else if (countryId.getSelectionModel().getSelectedItem() == null) 
-		{
-			actions.addAction("Please choose a country first");
-		} else if(setUp)
-		{
-			actions.addAction("You already place one army");
-		}
-		else{
-			Country selectedCountry = countryId.getSelectionModel().getSelectedItem();
-			if ((selectedCountry.getArmyCount() == 0) || checkIfEachCountryHasOneArmy()) 
-			{
-				selectedCountry.setArmyCount(1);
-				setStartingPoints();
-				actions.addAction("Added 1 Army to " + selectedCountry.getName());
-				setUp = true;
-			}
-		}
-		armyAvailable.setText("Army: " + Integer.toString(getArmies()));
-	}
+    /**
+     * This method is data binding for connection between controller and UI. It
+     * also sets up observable list, in which the view listens for changes and
+     * update its view.
+     *
+     *
+     * @see javafx.fxml.Initializable.initialize
+     * @see javafx.beans.value.ObservableValue;
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle)
+    {
+        actions = ActionModel.getActionModel();
+        TotalArmies = PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getStartingP();
+        armyAvailable.setText("Army: " + Integer.toString(getArmies()));
+        territoryObservableList.addAll(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
+        countryId.setItems(territoryObservableList);
+        renderView();
+    }
 
-	/**
-	 * This method is used to get the number of total armies
-	 * 
-	 * @return The the number of total armies
-	 */
-	public int getArmies() 
-	{
-		return TotalArmies;
-	}
-
-	/**
-	 * This method is used to reduce the number of available armies for
-	 * reinforcement
-	 * 
-	 */
-	public void setStartingPoints() 
-	{
-		TotalArmies--;
-		PlayerPhaseModel.getPlayerModel().getCurrentPlayer().setStartingPoints(TotalArmies);
-	}
-
-	/**
-	 * This method is used to check if each country occupied has one army
-	 * 
-	 * @return true if each country already has one army. Otherwise, return false
-	 */
-	public boolean checkIfEachCountryHasOneArmy() 
-	{
-		int i = 1;
-		for (Country c : territoryObservableList) 
-		{
-			if (c.getArmyCount() == 0) 
-			{
-				i = 0;
-			}
-		}
-		if (i == 1) 
-		{
-			return true;
-		} else 
-		{
-			return false;
-		}
-	}
-
-	@FXML
-	/**
-	 * Method to set up the Reinforcement.fxml or SetUp.fxml view and set the
-	 * controller for the view. Then, changes the scene on the stage to send user to
-	 * the reinforcement phase or setup phase.
-	 *
-	 * @param event
-	 *            eventlistener for button clicked event
-	 * @throws IOException
-	 *             Exception thrown when view is not found
-	 */
-	public void next(ActionEvent event) throws IOException 
-	{
-		int currentIndex = PlayerPhaseModel.getPlayerModel().getPlayerIndex();
-		boolean isAnyPlayerPlacedAllArmies = true;
-		for(Player p : PlayerPhaseModel.getPlayerModel().getPlayers())
+    /**
+     * This method sets the number of available army to your occupied country
+     */
+    @FXML
+    public void setArmy()
+    {
+        if (getArmies() == 0)
         {
-        	if(p.getStartingP()!=0) 
-        		isAnyPlayerPlacedAllArmies = false;
+            actions.addAction("You have no armies left");
         }
-		if(setUp) {
-			if (isAnyPlayerPlacedAllArmies) 
-			{
-				PlayerPhaseModel.getPlayerModel()
-						.setPlayerIndex((currentIndex + 1) % PlayerPhaseModel.getPlayerModel().getNumberOfPlayer());
-				GamePhaseModel.getGamePhaseModel().setPhase("setup complete");  
-				GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
-			} else 
-			{
-				PlayerPhaseModel.getPlayerModel()
-						.setPlayerIndex((currentIndex + 1) % PlayerPhaseModel.getPlayerModel().getNumberOfPlayer());
-				GamePhaseModel.getGamePhaseModel().setPhase("setup");
-			}
-		}
-		else
-		{
-			actions.addAction("Please place one army in your country");
-		}
-	}
-	
-	public void renderView()
-	{
-		countryId.setCellFactory(param -> new ListCell<Country>() 
-		{
-			@Override
-			protected void updateItem(Country country, boolean empty) 
-			{
-				super.updateItem(country, empty);
-				if (empty || country == null || country.getName() == null) 
-				{
-					setText(null);
-				} else {
-					 setText(country.getName() + " ("+ country.getArmyCount() +")");
-				}
-			}
-		});
-	}
+        else if (countryId.getSelectionModel().getSelectedItem() == null)
+        {
+            actions.addAction("Please choose a country first");
+        }
+        else if (setUp)
+        {
+            actions.addAction("You already place one army");
+        }
+        else
+        {
+            Country selectedCountry = countryId.getSelectionModel().getSelectedItem();
+            if ((selectedCountry.getArmyCount() == 0) || checkIfEachCountryHasOneArmy())
+            {
+                selectedCountry.setArmyCount(1);
+                setStartingPoints();
+                actions.addAction("Added 1 Army to " + selectedCountry.getName());
+                setUp = true;
+            }
+        }
+        armyAvailable.setText("Army: " + Integer.toString(getArmies()));
+    }
+
+    /**
+     * This method is used to get the number of total armies
+     *
+     * @return The the number of total armies
+     */
+    public int getArmies()
+    {
+        return TotalArmies;
+    }
+
+    /**
+     * This method is used to reduce the number of available armies for
+     * reinforcement
+     *
+     */
+    public void setStartingPoints()
+    {
+        TotalArmies--;
+        PlayerPhaseModel.getPlayerModel().getCurrentPlayer().setStartingPoints(TotalArmies);
+    }
+
+    /**
+     * This method is used to check if each country occupied has one army
+     *
+     * @return true if each country already has one army. Otherwise, return
+     * false
+     */
+    public boolean checkIfEachCountryHasOneArmy()
+    {
+        int i = 1;
+        for (Country c : territoryObservableList)
+        {
+            if (c.getArmyCount() == 0)
+            {
+                i = 0;
+            }
+        }
+        if (i == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    @FXML
+    /**
+     * Method to set up the Reinforcement.fxml or SetUp.fxml view and set the
+     * controller for the view. Then, changes the scene on the stage to send
+     * user to the reinforcement phase or setup phase.
+     *
+     * @param event eventlistener for button clicked event
+     * @throws IOException Exception thrown when view is not found
+     */
+    public void next(ActionEvent event) throws IOException
+    {
+        int currentIndex = PlayerPhaseModel.getPlayerModel().getPlayerIndex();
+        boolean isAnyPlayerPlacedAllArmies = true;
+        for (Player p : PlayerPhaseModel.getPlayerModel().getPlayers())
+        {
+            if (p.getStartingP() != 0)
+            {
+                isAnyPlayerPlacedAllArmies = false;
+            }
+        }
+        if (setUp)
+        {
+            if (isAnyPlayerPlacedAllArmies)
+            {
+                PlayerPhaseModel.getPlayerModel()
+                        .setPlayerIndex((currentIndex + 1) % PlayerPhaseModel.getPlayerModel().getNumberOfPlayer());
+                GamePhaseModel.getGamePhaseModel().setPhase("setup complete");
+                GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
+            }
+            else
+            {
+                PlayerPhaseModel.getPlayerModel()
+                        .setPlayerIndex((currentIndex + 1) % PlayerPhaseModel.getPlayerModel().getNumberOfPlayer());
+                GamePhaseModel.getGamePhaseModel().setPhase("setup");
+            }
+        }
+        else
+        {
+            actions.addAction("Please place one army in your country");
+        }
+    }
+
+    public void renderView()
+    {
+        countryId.setCellFactory(param -> new ListCell<Country>() {
+            @Override
+            protected void updateItem(Country country, boolean empty)
+            {
+                super.updateItem(country, empty);
+                if (empty || country == null || country.getName() == null)
+                {
+                    setText(null);
+                }
+                else
+                {
+                    setText(country.getName() + " (" + country.getArmyCount() + ")");
+                }
+            }
+        });
+    }
 }

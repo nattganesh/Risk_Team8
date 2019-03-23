@@ -1,6 +1,6 @@
 /**
  * Necessary for handling card exchange logic for reinforcement phase
- * 
+ *
  * @author DKM
  * @author Tianyi
  */
@@ -29,25 +29,22 @@ import javafx.scene.layout.AnchorPane;
  *
  */
 public class CardController extends Observable implements Initializable {
-	
+
     @FXML
     ListView<Card> yourCard;
 
     @FXML
     ListView<Card> tradeCard;
-    
-    
-    private int reinforcement;
-    
-    ActionModel actions;
-    
- 
 
-  ObservableList<Card> tradeObservableList = FXCollections.observableArrayList();
-	
+    private int reinforcement;
+
+    ActionModel actions;
+
+    ObservableList<Card> tradeObservableList = FXCollections.observableArrayList();
+
     public void renderView()
     {
-    	yourCard.setCellFactory(param -> new ListCell<Card>() {
+        yourCard.setCellFactory(param -> new ListCell<Card>() {
             @Override
             protected void updateItem(Card card, boolean empty)
             {
@@ -63,14 +60,16 @@ public class CardController extends Observable implements Initializable {
             }
         });
     }
-  	
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-      actions = ActionModel.getActionModel();
-      yourCard.setItems(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getCards());
-      tradeCard.setItems(tradeObservableList);
-      renderView();
-	}
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources)
+    {
+        actions = ActionModel.getActionModel();
+        yourCard.setItems(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getCards());
+        tradeCard.setItems(tradeObservableList);
+        renderView();
+    }
+
     /**
      * This method is used to update the cards the player owned and the cards
      * the player chooses to exchange
@@ -83,7 +82,7 @@ public class CardController extends Observable implements Initializable {
             Card card = yourCard.getSelectionModel().getSelectedItem();
             tradeCard.getItems().add(card);
             yourCard.getItems().remove(card);
- 
+
         }
     }
 
@@ -102,7 +101,7 @@ public class CardController extends Observable implements Initializable {
 
         }
     }
-    
+
     /**
      * This method is used to update the total reinforcement based on the cards
      * the player chooses And update the cards the player owned.
@@ -114,41 +113,45 @@ public class CardController extends Observable implements Initializable {
         {
             if (cardValidation(tradeCard.getItems()))
             {
-            	reinforcement = PlayerPhaseModel.getPlayerModel().calculateReinforcementFromCards();   
-            	for(Card c: tradeCard.getItems()) {
-            		c.removeCard(PlayerPhaseModel.getPlayerModel().getCurrentPlayer());
-            	}
-            	System.out.println(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getCards());
+                reinforcement = PlayerPhaseModel.getPlayerModel().calculateReinforcementFromCards();
+                for (Card c : tradeCard.getItems())
+                {
+                    c.removeCard(PlayerPhaseModel.getPlayerModel().getCurrentPlayer());
+                }
+                System.out.println(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getCards());
                 tradeCard.getItems().clear();
-                actions.addAction("you exchanged cards");            
+                actions.addAction("you exchanged cards");
                 setChanged();
-            	notifyObservers(reinforcement);
+                notifyObservers(reinforcement);
             }
-            else {
-            	 for(Card card: tradeCard.getItems()) {
-            		 yourCard.getItems().add(card);
-            	 }
-            	 tradeCard.getItems().clear();
-            	 actions.addAction("Invalid cards");	 
+            else
+            {
+                for (Card card : tradeCard.getItems())
+                {
+                    yourCard.getItems().add(card);
+                }
+                tradeCard.getItems().clear();
+                actions.addAction("Invalid cards");
             }
-        } 
-        else 
+        }
+        else
         {
-        	actions.addAction("you have less than 3 cards");
+            actions.addAction("you have less than 3 cards");
         }
     }
-    
+
     @FXML
     public void skipExchangeHandler()
     {
-    	if (PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getCards().size() > 5)
-    	{
-    		actions.addAction("5+ cards == you must exchange");
-    	} 	
-    	else {
-    		setChanged();
-    		notifyObservers();
-    	}
+        if (PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getCards().size() > 5)
+        {
+            actions.addAction("5+ cards == you must exchange");
+        }
+        else
+        {
+            setChanged();
+            notifyObservers();
+        }
     }
 
     /**

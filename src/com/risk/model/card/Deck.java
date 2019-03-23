@@ -13,7 +13,8 @@ import java.util.Random;
 import com.risk.model.player.Player;
 
 public class Deck {
-	private static LinkedList<Card> cards = new LinkedList<>();
+
+    private static LinkedList<Card> cards = new LinkedList<>();
     Card card[];
     int n = 44;
     String owner = null;
@@ -28,19 +29,21 @@ public class Deck {
             "Infantry", "Cavalry", "Artillery", "Wild"
         };
 
-        for (int i = 0; i < n-2; i++)
+        for (int i = 0; i < n - 2; i++)
         {
-            for(int j = 0;j<category.length-1;j++) {
-            	cards.add(new Card(category[j]));
+            for (int j = 0; j < category.length - 1; j++)
+            {
+                cards.add(new Card(category[j]));
             }
         }
         cards.add(new Card(category[3]));
         cards.add(new Card(category[3]));
         Collections.shuffle(cards);
     }
-    
-    public static LinkedList<Card> getCards() {
-    	return cards;
+
+    public static LinkedList<Card> getCards()
+    {
+        return cards;
     }
 
     /**
@@ -70,15 +73,17 @@ public class Deck {
      */
     public void sendCard(Player player)
     {
-        while(true) {
-        	int i =0;
-        	Card tmp = cards.get(i);
-        	if(tmp.getOwner()==null) {
-        		tmp.setOwner(player);
-        		player.addCard(tmp);
-        		break;
-        	}
-        	i++;
+        while (true)
+        {
+            int i = 0;
+            Card tmp = cards.get(i);
+            if (tmp.getOwner() == null)
+            {
+                tmp.setOwner(player);
+                player.addCard(tmp);
+                break;
+            }
+            i++;
         }
     }
 }

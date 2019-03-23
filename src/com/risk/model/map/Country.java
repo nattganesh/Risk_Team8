@@ -7,14 +7,13 @@ package com.risk.model.map;
 
 import com.risk.model.player.Player;
 
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 import java.util.Observable;
 
-public class Country extends Observable{
+public class Country extends Observable {
 
     public static final int MAX_NUMBER_OF_COUNTRIES = Continent.MAX_NUMBER_OF_COUNTRIES_IN_NORTH_AMERICA
             + Continent.MAX_NUMBER_OF_COUNTRIES_IN_SOUTH_AMERICA
@@ -25,7 +24,7 @@ public class Country extends Observable{
     private String name;
     private boolean isOccupied;
     private Player ruler;
-   
+
     private ArrayList<Country> connectedCountries = new ArrayList<>();
     private Continent continent;
     private int armyCount = 0;
@@ -41,12 +40,12 @@ public class Country extends Observable{
         this.name = name;
         this.isOccupied = false;
         this.ruler = null;
-      
+
     }
-    
+
     public void setContinent(Continent continent)
     {
-    	this.continent = continent;
+        this.continent = continent;
     }
 
     /**
@@ -82,12 +81,12 @@ public class Country extends Observable{
      */
     public void setArmyCount(int armyCount)
     {
-    	System.out.println("added army");
+        System.out.println("added army");
         this.armyCount += armyCount;
         ruler.setTotalArmy(armyCount);
         setChanged();
         notifyObservers(this);
-        
+
     }
 
     /**
@@ -96,7 +95,7 @@ public class Country extends Observable{
      */
     public void reduceArmyCount(int armyCount)
     {
-    	System.out.println("added army");
+        System.out.println("added army");
         this.armyCount -= armyCount;
         ruler.reduceTotalArmy(armyCount);
         setChanged();
@@ -130,8 +129,6 @@ public class Country extends Observable{
         return ruler;
     }
 
-    
-    
     /**
      *
      * @param ruler sets the ruler of the country
@@ -141,7 +138,7 @@ public class Country extends Observable{
         this.ruler = ruler;
 
     }
-    
+
     /**
      *
      * @return connectedCountries connected countries for the country
@@ -172,37 +169,37 @@ public class Country extends Observable{
         }
         return null;
     }
-    
+
     /**
      * This is a method for returning countries that are connected and you own
      */
     public ObservableList<Country> getConnectedOwned()
     {
-    	ObservableList<Country> list = FXCollections.observableArrayList();
-    	for (Country country : connectedCountries)
-    	{
-    		if (country.getRuler().getName().equals(ruler.getName()))
-    		{
-    			list.add(country);
-    		}
-    	}
-		return list;
+        ObservableList<Country> list = FXCollections.observableArrayList();
+        for (Country country : connectedCountries)
+        {
+            if (country.getRuler().getName().equals(ruler.getName()))
+            {
+                list.add(country);
+            }
+        }
+        return list;
     }
-    
+
     /**
      * This is a methodn for returning connected countries that you don't own
      */
     public ObservableList<Country> getConnectedEnemy()
     {
-    	ObservableList<Country> list = FXCollections.observableArrayList();
-    	for (Country country : connectedCountries)
-    	{
-    		if (!country.getRuler().getName().equals(ruler.getName()))
-    		{
-    			list.add(country);
-    		}
-    	}
-		return list;
+        ObservableList<Country> list = FXCollections.observableArrayList();
+        for (Country country : connectedCountries)
+        {
+            if (!country.getRuler().getName().equals(ruler.getName()))
+            {
+                list.add(country);
+            }
+        }
+        return list;
     }
 
 }
