@@ -167,13 +167,10 @@ public class FortificationController implements Initializable {
             }
             else if (Armyinput <= Territory.getSelectionModel().getSelectedItem().getArmyCount() - 1)
             {
-
                 Territory.getSelectionModel().getSelectedItem()
                         .reduceArmyCount(Armyinput);
-
                 Adjacent.getSelectionModel().getSelectedItem()
                         .setArmyCount(Armyinput);
-
                 AdjacentArmy.setText(Integer.toString(Adjacent.getSelectionModel().getSelectedItem().getArmyCount()));
                 TerritoryArmy.setText(Integer.toString(Territory.getSelectionModel().getSelectedItem().getArmyCount()));
                 actions.addAction("Move Successfully");

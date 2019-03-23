@@ -232,10 +232,22 @@ public class Player extends Observable {
         this.playerLost = playerLost;
     }
 
-    
-    public void reinforce(Country myCountry)
+    public void attack(Country attack, Country defend, int index)
     {
-    	
+        switch (index)
+        {
+            case 1:
+                defend.reduceArmyCount(1);
+                break;
+            case 2:
+                defend.setRuler(this);
+                defend.getRuler().removeCountry(defend);
+                addCountry(defend);
+                break;
+            case 3:
+                attack.reduceArmyCount(1);
+                break;
+        }
     }
     
     public void attack(Player enemy, Country enemyCountry, Country myCountry)
