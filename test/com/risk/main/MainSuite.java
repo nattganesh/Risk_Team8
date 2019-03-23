@@ -19,7 +19,7 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses(
 {
-    com.risk.main.RunTest.class, com.risk.main.mapTextfiles.MapTextfilesSuite.class
+    com.risk.main.RunTest.class
 })
 public class MainSuite {
 

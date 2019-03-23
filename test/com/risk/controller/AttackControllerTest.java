@@ -192,10 +192,10 @@ public class AttackControllerTest {
         System.out.println("rollDice");
         int diceattack = 0;
         int dicedefend = 0;
-        Country attack = null;
-        Country defend = null;
+        Country attackingCountry = null;
+        Country defendingCountry = null;
         AttackController instance = new AttackController();
-        instance.rollDice(diceattack, dicedefend, attack, defend);
+        instance.rollDice(diceattack, dicedefend, attackingCountry, defendingCountry);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

@@ -329,11 +329,11 @@ public class PlayerTest {
     public void testAttack()
     {
         System.out.println("attack");
-        Player enemy = null;
-        Country enemyCountry = null;
-        Country myCountry = null;
+        Country attack = null;
+        Country defend = null;
+        int caseType = 0;
         Player instance = null;
-        instance.attack(enemy, enemyCountry, myCountry);
+        instance.attack(attack, defend, caseType);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -346,8 +346,9 @@ public class PlayerTest {
     {
         System.out.println("reinforce");
         Country myCountry = null;
+        int Armyinput = 0;
         Player instance = null;
-        instance.reinforce(myCountry);
+        instance.reinforce(myCountry, Armyinput);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -359,9 +360,62 @@ public class PlayerTest {
     public void testFortify()
     {
         System.out.println("fortify");
-        Country myCountry = null;
+        Country from = null;
+        Country to = null;
+        int Armyinput = 0;
         Player instance = null;
-        instance.fortify(myCountry);
+        instance.fortify(from, to, Armyinput);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getCountriesArrivedbyPath method, of class Player.
+     */
+    @Test
+    public void testGetCountriesArrivedbyPath()
+    {
+        System.out.println("getCountriesArrivedbyPath");
+        Country country = null;
+        Country firstCountry = null;
+        ArrayList<Country> countries = null;
+        Player instance = null;
+        ArrayList<Country> expResult = null;
+        ArrayList<Country> result = instance.getCountriesArrivedbyPath(country, firstCountry, countries);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isCountryDuplicated method, of class Player.
+     */
+    @Test
+    public void testIsCountryDuplicated()
+    {
+        System.out.println("isCountryDuplicated");
+        Country country = null;
+        Country firstCountry = null;
+        ArrayList<Country> countries = null;
+        Player instance = null;
+        boolean expResult = false;
+        boolean result = instance.isCountryDuplicated(country, firstCountry, countries);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isAnyCountriesConnected method, of class Player.
+     */
+    @Test
+    public void testIsAnyCountriesConnected()
+    {
+        System.out.println("isAnyCountriesConnected");
+        Player instance = null;
+        boolean expResult = false;
+        boolean result = instance.isAnyCountriesConnected();
+        assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
