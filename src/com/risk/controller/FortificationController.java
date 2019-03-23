@@ -73,7 +73,7 @@ public class FortificationController implements Initializable {
         Adjacent.setItems(adjacentObservableList);
         updateView();
 
-        if (!isAnyCountriesConnected(PlayerPhaseModel.getPlayerModel().getCurrentPlayer()))
+        if (!PlayerPhaseModel.getPlayerModel().getCurrentPlayer().isAnyCountriesConnected())
         {
             int currentIndex = PlayerPhaseModel.getPlayerModel().getPlayerIndex();
             PlayerPhaseModel.getPlayerModel().setPlayerIndex((currentIndex + 1) % PlayerPhaseModel.getPlayerModel().getNumberOfPlayer());
@@ -130,7 +130,7 @@ public class FortificationController implements Initializable {
             Adjacent.getItems().clear();
             AdjacentArmy.setText("");
             CountriesArrivedbyPath = new ArrayList<>();
-            Adjacent.getItems().addAll(getCountriesArrivedbyPath(Territory.getSelectionModel().getSelectedItem(), Territory.getSelectionModel().getSelectedItem(), CountriesArrivedbyPath));
+            Adjacent.getItems().addAll(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getCountriesArrivedbyPath(Territory.getSelectionModel().getSelectedItem(), Territory.getSelectionModel().getSelectedItem(), CountriesArrivedbyPath));
             TerritoryArmy.setText(Integer.toString(Territory.getSelectionModel().getSelectedItem().getArmyCount()));
         }
     }
@@ -167,12 +167,8 @@ public class FortificationController implements Initializable {
             }
             else if (Armyinput <= Territory.getSelectionModel().getSelectedItem().getArmyCount() - 1)
             {
-
-                Territory.getSelectionModel().getSelectedItem()
-                        .reduceArmyCount(Armyinput);
-
-                Adjacent.getSelectionModel().getSelectedItem()
-                        .setArmyCount(Armyinput);
+                Player p = Territory.getSelectionModel().getSelectedItem().getRuler();
+                p.fortify(Territory.getSelectionModel().getSelectedItem(), Adjacent.getSelectionModel().getSelectedItem(), Armyinput);
 
                 AdjacentArmy.setText(Integer.toString(Adjacent.getSelectionModel().getSelectedItem().getArmyCount()));
                 TerritoryArmy.setText(Integer.toString(Territory.getSelectionModel().getSelectedItem().getArmyCount()));
@@ -190,103 +186,6 @@ public class FortificationController implements Initializable {
         else
         {
             actions.addAction("Invalid Selection");
-        }
-    }
-
-    /**
-     * This method is used to get all accessible countries of the country player
-     * chooses to move armies from
-     *
-     * @param country The country which is being checked to find all accessible
-     * countries to it
-     * @param firstCountry The country the player chooses to move armies from
-     * @param countries The list that saves all countries accessible to the
-     * country the player chooses
-     * @return The list of accessible countries corresponding to the country
-     *
-     */
-    public static ArrayList<Country> getCountriesArrivedbyPath(Country country, Country firstCountry, ArrayList<Country> countries)
-    {
-        Player p = country.getRuler();
-        for (Country c : country.getConnectedCountries())
-        {
-            Player player = c.getRuler();
-            if (player.getName().equals(p.getName()))
-            {
-                if (isCountryDuplicated(c, firstCountry, countries))
-                {
-                    countries.add(c);
-                    countries = getCountriesArrivedbyPath(c, firstCountry, countries);
-                }
-            }
-        }
-        return countries;
-    }
-
-    /**
-     * This method is used to check if the country accessible is already in the
-     * result list And avoid adding the origin country the player choose to the
-     * result list
-     *
-     * @param country The country which is being checked to find all accessible
-     * countries to it
-     * @param firstCountry The country the player chooses to move armies from
-     * @param countries The list that saves all countries accessible to the
-     * country the player chooses
-     * @return true if the country accessible is not in the result list;
-     * otherwise return false
-     */
-    public static boolean isCountryDuplicated(Country country, Country firstCountry, ArrayList<Country> countries)
-    {
-        int i = 0;
-        if (country.getName().equalsIgnoreCase(firstCountry.getName()))
-        {
-            i = 1;
-        }
-        else
-        {
-            for (Country c : countries)
-            {
-                if (c.getName().equalsIgnoreCase(country.getName()))
-                {
-                    i = 1;
-                }
-            }
-        }
-        if (i == 0)
-        {
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * This method checks if there is any country has accessible countries and
-     * the country which has accessible countries has enough armies for move
-     *
-     * @return true if there is a country which has accessible countries and it
-     * has enough armies for move. Otherwise, return false.
-     */
-    public static boolean isAnyCountriesConnected(Player p)
-    {
-        int i = 0;
-
-        for (Country c : p.getOccupiedCountries())
-        {
-            ArrayList<Country> result = new ArrayList<>();
-            if ((getCountriesArrivedbyPath(c, c, result).size() != 0) && (c.getArmyCount() > 1))
-            {
-                i = 1;
-                break;
-            }
-        }
-        if (i == 1)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
         }
     }
 

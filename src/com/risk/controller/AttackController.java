@@ -112,6 +112,9 @@ public class AttackController implements Initializable, Observer {
 
     public void updateView()
     {
+        territoryObservableList.clear();
+        territoryObservableList.addAll(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
+        countryId.setItems(territoryObservableList);
         countryId.setCellFactory(param -> new ListCell<Country>() {
             @Override
             protected void updateItem(Country country, boolean empty)
@@ -344,7 +347,7 @@ public class AttackController implements Initializable, Observer {
                     child.setVisible(true);
                     conqueringController.setConquringArmy(defendingCountry);
                     conqueringController.setDiceRoll(diceattack);
-                    updateView();
+//                    updateView();
                     break;
                 }
                 else
