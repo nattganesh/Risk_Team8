@@ -223,7 +223,6 @@ public class GamePhaseController implements Observer, Initializable{
 					System.out.println(country.getContinent().getName()+"/"+ c.getName()+"(currently owned by)"+c.getRuler().getName() + "/" + country.getName()+"(just occupied)"+country.getRuler().getName());
 					if (!c.getRuler().getName().equals(country.getRuler().getName()))
 					{
-					
 						occupy = false;
 						break;
 					}
@@ -234,8 +233,7 @@ public class GamePhaseController implements Observer, Initializable{
 					System.out.println("OCCUPIED");
 					country.getContinent().setRuler(country.getRuler());
 					updateContinentDominationView();
-					
-					
+						
 					for (Continent c : worldDomination3.getItems())
 					{
 						if (c.getRuler() != null) {
