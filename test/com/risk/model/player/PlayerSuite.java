@@ -19,7 +19,7 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses(
 {
-    com.risk.model.player.HumanPlayerTest.class, com.risk.model.player.PlayerTest.class
+    com.risk.model.player.PlayerTest.class
 })
 public class PlayerSuite {
 
