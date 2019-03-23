@@ -320,10 +320,10 @@ public class AttackController implements Initializable, Observer {
      *
      * @param diceattack The number of dice attacker wants to roll
      * @param dicedefend The number of dice defender wants to roll
-     * @param attack The country which invokes the attack
-     * @param defend The country which is attacked
+     * @param attackingCountry The country which invokes the attack
+     * @param defendingCountry The country which is attacked
      */
-    public void rollDice(int diceattack, int dicedefend, Country attack, Country defend)
+    public void rollDice(int diceattack, int dicedefend, Country attackingCountry, Country defendingCountry)
     {
         int[] dattack = rollResult(diceattack);
         int[] ddefend = rollResult(dicedefend);
@@ -332,31 +332,30 @@ public class AttackController implements Initializable, Observer {
         {
             if (dattack[i] > ddefend[i])
             {
-                defend.reduceArmyCount(1);
-                adjacentEnemyObservableList.set(adjacentEnemyObservableList.indexOf(defend), defend);
+                attackingCountry.getRuler().attack(attackingCountry, defendingCountry, 1);
+                adjacentEnemyObservableList.set(adjacentEnemyObservableList.indexOf(defendingCountry), defendingCountry);
                 actions.addAction("defender has lost 1 army");
-                if (defend.getArmyCount() == 0)
+                if (defendingCountry.getArmyCount() == 0)
                 {
                     actions.addAction("You have already occupied this country!");
                     actions.addAction("Please move armies to your new country!");
-                    defend.setRuler(attack.getRuler());
-                    defend.getRuler().removeCountry(defend);
-                    attack.getRuler().addCountry(defend);
+                    attackingCountry.getRuler().attack(attackingCountry, defendingCountry, 2);
                     occupy = true;
                     child.setVisible(true);
-                    conqueringController.setConquringArmy(defend);
+                    conqueringController.setConquringArmy(defendingCountry);
                     conqueringController.setDiceRoll(diceattack);
+                    updateView();
                     break;
                 }
                 else
                 {
-                    adjacentEnemyObservableList.set(adjacentEnemyObservableList.indexOf(defend), defend);
+                    adjacentEnemyObservableList.set(adjacentEnemyObservableList.indexOf(defendingCountry), defendingCountry);
                 }
             }
             else
             {
 
-                attack.reduceArmyCount(1);
+                attackingCountry.getRuler().attack(attackingCountry, defendingCountry, 3);
                 actions.addAction("attacker has lost 1 army");
                 updateView();
             }
