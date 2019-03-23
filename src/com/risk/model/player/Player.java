@@ -251,8 +251,9 @@ public class Player extends Observable {
         }
     }
 
-    public void reinforce(Country myCountry)
+    public void reinforce(Country myCountry, int Armyinput)
     {
+        myCountry.setArmyCount(Armyinput);
     }
 
     public void fortify(Country from, Country to, int Armyinput)
