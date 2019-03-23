@@ -84,9 +84,8 @@ public class AttackController implements Initializable, Observer {
 	    boolean occupy=false;
 	    Player p = PlayerPhaseModel.getPlayerModel().getCurrentPlayer();
 
-	
     /**
-     * This is the constructor for AttackController classs
+     * This is the constructor for AttackController class
      */
     public AttackController()
     {
@@ -165,7 +164,6 @@ public class AttackController implements Initializable, Observer {
     @FXML
     public void territoryHandler()
     {
-    	
         if (countryId.getSelectionModel().getSelectedItem() != null)
         {
         	// i dont' wannt them to be in sync
@@ -179,7 +177,6 @@ public class AttackController implements Initializable, Observer {
             adjacentEnemyObservableList.addAll(attacker.getConnectedEnemy());
             adjacentOwnedObservableList.addAll(attacker.getConnectedOwned());
             ArmyCount.setText(Integer.toString(attacker.getArmyCount()));
-          
         }   
     }
     

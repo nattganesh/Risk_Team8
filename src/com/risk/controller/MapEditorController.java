@@ -97,9 +97,6 @@ public class MapEditorController implements Initializable {
         TerritoryView.setItems(territoryObservableList);    
         AdjacentView.setItems(adjacentObservableList);
         renderView();
-       
-       
-
     }
 
     /**

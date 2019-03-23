@@ -230,6 +230,22 @@ public class Player extends Observable {
         this.playerLost = playerLost;
     }
     
+    public void attack(Player enemy, Country enemyCountry, Country myCountry)
+    {
+    	
+    }
+
+    public void reinforce(Country myCountry)
+    {
+    	
+    }
+
+    public void fortify(Country myCountry)
+    {
+    	
+    }
+
+   
 
     
 

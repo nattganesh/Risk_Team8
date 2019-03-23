@@ -148,9 +148,7 @@ public class ReinforcementController implements Initializable{
             adjacentOwnedObservableList.addAll(countryId.getSelectionModel().getSelectedItem().getConnectedOwned()); 
         }
     }
-    
  
-  
     /**
      * This method sets the number of available army to your occupied country
      */
@@ -179,7 +177,7 @@ public class ReinforcementController implements Initializable{
                 "Army: " + Integer.toString(TotalReinforcement));
     }
 
-    @FXML
+    
     /**
      * Method to set up the Attack.fxml view and set the controller
      * (AttackController) for the view. Then, changes the scene on the stage to
@@ -188,6 +186,7 @@ public class ReinforcementController implements Initializable{
      * @param event eventlistener for button clicked event
      * @throws IOException Exception thrown when view is not found
      */
+    @FXML
     public void goToAttackPhase(ActionEvent event) throws IOException
     {
         if (TotalReinforcement > 0)
