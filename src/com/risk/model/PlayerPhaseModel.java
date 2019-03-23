@@ -19,7 +19,7 @@ import com.risk.model.player.Player;
 public class PlayerPhaseModel extends Observable implements Observer {
 
     private ArrayList<Player> playerList = new ArrayList<Player>();
-    public static final String[] PLAYERCOLOR =
+    public static final String[] playerName =
     {
         "Player1", "Player2", "Player3", "Player4", "Player5", "Player6"
     };
