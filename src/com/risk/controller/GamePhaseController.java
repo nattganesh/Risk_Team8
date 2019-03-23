@@ -219,7 +219,7 @@ public class GamePhaseController implements Observer, Initializable {
     private class continentObserver implements Observer {
 
         /* (non-Javadoc)
-		 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
          */
         @Override
         public void update(Observable arg0, Object arg)
@@ -234,7 +234,6 @@ public class GamePhaseController implements Observer, Initializable {
                     System.out.println(country.getContinent().getName() + "/" + c.getName() + "(currently owned by)" + c.getRuler().getName() + "/" + country.getName() + "(just occupied)" + country.getRuler().getName());
                     if (!c.getRuler().getName().equals(country.getRuler().getName()))
                     {
-
                         occupy = false;
                         break;
                     }
@@ -256,7 +255,6 @@ public class GamePhaseController implements Observer, Initializable {
                 }
             }
         }
-
     }
 
     private class mapObserver implements Observer {

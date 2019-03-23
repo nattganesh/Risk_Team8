@@ -28,8 +28,6 @@ public class ActionModel extends Observable {
     public void clearAction()
     {
         actions.clear();
-//		setChanged();
-//		notifyObservers(); // notify the view that message has been cleared (between different phase)
     }
 
     public ObservableList<String> getActions()
