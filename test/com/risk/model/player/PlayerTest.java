@@ -388,24 +388,6 @@ public class PlayerTest {
     }
 
     /**
-     * Test of isCountryDuplicated method, of class Player.
-     */
-    @Test
-    public void testIsCountryDuplicated()
-    {
-        System.out.println("isCountryDuplicated");
-        Country country = null;
-        Country firstCountry = null;
-        ArrayList<Country> countries = null;
-        Player instance = null;
-        boolean expResult = false;
-        boolean result = instance.isCountryDuplicated(country, firstCountry, countries);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of isAnyCountriesConnected method, of class Player.
      */
     @Test
@@ -418,6 +400,36 @@ public class PlayerTest {
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
+    }
+
+    public class PlayerImpl extends Player {
+
+        public PlayerImpl()
+        {
+            super("");
+        }
+
+        public void attack(Country attack, Country defend, int caseType)
+        {
+        }
+
+        public void reinforce(Country myCountry, int Armyinput)
+        {
+        }
+
+        public void fortify(Country from, Country to, int Armyinput)
+        {
+        }
+
+        public ArrayList<Country> getCountriesArrivedbyPath(Country country, Country firstCountry, ArrayList<Country> countries)
+        {
+            return null;
+        }
+
+        public boolean isAnyCountriesConnected()
+        {
+            return false;
+        }
     }
     
 }

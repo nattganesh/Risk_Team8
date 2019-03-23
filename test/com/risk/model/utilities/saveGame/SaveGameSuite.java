@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.risk.model.utilities;
+package com.risk.model.utilities.saveGame;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -19,9 +19,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses(
 {
-    com.risk.model.utilities.generateOutputFile.GenerateOutputFileSuite.class, com.risk.model.utilities.FileParserTest.class, com.risk.model.utilities.saveGame.SaveGameSuite.class, com.risk.model.utilities.ValidateTest.class
 })
-public class UtilitiesSuite {
+public class SaveGameSuite {
 
     @BeforeClass
     public static void setUpClass() throws Exception
