@@ -232,7 +232,7 @@ public abstract class Player extends Observable {
     public abstract void reinforce(Country myCountry, int Armyinput);
 
     public abstract void fortify(Country from, Country to, int Armyinput);
-    
+
     public abstract ArrayList<Country> getCountriesArrivedbyPath(Country country, Country firstCountry, ArrayList<Country> countries);
 
     public abstract boolean isAnyCountriesConnected();

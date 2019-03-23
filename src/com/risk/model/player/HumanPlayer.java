@@ -12,14 +12,15 @@ import java.util.ArrayList;
  *
  * @author Natheepan
  */
-public class HumanPlayer extends Player{
-    
+public class HumanPlayer extends Player {
+
     public HumanPlayer(String name)
     {
         super(name);
     }
-    
-        public void attack(Country attack, Country defend, int caseType)
+
+    @Override
+    public void attack(Country attack, Country defend, int caseType)
     {
         switch (caseType)
         {
@@ -38,11 +39,13 @@ public class HumanPlayer extends Player{
         }
     }
 
+    @Override
     public void reinforce(Country myCountry, int Armyinput)
     {
         myCountry.setArmyCount(Armyinput);
     }
 
+    @Override
     public void fortify(Country from, Country to, int Armyinput)
     {
         from.reduceArmyCount(Armyinput);
@@ -61,6 +64,7 @@ public class HumanPlayer extends Player{
      * @return The list of accessible countries corresponding to the country
      *
      */
+    @Override
     public ArrayList<Country> getCountriesArrivedbyPath(Country country, Country firstCountry, ArrayList<Country> countries)
     {
 //        Player p = country.getRuler();
@@ -123,6 +127,7 @@ public class HumanPlayer extends Player{
      * @return true if there is a country which has accessible countries and it
      * has enough armies for move. Otherwise, return false.
      */
+    @Override
     public boolean isAnyCountriesConnected()
     {
         int i = 0;
@@ -138,5 +143,5 @@ public class HumanPlayer extends Player{
         }
         return i == 1;
     }
-    
+
 }
