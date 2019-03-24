@@ -388,6 +388,7 @@ public class Player extends Observable {
     public int calculateReinforcementContinentControl()
     {
     	int reinforcement = 0;
+    	HashSet<Continent> occupycontinent = new HashSet<Continent>();
     	for (Country country : occupiedCountries)
     	{
     		boolean control = true;
@@ -401,8 +402,11 @@ public class Player extends Observable {
     		}
     		if (control)
     		{
-    			reinforcement  = reinforcement + country.getContinent().getPointsWhenFullyOccupied();
+    			occupycontinent.add(country.getContinent());
     		}
+    	}
+    	for(Continent c: occupycontinent) {
+    		reinforcement = reinforcement + c.getPointsWhenFullyOccupied();
     	}
     	return reinforcement;
     }

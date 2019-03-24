@@ -6,8 +6,10 @@
 package com.risk.model.player;
 
 import com.risk.controller.FortificationController;
+import com.risk.controller.ReinforcementController;
 import com.risk.model.MapModel;
 import com.risk.model.card.Card;
+import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
 import java.util.ArrayList;
 
@@ -26,8 +28,11 @@ import static org.junit.Assert.*;
  * @author Tianyi
  */
 public class PlayerTest {
+	private Continent continent;
+	private Continent continent1;
     private Player p;
     private Player p2;
+    private ArrayList<Country> occupiedCountries;
     private ArrayList<Country> occupiedCountries1;
     private ArrayList<Country> occupiedCountries2;
     private Country c1;
@@ -45,7 +50,11 @@ public class PlayerTest {
     public void setUp()
     {
 		p = new Player("Green");
+		p2 = new Player("Red");
 		occupiedCountries1 = new ArrayList<Country>();
+		occupiedCountries = new ArrayList<Country>();
+		continent = new Continent("Asia",10);
+    	continent1 = new Continent("Europe",10);
 		c1 = new Country("China");
 		c2 = new Country("Quebec");
 		c3 = new Country("Siam");
@@ -60,6 +69,18 @@ public class PlayerTest {
 		c1.getConnectedCountries().add(c4);
 		c3.getConnectedCountries().add(c4);
 		c3.getConnectedCountries().add(c6);
+		continent.setCountry(c1);
+    	continent.setCountry(c2);
+    	continent.setCountry(c3);
+    	continent.setCountry(c4);
+    	continent1.setCountry(c5);
+    	continent1.setCountry(c6);
+    	c1.setContinent(continent);
+    	c2.setContinent(continent);
+    	c3.setContinent(continent);
+    	c4.setContinent(continent);
+    	c5.setContinent(continent1);
+    	c6.setContinent(continent1);
 		p.setOccupiedCountries(occupiedCountries1);
 		c1.setRuler(p);
 		c1.setIsOccupied(true);
@@ -67,7 +88,6 @@ public class PlayerTest {
         c3.setRuler(p);
         c6.setRuler(p);
 		p.setStartingPoints(20);
-		p2 = new Player("Red");
 		occupiedCountries2 = new ArrayList<Country>();
 		occupiedCountries2.add(c4);
 		occupiedCountries2.add(c5);
@@ -85,6 +105,7 @@ public class PlayerTest {
     @After
     public void tearDown()
     {
+    	MapModel.getMapModel().getContinents().clear();
     }
 
     /**
@@ -502,6 +523,74 @@ public class PlayerTest {
     	c4.setArmyCount(2);
     	c5.setArmyCount(2);
     	assertFalse(p2.isAnyCountriesConnected());
+    }
+    
+    /**
+     * Method test for calculation of army according to the occupy of continents
+     */
+    @Test
+    public void testCalculateReinforcementContinentControl()
+    {
+    	int expResult = 0;
+    	int result = p.calculateReinforcementContinentControl();
+    	assertEquals(expResult, result);
+    }
+    
+    /**
+     * Method test for calculation of army according to the occupy of continents
+     */
+    @Test
+    public void testCalculateReinforcementContinentControl1()
+    {
+    	c4.setRuler(p);
+    	int expResult = 10;
+    	int result = p.calculateReinforcementContinentControl();
+    	assertEquals(expResult, result);
+    }
+    
+    /**
+     * Method test for calculation of army according to the occupy of continents
+     */
+    @Test
+    public void testCalculateReinforcementOccupiedTerritory()
+    {
+    	int expResult = 1;
+    	int result = p.calculateReinforcementOccupiedTerritory();
+    	assertEquals(expResult, result);
+    }
+    
+    /**
+     * Method test for calculation of army according to the occupy of continents
+     */
+    @Test
+    public void testCalculateReinforcementOccupiedTerritory1()
+    {
+        occupiedCountries.add(new Country("A"));
+        occupiedCountries.add(new Country("B"));
+        occupiedCountries.add(new Country("C"));
+        occupiedCountries.add(new Country("D"));
+        occupiedCountries.add(new Country("E"));
+        occupiedCountries.add(new Country("F"));
+        occupiedCountries.add(new Country("G"));
+        occupiedCountries.add(new Country("H"));
+        occupiedCountries.add(new Country("I"));
+        occupiedCountries.add(new Country("J"));
+        p2.setOccupiedCountries(occupiedCountries);
+    	int expResult = 3;
+    	int result = p2.calculateReinforcementOccupiedTerritory();
+    	assertEquals(expResult, result);
+    }
+    
+    /**
+     * Method test for calculation of army according to the occupy of continents
+     */
+    @Test
+    public void testCalculateReinforcementFromCards()
+    {
+        MapModel.getMapModel().setExchangeTime(2);
+    	int expResult = 15;
+    	int result = p2.calculateReinforcementFromCards();
+    	assertEquals(expResult, result);
     }
     
 }
