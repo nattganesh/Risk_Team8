@@ -55,11 +55,21 @@ public class Continent {
         return countries;
     }
 
+    /**
+     * This method sets the ruler of continent
+     * 
+     * @param p player object
+     */
     public void setRuler(Player p)
     {
         ruler = p;
     }
 
+    /**
+     * This method gets the ruler of the continent 
+     * 
+     * @return returns player object
+     */
     public Player getRuler()
     {
         return ruler;

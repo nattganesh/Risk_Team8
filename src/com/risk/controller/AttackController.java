@@ -85,8 +85,6 @@ public class AttackController implements Initializable, Observer {
     }
 
     /**
-     * (non-Javadoc)
-     *
      * @see javafx.fxml.Initializable#initialize(java.net.URL,s
      * java.util.ResourceBundle)
      */
@@ -147,6 +145,10 @@ public class AttackController implements Initializable, Observer {
         });
     }
 
+    /**
+     * This method updates the view
+     * @param attacker current attacker
+     */
     public void updateView(Country attacker)
     {
     	 adjacentEnemyObservableList.setAll(attacker.getConnectedEnemy());
@@ -261,8 +263,6 @@ public class AttackController implements Initializable, Observer {
     @FXML
     public void rollDiceHandler()
     {
-       
-
         if (validateTerritorySelections() && validateDiceSelections() && countryId.getSelectionModel().getSelectedItem().getArmyCount()> 1)
         {
             int diceAttack = AttackerDice.getSelectionModel().getSelectedItem();
@@ -287,7 +287,6 @@ public class AttackController implements Initializable, Observer {
             actions.addAction("you do not have enough army to attack");
             clearDiceRolls();
         }
-
     }
 
     /**
@@ -321,12 +320,7 @@ public class AttackController implements Initializable, Observer {
                     conqueringController.setConquringArmy(defendingCountry);
                     conqueringController.setDiceRoll(diceattack);
                     break;
-                }
-//                else 
-//                {
-//                	
-//                }
-               
+                }               
             }
             else
             {
@@ -340,6 +334,9 @@ public class AttackController implements Initializable, Observer {
         updateView(attackingCountry);
     }
 
+    /**
+     * 
+     */
     @FXML
     public void AllOut()
     {
@@ -365,6 +362,13 @@ public class AttackController implements Initializable, Observer {
         }
     }
 
+    /**
+     * this sets the limit of roll depending the country chosen
+     * 
+     * @param attack country that is attacking
+     * @param defend country that is defending 
+     * @return returns array of roll limit for attacker and defender
+     */
     public int[] setRollLimit(Country attack, Country defend)
     {
         int dicerange_attack;
@@ -391,6 +395,13 @@ public class AttackController implements Initializable, Observer {
         return result;
     }
 
+    /**
+     * 
+     * 
+     * @param diceattack
+     * @param dicedefend
+     * @return
+     */
     public int setRollTime(int diceattack, int dicedefend)
     {
         int rolltime;
@@ -443,15 +454,12 @@ public class AttackController implements Initializable, Observer {
         GamePhaseModel.getGamePhaseModel().setPhase("fortification");
     }
 
-    /* (non-Javadoc)s
-	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+    /**
+     * This method is necessary for getting update from card exchange
      */
     @Override
     public void update(Observable o, Object arg)
     {
-
-        Country conquered = (Country) arg;
-
         child.setVisible(false);
         adjacentOwned.getItems().clear();
         territoryOwnedObservableList.setAll(p.getOccupiedCountries());	

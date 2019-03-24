@@ -626,7 +626,6 @@ public class MapEditorController implements Initializable {
                 {
                     MapModel.getMapModel().getCountries().get(random).setRuler(p);
                     MapModel.getMapModel().getCountries().get(random).setIsOccupied(true);
-//                    System.out.println("setting army count by 1 froms mapModel");
                     MapModel.getMapModel().getCountries().get(random).setArmyCount(1); //added army
                     p.setStartingPoints(p.getStartingPoints() - 1);
                     countryOccupied[random] = true;
@@ -653,7 +652,6 @@ public class MapEditorController implements Initializable {
                     int random = (int) (Math.random()
                             * PlayerPhaseModel.getPlayerModel().getPlayers().get(ii).numbOccupied());
 
-//                    System.out.println("setting army count by 1 from playerModel");
                     PlayerPhaseModel.getPlayerModel().getPlayers().get(ii).getOccupiedCountries().get(random)
                             .setArmyCount(1);
                     PlayerPhaseModel.getPlayerModel().getPlayers().get(ii).setStartingPoints(PlayerPhaseModel.getPlayerModel().getPlayers().get(ii).getStartingPoints() - 1);

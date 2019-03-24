@@ -25,6 +25,9 @@ public class MapModel extends Observable implements Observer {
     private int exchangeTime = 0;
     private static MapModel mapModel;
 
+    /**
+     * This is a constructor for map model
+     */
     private MapModel()
     {
 
@@ -104,8 +107,8 @@ public class MapModel extends Observable implements Observer {
         return mapModel;
     }
 
-    /* (non-Javadoc)
-	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+    /**
+     * This method receives update from change in army from country 
      */
     @Override
     public void update(Observable o, Object arg)

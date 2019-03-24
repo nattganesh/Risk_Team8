@@ -82,6 +82,9 @@ public class FortificationController implements Initializable {
 
     }
 
+    /**
+     * This method is necessary for updating the view of the list
+     */
     public void updateView()
     {
         Territory.setCellFactory(param -> new ListCell<Country>() {

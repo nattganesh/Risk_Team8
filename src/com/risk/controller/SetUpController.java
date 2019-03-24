@@ -86,7 +86,7 @@ public class SetUpController implements Initializable {
         armyAvailable.setText("Army: " + Integer.toString(getArmies()));
         territoryObservableList.addAll(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
         countryId.setItems(territoryObservableList);
-        renderView();
+        updateView();
     }
 
     /**
@@ -168,7 +168,6 @@ public class SetUpController implements Initializable {
         }
     }
 
-    @FXML
     /**
      * Method to set up the Reinforcement.fxml or SetUp.fxml view and set the
      * controller for the view. Then, changes the scene on the stage to send
@@ -177,6 +176,7 @@ public class SetUpController implements Initializable {
      * @param event eventlistener for button clicked event
      * @throws IOException Exception thrown when view is not found
      */
+    @FXML
     public void next(ActionEvent event) throws IOException
     {
         int currentIndex = PlayerPhaseModel.getPlayerModel().getPlayerIndex();
@@ -209,8 +209,12 @@ public class SetUpController implements Initializable {
             actions.addAction("Please place one army in your country");
         }
     }
-
-    public void renderView()
+    
+    
+    /**
+     * This method is necessary for updating the view of the list
+     */
+    public void updateView()
     {
         countryId.setCellFactory(param -> new ListCell<Country>() {
             @Override

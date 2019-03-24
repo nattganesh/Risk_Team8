@@ -15,6 +15,7 @@ import java.util.Observer;
 import java.util.ResourceBundle;
 
 import com.risk.model.map.Country;
+import com.risk.model.player.Player;
 import com.risk.model.ActionModel;
 import com.risk.model.GamePhaseModel;
 import com.risk.model.PlayerPhaseModel;
@@ -90,8 +91,9 @@ public class ReinforcementController implements Initializable {
     ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
     ObservableList<Country> adjacentEnemyObservableList = FXCollections.observableArrayList();
     ObservableList<Country> adjacentOwnedObservableList = FXCollections.observableArrayList();
-    PlayerPhaseModel playerPhaseModel;
+    Player player;
     ActionModel actions;
+    
 
     /**
      * This is the constructor for the reinforcement controller
@@ -115,15 +117,16 @@ public class ReinforcementController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
         cardController.addObserver(new cardObserver());
-        playerPhaseModel = PlayerPhaseModel.getPlayerModel();
+        player = PlayerPhaseModel.getPlayerModel().getCurrentPlayer();
         actions = ActionModel.getActionModel();
-        TotalReinforcement = playerPhaseModel.calculateReinforcementOccupiedTerritory() + playerPhaseModel.calculateReinforcementContinentControl();
+
+        TotalReinforcement = player.calculateReinforcementContinentControl() + player.calculateReinforcementOccupiedTerritory();
         if (TotalReinforcement < 3)
         {
             TotalReinforcement = 3;
         }
         armyAvailable.setText("Army: " + Integer.toString(TotalReinforcement));
-        territoryObservableList.addAll(playerPhaseModel.getCurrentPlayer().getOccupiedCountries());
+        territoryObservableList.addAll(player.getOccupiedCountries());
         countryId.setItems(territoryObservableList);
         adjacentEnemy.setItems(adjacentEnemyObservableList);
         adjacentOwned.setItems(adjacentOwnedObservableList);

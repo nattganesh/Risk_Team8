@@ -15,6 +15,7 @@ import com.risk.model.MapModel;
 import com.risk.model.PlayerPhaseModel;
 import com.risk.model.card.Card;
 import com.risk.model.map.Country;
+import com.risk.model.player.Player;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,10 +25,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 
-/**
- * @author DKM
- *
- */
+
 public class CardController extends Observable implements Initializable {
 
     @FXML
@@ -39,7 +37,8 @@ public class CardController extends Observable implements Initializable {
     private int reinforcement;
 
     ActionModel actions;
-
+    Player player;
+    
     ObservableList<Card> tradeObservableList = FXCollections.observableArrayList();
 
     public void renderView()
@@ -67,6 +66,7 @@ public class CardController extends Observable implements Initializable {
         actions = ActionModel.getActionModel();
         yourCard.setItems(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getCards());
         tradeCard.setItems(tradeObservableList);
+        player = PlayerPhaseModel.getPlayerModel().getCurrentPlayer();
         renderView();
     }
 
@@ -113,7 +113,7 @@ public class CardController extends Observable implements Initializable {
         {
             if (cardValidation(tradeCard.getItems()))
             {
-                reinforcement = PlayerPhaseModel.getPlayerModel().calculateReinforcementFromCards();
+                reinforcement = player.calculateReinforcementFromCards();
                 for (Card c : tradeCard.getItems())
                 {
                     c.removeCard(PlayerPhaseModel.getPlayerModel().getCurrentPlayer());
@@ -140,6 +140,9 @@ public class CardController extends Observable implements Initializable {
         }
     }
 
+    /**
+     * This method handles skipping of card exchange
+     */
     @FXML
     public void skipExchangeHandler()
     {

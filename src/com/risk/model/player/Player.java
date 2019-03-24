@@ -7,7 +7,9 @@
  */
 package com.risk.model.player;
 
+import com.risk.model.MapModel;
 import com.risk.model.card.Card;
+import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
 
 import javafx.collections.FXCollections;
@@ -22,7 +24,6 @@ public class Player extends Observable {
 
     private String name;
     private ArrayList<Country> occupiedCountries = new ArrayList<>();
-    private Set<String> continents = new HashSet<String>();
     private ObservableList<Card> cards = FXCollections.observableArrayList();
 
     private int totalArmy;
@@ -30,16 +31,31 @@ public class Player extends Observable {
 
     private boolean playerLost = false;
 
+    /**
+     * This method increases total army of player object by count
+     * 
+     * @param count number of army
+     */
     public void setTotalArmy(int count)
     {
         totalArmy = totalArmy + count;
     }
 
+    /**
+     * This method reduces the total army of player object by count
+     * 
+     * @param count number of army
+     */
     public void reduceTotalArmy(int count)
     {
         totalArmy = totalArmy - count;
     }
 
+    /**
+     * This method returns the total army
+     * 
+     * @return total number of army
+     */
     public int getTotalArmy()
     {
         return totalArmy;
@@ -102,8 +118,6 @@ public class Player extends Observable {
      */
     public void addCountry(Country country)
     {
-
-//        System.out.println("notify from addCountry");
         occupiedCountries.add(country);
         setChanged();
         notifyObservers(country);
@@ -116,9 +130,7 @@ public class Player extends Observable {
     public void removeCountry(Country country)
     {
 
-//        System.out.println("notify from removeCountry");
         occupiedCountries.remove(country);
-
         setChanged();
         notifyObservers(country);
     }
@@ -170,11 +182,21 @@ public class Player extends Observable {
         return cards;
     }
 
+    /**
+     * This method adds a card to player
+     * 
+     * @param card the card being added to player
+     */
     public void addCard(Card card)
     {
         cards.add(card);
     }
 
+    /**
+     * This method removes the card from player
+     * 
+     * @param card the card to be removed from player
+     */
     public void removeCard(Card card)
     {
         for (Card c : cards)
@@ -188,7 +210,8 @@ public class Player extends Observable {
     }
 
     /**
-     *
+     * This metohd sets the card observable list
+     * 
      * @param cards
      */
     public void setCards(ObservableList<Card> cards)
@@ -216,7 +239,14 @@ public class Player extends Observable {
     {
         this.playerLost = playerLost;
     }
-
+    
+	/**
+	 * This method is necessary to attack
+	 * 
+	 * @param attack country that is attacking
+	 * @param defend country being attacked
+	 * @param caseType the type of attack
+	 */
     public void attack(Country attack, Country defend, int caseType)
     {
         switch (caseType)
@@ -235,11 +265,24 @@ public class Player extends Observable {
         }
     }
 
+    /**
+     * This method is necessary for reinforcement
+     * 
+     * @param myCountry the country to be reinforced
+     * @param Armyinput the number of army to reinforce
+     */
     public void reinforce(Country myCountry, int Armyinput)
     {
         myCountry.setArmyCount(Armyinput);
     }
 
+    /**
+     * this method is necessary for fortify a country
+     * 
+     * @param from country origin of army
+     * @param to country destination of army
+     * @param Armyinput number of army to move
+     */
     public void fortify(Country from, Country to, int Armyinput)
     {
         from.reduceArmyCount(Armyinput);
@@ -260,7 +303,6 @@ public class Player extends Observable {
      */
     public ArrayList<Country> getCountriesArrivedbyPath(Country country, Country firstCountry, ArrayList<Country> countries)
     {
-//        Player p = country.getRuler();
         for (Country c : country.getConnectedCountries())
         {
             Player player = c.getRuler();
@@ -335,5 +377,60 @@ public class Player extends Observable {
         }
         return i == 1;
     }
-
+    
+    /**
+     * This method is used to calculate the extra armies earned if the player
+     * has occupied continents
+     *
+     * @param currentPlayer The player who is in his reinforcement round
+     * @return The result corresponding to the countries the player occupied
+     */
+    public int calculateReinforcementContinentControl()
+    {
+    	int reinforcement = 0;
+    	for (Country country : occupiedCountries)
+    	{
+    		boolean control = true;
+    		for (Country countryInContinent : country.getContinent().getCountries())
+    		{
+    			if (!countryInContinent.getRuler().getName().equals(name))
+    			{
+    				control = false;
+    				break;
+    			}
+    		}
+    		if (control)
+    		{
+    			reinforcement  = reinforcement + country.getContinent().getPointsWhenFullyOccupied();
+    		}
+    	}
+    	return reinforcement;
+    }
+    
+    /**
+     * This method is used to calculate the extra armies based on the number of
+     * countries the player already occupied
+     *
+     * @param currentPlayer The player who is in his reinforcement round
+     * @return The result corresponding to the countries the player occupied
+     */
+    public int calculateReinforcementOccupiedTerritory()
+    {
+        int reinforcement = (int) Math.floor(numbOccupied() / 3);
+        return reinforcement;
+    }
+    
+    /**
+     * This method is used to calculate the extra armies earned by exchanging
+     * cards
+     *
+     * @return The result corresponding to the total exchange time.
+     */
+    public int calculateReinforcementFromCards()
+    {
+        int currentExchange = MapModel.getMapModel().getExchangeTime();
+        int reinforcement = (currentExchange + 1) * 5;
+        MapModel.getMapModel().setExchangeTime(currentExchange + 1);
+        return reinforcement;
+    }
 }

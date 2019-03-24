@@ -1,4 +1,7 @@
 /**
+ * This class is necessary for moving army after conquer
+ * 
+ * @author DKM
  *
  */
 package com.risk.controller;
@@ -22,10 +25,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
-/**
- * @author DKM
- *
- */
+
 public class ConqueredController extends Observable implements Initializable {
 
     ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
@@ -46,6 +46,10 @@ public class ConqueredController extends Observable implements Initializable {
     TextField armyCount;
     boolean move = false;
 
+    /**
+     * @see javafx.fxml.Initializable#initialize(java.net.URL,s
+     * java.util.ResourceBundle)
+     */
     @Override
     public void initialize(URL arg0, ResourceBundle arg1)
     {
@@ -86,6 +90,9 @@ public class ConqueredController extends Observable implements Initializable {
         }
     }
 
+    /**
+     * This method ends the conquer move
+     */
     @FXML
     public void moveComplete()
     {

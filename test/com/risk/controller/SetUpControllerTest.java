@@ -138,7 +138,7 @@ public class SetUpControllerTest {
     {
         System.out.println("renderView");
         SetUpController instance = new SetUpController();
-        instance.renderView();
+        instance.updateView();
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

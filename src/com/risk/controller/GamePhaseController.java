@@ -312,10 +312,7 @@ public class GamePhaseController implements Observer, Initializable {
 
         actionMessage.setItems(ActionModel.getActionModel().getActions());
         worldDomination1.setData(pieChartData);
-//        barData.add(serie);
-//        worldDomination2.setData(barData);
-//        worldDomination2.get
-
+        
         try
         {
             mainPane.getChildren().clear();
