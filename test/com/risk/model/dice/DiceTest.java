@@ -18,6 +18,7 @@ import static org.junit.Assert.*;
 /**
  *
  * @author Natt
+ * @author Tianyi
  */
 public class DiceTest {
 	private Country country1;
