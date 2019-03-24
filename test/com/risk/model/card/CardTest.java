@@ -6,6 +6,9 @@
 package com.risk.model.card;
 
 import com.risk.model.player.Player;
+
+import javafx.collections.ObservableList;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -18,7 +21,9 @@ import static org.junit.Assert.*;
  * @author Natt
  */
 public class CardTest {
-    
+    private Card card;
+    private Card card2;
+    private Player p;
     public CardTest()
     {
     }
@@ -36,6 +41,11 @@ public class CardTest {
     @Before
     public void setUp()
     {
+    	card = new Card("Wild");
+    	card2 = new Card("Infantry");
+    	p = new Player("Green");
+    	card.setOwner(p);
+    	p.addCard(card);
     }
     
     @After
@@ -49,13 +59,9 @@ public class CardTest {
     @Test
     public void testToString()
     {
-        System.out.println("toString");
-        Card instance = null;
-        String expResult = "";
-        String result = instance.toString();
+        String expResult = card.getCatagory()+" "+card.getOwner();
+        String result = card.toString();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -64,13 +70,9 @@ public class CardTest {
     @Test
     public void testGetCatagory()
     {
-        System.out.println("getCatagory");
-        Card instance = null;
-        String expResult = "";
-        String result = instance.getCatagory();
+        String expResult = "Wild";
+        String result = card.getCatagory();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -79,13 +81,8 @@ public class CardTest {
     @Test
     public void testGetOwner()
     {
-        System.out.println("getOwner");
-        Card instance = null;
-        Player expResult = null;
-        Player result = instance.getOwner();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Player result = card.getOwner();
+        assertEquals(p, result);
     }
 
     /**
@@ -94,12 +91,9 @@ public class CardTest {
     @Test
     public void testSetOwner()
     {
-        System.out.println("setOwner");
-        Player player = null;
-        Card instance = null;
-        instance.setOwner(player);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        card2.setOwner(p);
+        Player result = card2.getOwner();
+        assertEquals(p, result);
     }
 
     /**
@@ -108,12 +102,11 @@ public class CardTest {
     @Test
     public void testRemoveCard()
     {
-        System.out.println("removeCard");
-        Player player = null;
-        Card instance = null;
-        instance.removeCard(player);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        card.removeCard(p);
+        Player result = card.getOwner();
+        assertEquals(null, result);
+        ObservableList<Card> resultList = p.getCards();
+        assertTrue(resultList.isEmpty());
     }
     
 }
