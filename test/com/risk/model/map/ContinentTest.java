@@ -17,9 +17,15 @@ import static org.junit.Assert.*;
 /**
  *
  * @author Natt
+ * @author Tianyi
  */
 public class ContinentTest {
-    
+    private Continent continent;
+    private Country c1;
+    private Country c2;
+    private Country c3;
+    private Player p;
+    private Player p1;
     public ContinentTest()
     {
     }
@@ -37,6 +43,15 @@ public class ContinentTest {
     @Before
     public void setUp()
     {
+    	continent = new Continent("Asia",10);
+    	c1 = new Country("China");
+    	c2 = new Country("Japan");
+    	c3 = new Country("Siam");
+    	continent.setCountry(c1);
+    	continent.setCountry(c2);
+    	p = new Player("Green");
+    	p1 = new Player("Red");
+    	continent.setRuler(p1);
     }
     
     @After
@@ -50,13 +65,9 @@ public class ContinentTest {
     @Test
     public void testGetName()
     {
-        System.out.println("getName");
-        Continent instance = null;
-        String expResult = "";
-        String result = instance.getName();
+        String expResult = "Asia";
+        String result = continent.getName();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -65,13 +76,11 @@ public class ContinentTest {
     @Test
     public void testGetCountries()
     {
-        System.out.println("getCountries");
-        Continent instance = null;
-        ArrayList<Country> expResult = null;
-        ArrayList<Country> result = instance.getCountries();
+        ArrayList<Country> expResult = new ArrayList<Country>();
+        expResult.add(c1);
+        expResult.add(c2);
+        ArrayList<Country> result = continent.getCountries();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -80,12 +89,9 @@ public class ContinentTest {
     @Test
     public void testSetRuler()
     {
-        System.out.println("setRuler");
-        Player p = null;
-        Continent instance = null;
-        instance.setRuler(p);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        continent.setRuler(p);
+        Player result = continent.getRuler();
+        assertEquals(p, result);
     }
 
     /**
@@ -94,13 +100,8 @@ public class ContinentTest {
     @Test
     public void testGetRuler()
     {
-        System.out.println("getRuler");
-        Continent instance = null;
-        Player expResult = null;
-        Player result = instance.getRuler();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    	 Player result = continent.getRuler();
+         assertEquals(p1, result);
     }
 
     /**
@@ -109,12 +110,13 @@ public class ContinentTest {
     @Test
     public void testSetCountry()
     {
-        System.out.println("setCountry");
-        Country country = null;
-        Continent instance = null;
-        instance.setCountry(country);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+       continent.setCountry(c3);
+       ArrayList<Country> expResult = new ArrayList<Country>();
+       expResult.add(c1);
+       expResult.add(c2);
+       expResult.add(c3);
+       ArrayList<Country> result = continent.getCountries();
+       assertEquals(expResult, result);
     }
 
     /**
@@ -123,13 +125,9 @@ public class ContinentTest {
     @Test
     public void testGetPointsWhenFullyOccupied()
     {
-        System.out.println("getPointsWhenFullyOccupied");
-        Continent instance = null;
-        int expResult = 0;
-        int result = instance.getPointsWhenFullyOccupied();
+    	int expResult = 10;
+        int result = continent.getPointsWhenFullyOccupied();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -138,12 +136,11 @@ public class ContinentTest {
     @Test
     public void testSetPointsWhenFullyOccupied()
     {
-        System.out.println("setPointsWhenFullyOccupied");
-        int pointsWhenFullyOccupied = 0;
-        Continent instance = null;
-        instance.setPointsWhenFullyOccupied(pointsWhenFullyOccupied);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    	int pointsWhenFullyOccupied = 20;
+        continent.setPointsWhenFullyOccupied(pointsWhenFullyOccupied);
+        int expResult = 20;
+        int result = continent.getPointsWhenFullyOccupied();
+        assertEquals(expResult, result);
     }
     
 }
