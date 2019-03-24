@@ -43,10 +43,7 @@ public class AttackController implements Initializable, Observer {
 
     @FXML
     Label inputArmyError;
-
-    @FXML
-    TextField ArmyCount;
-
+    
     @FXML
     ListView<Country> adjacentEnemy;
 
@@ -71,9 +68,7 @@ public class AttackController implements Initializable, Observer {
     @FXML
     AnchorPane child;
 
-    ObservableList<Country> territoryObservableList;
-    
-  
+    ObservableList<Country> territoryOwnedObservableList = FXCollections.observableArrayList();
     ObservableList<Country> adjacentEnemyObservableList = FXCollections.observableArrayList();
     ObservableList<Country> adjacentOwnedObservableList = FXCollections.observableArrayList();
 
@@ -100,11 +95,11 @@ public class AttackController implements Initializable, Observer {
     {
         conqueringController.addObserver(this);
         actions = ActionModel.getActionModel();
-
-        
-        countryId.setItems(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
+        territoryOwnedObservableList.setAll(p.getOccupiedCountries());
+        countryId.setItems(territoryOwnedObservableList);
         adjacentEnemy.setItems(adjacentEnemyObservableList);
         adjacentOwned.setItems(adjacentOwnedObservableList);
+        
         countryId.setCellFactory(param -> new ListCell<Country>() {
             @Override
             protected void updateItem(Country country, boolean empty)
@@ -120,12 +115,6 @@ public class AttackController implements Initializable, Observer {
                 }
             }
         });
-        updateView();
-
-    }
-
-    public void updateView()
-    {
         adjacentEnemy.setCellFactory(param -> new ListCell<Country>() {
             @Override
             protected void updateItem(Country country, boolean empty)
@@ -158,27 +147,25 @@ public class AttackController implements Initializable, Observer {
         });
     }
 
+    public void updateView(Country attacker)
+    {
+    	 adjacentEnemyObservableList.setAll(attacker.getConnectedEnemy());
+    	 adjacentOwnedObservableList.setAll(attacker.getConnectedOwned());
+    	 territoryOwnedObservableList.setAll(p.getOccupiedCountries());	
+    }
+
     /**
      * this method is responsible for populating adjacent territories
      */
     @FXML
     public void territoryHandler()
     {
-
-        if (countryId.getSelectionModel().getSelectedItem() != null)
+    	Country attacker = countryId.getSelectionModel().getSelectedItem();   
+        if (attacker != null)
         {
-            // i dont' wannt them to be in sync
-            clearDiceRolls();
-
-            Country attacker = countryId.getSelectionModel().getSelectedItem();
-
-            adjacentEnemyObservableList.clear();
-            adjacentOwnedObservableList.clear();
-
-            adjacentEnemyObservableList.addAll(attacker.getConnectedEnemy());
-            adjacentOwnedObservableList.addAll(attacker.getConnectedOwned());
-            ArmyCount.setText(Integer.toString(attacker.getArmyCount()));
-
+            clearDiceRolls();    
+            adjacentEnemyObservableList.setAll(attacker.getConnectedEnemy());
+            adjacentOwnedObservableList.setAll(attacker.getConnectedOwned());
         }
     }
 
@@ -199,11 +186,10 @@ public class AttackController implements Initializable, Observer {
     @FXML
     public void adjacentEnemyHandler()
     {
-        if (adjacentEnemy.getSelectionModel().getSelectedItem() != null && countryId.getSelectionModel().getSelectedItem().getArmyCount() > 1)
+	    Country defender = adjacentEnemy.getSelectionModel().getSelectedItem();
+        Country attacker = countryId.getSelectionModel().getSelectedItem();
+        if (defender != null && attacker != null && attacker.getArmyCount() > 1)
         {
-            Country defender = adjacentEnemy.getSelectionModel().getSelectedItem();
-            Country attacker = countryId.getSelectionModel().getSelectedItem();
-
             actions.addAction("attacker == " + attacker.getName() + " (" + attacker.getArmyCount() + ")");
             actions.addAction("defender == " + defender.getName() + " (" + defender.getArmyCount() + ")");
             initializeDice();
@@ -214,12 +200,6 @@ public class AttackController implements Initializable, Observer {
             AttackerDice.getItems().clear();
             DefenderDice.getItems().clear();
         }
-    }
-
-    @FXML
-    public void goToFortificationPhase()
-    {
-
     }
 
     /**
@@ -281,16 +261,14 @@ public class AttackController implements Initializable, Observer {
     @FXML
     public void rollDiceHandler()
     {
-        int attackerArmy = countryId.getSelectionModel().getSelectedItem().getArmyCount();
+       
 
-        if (validateTerritorySelections() && validateDiceSelections() && attackerArmy > 1)
+        if (validateTerritorySelections() && validateDiceSelections() && countryId.getSelectionModel().getSelectedItem().getArmyCount()> 1)
         {
-            actions.addAction("rolling dice");
             int diceAttack = AttackerDice.getSelectionModel().getSelectedItem();
             int diceDefender = DefenderDice.getSelectionModel().getSelectedItem();
             actions.addAction("attacker rolled " + diceAttack + " dice");
             actions.addAction("defender rolled " + diceDefender + " dice");
-
             rollDice(diceAttack, diceDefender, countryId.getSelectionModel().getSelectedItem(), adjacentEnemy.getSelectionModel().getSelectedItem());
             initializeDice();
         }
@@ -301,7 +279,7 @@ public class AttackController implements Initializable, Observer {
         else if (!validateDiceSelections())
         {
             actions.addAction("select number of rolls");
-            AttackerDice.getItems().clear();
+            AttackerDice.getItems().clear(); 
             DefenderDice.getItems().clear();
         }
         else
@@ -332,7 +310,6 @@ public class AttackController implements Initializable, Observer {
             if (dattack[i] > ddefend[i])
             {
                 attackingCountry.getRuler().attack(attackingCountry, defendingCountry, 1);
-                adjacentEnemyObservableList.set(adjacentEnemyObservableList.indexOf(defendingCountry), defendingCountry);
                 actions.addAction("defender has lost 1 army");
                 if (defendingCountry.getArmyCount() == 0)
                 {
@@ -340,26 +317,27 @@ public class AttackController implements Initializable, Observer {
                     actions.addAction("Please move armies to your new country!");
                     attackingCountry.getRuler().attack(attackingCountry, defendingCountry, 2);
                     occupy = true;
-//                    child.setVisible(true);
+                    child.setVisible(true);
                     conqueringController.setConquringArmy(defendingCountry);
                     conqueringController.setDiceRoll(diceattack);
-                    updateView();
                     break;
                 }
-                else
-                {
-                    adjacentEnemyObservableList.set(adjacentEnemyObservableList.indexOf(defendingCountry), defendingCountry);
-                }
+//                else 
+//                {
+//                	
+//                }
+               
             }
             else
             {
 
                 attackingCountry.getRuler().attack(attackingCountry, defendingCountry, 3);
+                updateView(attackingCountry);
                 actions.addAction("attacker has lost 1 army");
-                updateView();
+                
             }
         }
-
+        updateView(attackingCountry);
     }
 
     @FXML
@@ -461,10 +439,6 @@ public class AttackController implements Initializable, Observer {
         if (occupy)
         {
             DeckModel.getCardModel().sendCard(PlayerPhaseModel.getPlayerModel().getCurrentPlayer());
-            for (Card card : p.getCards())
-            {
-                System.out.println(card.getCatagory());
-            }
         }
         GamePhaseModel.getGamePhaseModel().setPhase("fortification");
     }
@@ -480,9 +454,6 @@ public class AttackController implements Initializable, Observer {
 
         child.setVisible(false);
         adjacentOwned.getItems().clear();
-        ArmyCount.setText(Integer.toString(countryId.getSelectionModel().getSelectedItem().getArmyCount()));
-
-        updateView();
-
+        territoryOwnedObservableList.setAll(p.getOccupiedCountries());	
     }
 }

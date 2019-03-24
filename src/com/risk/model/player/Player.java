@@ -21,7 +21,7 @@ import java.util.Set;
 public class Player extends Observable {
 
     private String name;
-    private ObservableList<Country> occupiedCountries = FXCollections.observableArrayList();
+    private ArrayList<Country> occupiedCountries = new ArrayList<>();
     private Set<String> continents = new HashSet<String>();
     private ObservableList<Card> cards = FXCollections.observableArrayList();
 
@@ -91,7 +91,7 @@ public class Player extends Observable {
      *
      * @return occupiedCountries returns ArrayList<Country> occupiedCountries
      */
-    public ObservableList<Country> getOccupiedCountries()
+    public ArrayList<Country> getOccupiedCountries()
     {
         return occupiedCountries;
     }
@@ -103,7 +103,7 @@ public class Player extends Observable {
     public void addCountry(Country country)
     {
 
-        System.out.println("notify from addCountry");
+//        System.out.println("notify from addCountry");
         occupiedCountries.add(country);
         setChanged();
         notifyObservers(country);
@@ -116,7 +116,7 @@ public class Player extends Observable {
     public void removeCountry(Country country)
     {
 
-        System.out.println("notify from removeCountry");
+//        System.out.println("notify from removeCountry");
         occupiedCountries.remove(country);
 
         setChanged();
@@ -138,7 +138,7 @@ public class Player extends Observable {
      * gets country object associated with the name of the string
      * @param occupiedCountries 
      */
-    public void setOccupiedCountries(ObservableList<Country> occupiedCountries)
+    public void setOccupiedCountries(ArrayList<Country> occupiedCountries)
     {
         this.occupiedCountries = occupiedCountries;
     }

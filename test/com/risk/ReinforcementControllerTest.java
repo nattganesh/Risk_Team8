@@ -52,12 +52,12 @@ public class ReinforcementControllerTest extends TestCase {
     {
     	
         occupiedCountries = new ArrayList<Country>();
-        occupiedCountries.add(new Country("dummy country", "dummy continent"));
-        occupiedCountries.add(new Country("dummy country", "dummy continent"));
-        occupiedCountries.add(new Country("dummy country", "dummy continent"));
-        occupiedCountries.add(new Country("dummy country", "dummy continent"));
-        occupiedCountries.add(new Country("dummy country", "dummy continent"));
-        occupiedCountries.add(new Country("dummy country", "dummy continent"));
+        occupiedCountries.add(new Country("dummy country"));
+        occupiedCountries.add(new Country("dummy country"));
+        occupiedCountries.add(new Country("dummy country"));
+        occupiedCountries.add(new Country("dummy country"));
+        occupiedCountries.add(new Country("dummy country"));
+        occupiedCountries.add(new Country("dummy country"));
 
         testPlayer1.setOccupiedCountries(occupiedCountries);
         ReinforcementController rController = new ReinforcementController();
@@ -72,16 +72,16 @@ public class ReinforcementControllerTest extends TestCase {
     {
 
         occupiedCountries = new ArrayList<Country>();
-        occupiedCountries.add(new Country("dummy country", "dummy continent"));
-        occupiedCountries.add(new Country("dummy country", "dummy continent"));
-        occupiedCountries.add(new Country("dummy country", "dummy continent"));
-        occupiedCountries.add(new Country("dummy country", "dummy continent"));
-        occupiedCountries.add(new Country("dummy country", "dummy continent"));
-        occupiedCountries.add(new Country("dummy country", "dummy continent"));
-        occupiedCountries.add(new Country("dummy country", "dummy continent"));
-        occupiedCountries.add(new Country("dummy country", "dummy continent"));
-        occupiedCountries.add(new Country("dummy country", "dummy continent"));
-        occupiedCountries.add(new Country("dummy country", "dummy continent"));
+        occupiedCountries.add(new Country("dummy country"));
+        occupiedCountries.add(new Country("dummy country"));
+        occupiedCountries.add(new Country("dummy country"));
+        occupiedCountries.add(new Country("dummy country"));
+        occupiedCountries.add(new Country("dummy country"));
+        occupiedCountries.add(new Country("dummy country"));
+        occupiedCountries.add(new Country("dummy country"));
+        occupiedCountries.add(new Country("dummy country"));
+        occupiedCountries.add(new Country("dummy country"));
+        occupiedCountries.add(new Country("dummy country"));
 
         testPlayer1.setOccupiedCountries(occupiedCountries);
         ReinforcementController rController = new ReinforcementController();
