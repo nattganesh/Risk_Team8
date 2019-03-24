@@ -212,7 +212,7 @@ public class AttackController implements Initializable, Observer {
     	boolean validateTerritorySelections = p.validateTerritorySelections(countryId.getSelectionModel().getSelectedItem(), adjacentEnemy.getSelectionModel().getSelectedItem());
         if (validateTerritorySelections)
         {
-            rollLimit = setRollLimit(countryId.getSelectionModel().getSelectedItem(), adjacentEnemy.getSelectionModel().getSelectedItem());
+            rollLimit = p.setRollLimit(countryId.getSelectionModel().getSelectedItem(), adjacentEnemy.getSelectionModel().getSelectedItem());
             AttackerDice.getItems().clear();
             for (int i = 0; i < rollLimit[0]; i++)
             {
@@ -278,9 +278,9 @@ public class AttackController implements Initializable, Observer {
      */
     public void rollDice(int diceattack, int dicedefend, Country attackingCountry, Country defendingCountry)
     {
-        int[] dattack = rollResult(diceattack);
-        int[] ddefend = rollResult(dicedefend);
-        int rolltime = setRollTime(diceattack, dicedefend);
+        int[] dattack = p.rollResult(diceattack);
+        int[] ddefend = p.rollResult(dicedefend);
+        int rolltime = p.setRollTime(diceattack, dicedefend);
         for (int i = 0; i < rolltime; i++)
         {
             if (dattack[i] > ddefend[i])
@@ -319,12 +319,14 @@ public class AttackController implements Initializable, Observer {
     {
         Country attack = countryId.getSelectionModel().getSelectedItem();
         Country defend = adjacentEnemy.getSelectionModel().getSelectedItem();
-        if (attack != null && defend != null && attack.getArmyCount() > 1)
+        boolean validateTerritorySelections = p.validateTerritorySelections(attack, defend);
+    	boolean validateAttackerHasEnoughArmy = p.validateAttackerHasEnoughArmy(attack);
+        if (validateTerritorySelections && validateAttackerHasEnoughArmy)
         {
             boolean roll = true;
             while (roll)
             {
-                int result[] = setRollLimit(attack, defend);
+                int result[] = p.setRollLimit(attack, defend);
                 rollDice(result[0], result[1], attack, defend);
                 if (attack.getArmyCount() == 1 || defend.getArmyCount() == 0)
                 {
@@ -333,87 +335,15 @@ public class AttackController implements Initializable, Observer {
                 }
             }
         }
-        else
+        else if (!validateTerritorySelections)
         {
-            actions.addAction("invalid move");
-        }
-    }
-
-    /**
-     * this sets the limit of roll depending the country chosen
-     * 
-     * @param attack country that is attacking
-     * @param defend country that is defending 
-     * @return returns array of roll limit for attacker and defender
-     */
-    public int[] setRollLimit(Country attack, Country defend)
-    {
-        int dicerange_attack;
-        int dicerange_defend;
-        int[] result = new int[2];
-        if ((attack.getArmyCount() - 1) > 3)
-        {
-            dicerange_attack = 3;
+            actions.addAction("select attacker and defender");
         }
         else
         {
-            dicerange_attack = attack.getArmyCount() - 1;
+            actions.addAction("you do not have enough army to attack");
+            clearDiceRolls();
         }
-        if (defend.getArmyCount() >= 2)
-        {
-            dicerange_defend = 2;
-        }
-        else
-        {
-            dicerange_defend = 1;
-        }
-        result[0] = dicerange_attack;
-        result[1] = dicerange_defend;
-        return result;
-    }
-
-    /**
-     * 
-     * 
-     * @param diceattack
-     * @param dicedefend
-     * @return
-     */
-    public int setRollTime(int diceattack, int dicedefend)
-    {
-        int rolltime;
-        if (diceattack >= dicedefend)
-        {
-            rolltime = dicedefend;
-        }
-        else
-        {
-            rolltime = diceattack;
-        }
-        return rolltime;
-    }
-
-    public int[] rollResult(int diceNumber)
-    {
-        int[] result = new int[diceNumber];
-        for (int i = 0; i < diceNumber; i++)
-        {
-            result[i] = Dice.roll();
-        }
-        int tmp;
-        for (int i = 0; i < diceNumber; i++)
-        {
-            for (int j = i + 1; j < diceNumber; j++)
-            {
-                if (result[i] < result[j])
-                {
-                    tmp = result[i];
-                    result[i] = result[j];
-                    result[j] = tmp;
-                }
-            }
-        }
-        return result;
     }
 
     /**

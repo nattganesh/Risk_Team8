@@ -9,6 +9,7 @@ package com.risk.model.player;
 
 import com.risk.model.MapModel;
 import com.risk.model.card.Card;
+import com.risk.model.dice.Dice;
 import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
 
@@ -482,5 +483,82 @@ public class Player extends Observable {
        {
     	   return false;
        }
+   }
+   
+   /**
+    * this sets the limit of roll depending the country chosen
+    * 
+    * @param attack country that is attacking
+    * @param defend country that is defending 
+    * @return returns array of roll limit for attacker and defender
+    */
+   public int[] setRollLimit(Country attack, Country defend)
+   {
+       int dicerange_attack;
+       int dicerange_defend;
+       int[] result = new int[2];
+       if ((attack.getArmyCount() - 1) > 3)
+       {
+           dicerange_attack = 3;
+       }
+       else
+       {
+           dicerange_attack = attack.getArmyCount() - 1;
+       }
+       if (defend.getArmyCount() >= 2)
+       {
+           dicerange_defend = 2;
+       }
+       else
+       {
+           dicerange_defend = 1;
+       }
+       result[0] = dicerange_attack;
+       result[1] = dicerange_defend;
+       return result;
+   }
+
+   /**
+    * 
+    * 
+    * @param diceattack
+    * @param dicedefend
+    * @return
+    */
+   public int setRollTime(int diceattack, int dicedefend)
+   {
+       int rolltime;
+       if (diceattack >= dicedefend)
+       {
+           rolltime = dicedefend;
+       }
+       else
+       {
+           rolltime = diceattack;
+       }
+       return rolltime;
+   }
+
+   public int[] rollResult(int diceNumber)
+   {
+       int[] result = new int[diceNumber];
+       for (int i = 0; i < diceNumber; i++)
+       {
+           result[i] = Dice.roll();
+       }
+       int tmp;
+       for (int i = 0; i < diceNumber; i++)
+       {
+           for (int j = i + 1; j < diceNumber; j++)
+           {
+               if (result[i] < result[j])
+               {
+                   tmp = result[i];
+                   result[i] = result[j];
+                   result[j] = tmp;
+               }
+           }
+       }
+       return result;
    }
 }

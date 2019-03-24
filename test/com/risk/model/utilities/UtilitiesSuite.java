@@ -19,7 +19,7 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses(
 {
-    com.risk.model.utilities.generateOutputFile.GenerateOutputFileSuite.class, com.risk.model.utilities.FileParserTest.class, com.risk.model.utilities.ValidateTest.class
+    com.risk.model.utilities.FileParserTest.class, com.risk.model.utilities.ValidateTest.class
 })
 public class UtilitiesSuite {
 

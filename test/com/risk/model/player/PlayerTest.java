@@ -661,4 +661,90 @@ public class PlayerTest {
         assertEquals(expResult, result);
     }
     
+    /**
+     * Method test for the limit of number of dice attacker and defender can roll
+     */
+    @Test
+    public void testSetRollLimit()
+    {
+    	c1.setArmyCount(10);
+    	c4.setArmyCount(2);
+    	int[] result = p.setRollLimit(c1, c4);
+    	int[] expResult = new int[2];
+    	expResult[0] = 3;
+    	expResult[1] = 2;
+        assertEquals(expResult[0], result[0]);
+        assertEquals(expResult[1], result[1]);
+    }
+    
+    /**
+     * Method test for the limit of number of dice attacker and defender can roll
+     */
+    @Test
+    public void testSetRollLimit1()
+    {
+    	c1.setArmyCount(3);
+    	c4.setArmyCount(2);
+    	int[] result = p.setRollLimit(c1, c4);
+    	int[] expResult = new int[2];
+    	expResult[0] = 2;
+    	expResult[1] = 2;
+        assertEquals(expResult[0], result[0]);
+        assertEquals(expResult[1], result[1]);
+    }
+    
+    /**
+     * Method test for the limit of number of dice attacker and defender can roll
+     */
+    @Test
+    public void testSetRollLimit2()
+    {
+    	c1.setArmyCount(2);
+    	c4.setArmyCount(1);
+    	int[] result = p.setRollLimit(c1, c4);
+    	int[] expResult = new int[2];
+    	expResult[0] = 1;
+    	expResult[1] = 2;
+        assertEquals(expResult[0], result[0]);
+        assertEquals(expResult[1], result[1]);
+    }
+    
+    /**
+     * Method test for the times of comparing the result of rolling dice
+     */
+    @Test
+    public void testSetRollTime()
+    {
+    	int result = p.setRollTime(3, 2);
+    	int expResult = 2;
+    	assertEquals(expResult, result);
+    }
+    
+    /**
+     * Method test for the times of comparing the result of rolling dice
+     */
+    @Test
+    public void testSetRollTime1()
+    {
+    	int result = p.setRollTime(1, 2);
+    	int expResult = 1;
+    	assertEquals(expResult, result);
+    }
+    
+    /**
+     * Method test for the result of rolling dice
+     */
+    @Test
+    public void testRollResult()
+    {
+    	int[] result = p.rollResult(3);
+		for (int i = 0; i < result.length; i++) 
+    	{
+			for (int j = i + 1; j < result.length; j++) 
+			{
+				assertTrue(result[i]>=result[j]);
+    		}
+    	}
+    }
+    
 }
