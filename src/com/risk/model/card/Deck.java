@@ -15,7 +15,7 @@ import com.risk.model.player.Player;
 public class Deck {
 
     private static LinkedList<Card> cards = new LinkedList<>();
-    Card card[];
+    private static Card card[];
     int n = 44;
     String owner = null;
 
@@ -24,26 +24,30 @@ public class Deck {
      */
     public void initialize()
     {
+    	card = new Card[n];
         String category[] =
         {
             "Infantry", "Cavalry", "Artillery", "Wild"
         };
 
-        for (int i = 0; i < n - 2; i++)
+        for (int i = 0; i < n; i++)
         {
-            for (int j = 0; j < category.length - 1; j++)
-            {
-                cards.add(new Card(category[j]));
-            }
+        	if(i<14) {
+        		card[i]=new Card(category[0]);
+        	}else if(i<28) {
+        		card[i]=new Card(category[1]);
+        	}else if(i<42) {
+        		card[i]=new Card(category[2]);
+        	}else {
+        		card[i]=new Card(category[3]);
+        	}
         }
-        cards.add(new Card(category[3]));
-        cards.add(new Card(category[3]));
-        Collections.shuffle(cards);
+        shuffleCard();
     }
 
-    public static LinkedList<Card> getCards()
+    public Card[] getCards()
     {
-        return cards;
+        return card;
     }
 
     /**
@@ -71,17 +75,16 @@ public class Deck {
      *
      * @param player The name of the player
      */
-    public void sendCard(Player player)
+    public Card sendCard(Player player)
     {
         while (true)
         {
             int i = 0;
-            Card tmp = cards.get(i);
-            if (tmp.getOwner() == null)
+            if (card[i].getOwner() == null)
             {
-                tmp.setOwner(player);
-                player.addCard(tmp);
-                break;
+            	card[i].setOwner(player);
+                player.addCard(card[i]);
+                return card[i];
             }
             i++;
         }

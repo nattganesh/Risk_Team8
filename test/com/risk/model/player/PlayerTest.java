@@ -5,9 +5,13 @@
  */
 package com.risk.model.player;
 
+import com.risk.controller.FortificationController;
+import com.risk.model.MapModel;
 import com.risk.model.card.Card;
 import com.risk.model.map.Country;
 import java.util.ArrayList;
+
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -19,26 +23,63 @@ import static org.junit.Assert.*;
 /**
  *
  * @author Natt
+ * @author Tianyi
  */
 public class PlayerTest {
-    
+    private Player p;
+    private Player p2;
+    private ArrayList<Country> occupiedCountries1;
+    private ArrayList<Country> occupiedCountries2;
+    private Country c1;
+	private Country c2;
+	private Country c3;
+	private Country c4;
+	private Country c5;
+	private Country c6;
+	private ObservableList<Card> cards = FXCollections.observableArrayList();
     public PlayerTest()
-    {
-    }
-    
-    @BeforeClass
-    public static void setUpClass()
-    {
-    }
-    
-    @AfterClass
-    public static void tearDownClass()
     {
     }
     
     @Before
     public void setUp()
     {
+		p = new Player("Green");
+		occupiedCountries1 = new ArrayList<Country>();
+		c1 = new Country("China");
+		c2 = new Country("Quebec");
+		c3 = new Country("Siam");
+		c4 = new Country("India");
+		c5 = new Country("Congo");
+		c6 = new Country("Indonesia");
+		occupiedCountries1.add(c1);
+		occupiedCountries1.add(c2);
+		occupiedCountries1.add(c3);
+		occupiedCountries1.add(c6);
+		c1.getConnectedCountries().add(c3);
+		c1.getConnectedCountries().add(c4);
+		c3.getConnectedCountries().add(c4);
+		c3.getConnectedCountries().add(c6);
+		p.setOccupiedCountries(occupiedCountries1);
+		c1.setRuler(p);
+		c1.setIsOccupied(true);
+        c2.setRuler(p);
+        c3.setRuler(p);
+        c6.setRuler(p);
+		p.setStartingPoints(20);
+		p2 = new Player("Red");
+		occupiedCountries2 = new ArrayList<Country>();
+		occupiedCountries2.add(c4);
+		occupiedCountries2.add(c5);
+		cards.add(new Card("Infantry"));
+		cards.add(new Card("Cavalry"));
+		cards.add(new Card("Artillery"));
+		p.setCards(cards);
+		p2.setOccupiedCountries(occupiedCountries2);
+		c4.setRuler(p2);
+		c4.setIsOccupied(true);
+		c4.setArmyCount(1);
+	    c5.setRuler(p2);
     }
     
     @After
@@ -52,12 +93,20 @@ public class PlayerTest {
     @Test
     public void testSetTotalArmy()
     {
-        System.out.println("setTotalArmy");
         int count = 0;
-        Player instance = null;
-        instance.setTotalArmy(count);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        p.setTotalArmy(count);
+        assertEquals(0, p.getTotalArmy());
+    }
+    
+    /**
+     * Test of setTotalArmy method, of class Player.
+     */
+    @Test
+    public void testSetTotalArmy1()
+    {
+        int count = 4;
+        p.setTotalArmy(count);
+        assertEquals(4, p.getTotalArmy());
     }
 
     /**
@@ -66,12 +115,10 @@ public class PlayerTest {
     @Test
     public void testReduceTotalArmy()
     {
-        System.out.println("reduceTotalArmy");
-        int count = 0;
-        Player instance = null;
-        instance.reduceTotalArmy(count);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    	p.setTotalArmy(4);
+    	int count = 1;
+        p.reduceTotalArmy(count);
+        assertEquals(3, p.getTotalArmy());
     }
 
     /**
@@ -80,13 +127,10 @@ public class PlayerTest {
     @Test
     public void testGetTotalArmy()
     {
-        System.out.println("getTotalArmy");
-        Player instance = null;
-        int expResult = 0;
-        int result = instance.getTotalArmy();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    	 p.setTotalArmy(4);
+         int count = 1;
+         p.reduceTotalArmy(count);
+         assertEquals(3, p.getTotalArmy());
     }
 
     /**
@@ -95,12 +139,9 @@ public class PlayerTest {
     @Test
     public void testSetStartingPoints()
     {
-        System.out.println("setStartingPoints");
-        int i = 0;
-        Player instance = null;
-        instance.setStartingPoints(i);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    	int i = 20;
+        p.setStartingPoints(i);
+        assertEquals(20, p.getStartingPoints());
     }
 
     /**
@@ -109,13 +150,9 @@ public class PlayerTest {
     @Test
     public void testGetStartingPoints()
     {
-        System.out.println("getStartingPoints");
-        Player instance = null;
-        int expResult = 0;
-        int result = instance.getStartingPoints();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    	int i = 20;
+        p.setStartingPoints(i);
+        assertEquals(20, p.getStartingPoints());
     }
 
     /**
@@ -124,13 +161,9 @@ public class PlayerTest {
     @Test
     public void testGetName()
     {
-        System.out.println("getName");
-        Player instance = null;
-        String expResult = "";
-        String result = instance.getName();
+        String expResult = "Green";
+        String result = p.getName();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -139,13 +172,13 @@ public class PlayerTest {
     @Test
     public void testGetOccupiedCountries()
     {
-        System.out.println("getOccupiedCountries");
-        Player instance = null;
-        ArrayList<Country> expResult = null;
-        ArrayList<Country> result = instance.getOccupiedCountries();
+        ArrayList<Country> expResult = new ArrayList<Country>() ;
+        expResult.add(c1);
+        expResult.add(c2);
+        expResult.add(c3);
+        expResult.add(c6);
+        ArrayList<Country> result = p.getOccupiedCountries();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -154,12 +187,15 @@ public class PlayerTest {
     @Test
     public void testAddCountry()
     {
-        System.out.println("addCountry");
-        Country country = null;
-        Player instance = null;
-        instance.addCountry(country);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+		ArrayList<Country> expResult = new ArrayList<Country>();
+		expResult.add(c1);
+		expResult.add(c2);
+		expResult.add(c3);
+		expResult.add(c6);
+		expResult.add(c5);
+		p.addCountry(c5);
+		ArrayList<Country> result = p.getOccupiedCountries();
+		assertEquals(expResult, result);
     }
 
     /**
@@ -168,12 +204,13 @@ public class PlayerTest {
     @Test
     public void testRemoveCountry()
     {
-        System.out.println("removeCountry");
-        Country country = null;
-        Player instance = null;
-        instance.removeCountry(country);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    	ArrayList<Country> expResult = new ArrayList<Country>();
+		expResult.add(c1);
+		expResult.add(c2);
+		expResult.add(c6);
+		p.removeCountry(c3);
+		ArrayList<Country> result = p.getOccupiedCountries();
+		assertEquals(expResult, result);
     }
 
     /**
@@ -182,28 +219,9 @@ public class PlayerTest {
     @Test
     public void testNumbOccupied()
     {
-        System.out.println("numbOccupied");
-        Player instance = null;
-        int expResult = 0;
-        int result = instance.numbOccupied();
+        int expResult = 4;
+        int result = p.numbOccupied();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getStartingP method, of class Player.
-     */
-    @Test
-    public void testGetStartingP()
-    {
-        System.out.println("getStartingP");
-        Player instance = null;
-        int expResult = 0;
-        int result = instance.getStartingP();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -212,12 +230,12 @@ public class PlayerTest {
     @Test
     public void testSetOccupiedCountries()
     {
-        System.out.println("setOccupiedCountries");
-        ArrayList<Country> occupiedCountries = null;
-        Player instance = null;
-        instance.setOccupiedCountries(occupiedCountries);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        p2.setOccupiedCountries(occupiedCountries2);
+        ArrayList<Country> expResult = new ArrayList<Country>();
+		expResult.add(c4);
+		expResult.add(c5);
+		ArrayList<Country> result = p2.getOccupiedCountries();
+		assertEquals(expResult, result);
     }
 
     /**
@@ -226,14 +244,8 @@ public class PlayerTest {
     @Test
     public void testGetCountry()
     {
-        System.out.println("getCountry");
-        String name = "";
-        Player instance = null;
-        Country expResult = null;
-        Country result = instance.getCountry(name);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+       Country result = p.getCountry("China");
+       assertEquals(c1, result);
     }
 
     /**
@@ -242,13 +254,16 @@ public class PlayerTest {
     @Test
     public void testGetCards()
     {
-        System.out.println("getCards");
-        Player instance = null;
-        ObservableList<Card> expResult = null;
-        ObservableList<Card> result = instance.getCards();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        ObservableList<Card> expResult = FXCollections.observableArrayList(new Card("Infantry"), new Card("Cavalry"), new Card("Artillery"));
+        ObservableList<Card> result = p.getCards();
+        assertEquals(expResult.size(), result.size());
+        assertEquals(expResult.size(), result.size());
+		for (int i = 0; i < expResult.size(); i++) 
+		{
+			Card t1 = expResult.get(i);
+			Card t2 = result.get(i);
+			assertEquals(t1.getCatagory(), t2.getCatagory());
+		}
     }
 
     /**
@@ -257,12 +272,17 @@ public class PlayerTest {
     @Test
     public void testAddCard()
     {
-        System.out.println("addCard");
-        Card card = null;
-        Player instance = null;
-        instance.addCard(card);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    	ObservableList<Card> expResult = FXCollections.observableArrayList(new Card("Infantry"), new Card("Cavalry"), new Card("Artillery"),new Card("Wild"));
+        p.addCard(new Card("Wild"));
+        ObservableList<Card> result = p.getCards();
+        assertEquals(expResult.size(), result.size());
+        assertEquals(expResult.size(), result.size());
+		for (int i = 0; i < expResult.size(); i++) 
+		{
+			Card t1 = expResult.get(i);
+			Card t2 = result.get(i);
+			assertEquals(t1.getCatagory(), t2.getCatagory());
+		}
     }
 
     /**
@@ -271,12 +291,17 @@ public class PlayerTest {
     @Test
     public void testRemoveCard()
     {
-        System.out.println("removeCard");
-        Card card = null;
-        Player instance = null;
-        instance.removeCard(card);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    	ObservableList<Card> expResult = FXCollections.observableArrayList(new Card("Infantry"), new Card("Cavalry"));
+        p.removeCard(new Card("Artillery"));
+        ObservableList<Card> result = p.getCards();
+        assertEquals(expResult.size(), result.size());
+        assertEquals(expResult.size(), result.size());
+		for (int i = 0; i < expResult.size(); i++) 
+		{
+			Card t1 = expResult.get(i);
+			Card t2 = result.get(i);
+			assertEquals(t1.getCatagory(), t2.getCatagory());
+		}
     }
 
     /**
@@ -285,12 +310,19 @@ public class PlayerTest {
     @Test
     public void testSetCards()
     {
-        System.out.println("setCards");
-        ObservableList<Card> cards = null;
-        Player instance = null;
-        instance.setCards(cards);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        p2.setCards(cards);
+        ObservableList<Card> expResult = FXCollections.observableArrayList(new Card("Infantry"), new Card("Cavalry"), new Card("Artillery"));
+        ObservableList<Card> result = p2.getCards();
+        assertEquals(expResult.size(), result.size());
+        assertEquals(expResult.size(), result.size());
+       
+		for (int i = 0; i < expResult.size(); i++) 
+		{
+			Card t1 = expResult.get(i);
+			Card t2 = result.get(i);
+			assertEquals(t1.getCatagory(), t2.getCatagory());
+		}
+
     }
 
     /**
@@ -299,13 +331,9 @@ public class PlayerTest {
     @Test
     public void testIsPlayerLost()
     {
-        System.out.println("isPlayerLost");
-        Player instance = null;
         boolean expResult = false;
-        boolean result = instance.isPlayerLost();
+        boolean result = p.isPlayerLost();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -314,12 +342,10 @@ public class PlayerTest {
     @Test
     public void testSetPlayerLost()
     {
-        System.out.println("setPlayerLost");
-        boolean playerLost = false;
-        Player instance = null;
-        instance.setPlayerLost(playerLost);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    	p.setPlayerLost(true);
+        boolean expResult = true;
+        boolean result = p.isPlayerLost();
+        assertEquals(expResult, result);
     }
 
     /**
@@ -328,14 +354,36 @@ public class PlayerTest {
     @Test
     public void testAttack()
     {
-        System.out.println("attack");
-        Country attack = null;
-        Country defend = null;
-        int caseType = 0;
-        Player instance = null;
-        instance.attack(attack, defend, caseType);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    	c1.setArmyCount(4);
+        p.attack(c1, c4, 1);
+        int expResult = 0;
+        int result = c4.getArmyCount();
+        assertEquals(expResult, result);
+    }
+    
+    /**
+     * Test of attack method, of class Player.
+     */
+    @Test
+    public void testAttack1()
+    {
+    	c1.setArmyCount(4);
+        p.attack(c1, c4, 2);
+        Player result = c4.getRuler();
+        assertEquals(p, result);
+    }
+    
+    /**
+     * Test of attack method, of class Player.
+     */
+    @Test
+    public void testAttack2()
+    {
+    	c1.setArmyCount(4);
+        p.attack(c1, c4, 3);
+        int expResult = 3;
+        int result = c1.getArmyCount();
+        assertEquals(expResult, result);
     }
 
     /**
@@ -344,13 +392,12 @@ public class PlayerTest {
     @Test
     public void testReinforce()
     {
-        System.out.println("reinforce");
-        Country myCountry = null;
-        int Armyinput = 0;
-        Player instance = null;
-        instance.reinforce(myCountry, Armyinput);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    	c1.setArmyCount(4);
+        int Armyinput = 1;
+        p.reinforce(c1, Armyinput);
+        int expResult = 5;
+        int result = c1.getArmyCount();
+        assertEquals(expResult, result);
     }
 
     /**
@@ -359,32 +406,41 @@ public class PlayerTest {
     @Test
     public void testFortify()
     {
-        System.out.println("fortify");
-        Country from = null;
-        Country to = null;
-        int Armyinput = 0;
-        Player instance = null;
-        instance.fortify(from, to, Armyinput);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    	c1.setArmyCount(4);
+    	c3.setArmyCount(1);
+        int Armyinput = 2;
+        p.fortify(c1, c3, Armyinput);
+        int result = c1.getArmyCount();
+        int result1 = c3.getArmyCount();
+        assertEquals(2, result);
+        assertEquals(3, result1);
     }
 
     /**
      * Test of getCountriesArrivedbyPath method, of class Player.
      */
     @Test
-    public void testGetCountriesArrivedbyPath()
+    public void testGetCountriesArrivedbyPath1()
     {
-        System.out.println("getCountriesArrivedbyPath");
-        Country country = null;
-        Country firstCountry = null;
-        ArrayList<Country> countries = null;
-        Player instance = null;
-        ArrayList<Country> expResult = null;
-        ArrayList<Country> result = instance.getCountriesArrivedbyPath(country, firstCountry, countries);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    	Country firstCountry = p.getCountry("China");
+        ArrayList<Country> expected = new ArrayList<>();
+        expected.add(c3);
+        expected.add(c6);
+        ArrayList<Country> result = new ArrayList<>();
+        result = p.getCountriesArrivedbyPath(firstCountry, firstCountry, result);
+        assertEquals(expected, result);
+    }
+    
+    /**
+     * Test of getCountriesArrivedbyPath method, of class Player.
+     */
+    @Test
+    public void testGetCountriesArrivedbyPath2()
+    {
+        ArrayList<Country> result = new ArrayList<>();
+        Country testCountry = p.getCountry("Quebec");
+        result = p.getCountriesArrivedbyPath(testCountry, testCountry, result);
+        assertTrue(result.isEmpty());
     }
 
     /**
@@ -393,31 +449,59 @@ public class PlayerTest {
     @Test
     public void testIsCountryDuplicated()
     {
-        System.out.println("isCountryDuplicated");
-        Country country = null;
-        Country firstCountry = null;
-        ArrayList<Country> countries = null;
-        Player instance = null;
+        ArrayList<Country> countries = new ArrayList<Country>();
+        countries.add(c3);
+        countries.add(c6);
         boolean expResult = false;
-        boolean result = instance.isCountryDuplicated(country, firstCountry, countries);
+        boolean result = p.isCountryDuplicated(c3, c1, countries);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
-
+    
     /**
-     * Test of isAnyCountriesConnected method, of class Player.
+     * Test of isCountryDuplicated method, of class Player.
      */
     @Test
-    public void testIsAnyCountriesConnected()
+    public void testIsCountryDuplicated2()
     {
-        System.out.println("isAnyCountriesConnected");
-        Player instance = null;
-        boolean expResult = false;
-        boolean result = instance.isAnyCountriesConnected();
+        ArrayList<Country> countries = new ArrayList<Country>();
+        countries.add(c3);
+        boolean expResult = true;
+        boolean result = p.isCountryDuplicated(c6, c1, countries);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    }
+
+    
+    /**
+     * Method test for if there are countries accessible to each other and have enough armies
+     */
+    @Test
+    public void testIsAnyCountriesConnected() 
+    {
+    	c3.setArmyCount(2);
+    	c6.setArmyCount(1);
+    	assertTrue(p.isAnyCountriesConnected());
+    }
+    
+    /**
+     * Method test for if there are countries accessible to each other and have enough armies
+     */
+    @Test
+    public void testIsAnyCountriesConnected2() 
+    {
+    	c3.setArmyCount(1);
+    	c6.setArmyCount(1);
+    	assertFalse(p.isAnyCountriesConnected());
+    }
+    
+    /**
+     * Method test for if there are countries accessible to each other and have enough armies
+     */
+    @Test
+    public void testIsAnyCountriesConnected3() 
+    {
+    	c4.setArmyCount(2);
+    	c5.setArmyCount(2);
+    	assertFalse(p2.isAnyCountriesConnected());
     }
     
 }

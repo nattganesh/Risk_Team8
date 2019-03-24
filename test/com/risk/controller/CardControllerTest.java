@@ -8,6 +8,8 @@ package com.risk.controller;
 import com.risk.model.card.Card;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -19,9 +21,10 @@ import static org.junit.Assert.*;
 /**
  *
  * @author Natt
+ * @author Tianyi
  */
 public class CardControllerTest {
-    
+	private CardController instance;
     public CardControllerTest()
     {
     }
@@ -39,6 +42,7 @@ public class CardControllerTest {
     @Before
     public void setUp()
     {
+    	 instance = new CardController();
     }
     
     @After
@@ -68,7 +72,7 @@ public class CardControllerTest {
         System.out.println("initialize");
         URL location = null;
         ResourceBundle resources = null;
-        CardController instance = new CardController();
+        instance = new CardController();
         instance.initialize(location, resources);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -130,16 +134,33 @@ public class CardControllerTest {
      * Test of cardValidation method, of class CardController.
      */
     @Test
-    public void testCardValidation()
+    public void testCardValidation1()
     {
         System.out.println("cardValidation");
-        ObservableList<Card> selectedCards = null;
-        CardController instance = new CardController();
+        ObservableList<Card> selectedCards = FXCollections.observableArrayList(new Card("Infantry"), new Card("Cavalry"), new Card("Artillery"));
+        boolean expResult = true;
+        boolean result = instance.cardValidation(selectedCards);
+        assertEquals(expResult, result);
+    }
+    
+    @Test
+    public void testCardValidation2()
+    {
+        System.out.println("cardValidation");
+        ObservableList<Card> selectedCards = FXCollections.observableArrayList(new Card("Infantry"), new Card("Infantry"), new Card("Infantry"));
+        boolean expResult = true;
+        boolean result = instance.cardValidation(selectedCards);
+        assertEquals(expResult, result);
+    }
+    
+    @Test
+    public void testCardValidation3()
+    {
+        System.out.println("cardValidation");
+        ObservableList<Card> selectedCards = FXCollections.observableArrayList(new Card("Infantry"), new Card("Infantry"), new Card("Artillery"));
         boolean expResult = false;
         boolean result = instance.cardValidation(selectedCards);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }
