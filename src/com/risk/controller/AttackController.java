@@ -209,7 +209,8 @@ public class AttackController implements Initializable, Observer {
      */
     public void initializeDice()
     {
-        if (validateTerritorySelections())
+    	boolean validateTerritorySelections = p.validateTerritorySelections(countryId.getSelectionModel().getSelectedItem(), adjacentEnemy.getSelectionModel().getSelectedItem());
+        if (validateTerritorySelections)
         {
             rollLimit = setRollLimit(countryId.getSelectionModel().getSelectedItem(), adjacentEnemy.getSelectionModel().getSelectedItem());
             AttackerDice.getItems().clear();
@@ -231,39 +232,15 @@ public class AttackController implements Initializable, Observer {
     }
 
     /**
-     *
-     * @return returns true if attacker and defender has been selected
-     */
-    public boolean validateTerritorySelections()
-    {
-        boolean valid = false;
-        if (countryId.getSelectionModel().getSelectedItem() != null && adjacentEnemy.getSelectionModel().getSelectedItem() != null)
-        {
-            valid = true;
-        }
-        return valid;
-    }
-
-    /**
-     * @return returns true if defender and attacker both selected dice roll
-     */
-    public boolean validateDiceSelections()
-    {
-        boolean valid = false;
-        if (AttackerDice.getSelectionModel().getSelectedItem() != null && DefenderDice.getSelectionModel().getSelectedItem() != null)
-        {
-            valid = true;
-        }
-        return valid;
-    }
-
-    /**
      * This is rolls the dice
      */
     @FXML
     public void rollDiceHandler()
     {
-        if (validateTerritorySelections() && validateDiceSelections() && countryId.getSelectionModel().getSelectedItem().getArmyCount()> 1)
+    	boolean validateTerritorySelections = p.validateTerritorySelections(countryId.getSelectionModel().getSelectedItem(), adjacentEnemy.getSelectionModel().getSelectedItem());
+    	boolean validateDiceSelections = p.validateDiceSelections(AttackerDice.getSelectionModel().getSelectedItem(),DefenderDice.getSelectionModel().getSelectedItem());
+    	boolean validateAttackerHasEnoughArmy = p.validateAttackerHasEnoughArmy(countryId.getSelectionModel().getSelectedItem());
+    	if (validateTerritorySelections && validateDiceSelections && validateAttackerHasEnoughArmy)
         {
             int diceAttack = AttackerDice.getSelectionModel().getSelectedItem();
             int diceDefender = DefenderDice.getSelectionModel().getSelectedItem();
@@ -272,11 +249,11 @@ public class AttackController implements Initializable, Observer {
             rollDice(diceAttack, diceDefender, countryId.getSelectionModel().getSelectedItem(), adjacentEnemy.getSelectionModel().getSelectedItem());
             initializeDice();
         }
-        else if (!validateTerritorySelections())
+        else if (!validateTerritorySelections)
         {
             actions.addAction("select attacker and defender");
         }
-        else if (!validateDiceSelections())
+        else if (!validateDiceSelections)
         {
             actions.addAction("select number of rolls");
             AttackerDice.getItems().clear(); 

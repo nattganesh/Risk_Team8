@@ -437,4 +437,50 @@ public class Player extends Observable {
         MapModel.getMapModel().setExchangeTime(currentExchange + 1);
         return reinforcement;
     }
+    
+    /**
+    *
+    * @return returns true if attacker and defender has been selected
+    */
+   public boolean validateTerritorySelections(Country attack, Country defender)
+   {
+       if (attack!= null && defender!= null)
+       {
+           return true;
+       }
+       else 
+       {
+    	   return false;
+       }
+   }
+   
+   /**
+    * @return returns true if defender and attacker both selected dice roll
+    */
+   public boolean validateDiceSelections(Integer attackDice, Integer defendDice)
+   {
+       if (attackDice != null && defendDice != null)
+       {
+    	   return true;
+       }
+       else 
+       {
+    	   return false;
+       }
+   }
+   
+   /**
+    * @return returns true if defender and attacker both selected dice roll
+    */
+   public boolean validateAttackerHasEnoughArmy(Country attack)
+   {
+       if (attack.getArmyCount()> 1)
+       {
+           return true;
+       }
+       else 
+       {
+    	   return false;
+       }
+   }
 }

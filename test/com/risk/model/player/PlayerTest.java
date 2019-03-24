@@ -582,7 +582,7 @@ public class PlayerTest {
     }
     
     /**
-     * Method test for calculation of army according to the occupy of continents
+     * Method test for calculation of army according to cards exchanged
      */
     @Test
     public void testCalculateReinforcementFromCards()
@@ -591,6 +591,74 @@ public class PlayerTest {
     	int expResult = 15;
     	int result = p2.calculateReinforcementFromCards();
     	assertEquals(expResult, result);
+    }
+    
+    /**
+     * Method test for validation of attack and defend countries
+     */
+    @Test
+    public void testValidateTerritorySelections()
+    {
+    	Country test = null;
+    	boolean expResult = false;
+        boolean result = p.validateTerritorySelections(test, c4);
+        assertEquals(expResult, result);
+    }
+    
+    /**
+     * Method test for validation of attacker and defender countries
+     */
+    @Test
+    public void testValidateTerritorySelections1()
+    {
+    	boolean expResult = true;
+        boolean result = p.validateTerritorySelections(c1, c4);
+        assertEquals(expResult, result);
+    }
+    
+    /**
+     * Method test for validation of the number of dice of attacker and defender
+     */
+    @Test
+    public void testValidateDiceSelections()
+    {
+    	boolean expResult = true;
+        boolean result = p.validateDiceSelections(3, 2);
+        assertEquals(expResult, result);
+    }
+    
+    /**
+     * Method test for validation of the number of dice of attacker and defender
+     */
+    @Test
+    public void testValidateDiceSelections1()
+    {
+    	boolean expResult = false;
+        boolean result = p.validateDiceSelections(null, 2);
+        assertEquals(expResult, result);
+    }
+    
+    /**
+     * Method test for validation of the number of armies of attacker
+     */
+    @Test
+    public void testValidateAttackerHasEnoughArmy()
+    {
+    	boolean expResult = false;
+        boolean result = p.validateAttackerHasEnoughArmy(c1);
+        assertEquals(expResult, result);
+    }
+    
+    /**
+     * Method test for validation of the number of armies of attacker
+     */
+    @Test
+    public void testValidateAttackerHasEnoughArmy1()
+    {
+    	c1.setArmyCount(10);
+    	boolean expResult = true;
+        boolean result = p.validateAttackerHasEnoughArmy(c1);
+        assertEquals(expResult, result);
     }
     
 }
