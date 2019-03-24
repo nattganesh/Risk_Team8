@@ -8,6 +8,7 @@
 package com.risk.controller;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Observable;
 import java.util.Observer;
@@ -16,17 +17,13 @@ import java.util.ResourceBundle;
 import com.risk.model.ActionModel;
 import com.risk.model.DeckModel;
 import com.risk.model.GamePhaseModel;
-import com.risk.model.MapModel;
 import com.risk.model.PlayerPhaseModel;
 import com.risk.model.card.Card;
 import com.risk.model.dice.Dice;
 import com.risk.model.map.Country;
 import com.risk.model.player.Player;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -38,54 +35,55 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.FlowPane;
 
 public class AttackController implements Initializable, Observer {
 
-	    @FXML
-	    ListView<Country> countryId;
-	    
-	    @FXML
-	    Label inputArmyError;
+    @FXML
+    ListView<Country> countryId;
 
-	    @FXML
-	    TextField ArmyCount;
+    @FXML
+    Label inputArmyError;
 
-	    @FXML
-	    ListView<Country> adjacentEnemy;
-	    
-	    @FXML
-	    ListView<Country> adjacentOwned;
-	    
-	    @FXML
-	    ComboBox<Integer> AttackerDice;
-	    
-	    @FXML
-	    ComboBox<Integer> DefenderDice;
-	    
-	    @FXML
-	    Button rollDiceHandler;
-	    
-	    @FXML
-	    Button AllOut;
+    @FXML
+    TextField ArmyCount;
 
-	    @FXML
-	    private ConqueredController conqueringController;
-	    
-	    @FXML 
-	    AnchorPane child;
-	    
-	    ObservableList<Country> territoryObservableList;
-	    ObservableList<Country> adjacentEnemyObservableList = FXCollections.observableArrayList();
-	    ObservableList<Country> adjacentOwnedObservableList = FXCollections.observableArrayList();
-	    
-	    int [] rollLimit;
-	    ActionModel actions;
-	    boolean occupy=false;
-	    Player p = PlayerPhaseModel.getPlayerModel().getCurrentPlayer();
+    @FXML
+    ListView<Country> adjacentEnemy;
+
+    @FXML
+    ListView<Country> adjacentOwned;
+
+    @FXML
+    ComboBox<Integer> AttackerDice;
+
+    @FXML
+    ComboBox<Integer> DefenderDice;
+
+    @FXML
+    Button rollDiceHandler;
+
+    @FXML
+    Button AllOut;
+
+    @FXML
+    private ConqueredController conqueringController;
+
+    @FXML
+    AnchorPane child;
+
+    ObservableList<Country> territoryObservableList;
+    
+  
+    ObservableList<Country> adjacentEnemyObservableList = FXCollections.observableArrayList();
+    ObservableList<Country> adjacentOwnedObservableList = FXCollections.observableArrayList();
+
+    int[] rollLimit;
+    ActionModel actions;
+    boolean occupy = false;
+    Player p = PlayerPhaseModel.getPlayerModel().getCurrentPlayer();
 
     /**
-     * This is the constructor for AttackController class
+     * This is the constructor for AttackController classs
      */
     public AttackController()
     {
@@ -102,20 +100,11 @@ public class AttackController implements Initializable, Observer {
     {
         conqueringController.addObserver(this);
         actions = ActionModel.getActionModel();
-        territoryObservableList = FXCollections.observableList(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
+
         
-        countryId.setItems(territoryObservableList);
+        countryId.setItems(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
         adjacentEnemy.setItems(adjacentEnemyObservableList);
         adjacentOwned.setItems(adjacentOwnedObservableList);
-              
-        updateView();
-    }
-
-    public void updateView()
-    {
-        territoryObservableList.clear();
-        territoryObservableList.addAll(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
-        countryId.setItems(territoryObservableList);
         countryId.setCellFactory(param -> new ListCell<Country>() {
             @Override
             protected void updateItem(Country country, boolean empty)
@@ -131,6 +120,12 @@ public class AttackController implements Initializable, Observer {
                 }
             }
         });
+        updateView();
+
+    }
+
+    public void updateView()
+    {
         adjacentEnemy.setCellFactory(param -> new ListCell<Country>() {
             @Override
             protected void updateItem(Country country, boolean empty)
@@ -161,11 +156,6 @@ public class AttackController implements Initializable, Observer {
                 }
             }
         });
-        System.out.println(" == update view ==  ");
-        for (Country country : territoryObservableList)
-        {
-        	System.out.println(country.getName());
-        }
     }
 
     /**
@@ -174,6 +164,7 @@ public class AttackController implements Initializable, Observer {
     @FXML
     public void territoryHandler()
     {
+
         if (countryId.getSelectionModel().getSelectedItem() != null)
         {
             // i dont' wannt them to be in sync
@@ -348,24 +339,27 @@ public class AttackController implements Initializable, Observer {
                     actions.addAction("You have already occupied this country!");
                     actions.addAction("Please move armies to your new country!");
                     attackingCountry.getRuler().attack(attackingCountry, defendingCountry, 2);
+                    occupy = true;
+//                    child.setVisible(true);
                     conqueringController.setConquringArmy(defendingCountry);
                     conqueringController.setDiceRoll(diceattack);
-//                    updateView();
+                    updateView();
                     break;
                 }
                 else
                 {
                     adjacentEnemyObservableList.set(adjacentEnemyObservableList.indexOf(defendingCountry), defendingCountry);
-                    updateView();
                 }
             }
             else
             {
+
                 attackingCountry.getRuler().attack(attackingCountry, defendingCountry, 3);
-                actions.addAction("attacker has lost 1 army");      
+                actions.addAction("attacker has lost 1 army");
                 updateView();
             }
         }
+
     }
 
     @FXML
@@ -475,17 +469,20 @@ public class AttackController implements Initializable, Observer {
         GamePhaseModel.getGamePhaseModel().setPhase("fortification");
     }
 
-
-    /**
-     * 
+    /* (non-Javadoc)s
+	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
      */
     @Override
     public void update(Observable o, Object arg)
     {
-        Country conquered = (Country)arg;
+
+        Country conquered = (Country) arg;
+
         child.setVisible(false);
         adjacentOwned.getItems().clear();
         ArmyCount.setText(Integer.toString(countryId.getSelectionModel().getSelectedItem().getArmyCount()));
+
         updateView();
+
     }
 }

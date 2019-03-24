@@ -7,26 +7,21 @@
  */
 package com.risk.model.player;
 
-import com.risk.model.MapModel;
 import com.risk.model.card.Card;
-import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Observable;
-import java.util.Observer;
 import java.util.Set;
 
 public class Player extends Observable {
 
     private String name;
-    private ArrayList<Country> occupiedCountries = new ArrayList<>();
+    private ObservableList<Country> occupiedCountries = FXCollections.observableArrayList();
     private Set<String> continents = new HashSet<String>();
     private ObservableList<Card> cards = FXCollections.observableArrayList();
 
@@ -96,7 +91,7 @@ public class Player extends Observable {
      *
      * @return occupiedCountries returns ArrayList<Country> occupiedCountries
      */
-    public ArrayList<Country> getOccupiedCountries()
+    public ObservableList<Country> getOccupiedCountries()
     {
         return occupiedCountries;
     }
@@ -149,19 +144,17 @@ public class Player extends Observable {
 
     /**
      * gets country object associated with the name of the string
-     *
-     * @param name name of the country
-     * @return country returns country object if it exists, otherwise null
+     * @param occupiedCountries 
      */
-    public void setOccupiedCountries(ArrayList<Country> occupiedCountries)
+    public void setOccupiedCountries(ObservableList<Country> occupiedCountries)
     {
         this.occupiedCountries = occupiedCountries;
     }
 
     /**
-     * gets the card associated with the player
-     *
-     * @return cards returns ArrayList<Card> cards
+     * 
+     * @param name string name of the country
+     * @return returns country associated with the name
      */
     public Country getCountry(String name)
     {
