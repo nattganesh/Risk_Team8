@@ -40,7 +40,6 @@ public class Country extends Observable {
         this.name = name;
         this.isOccupied = false;
         this.ruler = null;
-
     }
 
     /**

@@ -1,5 +1,8 @@
 package com.risk;
 
+import com.risk.model.utilities.FileParserTest;
+import com.risk.model.utilities.UtilitiesSuite;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -10,11 +13,9 @@ public class AllTests extends TestCase {
     {
         TestSuite suite = new TestSuite(AllTests.class.getName());
         //$JUnit-BEGIN$
-        suite.addTestSuite(FileParsingTest.class);
-        suite.addTestSuite(FortificationControllerTest.class);
-        suite.addTestSuite(ReinforcementControllerTest.class);
-        suite.addTestSuite(ValidateTest.class);
-        //$JUnit-END$
+        suite.addTestSuite(FileParserTest.class);
+        
+       
         return suite;
     }
 

@@ -178,49 +178,5 @@ public class PlayerPhaseModelTest {
         fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of calculateReinforcementContinentControl method, of class PlayerPhaseModel.
-     */
-    @Test
-    public void testCalculateReinforcementContinentControl()
-    {
-        System.out.println("calculateReinforcementContinentControl");
-        PlayerPhaseModel instance = null;
-        int expResult = 0;
-        int result = instance.calculateReinforcementContinentControl();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of calculateReinforcementOccupiedTerritory method, of class PlayerPhaseModel.
-     */
-    @Test
-    public void testCalculateReinforcementOccupiedTerritory()
-    {
-        System.out.println("calculateReinforcementOccupiedTerritory");
-        PlayerPhaseModel instance = null;
-        int expResult = 0;
-        int result = instance.calculateReinforcementOccupiedTerritory();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of calculateReinforcementFromCards method, of class PlayerPhaseModel.
-     */
-    @Test
-    public void testCalculateReinforcementFromCards()
-    {
-        System.out.println("calculateReinforcementFromCards");
-        PlayerPhaseModel instance = null;
-        int expResult = 0;
-        int result = instance.calculateReinforcementFromCards();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
     
 }
