@@ -116,9 +116,12 @@ public class ReinforcementController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
+    	
         cardController.addObserver(new cardObserver());
         player = PlayerPhaseModel.getPlayerModel().getCurrentPlayer();
         actions = ActionModel.getActionModel();
+        
+        actions.addAction(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getCards().size() + " here ");
 
         TotalReinforcement = player.getReinforcementArmy();
         armyAvailable.setText("Army: " + Integer.toString(TotalReinforcement));
@@ -220,6 +223,7 @@ public class ReinforcementController implements Initializable {
 
                 if (PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getCards().size() < 3)
                 {
+                	actions.addAction(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getCards().size() + " here ");
                     child.getChildren().clear();
                 }
             }
@@ -250,6 +254,7 @@ public class ReinforcementController implements Initializable {
                 }
             }
         });
+        
         adjacentOwned.setCellFactory(param -> new ListCell<Country>() {
             @Override
             protected void updateItem(Country country, boolean empty)
@@ -266,6 +271,7 @@ public class ReinforcementController implements Initializable {
                 }
             }
         });
+        
         adjacentEnemy.setCellFactory(param -> new ListCell<Country>() {
             @Override
             protected void updateItem(Country country, boolean empty)

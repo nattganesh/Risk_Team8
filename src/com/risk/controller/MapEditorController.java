@@ -77,6 +77,9 @@ public class MapEditorController implements Initializable {
 
     @FXML
     RadioButton skipRobinID;
+    
+    @FXML
+    RadioButton startCardsID;
 
     private int validated = 0;
     ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
@@ -391,6 +394,20 @@ public class MapEditorController implements Initializable {
         }
     }
 
+	/**
+	 *  This method initialize the initial number of cards for each player
+	 */
+    public void startWithCards()
+    {
+    	for (Player p : PlayerPhaseModel.getPlayerModel().getPlayers())
+    	{
+    		for (int i = 0; i < 6; i++)
+    		{
+    			DeckModel.getCardModel().sendCard(p);
+    		}
+    	}
+    }
+    
     /**
      * This method handles setting number of players, calculating starting
      * armies in each country, it assigns countries to players and determines
@@ -402,6 +419,7 @@ public class MapEditorController implements Initializable {
     {
         if (validated == 1)
         {
+        	
             if (PlayerID.getSelectionModel().getSelectedItem() != null && !skipRobinID.isSelected())
             {
                 int numbPlayers = Integer.parseInt(PlayerID.getSelectionModel().getSelectedItem());
@@ -410,6 +428,10 @@ public class MapEditorController implements Initializable {
                 calcStartingArmies();
                 assignCountriesToPlayers();
                 determinePlayersStartingOrder();
+                if (startCardsID.isSelected())
+                {
+                	startWithCards();
+                }
                 GamePhaseModel.getGamePhaseModel().setPhase("setup complete");
                 GamePhaseModel.getGamePhaseModel().setPhase("setup");
             }
@@ -421,6 +443,10 @@ public class MapEditorController implements Initializable {
                 calcStartingArmies();
                 autoAssignCountriesToPlayers();
                 determinePlayersStartingOrder();
+                if (startCardsID.isSelected())
+                {
+                	startWithCards();
+                }
                 GamePhaseModel.getGamePhaseModel().setPhase("setup complete");
                 GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
             }
@@ -493,14 +519,20 @@ public class MapEditorController implements Initializable {
         actions.addAction("This is a fixed map with the following continents");
     }
 
+
     /**
      * This method initalizes the 2 - 6 players in the UI
      */
     public void initializePlayers()
     {
         PlayerID.getItems().clear();
-        PlayerID.getItems().addAll("2", "3", "4", "5", "6");
+        int numberContinent = MapModel.getMapModel().getContinents().size();
+        for (int i = 0; i < numberContinent-1; i++)
+        {
+        	PlayerID.getItems().add(Integer.toString(i+2));
+        }
     }
+   
 
     /**
      * This method is a helper method for clearing the UI board
@@ -637,7 +669,6 @@ public class MapEditorController implements Initializable {
                     p.setStartingPoints(p.getStartingPoints() - 1);
                     countryOccupied[random] = true;
                     p.addCountry(MapModel.getMapModel().getCountries().get(random));
-
                     i++;
                 }
                 if (i >= totalCountrySize)

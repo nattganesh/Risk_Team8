@@ -630,6 +630,7 @@ public class Player extends Observable {
     * @return returns true if the player has 5 or more than 5 cards. Otherwise, return false.
     */
    public boolean checkIfCardsMaximum() {
+	   System.out.println("check if maximum: " + (getCards().size()));
 	   if (getCards().size() >= 5) {
 		   return true;
 	   }

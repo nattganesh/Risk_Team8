@@ -42,11 +42,27 @@ public class CardController extends Observable implements Initializable {
     ActionModel actions;
     Player player;
     
+    ObservableList<Card> yourObservableList = FXCollections.observableArrayList();
     ObservableList<Card> tradeObservableList = FXCollections.observableArrayList();
 
     public void renderView()
     {
         yourCard.setCellFactory(param -> new ListCell<Card>() {
+            @Override
+            protected void updateItem(Card card, boolean empty)
+            {
+                super.updateItem(card, empty);
+                if (empty || card == null || card.getCatagory() == null)
+                {
+                    setText(null);
+                }
+                else
+                {
+                    setText(card.getCatagory());
+                }
+            }
+        });
+        tradeCard.setCellFactory(param -> new ListCell<Card>() {
             @Override
             protected void updateItem(Card card, boolean empty)
             {
@@ -67,8 +83,9 @@ public class CardController extends Observable implements Initializable {
     public void initialize(URL location, ResourceBundle resources)
     {
         actions = ActionModel.getActionModel();
-        yourCard.setItems(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getCards());
+        yourCard.setItems(yourObservableList);
         tradeCard.setItems(tradeObservableList);
+        yourObservableList.addAll(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getCards());
         player = PlayerPhaseModel.getPlayerModel().getCurrentPlayer();
         renderView();
     }
@@ -117,8 +134,8 @@ public class CardController extends Observable implements Initializable {
             if (player.cardValidation(tradeCard.getItems()))
             {
                 reinforcement = player.calculateReinforcementFromCards();
+                               
                 player.exchangeCards(tradeCard.getItems());
-                System.out.println(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getCards());
                 tradeCard.getItems().clear();
                 actions.addAction("you exchanged cards");
                 setChanged();
@@ -146,7 +163,11 @@ public class CardController extends Observable implements Initializable {
     @FXML
     public void skipExchangeHandler()
     {
-        if (PlayerPhaseModel.getPlayerModel().getCurrentPlayer().checkIfCardsMaximum())
+    	if (yourCard.getItems().size() + tradeCard.getItems().size() >= 5)
+    	{
+    		actions.addAction("5+ cards == you must exchange");
+    	}
+    	else if (PlayerPhaseModel.getPlayerModel().getCurrentPlayer().checkIfCardsMaximum())
         {
             actions.addAction("5+ cards == you must exchange");
         }

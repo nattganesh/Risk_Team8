@@ -280,11 +280,14 @@ public class AttackController implements Initializable, Observer {
      * @param attackingCountry The country which invokes the attack
      * @param defendingCountry The country which is attacked
      */
+    
     public void rollDice(int diceattack, int dicedefend, Country attackingCountry, Country defendingCountry)
     {
+    	
         int[] dattack = p.rollResult(diceattack);
         int[] ddefend = p.rollResult(dicedefend);
         int rolltime = p.setRollTime(diceattack, dicedefend);
+        
         for (int i = 0; i < rolltime; i++)
         {
             if (dattack[i] > ddefend[i])
@@ -296,18 +299,9 @@ public class AttackController implements Initializable, Observer {
                     actions.addAction("You have already occupied this country!");
                     actions.addAction("Please move armies to your new country!");
                     attackingCountry.getRuler().attack(attackingCountry, defendingCountry, 2);
-//                    if (p.getOccupiedCountries().size()  == MapModel.getMapModel().getCountries().size())
-//                    {
-//                    	GamePhaseModel.getGamePhaseModel().setPhase("winner");
-//                    }
-//                    else 
-//                    {
-                        occupy = true;
-                        child.setVisible(true);
-                        conqueringController.setConquringArmy(defendingCountry);
-                        conqueringController.setDiceRoll(diceattack);
-//                    }
-
+                    occupy = true;
+                    child.setVisible(true);
+                    conqueringController.setConquringArmy(defendingCountry);
                     break;
                 }               
             }

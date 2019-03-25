@@ -30,7 +30,7 @@ public class PlayerPhaseModel extends Observable implements Observer {
     /**
      * Constructor for PlayerModel class
      */
-    public PlayerPhaseModel()
+    private PlayerPhaseModel()
     {
     }
 
@@ -48,7 +48,7 @@ public class PlayerPhaseModel extends Observable implements Observer {
 
     /**
      * This method increments the current player index
-     * @param increment The number to increment the current player index
+     *
      */
     public void setPlayerIndex(int increment)
     {
