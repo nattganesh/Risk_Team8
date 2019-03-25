@@ -48,10 +48,9 @@ public class ConqueredController extends Observable implements Initializable {
     TextField armyCount;
     boolean move = false;
 
-    
+ 
     /**
-     * @see javafx.fxml.Initializable#initialize(java.net.URL,s
-     * java.util.ResourceBundle)
+     * @see javafx.fxml.Initializable
      */
     @Override
     public void initialize(URL arg0, ResourceBundle arg1)
@@ -136,6 +135,7 @@ public class ConqueredController extends Observable implements Initializable {
         territoryObservableList.addAll(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
     }
 
+   
     /**
      * This method sets the number of army to move in ComboBox
      *

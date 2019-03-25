@@ -38,7 +38,9 @@ import javafx.scene.chart.XYChart.Data;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 
 public class GamePhaseController implements Observer, Initializable {
 
@@ -46,11 +48,11 @@ public class GamePhaseController implements Observer, Initializable {
     AttackController aController;
     FortificationController fController;
     SetUpController sController;
+    
 
     ObservableList<XYChart.Series<String, Integer>> barData = FXCollections.observableArrayList();
     ObservableList<Data <String, Integer>> data = FXCollections.observableArrayList();
-    XYChart.Series<String, Integer> serie = new XYChart.Series<String, Integer>();
-    
+    XYChart.Series<String, Integer> serie = new XYChart.Series<String, Integer>();    
     ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
 
     ArrayList<Player> piePlayersList = new ArrayList<>();
@@ -86,6 +88,12 @@ public class GamePhaseController implements Observer, Initializable {
 
     @FXML
     ListView<String> actionMessage;
+    
+    @FXML
+    AnchorPane winnerPane;
+    
+    @FXML
+    Text winnerID;
 
     /**
      * This is a constructor for GamePhaseController
@@ -121,16 +129,11 @@ public class GamePhaseController implements Observer, Initializable {
         }
         else if (view.equals("winner"))
         {
-            try
-            {
-                playerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
+          
+                winnerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName() + " is the winner");
                 mainPane.getChildren().clear();
-                mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/Winner.fxml")));
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
+                winnerPane.setVisible(true);
+        
         }
         else if (view.equals("setup complete"))
         {

@@ -88,8 +88,7 @@ public class AttackController implements Initializable, Observer {
     }
 
     /**
-     * @see javafx.fxml.Initializable#initialize(java.net.URL,s
-     * java.util.ResourceBundle)
+     * @see javafx.fxml.Initializable
      */
     @Override
     public void initialize(URL arg0, ResourceBundle arg1)

@@ -109,9 +109,7 @@ public class ReinforcementController implements Initializable {
      * update its view.
      *
      *
-     * @see javafx.fxml.Initializable.initialize
-     * @see javafx.beans.value.ChangeListener;
-     * @see javafx.beans.value.ObservableValue;
+     * @see javafx.fxml.Initializable
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)

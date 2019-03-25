@@ -29,11 +29,11 @@ public class FileParserTest {
 	
     /**
      * Test of setCountriesInContinents method, of class FileParser.
+     * @throws FileNotFoundException exception thrown when file does not exist
      * 
-     * @throws Exception
      */
     @Test
-    public void testSetCountriesInContinents() throws Exception
+    public void testSetCountriesInContinents() throws FileNotFoundException 
     {
         System.out.println("setCountriesInContinents");
         
@@ -47,9 +47,11 @@ public class FileParserTest {
 
     /**
      * Test of setNeighboringCountries method, of class FileParser.
+     * 
+     * @throws FileNotFoundException  exception thrown when file does not exist
      */
     @Test
-    public void testSetNeighboringCountries() throws Exception
+    public void testSetNeighboringCountries() throws FileNotFoundException
     {
         System.out.println("setNeighboringCountries");
         Scanner input =  new Scanner(new File("src/com/risk/main/mapTextfiles/testSetNeighboringCountries.txt"));
@@ -61,7 +63,7 @@ public class FileParserTest {
     /**
      * Tests empty file
      *
-     * @throws FileNotFoundException
+     * @throws FileNotFoundException exception thrown when file does not exist
      */
     @Test
     public void testEmptyFile() throws FileNotFoundException
@@ -76,7 +78,7 @@ public class FileParserTest {
     /**
      * Tests invalid format file
      *
-     * @throws FileNotFoundException
+     * @throws FileNotFoundException exception thrown when file does not exist
      */
     @Test
     public void testInvalidFormatFile() throws FileNotFoundException

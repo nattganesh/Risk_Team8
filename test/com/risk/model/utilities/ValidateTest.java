@@ -60,11 +60,13 @@ public class ValidateTest {
 
     /**
      * Test of continentChecks method, of class Validate.
+     * @throws FileNotFoundException exception thrown when file does not exist 
+     * @throws DuplicatesException exception thrown when duplicate country in continent
+     * @throws CannotFindException exception thrown when input file is different standard file format
      * 
-     * @throws Exception 
      */
     @Test
-    public void testContinentChecks() throws Exception
+    public void testContinentChecks() throws FileNotFoundException, CannotFindException, DuplicatesException
     {
     	 String ExceedsContinentLimitFile = "src/com/risk/main/mapTextfiles/ExceedsContinentLimit.txt";
     	 Scanner scan = new Scanner(new File(ExceedsContinentLimitFile));
@@ -77,9 +79,9 @@ public class ValidateTest {
     
     /**
      * Test of mapConnected method, of class Validate.
-     * @throws FileNotFoundException 
-     * @throws DuplicatesException 
-     * @throws CannotFindException 
+     * @throws FileNotFoundException exception thrown when file does not exist 
+     * @throws DuplicatesException exception thrown when duplicate country in continent
+     * @throws CannotFindException exception thrown when input file is different standard file format
      */
     @Test
     public void testMapConnected() throws FileNotFoundException, CannotFindException, DuplicatesException
@@ -97,33 +99,12 @@ public class ValidateTest {
         assertEquals(expResult, result);
     }
 
-    /**
-     * Test of validateMap method, of class Validate.
-     * 
-     * @throws Exception
-     */
-    @Test
-    public void testValidateMap() throws Exception
-    {
-    	
-    	Validate val = Validate.getValidate();
-    	String ExceedsContinentLimitFile = "src/com/risk/main/mapTextfiles/ExceedsContinentLimit.txt";
-        System.out.println("getValidateSize");
-     
-        Scanner scan = new Scanner(new File(ExceedsContinentLimitFile));
-        FileParser fileParser = new FileParser();
-        fileParser.init(scan);
-        
-        
-        assertThrows(CountLimitException.class,
-                () -> val.validateMap());
-    }
     
     /**
      * Tests parser.setCountriesInContinents(Scanner) for duplicate country in
      * the map
      *
-     * @throws FileNotFoundException
+     * @throws FileNotFoundException exception thrown when file does not exist 
      */
     public void testDuplicateCountry() throws FileNotFoundException
     {
@@ -133,13 +114,14 @@ public class ValidateTest {
         assertThrows(DuplicatesException.class,
                 () -> fileParser.init(scan));
     }
+ 
 
     /**
      * Test for file that has a continent that does not exist
      *
-     * @throws FileNotFoundException
-     * @throws DuplicatesException
-     * @throws CannotFindException
+     * @throws FileNotFoundException exception thrown when file does not exist 
+     * @throws DuplicatesException exception thrown when duplicate country in continent
+     * @throws CannotFindException exception thrown when input file is different standard file format
      */
     public void testNonExistentContinentFile() throws FileNotFoundException, CannotFindException, DuplicatesException
     {
@@ -154,9 +136,9 @@ public class ValidateTest {
     /**
      * Tests for file that has exceeding number of country in the continent
      *
-     * @throws FileNotFoundException
-     * @throws DuplicatesException
-     * @throws CannotFindException
+     * @throws FileNotFoundException exception thrown when file does not exist 
+     * @throws DuplicatesException exception thrown when duplicate country in continent
+     * @throws CannotFindException exception thrown when input file is different standard file format
      */
     public void testExceedsContinentLimitFile() throws FileNotFoundException, CannotFindException, DuplicatesException
     {
@@ -172,10 +154,9 @@ public class ValidateTest {
     /**
      * Tests for file that has no connectivity
      *
-     * @throws FileNotFoundException
-     * @throws DuplicatesExceptions
-     * @throws CannotFindException
-     * @throws CountLimitException
+     * @throws FileNotFoundException exception thrown when file does not exist 
+     * @throws DuplicatesException exception thrown when duplicate country in continent
+     * @throws CannotFindException exception thrown when input file is different standard file format
      */
     public void testContinentCountLimit() throws FileNotFoundException, CannotFindException, DuplicatesException
     {

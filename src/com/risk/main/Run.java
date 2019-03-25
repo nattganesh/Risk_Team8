@@ -48,15 +48,12 @@ public class Run extends Application {
     /**
      * Start is called when JavaFX is ready to be initialized
      *
-     * @throws IOException
-     * @throws DuplicatesException
-     * @throws CannotFindException
-     * @throws CountLimitException
+     * @throws IOException exception thrown when .fxml file is not found
      *
      * @see javafx.application.Application
      */
     @Override
-    public void start(Stage primaryStage) throws CountLimitException, CannotFindException, DuplicatesException, IOException
+    public void start(Stage primaryStage) throws IOException
     {
     	
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/risk/view/LayoutView.fxml"));
