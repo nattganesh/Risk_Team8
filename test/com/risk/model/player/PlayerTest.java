@@ -42,6 +42,9 @@ public class PlayerTest {
 	private Country c5;
 	private Country c6;
 	private ObservableList<Card> cards = FXCollections.observableArrayList();
+	private Card card1;
+	private Card card2;
+	private Card card3;
     public PlayerTest()
     {
     }
@@ -91,10 +94,16 @@ public class PlayerTest {
 		occupiedCountries2 = new ArrayList<Country>();
 		occupiedCountries2.add(c4);
 		occupiedCountries2.add(c5);
-		cards.add(new Card("Infantry"));
-		cards.add(new Card("Cavalry"));
-		cards.add(new Card("Artillery"));
+		card1 =new Card("Infantry");
+		card2 =new Card("Cavalry");
+		card3 =new Card("Artillery");
+		cards.add(card1);
+		cards.add(card2);
+		cards.add(card3);
 		p.setCards(cards);
+		card1.setOwner(p);
+		card2.setOwner(p);
+		card3.setOwner(p);
 		p2.setOccupiedCountries(occupiedCountries2);
 		c4.setRuler(p2);
 		c4.setIsOccupied(true);
@@ -278,7 +287,6 @@ public class PlayerTest {
         ObservableList<Card> expResult = FXCollections.observableArrayList(new Card("Infantry"), new Card("Cavalry"), new Card("Artillery"));
         ObservableList<Card> result = p.getCards();
         assertEquals(expResult.size(), result.size());
-        assertEquals(expResult.size(), result.size());
 		for (int i = 0; i < expResult.size(); i++) 
 		{
 			Card t1 = expResult.get(i);
@@ -297,7 +305,6 @@ public class PlayerTest {
         p.addCard(new Card("Wild"));
         ObservableList<Card> result = p.getCards();
         assertEquals(expResult.size(), result.size());
-        assertEquals(expResult.size(), result.size());
 		for (int i = 0; i < expResult.size(); i++) 
 		{
 			Card t1 = expResult.get(i);
@@ -313,9 +320,11 @@ public class PlayerTest {
     public void testRemoveCard()
     {
     	ObservableList<Card> expResult = FXCollections.observableArrayList(new Card("Infantry"), new Card("Cavalry"));
-        p.removeCard(new Card("Artillery"));
+        p.removeCard(card3);
+        Player expResultPlayer = null;
+        Player resultPlayer = card3.getOwner();
+        assertEquals(expResultPlayer, resultPlayer);
         ObservableList<Card> result = p.getCards();
-        assertEquals(expResult.size(), result.size());
         assertEquals(expResult.size(), result.size());
 		for (int i = 0; i < expResult.size(); i++) 
 		{
@@ -334,7 +343,6 @@ public class PlayerTest {
         p2.setCards(cards);
         ObservableList<Card> expResult = FXCollections.observableArrayList(new Card("Infantry"), new Card("Cavalry"), new Card("Artillery"));
         ObservableList<Card> result = p2.getCards();
-        assertEquals(expResult.size(), result.size());
         assertEquals(expResult.size(), result.size());
        
 		for (int i = 0; i < expResult.size(); i++) 
@@ -747,4 +755,74 @@ public class PlayerTest {
     	}
     }
     
+    /**
+     * Method test for check if a player has 5 or more than 5 cards
+     */
+    @Test
+    public void testCheckIfCardsMaximum() {
+    	boolean expResult = false;
+        boolean result = p.checkIfCardsMaximum();
+        assertEquals(expResult, result);
+    }
+    
+    /**
+     * Method test for check if a player has 5 or more than 5 cards
+     */
+    @Test
+    public void testCheckIfCardsMaximum1() {
+    	p.addCard(new Card("Infantry"));
+    	p.addCard(new Card("Cavalry"));
+    	boolean expResult = true;
+        boolean result = p.checkIfCardsMaximum();
+        assertEquals(expResult, result);
+    }
+    
+    /**
+     * Method test for check if cards the player chooses meet the requirement of exchange
+     */
+    @Test
+    public void testCardValidation() {
+    	ObservableList<Card> selectedCards = FXCollections.observableArrayList(new Card("Infantry"), new Card("Cavalry"), new Card("Artillery"));
+    	boolean expResult = true;
+        boolean result = p.cardValidation(selectedCards);
+        assertEquals(expResult, result);
+    }
+    
+    /**
+     * Method test for check if cards the player chooses meet the requirement of exchange
+     */
+    @Test
+    public void testCardValidation1() {
+    	ObservableList<Card> selectedCards = FXCollections.observableArrayList(new Card("Infantry"), new Card("Infantry"), new Card("Infantry"));
+    	boolean expResult = true;
+        boolean result = p.cardValidation(selectedCards);
+        assertEquals(expResult, result);
+    }
+    
+    /**
+     * Method test for check if cards the player chooses meet the requirement of exchange
+     */
+    @Test
+    public void testCardValidation2() {
+    	ObservableList<Card> selectedCards = FXCollections.observableArrayList(new Card("Infantry"), new Card("Infantry"), new Card("Artillery"));
+    	boolean expResult = false;
+        boolean result = p.cardValidation(selectedCards);
+        assertEquals(expResult, result);
+    }
+    
+    /**
+     * Method test for check the owner of cards that are exchanged
+     * If exchanged successfully, the cards are removed from the player's cards
+     * And the owner of cards are set as null
+     */
+    @Test
+    public void testExchangeCards() {
+    	ObservableList<Card> selectedCards = FXCollections.observableArrayList(card1, card2, card3);
+    	p.exchangeCards(selectedCards);
+    	ObservableList<Card> result = p.getCards();
+        assertTrue(result.isEmpty());
+        for(int i=0; i< selectedCards.size(); i++) {
+        	assertEquals(null, selectedCards.get(i).getOwner());
+        }
+    }
 }

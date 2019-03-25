@@ -8,6 +8,7 @@
 package com.risk.model.player;
 
 import com.risk.model.MapModel;
+import com.risk.model.PlayerPhaseModel;
 import com.risk.model.card.Card;
 import com.risk.model.dice.Dice;
 import com.risk.model.map.Continent;
@@ -204,7 +205,8 @@ public class Player extends Observable {
         {
             if (c.getCatagory().equals(card.getCatagory()))
             {
-                cards.remove(c);
+                c.setOwner(null);
+            	cards.remove(c);
                 break;
             }
         }
@@ -560,5 +562,52 @@ public class Player extends Observable {
            }
        }
        return result;
+   }
+   
+   public boolean checkIfCardsMaximum() {
+	   if (getCards().size() >= 5) {
+		   return true;
+	   }
+	   else {
+		   return false;
+	   }
+   }
+   
+   /**
+    * This method is used to validate the cards the player chooses to exchange
+    *
+    * @param selectedCards A list of cards the player chooses to exchange for
+    * armies
+    * @return The result corresponding to the countries the player occupied
+    */
+   public boolean cardValidation(ObservableList<Card> selectedCards)
+   {
+       if (((selectedCards.get(0).getCatagory().equals(selectedCards.get(1).getCatagory()))
+               && (selectedCards.get(0).getCatagory().equals(selectedCards.get(2).getCatagory())))
+               || ((!(selectedCards.get(0).getCatagory().equals(selectedCards.get(1).getCatagory())))
+               && (!(selectedCards.get(0).getCatagory().equals(selectedCards.get(2).getCatagory())))
+               && (!(selectedCards.get(1).getCatagory().equals(selectedCards.get(2).getCatagory())))))
+       {
+           return true;
+       }
+       else
+       {
+           return false;
+       }
+   }
+   
+   /**
+    * This method is used to remove the cards which the player chooses to exchange
+    *
+    * @param observableList A list of cards the player chooses to exchange for
+    * armies
+    * 
+    */
+   public void exchangeCards(ObservableList<Card> observableList) 
+   {
+	   for (Card c : observableList)
+       {
+		   removeCard(c);
+       }
    }
 }

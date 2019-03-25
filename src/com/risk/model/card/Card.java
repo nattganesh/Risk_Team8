@@ -67,9 +67,4 @@ public class Card {
         this.owner = player;
     }
 
-    public void removeCard(Player player)
-    {
-        this.owner = null;
-        player.removeCard(this);
-    }
 }

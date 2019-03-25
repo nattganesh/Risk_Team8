@@ -7,6 +7,7 @@
 package com.risk.controller;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.ResourceBundle;
 
@@ -111,13 +112,10 @@ public class CardController extends Observable implements Initializable {
     {
         if (tradeCard.getItems().size() == 3)
         {
-            if (cardValidation(tradeCard.getItems()))
+            if (player.cardValidation(tradeCard.getItems()))
             {
                 reinforcement = player.calculateReinforcementFromCards();
-                for (Card c : tradeCard.getItems())
-                {
-                    c.removeCard(PlayerPhaseModel.getPlayerModel().getCurrentPlayer());
-                }
+                player.exchangeCards(tradeCard.getItems());
                 System.out.println(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getCards());
                 tradeCard.getItems().clear();
                 actions.addAction("you exchanged cards");
@@ -136,7 +134,7 @@ public class CardController extends Observable implements Initializable {
         }
         else
         {
-            actions.addAction("you have less than 3 cards");
+            actions.addAction("you only can exchange 3 cards once");
         }
     }
 
@@ -146,7 +144,7 @@ public class CardController extends Observable implements Initializable {
     @FXML
     public void skipExchangeHandler()
     {
-        if (PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getCards().size() > 5)
+        if (PlayerPhaseModel.getPlayerModel().getCurrentPlayer().checkIfCardsMaximum())
         {
             actions.addAction("5+ cards == you must exchange");
         }
@@ -154,32 +152,6 @@ public class CardController extends Observable implements Initializable {
         {
             setChanged();
             notifyObservers();
-        }
-    }
-
-    /**
-     * This method is used to validate the cards the player chooses to exchange
-     *
-     * @param selectedCards A list of cards the player chooses to exchange for
-     * armies
-     * @return The result corresponding to the countries the player occupied
-     */
-    public boolean cardValidation(ObservableList<Card> selectedCards)
-    {
-        ObservableList<Card> cards = FXCollections.observableArrayList();
-        cards = selectedCards;
-
-        if (((cards.get(0).getCatagory().equals(cards.get(1).getCatagory()))
-                && (cards.get(0).getCatagory().equals(cards.get(2).getCatagory())))
-                || ((!(cards.get(0).getCatagory().equals(cards.get(1).getCatagory())))
-                && (!(cards.get(0).getCatagory().equals(cards.get(2).getCatagory())))
-                && (!(cards.get(1).getCatagory().equals(cards.get(2).getCatagory())))))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
         }
     }
 

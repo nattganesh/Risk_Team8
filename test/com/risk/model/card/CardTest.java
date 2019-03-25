@@ -96,17 +96,5 @@ public class CardTest {
         assertEquals(p, result);
     }
 
-    /**
-     * Test of removeCard method, of class Card.
-     */
-    @Test
-    public void testRemoveCard()
-    {
-        card.removeCard(p);
-        Player result = card.getOwner();
-        assertEquals(null, result);
-        ObservableList<Card> resultList = p.getCards();
-        assertTrue(resultList.isEmpty());
-    }
     
 }

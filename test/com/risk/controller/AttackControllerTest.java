@@ -140,35 +140,6 @@ public class AttackControllerTest {
         fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of validateTerritorySelections method, of class AttackController.
-     */
-    @Test
-    public void testValidateTerritorySelections()
-    {
-        System.out.println("validateTerritorySelections");
-        AttackController instance = new AttackController();
-        boolean expResult = false;
-        boolean result = instance.validateTerritorySelections();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of validateDiceSelections method, of class AttackController.
-     */
-    @Test
-    public void testValidateDiceSelections()
-    {
-        System.out.println("validateDiceSelections");
-        AttackController instance = new AttackController();
-        boolean expResult = false;
-        boolean result = instance.validateDiceSelections();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
 
     /**
      * Test of rollDiceHandler method, of class AttackController.
@@ -213,55 +184,6 @@ public class AttackControllerTest {
         fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of setRollLimit method, of class AttackController.
-     */
-    @Test
-    public void testSetRollLimit()
-    {
-        System.out.println("setRollLimit");
-        Country attack = null;
-        Country defend = null;
-        AttackController instance = new AttackController();
-        int[] expResult = null;
-        int[] result = instance.setRollLimit(attack, defend);
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setRollTime method, of class AttackController.
-     */
-    @Test
-    public void testSetRollTime()
-    {
-        System.out.println("setRollTime");
-        int diceattack = 0;
-        int dicedefend = 0;
-        AttackController instance = new AttackController();
-        int expResult = 0;
-        int result = instance.setRollTime(diceattack, dicedefend);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of rollResult method, of class AttackController.
-     */
-    @Test
-    public void testRollResult()
-    {
-        System.out.println("rollResult");
-        int diceNumber = 0;
-        AttackController instance = new AttackController();
-        int[] expResult = null;
-        int[] result = instance.rollResult(diceNumber);
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
 
     /**
      * Test of goToFortificationPhase method, of class AttackController.
