@@ -122,6 +122,7 @@ public class CardController extends Observable implements Initializable {
         }
     }
 
+    
     /**
      * This method is used to update the total reinforcement based on the cards
      * the player chooses And update the cards the player owned.

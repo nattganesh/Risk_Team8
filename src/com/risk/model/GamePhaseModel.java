@@ -11,7 +11,7 @@ import java.util.Observable;
 
 public class GamePhaseModel extends Observable {
 
-    String phase = "setup";
+    public String phase = "setup";
     private static GamePhaseModel gamePhaseModel;
 
     /**

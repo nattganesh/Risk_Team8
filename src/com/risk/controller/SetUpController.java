@@ -123,7 +123,7 @@ public class SetUpController implements Initializable {
         else
         {
             Country selectedCountry = countryId.getSelectionModel().getSelectedItem();
-            if ((selectedCountry.getArmyCount() == 0) || checkIfEachCountryHasOneArmy())
+            if ((selectedCountry.getArmyCount() == 0) || checkIfEachCountryHasOneArmy(territoryObservableList))
             {
                 selectedCountry.setArmyCount(1);
                 setStartingPoints();
@@ -163,10 +163,10 @@ public class SetUpController implements Initializable {
      * @return true if each country already has one army. Otherwise, return
      * false
      */
-    public boolean checkIfEachCountryHasOneArmy()
+    public boolean checkIfEachCountryHasOneArmy(ObservableList <Country> list)
     {
         int i = 1;
-        for (Country c : territoryObservableList)
+        for (Country c : list)
         {
             if (c.getArmyCount() == 0)
             {

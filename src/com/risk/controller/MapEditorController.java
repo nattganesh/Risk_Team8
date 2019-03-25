@@ -189,17 +189,18 @@ public class MapEditorController implements Initializable {
     {
         if (!AdjacentInput.getText().trim().isEmpty() && TerritoryView.getSelectionModel().getSelectedItem() != null)
         {
-
+        	Country selectedCountry = TerritoryView.getSelectionModel().getSelectedItem();
             if (AdjacentInput.getText().equals(TerritoryView.getSelectionModel().getSelectedItem().getName()))
             {
                 actions.addAction("You can't add a territory as it's own neighbour");
 
             }
-            else if (existsInAdjacentList(AdjacentInput.getText()))
+          
+            else if (existsInAdjacentList(selectedCountry, AdjacentInput.getText()))
             {
                 actions.addAction("Territory is already a neighbour");
             }
-            else if (searchTerritory(ContinentView.getItems(), AdjacentInput.getText()) != null && !existsInAdjacentList(AdjacentInput.getText()))
+            else if (searchTerritory(ContinentView.getItems(), AdjacentInput.getText()) != null && !existsInAdjacentList(selectedCountry, AdjacentInput.getText()))
             {
                 Country country = searchTerritory(ContinentView.getItems(), AdjacentInput.getText());
                 TerritoryView.getSelectionModel().getSelectedItem().getConnectedCountries().add(country);
@@ -224,9 +225,9 @@ public class MapEditorController implements Initializable {
      * @return true if the country already exists in the adjacent list, false
      * otherwise
      */
-    private boolean existsInAdjacentList(String addingCountry)
+    public boolean existsInAdjacentList(Country selectedCountry, String addingCountry)
     {
-        Country selectedCountry = TerritoryView.getSelectionModel().getSelectedItem();
+        
         for (Country country : selectedCountry.getConnectedCountries())
         {
             if (country.getName().equals(addingCountry))

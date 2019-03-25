@@ -106,6 +106,7 @@ public class ValidateTest {
      *
      * @throws FileNotFoundException exception thrown when file does not exist 
      */
+    @Test
     public void testDuplicateCountry() throws FileNotFoundException
     {
     	String DuplicateCountry =  "src/com/risk/main/mapTextfiles/DuplicateCountry.txt";
@@ -123,6 +124,7 @@ public class ValidateTest {
      * @throws DuplicatesException exception thrown when duplicate country in continent
      * @throws CannotFindException exception thrown when input file is different standard file format
      */
+    @Test
     public void testNonExistentContinentFile() throws FileNotFoundException, CannotFindException, DuplicatesException
     {
     	String NonExistentContinent =  "src/com/risk/main/mapTextfiles/NonExistentContinent.txt";
@@ -140,6 +142,7 @@ public class ValidateTest {
      * @throws DuplicatesException exception thrown when duplicate country in continent
      * @throws CannotFindException exception thrown when input file is different standard file format
      */
+    @Test
     public void testExceedsContinentLimitFile() throws FileNotFoundException, CannotFindException, DuplicatesException
     {
     	
@@ -158,6 +161,7 @@ public class ValidateTest {
      * @throws DuplicatesException exception thrown when duplicate country in continent
      * @throws CannotFindException exception thrown when input file is different standard file format
      */
+    @Test
     public void testContinentCountLimit() throws FileNotFoundException, CannotFindException, DuplicatesException
     {
     	String NoConnectivity =  "src/com/risk/main/mapTextfiles/NoConnectivity.txt";

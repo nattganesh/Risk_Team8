@@ -113,11 +113,12 @@ public class GamePhaseController implements Observer, Initializable {
     {
         ActionModel.getActionModel().clearAction();
         view = (String) phase;
-        phaseID.setText(view);
+        
         if (view.equals("setup"))
         {
             try
             {
+                phaseID.setText(view);
                 playerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
                 mainPane.getChildren().clear();
                 mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/SetUp.fxml")));
@@ -129,14 +130,15 @@ public class GamePhaseController implements Observer, Initializable {
         }
         else if (view.equals("winner"))
         {
-          
+                phaseID.setText(view);
                 winnerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName() + " is the winner");
                 mainPane.getChildren().clear();
-                winnerPane.setVisible(true);
+                winnerPane.setVisible(true);	
         
         }
         else if (view.equals("setup complete"))
         {
+            phaseID.setText(view);
             HashSet<String> s = new HashSet<String>();
             for (Continent continent : MapModel.getMapModel().getContinents())
             {
@@ -162,7 +164,7 @@ public class GamePhaseController implements Observer, Initializable {
         {
             try
             {
-
+                phaseID.setText(view);
                 playerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
                 mainPane.getChildren().clear();
                 mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/Reinforcement.fxml")));
@@ -177,6 +179,7 @@ public class GamePhaseController implements Observer, Initializable {
         {
             try
             {
+                phaseID.setText(view);
                 playerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
                 mainPane.getChildren().clear();
                 mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/Attack.fxml")));
@@ -191,6 +194,7 @@ public class GamePhaseController implements Observer, Initializable {
         {
             try
             {
+                phaseID.setText(view);
                 playerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
                 mainPane.getChildren().clear();
                 mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/Fortification.fxml")));
@@ -215,7 +219,7 @@ public class GamePhaseController implements Observer, Initializable {
             int index = piePlayersList.indexOf(player);
             
             System.out.println((player.getOccupiedCountries().size() + " / "  + MapModel.getMapModel().getCountries().size()));
-            if (player.getOccupiedCountries().size()  == MapModel.getMapModel().getCountries().size())
+            if (checkWinner(player))
             {
             	GamePhaseModel.getGamePhaseModel().setPhase("winner");
             }
@@ -232,6 +236,13 @@ public class GamePhaseController implements Observer, Initializable {
                 pieChartData.get(index).setName(player.getName() + " (" + Math.round(player.getOccupiedCountries().size() * 100.0 / MapModel.getMapModel().getCountries().size()) + "%)");
                 pieChartData.get(index).setPieValue(player.getOccupiedCountries().size() * 100.0 / 42);
             }
+        }
+       
+        public boolean checkWinner(Player p)
+        {
+        	
+        	return p.getOccupiedCountries().size()  == MapModel.getMapModel().getCountries().size();
+            
         }
 
     }

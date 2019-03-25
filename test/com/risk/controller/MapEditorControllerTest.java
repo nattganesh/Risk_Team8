@@ -263,5 +263,32 @@ public class MapEditorControllerTest {
 	     
     }
     
-    
+    /**
+     * This method tests for whether country exists in the adjacent list
+     */
+    @Test
+    public void testExistsInAdjacentList()
+    {
+    	
+    	Country country1 = new Country ("hello1");
+    	Country connected1 = new Country ("exists");
+    	Country connected2 = new Country ("hello3");
+    	
+    	country1.getConnectedCountries().add(connected1);
+    	country1.getConnectedCountries().add(connected2);
+    	
+    	Country countryA = new Country ("hello1");
+    	Country connectedB = new Country ("does not");
+    	Country connectedC = new Country ("hello3");
+    	
+    	countryA.getConnectedCountries().add(connectedB);
+    	countryA.getConnectedCountries().add(connectedC);
+    	
+    	String countryName = "exists";
+    	MapEditorController instance = new MapEditorController();
+    	assertTrue(instance.existsInAdjacentList(country1, countryName));
+    	assertFalse(instance.existsInAdjacentList(countryA, countryName));
+
+    }
+        
 }

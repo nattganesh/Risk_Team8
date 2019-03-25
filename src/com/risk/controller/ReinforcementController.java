@@ -146,6 +146,7 @@ public class ReinforcementController implements Initializable {
         }
     }
     
+    
     /**
      * This method sets the number of available army to your occupied country
      */
