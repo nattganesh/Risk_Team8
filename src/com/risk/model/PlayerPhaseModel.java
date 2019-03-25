@@ -30,7 +30,7 @@ public class PlayerPhaseModel extends Observable implements Observer {
     /**
      * Constructor for PlayerModel class
      */
-    private PlayerPhaseModel()
+    public PlayerPhaseModel()
     {
     }
 

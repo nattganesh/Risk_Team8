@@ -19,7 +19,7 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses(
 {
-    com.risk.model.card.DeckTest.class, com.risk.model.card.CardTest.class
+     com.risk.model.card.CardTest.class
 })
 public class CardSuite {
 

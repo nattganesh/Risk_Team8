@@ -6,18 +6,18 @@ package com.risk.model;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Observable;
+import java.util.Random;
 
 import com.risk.model.card.Card;
 import com.risk.model.player.Player;
 
 /**
  * @author DKM
+ * @author Tianyi
  *
  */
 public class DeckModel extends Observable {
-
     private static DeckModel deckModel;
-    private static LinkedList<Card> cards = new LinkedList<>();
     Card card[];
     int n = 44;
     String owner = null;
@@ -41,39 +41,67 @@ public class DeckModel extends Observable {
      */
     public void initialize()
     {
+    	card = new Card[n];
         String category[] =
         {
             "Infantry", "Cavalry", "Artillery", "Wild"
         };
 
-        for (int i = 0; i < n - 2; i++)
+        for (int i = 0; i < n; i++)
         {
-            for (int j = 0; j < category.length - 1; j++)
-            {
-                cards.add(new Card(category[j]));
-            }
+        	if(i<14) 
+        	{
+        		card[i]=new Card(category[0]);
+        	}else if(i<28) 
+        	{
+        		card[i]=new Card(category[1]);
+        	}else if(i<42) 
+        	{
+        		card[i]=new Card(category[2]);
+        	}else 
+        	{
+        		card[i]=new Card(category[3]);
+        	}
         }
-        cards.add(new Card(category[3]));
-        cards.add(new Card(category[3]));
-        Collections.shuffle(cards);
+        shuffleCard();
+    }
+    
+    /**
+     * This method is used to shuffle the deck randomly.
+     */
+    public void shuffleCard()
+    {
+        Random r = new Random();
+        for (int i = 0; i < n; i++)
+        {
+            int ran = r.nextInt(n);
+            Card tmp = card[i];
+            card[i] = card[ran];
+            card[ran] = tmp;
+        }
     }
 
+
+    public Card[] getCards()
+    {
+        return card;
+    }
+    
     /**
      * This method is used to send the card to a player.
      *
      * @param player The name of the player
      */
-    public void sendCard(Player player)
+    public Card sendCard(Player player)
     {
         int i = 0;
         while (true)
         {
-            Card tmp = cards.get(i);
-            if (tmp.getOwner() == null)
+            if (card[i].getOwner() == null)
             {
-                tmp.setOwner(player);
-                player.addCard(tmp);
-                break;
+            	card[i].setOwner(player);
+                player.addCard(card[i]);
+                return card[i];
             }
             i++;
         }

@@ -28,7 +28,7 @@ public class MapModel extends Observable implements Observer {
     /**
      * This is a constructor for map model
      */
-    private MapModel()
+    public MapModel()
     {
 
     }
