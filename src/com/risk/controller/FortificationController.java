@@ -48,7 +48,7 @@ public class FortificationController implements Initializable {
     private boolean fortification = false;
     ArrayList<Country> CountriesArrivedbyPath;
     ActionModel actions;
-
+    Player p = PlayerPhaseModel.getPlayerModel().getCurrentPlayer();
     /**
      * This is a constructor of the FortificationController class
      */
@@ -157,9 +157,12 @@ public class FortificationController implements Initializable {
     @FXML
     public void moveHandler()
     {
-        if (Territory.getSelectionModel().getSelectedItem() != null
-                && Adjacent.getSelectionModel().getSelectedItem() != null
-                && Territory.getSelectionModel().getSelectedItem().getArmyCount() > 1
+    	Country firstCountry = Territory.getSelectionModel().getSelectedItem();
+        Country secondCountry = Adjacent.getSelectionModel().getSelectedItem();
+        boolean validateTerritorySelections = p.validateTerritorySelections(firstCountry, secondCountry);
+        boolean validateAttackerHasEnoughArmy = p.validateAttackerHasEnoughArmy(firstCountry);
+        if (validateTerritorySelections
+                && validateAttackerHasEnoughArmy
                 && !moveField.getText().trim().isEmpty() && !fortification)
         {
             int Armyinput = Integer.parseInt(moveField.getText());
@@ -171,7 +174,7 @@ public class FortificationController implements Initializable {
             else if (Armyinput <= Territory.getSelectionModel().getSelectedItem().getArmyCount() - 1)
             {
                 Player p = Territory.getSelectionModel().getSelectedItem().getRuler();
-                p.fortify(Territory.getSelectionModel().getSelectedItem(), Adjacent.getSelectionModel().getSelectedItem(), Armyinput);
+                p.fortify(firstCountry, secondCountry, Armyinput);
 
                 AdjacentArmy.setText(Integer.toString(Adjacent.getSelectionModel().getSelectedItem().getArmyCount()));
                 TerritoryArmy.setText(Integer.toString(Territory.getSelectionModel().getSelectedItem().getArmyCount()));

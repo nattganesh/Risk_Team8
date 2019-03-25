@@ -274,8 +274,19 @@ public class PlayerTest {
     @Test
     public void testGetCountry()
     {
-       Country result = p.getCountry("China");
-       assertEquals(c1, result);
+    	Country result = p.getCountry("China");
+    	assertEquals(c1, result);
+    }
+    
+    /**
+     * Test of getCountry method, of class Player.
+     */
+    @Test
+    public void testGetCountry1()
+    {
+    	Country expResult = null;
+    	Country result = p.getCountry("South Africa");
+    	assertEquals(expResult, result);
     }
 
     /**
@@ -602,6 +613,30 @@ public class PlayerTest {
     }
     
     /**
+     * Method test for calculation of army from occupied continent and countries
+     */
+    @Test
+    public void testGetReinforcementArmy() 
+    {
+    	int expResult = 3;
+    	int result = p.getReinforcementArmy();
+    	assertEquals(expResult, result);
+    }
+    
+    /**
+     * Method test for calculation of army from occupied continent and countries
+     */
+    @Test
+    public void testGetReinforcementArmy1() 
+    {
+    	c4.setRuler(p);
+    	int expResult = 11;
+    	int result = p.getReinforcementArmy();
+    	assertEquals(expResult, result);
+    }
+    
+    
+    /**
      * Method test for validation of attack and defend countries
      */
     @Test
@@ -713,6 +748,21 @@ public class PlayerTest {
     	int[] expResult = new int[2];
     	expResult[0] = 1;
     	expResult[1] = 2;
+        assertEquals(expResult[0], result[0]);
+        assertEquals(expResult[1], result[1]);
+    }
+    
+    /**
+     * Method test for the limit of number of dice attacker and defender can roll
+     */
+    @Test
+    public void testSetRollLimit3()
+    {
+    	c1.setArmyCount(2);
+    	int[] result = p.setRollLimit(c1, c4);
+    	int[] expResult = new int[2];
+    	expResult[0] = 1;
+    	expResult[1] = 1;
         assertEquals(expResult[0], result[0]);
         assertEquals(expResult[1], result[1]);
     }

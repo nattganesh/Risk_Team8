@@ -120,11 +120,7 @@ public class ReinforcementController implements Initializable {
         player = PlayerPhaseModel.getPlayerModel().getCurrentPlayer();
         actions = ActionModel.getActionModel();
 
-        TotalReinforcement = player.calculateReinforcementContinentControl() + player.calculateReinforcementOccupiedTerritory();
-        if (TotalReinforcement < 3)
-        {
-            TotalReinforcement = 3;
-        }
+        TotalReinforcement = player.getReinforcementArmy();
         armyAvailable.setText("Army: " + Integer.toString(TotalReinforcement));
         territoryObservableList.addAll(player.getOccupiedCountries());
         countryId.setItems(territoryObservableList);

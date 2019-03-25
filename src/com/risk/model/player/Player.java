@@ -442,6 +442,22 @@ public class Player extends Observable {
     }
     
     /**
+     * This method is used to get the number of army from occupied continent and countries
+     * 
+     *
+     * @return The result corresponding to the number of continents and countries occupied by the player
+     */
+    public int getReinforcementArmy() {
+        int TotalReinforcement = calculateReinforcementContinentControl() + calculateReinforcementOccupiedTerritory();
+        if (TotalReinforcement < 3)
+        {
+            TotalReinforcement = 3;
+        }
+        return TotalReinforcement;
+    }
+    
+    
+    /**
     *
     * @return returns true if two countries have been selected
     */
