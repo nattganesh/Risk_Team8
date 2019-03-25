@@ -122,8 +122,9 @@ public class FortificationController implements Initializable {
     }
 
     /**
-     * This method handles loading adjacent connected countries that current
-     * player owns
+     * This method handles loading adjacent connected countries of the country that current
+     * player chooses for fortification
+     * Only countries owned by the player will be displayed
      */
     @FXML
     public void territoryHandler()
@@ -139,7 +140,7 @@ public class FortificationController implements Initializable {
     }
 
     /**
-     * This method handles showing the army count of the adjacent country
+     * This method handles showing the army count of the adjacent country the player chooses
      */
     @FXML
     public void adjacentHandler()

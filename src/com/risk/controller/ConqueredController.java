@@ -102,6 +102,8 @@ public class ConqueredController extends Observable implements Initializable {
 
     /**
      * This method ends the conquer move
+     * When the number of army moved is equal or more than the number of dice the player rolled
+     * Then it allows him to end the move
      */
     @FXML
     public void moveComplete()

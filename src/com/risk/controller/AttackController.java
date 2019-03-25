@@ -1,5 +1,7 @@
 /**
  * This class is necessary for Controller of the Attack Phase
+ * The JavaFx part is done by DKM
+ * The logic part is done by Tianyi
  *
  * @author DKM
  * @author Tianyi
@@ -232,7 +234,7 @@ public class AttackController implements Initializable, Observer {
     }
 
     /**
-     * This is rolls the dice
+     * This is rolls the dice when click the roll dice button
      */
     @FXML
     public void rollDiceHandler()
@@ -312,6 +314,8 @@ public class AttackController implements Initializable, Observer {
     }
 
     /**
+     * This method is used to roll dice automatically after the player chooses the attacker and defender
+     * It will stop when either the attacker has not enough army or the defender is conquered
      * 
      */
     @FXML

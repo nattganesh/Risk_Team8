@@ -1,6 +1,8 @@
 /**
  * Necessary for handling card exchange logic for reinforcement phase
- *
+ * * The JavaFx part is done by DKM
+ * The logic part is done by Tianyi
+ * 
  * @author DKM
  * @author Tianyi
  */
