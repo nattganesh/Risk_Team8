@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
 import com.risk.model.ActionModel;
 import com.risk.model.PlayerPhaseModel;
 import com.risk.model.map.Country;
+import com.risk.model.player.Player;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -34,6 +35,7 @@ public class ConqueredController extends Observable implements Initializable {
     int diceRolled;
     Country conquered;
     int moved = 0;
+    Player p = PlayerPhaseModel.getPlayerModel().getCurrentPlayer();
 
     ActionModel actions;
     @FXML
@@ -67,14 +69,15 @@ public class ConqueredController extends Observable implements Initializable {
     {
         Country reinforcement = countryOwnedID.getSelectionModel().getSelectedItem();
         Country conquered = conqueredID.getSelectionModel().getSelectedItem();
-        if (reinforcement != null && conquered != null && !armyCount.getText().trim().isEmpty())
+        boolean validateTerritorySelections = p.validateTerritorySelections(reinforcement, conquered);
+        boolean validateTerritorysTheSame = p.validateTerritorysTheSame(reinforcement, conquered);
+        if (validateTerritorySelections && !armyCount.getText().trim().isEmpty()&&validateTerritorysTheSame)
         {
             int army = Integer.parseInt(armyCount.getText());
             if (army < reinforcement.getArmyCount())
             {
                 moved = moved + army;
-                reinforcement.reduceArmyCount(army);
-                conquered.setArmyCount(army);
+                p.fortify(reinforcement, conquered, army);
                 actions.addAction("moving army");
                 renderView();
 
@@ -87,6 +90,13 @@ public class ConqueredController extends Observable implements Initializable {
             {
                 actions.addAction("invalid move");
             }
+        }else if(!validateTerritorySelections) 
+        {
+        	actions.addAction("please choose countries first");
+        }else if(armyCount.getText().trim().isEmpty()) {
+        	actions.addAction("please enter the number of army first");
+        } else {
+        	actions.addAction("countries you choose should not be the same");
         }
     }
 

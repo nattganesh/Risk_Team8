@@ -443,11 +443,11 @@ public class Player extends Observable {
     
     /**
     *
-    * @return returns true if attacker and defender has been selected
+    * @return returns true if two countries have been selected
     */
-   public boolean validateTerritorySelections(Country attack, Country defender)
+   public boolean validateTerritorySelections(Country firstCountry, Country secondCountry)
    {
-       if (attack!= null && defender!= null)
+       if (firstCountry!= null && secondCountry!= null)
        {
            return true;
        }
@@ -456,6 +456,22 @@ public class Player extends Observable {
     	   return false;
        }
    }
+   
+   /**
+   *
+   * @return returns true if two countries have been selected
+   */
+  public boolean validateTerritorysTheSame(Country firstCountry, Country secondCountry)
+  {
+      if (firstCountry!=secondCountry)
+      {
+          return true;
+      }
+      else 
+      {
+   	   return false;
+      }
+  }
    
    /**
     * @return returns true if defender and attacker both selected dice roll

@@ -825,4 +825,18 @@ public class PlayerTest {
         	assertEquals(null, selectedCards.get(i).getOwner());
         }
     }
+    
+    @Test
+    public void testvalidateTerritorysTheSame() {
+    	boolean expResult = true;
+        boolean result = p.validateTerritorysTheSame(c1, c3);
+        assertEquals(expResult, result);
+    }
+    
+    @Test
+    public void testvalidateTerritorysTheSame1() {
+    	boolean expResult = false;
+        boolean result = p.validateTerritorysTheSame(c1, c1);
+        assertEquals(expResult, result);
+    }
 }
