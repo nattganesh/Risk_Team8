@@ -46,7 +46,8 @@ public class FileParser {
             {
                 text = input.nextLine();
                 int b = 1;
-                while (input.hasNextLine() && b <= Country.MAX_NUMBER_OF_COUNTRIES)
+//                while (input.hasNextLine() && b <= Country.MAX_NUMBER_OF_COUNTRIES)
+                while (input.hasNextLine() && !text.equals("SET NEIGHBORS"))
                 {
                     b++;
                     String nameOfContinent = text.substring(0, text.indexOf(","));

@@ -118,6 +118,7 @@ public class PlayerPhaseModel extends Observable implements Observer {
     }
 
     /**
+     * This method receives update from Player class
      * This method notifies GamePhaseModel, updating world domination phase
      */
     @Override

@@ -15,12 +15,15 @@ import java.util.Observable;
 
 public class Country extends Observable {
 
-    public static final int MAX_NUMBER_OF_COUNTRIES = Continent.MAX_NUMBER_OF_COUNTRIES_IN_NORTH_AMERICA
-            + Continent.MAX_NUMBER_OF_COUNTRIES_IN_SOUTH_AMERICA
-            + Continent.MAX_NUMBER_OF_COUNTRIES_IN_EUROPE
-            + Continent.MAX_NUMBER_OF_COUNTRIES_IN_AFRICA
-            + Continent.MAX_NUMBER_OF_COUNTRIES_IN_ASIA
-            + Continent.MAX_NUMBER_OF_COUNTRIES_IN_AUSTRALIA;
+//    public static final int MAX_NUMBER_OF_COUNTRIES = Continent.MAX_NUMBER_OF_COUNTRIES_IN_NORTH_AMERICA
+//            + Continent.MAX_NUMBER_OF_COUNTRIES_IN_SOUTH_AMERICA
+//            + Continent.MAX_NUMBER_OF_COUNTRIES_IN_EUROPE
+//            + Continent.MAX_NUMBER_OF_COUNTRIES_IN_AFRICA
+//            + Continent.MAX_NUMBER_OF_COUNTRIES_IN_ASIA
+//            + Continent.MAX_NUMBER_OF_COUNTRIES_IN_AUSTRALIA;
+	
+	
+    
     private String name;
     private boolean isOccupied;
     private Player ruler;

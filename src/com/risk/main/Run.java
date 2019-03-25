@@ -58,11 +58,10 @@ public class Run extends Application {
     @Override
     public void start(Stage primaryStage) throws CountLimitException, CannotFindException, DuplicatesException, IOException
     {
+    	
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/risk/view/LayoutView.fxml"));
-
         GamePhaseController gamephase = new GamePhaseController();
         loader.setController(gamephase);
-
         Parent root = loader.load();
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
@@ -72,6 +71,7 @@ public class Run extends Application {
         primaryStage.setHeight(bounds.getHeight() / 1.5);
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();
+        
     }
 
 }

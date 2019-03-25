@@ -19,7 +19,7 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses(
 {
-    com.risk.model.DeckModelTest.class, com.risk.model.card.CardSuite.class, com.risk.model.utilities.UtilitiesSuite.class, com.risk.model.PlayerPhaseModelTest.class, com.risk.model.ActionModelTest.class, com.risk.model.map.MapSuite.class, com.risk.model.player.PlayerSuite.class, com.risk.model.dice.DiceSuite.class, com.risk.model.MapModelTest.class, com.risk.model.GamePhaseModelTest.class
+    com.risk.model.DeckModelTest.class, com.risk.model.card.CardSuite.class, com.risk.model.utilities.UtilitiesSuite.class, com.risk.model.PlayerPhaseModelTest.class, com.risk.model.map.MapSuite.class, com.risk.model.player.PlayerSuite.class, com.risk.model.dice.DiceSuite.class, com.risk.model.MapModelTest.class, com.risk.model.GamePhaseModelTest.class
 })
 public class ModelSuite {
 

@@ -21,7 +21,7 @@ public class Continent {
     private ArrayList<Country> countries = new ArrayList<>();
     private int pointsWhenFullyOccupied;
     private Player ruler;
-
+    
     /**
      * This is the constructor for Continent
      *

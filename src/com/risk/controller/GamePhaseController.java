@@ -13,7 +13,6 @@ import java.util.HashSet;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
-import java.util.*;
 
 import com.risk.model.ActionModel;
 import com.risk.model.GamePhaseModel;
@@ -121,6 +120,19 @@ public class GamePhaseController implements Observer, Initializable {
                 e.printStackTrace();
             }
         }
+        else if (view.equals("winner"))
+        {
+            try
+            {
+                playerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
+                mainPane.getChildren().clear();
+                mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/Winner.fxml")));
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
         else if (view.equals("setup complete"))
         {
             HashSet<String> s = new HashSet<String>();
@@ -189,10 +201,7 @@ public class GamePhaseController implements Observer, Initializable {
     }
 
     /**
-     * This class observes PlayerModel and gets updated
-     *
-     * @author DKM
-     *
+     * This method observes the PlayerPhaseModel when a country has been occupied
      */
     private class playerObserver implements Observer {
 
@@ -202,27 +211,35 @@ public class GamePhaseController implements Observer, Initializable {
             Country c = (Country) arg;
             Player player = c.getRuler();
             int index = piePlayersList.indexOf(player);
+            
+            System.out.println((player.getOccupiedCountries().size() + " / "  + MapModel.getMapModel().getCountries().size()));
+            if (player.getOccupiedCountries().size()  == MapModel.getMapModel().getCountries().size())
+            {
+            	GamePhaseModel.getGamePhaseModel().setPhase("winner");
+            }
+           
             if (index == -1)
             {
                 piePlayersList.add(player);
-                pieChartData.add(new PieChart.Data(player.getName() + " (" + Math.round(player.getOccupiedCountries().size() * 100.0 / 42) + "%)",
+                pieChartData.add(new PieChart.Data(player.getName() + " (" + Math.round(player.getOccupiedCountries().size() * 100.0 / MapModel.getMapModel().getCountries().size()) + "%)",
                         player.getOccupiedCountries().size() * 100.0 / 42));
             }
             else
             {
                 piePlayersList.set(index, player);
-                pieChartData.get(index).setName(player.getName() + " (" + Math.round(player.getOccupiedCountries().size() * 100.0 / 42) + "%)");
+                pieChartData.get(index).setName(player.getName() + " (" + Math.round(player.getOccupiedCountries().size() * 100.0 / MapModel.getMapModel().getCountries().size()) + "%)");
                 pieChartData.get(index).setPieValue(player.getOccupiedCountries().size() * 100.0 / 42);
             }
         }
 
     }
 
+    /**
+     * 
+     * This method observes the PlayerPhaseModel when a country has been occupied
+     * 
+     */
     private class continentObserver implements Observer {
-
-        /* (non-Javadoc)
-	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
-         */
         @Override
         public void update(Observable arg0, Object arg)
         {
@@ -249,6 +266,11 @@ public class GamePhaseController implements Observer, Initializable {
         }
     }
 
+    /**
+     * This method observes the PlayerPhaseModel when a country has been occupied
+     * @author DKM
+     *
+     */
     private class mapObserver implements Observer {
 
         @SuppressWarnings("unchecked")
@@ -273,7 +295,6 @@ public class GamePhaseController implements Observer, Initializable {
                 serie.getData().get(index).setXValue(player.getName());
                 serie.getData().get(index).setYValue((int)player.getTotalArmy()); 
             }
-            
             if (!view.equals("setup"))
             {
             	worldDomination2.getData().setAll(serie);  
@@ -282,6 +303,7 @@ public class GamePhaseController implements Observer, Initializable {
         }
     }
 
+   
     public void updateContinentDominationView()
     {
         worldDomination3.setCellFactory(param -> new ListCell<Continent>() {

@@ -120,7 +120,7 @@ public class Validate {
 
         counter = 0;
         countriesModelValidationList.clear();
-        continentChecks();
+//        continentChecks();
         mapConnected(map.getCountries().get(0));
 
     }

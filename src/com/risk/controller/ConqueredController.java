@@ -48,6 +48,7 @@ public class ConqueredController extends Observable implements Initializable {
     TextField armyCount;
     boolean move = false;
 
+    
     /**
      * @see javafx.fxml.Initializable#initialize(java.net.URL,s
      * java.util.ResourceBundle)
@@ -126,6 +127,7 @@ public class ConqueredController extends Observable implements Initializable {
      */
     public void setConquringArmy(Country c)
     {
+    	territoryObservableList.clear();
         conqueredObservableList.clear();
         conqueredObservableList.add(c);
         conquered = c;

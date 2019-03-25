@@ -47,6 +47,7 @@ import javafx.scene.input.MouseEvent;
 
 public class MapEditorController implements Initializable {
 
+
     @FXML
     ListView<Continent> ContinentView;
 
@@ -64,6 +65,9 @@ public class MapEditorController implements Initializable {
 
     @FXML
     TextField ExistingFile;
+    
+    @FXML
+    TextField ContinentInput;
 
     @FXML
     Label AdjacentError;
@@ -227,7 +231,8 @@ public class MapEditorController implements Initializable {
         }
         return false;
     }
-
+    
+    
     /**
      * This method handles deleting a territory and all of it's connection in
      * the map
@@ -575,16 +580,17 @@ public class MapEditorController implements Initializable {
      */
     public void assignCountriesToPlayers()
     {
-        boolean[] countryOccupied = new boolean[Country.MAX_NUMBER_OF_COUNTRIES];
+    	int totalCountrySize = MapModel.getMapModel().getCountries().size();
+        boolean[] countryOccupied = new boolean[totalCountrySize];
         int i = 0;
-        while (i < Country.MAX_NUMBER_OF_COUNTRIES)
+        while (i < totalCountrySize)
         {
             for (Player p : PlayerPhaseModel.getPlayerModel().getPlayers())
             {
-                int random = (int) (Math.random() * Country.MAX_NUMBER_OF_COUNTRIES);
+                int random = (int) (Math.random() * totalCountrySize);
                 while (countryOccupied[random])
                 {
-                    random = (int) (Math.random() * Country.MAX_NUMBER_OF_COUNTRIES);
+                    random = (int) (Math.random() * totalCountrySize);
                 }
                 if (!countryOccupied[random])
                 {
@@ -597,7 +603,7 @@ public class MapEditorController implements Initializable {
                     p.addCountry(MapModel.getMapModel().getCountries().get(random));
                     i++;
                 }
-                if (i >= Country.MAX_NUMBER_OF_COUNTRIES)
+                if (i >= totalCountrySize)
                 {
                     break;
                 }
@@ -611,16 +617,17 @@ public class MapEditorController implements Initializable {
      */
     public void autoAssignCountriesToPlayers()
     {
-        boolean[] countryOccupied = new boolean[Country.MAX_NUMBER_OF_COUNTRIES];
+    	int totalCountrySize = MapModel.getMapModel().getCountries().size();
+        boolean[] countryOccupied = new boolean[totalCountrySize];
         int i = 0;
-        while (i < Country.MAX_NUMBER_OF_COUNTRIES)
+        while (i < totalCountrySize)
         {
             for (Player p : PlayerPhaseModel.getPlayerModel().getPlayers())
             {
-                int random = (int) (Math.random() * Country.MAX_NUMBER_OF_COUNTRIES);
+                int random = (int) (Math.random() * totalCountrySize);
                 while (countryOccupied[random])
                 {
-                    random = (int) (Math.random() * Country.MAX_NUMBER_OF_COUNTRIES);
+                    random = (int) (Math.random() * totalCountrySize);
                 }
                 if (!countryOccupied[random])
                 {
@@ -633,7 +640,7 @@ public class MapEditorController implements Initializable {
 
                     i++;
                 }
-                if (i >= Country.MAX_NUMBER_OF_COUNTRIES)
+                if (i >= totalCountrySize)
                 {
                     break;
                 }

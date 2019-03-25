@@ -17,6 +17,7 @@ import java.util.ResourceBundle;
 import com.risk.model.ActionModel;
 import com.risk.model.DeckModel;
 import com.risk.model.GamePhaseModel;
+import com.risk.model.MapModel;
 import com.risk.model.PlayerPhaseModel;
 import com.risk.model.card.Card;
 import com.risk.model.dice.Dice;
@@ -230,6 +231,7 @@ public class AttackController implements Initializable, Observer {
             }
         }
     }
+    
 
     /**
      * This is rolls the dice
@@ -292,10 +294,18 @@ public class AttackController implements Initializable, Observer {
                     actions.addAction("You have already occupied this country!");
                     actions.addAction("Please move armies to your new country!");
                     attackingCountry.getRuler().attack(attackingCountry, defendingCountry, 2);
-                    occupy = true;
-                    child.setVisible(true);
-                    conqueringController.setConquringArmy(defendingCountry);
-                    conqueringController.setDiceRoll(diceattack);
+//                    if (p.getOccupiedCountries().size()  == MapModel.getMapModel().getCountries().size())
+//                    {
+//                    	GamePhaseModel.getGamePhaseModel().setPhase("winner");
+//                    }
+//                    else 
+//                    {
+                        occupy = true;
+                        child.setVisible(true);
+                        conqueringController.setConquringArmy(defendingCountry);
+                        conqueringController.setDiceRoll(diceattack);
+//                    }
+
                     break;
                 }               
             }

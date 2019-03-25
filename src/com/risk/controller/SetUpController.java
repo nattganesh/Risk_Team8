@@ -41,7 +41,7 @@ public class SetUpController implements Initializable {
 
     public int TotalArmies;
     public ArrayList<String> cards = new ArrayList<>();
-    private boolean setUp = false;
+    private boolean setUp = false;	
     /**
      * @see javafx.fxml.XML
      */
@@ -86,7 +86,21 @@ public class SetUpController implements Initializable {
         armyAvailable.setText("Army: " + Integer.toString(getArmies()));
         territoryObservableList.addAll(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
         countryId.setItems(territoryObservableList);
-        updateView();
+        countryId.setCellFactory(param -> new ListCell<Country>() {
+            @Override
+            protected void updateItem(Country country, boolean empty)
+            {
+                super.updateItem(country, empty);
+                if (empty || country == null || country.getName() == null)
+                {
+                    setText(null);
+                }
+                else
+                {
+                    setText(country.getName() + " (" + country.getArmyCount() + ")");
+                }
+            }
+        });
     }
 
     /**
@@ -118,6 +132,8 @@ public class SetUpController implements Initializable {
                 setUp = true;
             }
         }
+        updateView();
+        
         armyAvailable.setText("Army: " + Integer.toString(getArmies()));
     }
 
@@ -216,20 +232,6 @@ public class SetUpController implements Initializable {
      */
     public void updateView()
     {
-        countryId.setCellFactory(param -> new ListCell<Country>() {
-            @Override
-            protected void updateItem(Country country, boolean empty)
-            {
-                super.updateItem(country, empty);
-                if (empty || country == null || country.getName() == null)
-                {
-                    setText(null);
-                }
-                else
-                {
-                    setText(country.getName() + " (" + country.getArmyCount() + ")");
-                }
-            }
-        });
+    	territoryObservableList.setAll(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
     }
 }
