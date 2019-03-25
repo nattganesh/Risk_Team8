@@ -1,7 +1,11 @@
 /**
- * Necessary to create a player
+ * This Player class contains the methods for creating a player
+ * and also the implementation of the reinforcement, attack and fortification
+ * The functions for reinforcement are done by Nat
+ * The functions for attack, fortification and cards are done by Tianyi
  *
  * @author Natheepan
+ * @author Tianyi
  *
  *
  */
@@ -213,7 +217,7 @@ public class Player extends Observable {
     }
 
     /**
-     * This metohd sets the card observable list
+     * This method sets the card observable list of player directly
      * 
      * @param cards
      */
@@ -244,11 +248,15 @@ public class Player extends Observable {
     }
     
 	/**
-	 * This method is necessary to attack
+	 * This method is used to decrease the army amount or change the owner of country when it is occupied
+	 * In case1, the defender lost in dice so it lost 1 army
+	 * In case2, the attacker conquered the defender, so the owner of defender changes
+	 * In case3, the attacker lost in dice so it lost 1 army 
 	 * 
 	 * @param attack country that is attacking
 	 * @param defend country being attacked
 	 * @param caseType the type of attack
+	 * 
 	 */
     public void attack(Country attack, Country defend, int caseType)
     {
@@ -270,6 +278,7 @@ public class Player extends Observable {
 
     /**
      * This method is necessary for reinforcement
+     * The number of armies in the country will be add with the number the player inputs
      * 
      * @param myCountry the country to be reinforced
      * @param Armyinput the number of army to reinforce
@@ -280,11 +289,11 @@ public class Player extends Observable {
     }
 
     /**
-     * this method is necessary for fortify a country
+     * This method is necessary for fortify a country
      * 
-     * @param from country origin of army
-     * @param to country destination of army
-     * @param Armyinput number of army to move
+     * @param from The country which the player moves the armies from
+     * @param to The country which the player moves the armies to
+     * @param Armyinput The number of armies to move
      */
     public void fortify(Country from, Country to, int Armyinput)
     {
@@ -458,9 +467,10 @@ public class Player extends Observable {
     
     
     /**
-    *
-    * @return returns true if two countries have been selected
-    */
+     * This method is used to validate if the player selects two countries
+     *
+     * @return returns true if two countries have been selected. Otherwise, return false.
+     */
    public boolean validateTerritorySelections(Country firstCountry, Country secondCountry)
    {
        if (firstCountry!= null && secondCountry!= null)
@@ -474,9 +484,10 @@ public class Player extends Observable {
    }
    
    /**
-   *
-   * @return returns true if two countries have been selected
-   */
+    *This method is used to validate if the two countries the player selects are the same
+    *
+    * @return returns true if two countries selected are not the same country. Otherwise, return false.
+    */
   public boolean validateTerritorysTheSame(Country firstCountry, Country secondCountry)
   {
       if (firstCountry!=secondCountry)
@@ -490,7 +501,9 @@ public class Player extends Observable {
   }
    
    /**
-    * @return returns true if defender and attacker both selected dice roll
+    * This method is used to validate if both attacker and defender select how many dice to roll
+    * 
+    * @return returns true if defender and attacker both selected how many dice to roll. Otherwise, return false
     */
    public boolean validateDiceSelections(Integer attackDice, Integer defendDice)
    {
@@ -505,7 +518,9 @@ public class Player extends Observable {
    }
    
    /**
-    * @return returns true if defender and attacker both selected dice roll
+    * This method is used to validate if the country the player selects has enough armies for attack or fortification
+    * 
+    * @return returns true if the country has enough armies. Otherwise, return false.
     */
    public boolean validateAttackerHasEnoughArmy(Country attack)
    {
@@ -520,11 +535,11 @@ public class Player extends Observable {
    }
    
    /**
-    * this sets the limit of roll depending the country chosen
+    * This method is used to set the roll limit according to the number of armies the attacker and defender have
     * 
-    * @param attack country that is attacking
-    * @param defend country that is defending 
-    * @return returns array of roll limit for attacker and defender
+    * @param attack The country that is attacking
+    * @param defend The country that is defending 
+    * @return returns The array of roll limit for attacker and defender
     */
    public int[] setRollLimit(Country attack, Country defend)
    {
@@ -553,11 +568,11 @@ public class Player extends Observable {
    }
 
    /**
+    * This method is used to set the times of rolling dice according to the number of dice the attacker and defender choose to roll
     * 
-    * 
-    * @param diceattack
-    * @param dicedefend
-    * @return
+    * @param diceattack The number of dice the attacker chooses to roll
+    * @param dicedefend The number of dice the defender chooses to roll
+    * @return rolltime The times of rolling dice
     */
    public int setRollTime(int diceattack, int dicedefend)
    {
@@ -573,6 +588,13 @@ public class Player extends Observable {
        return rolltime;
    }
 
+   /**
+    * This method is used to set the result of rolling dice according to the number of dice
+    * And the result is sorted from the highest to lowest
+    * 
+    * @param diceNumber The number of dice the player chooses to roll
+    * @return result The result of rolling dice
+    */
    public int[] rollResult(int diceNumber)
    {
        int[] result = new int[diceNumber];
@@ -596,6 +618,11 @@ public class Player extends Observable {
        return result;
    }
    
+   /**
+    * This method is used to check if player has 5 or more than 5 cards
+    * 
+    * @return returns true if the player has 5 or more than 5 cards. Otherwise, return false.
+    */
    public boolean checkIfCardsMaximum() {
 	   if (getCards().size() >= 5) {
 		   return true;
@@ -610,7 +637,7 @@ public class Player extends Observable {
     *
     * @param selectedCards A list of cards the player chooses to exchange for
     * armies
-    * @return The result corresponding to the countries the player occupied
+    * @return The result corresponding to the category of cards the player chooses
     */
    public boolean cardValidation(ObservableList<Card> selectedCards)
    {
