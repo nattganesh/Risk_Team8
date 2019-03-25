@@ -22,7 +22,7 @@ public class ActionModel extends Observable {
     /**
      * This method is necessary for adding game action to observableList
      * 
-     * @param action
+     * @param action The name of action
      */
     public void addAction(String action)
     {
@@ -38,9 +38,9 @@ public class ActionModel extends Observable {
     }
 
     /**
-     * This method returns the observableList of action
+     * This method returns the observableList of actions
      * 
-     * @return
+     * @return actions The observableList of actions
      */
     public ObservableList<String> getActions()
     {

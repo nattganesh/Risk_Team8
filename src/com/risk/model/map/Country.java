@@ -35,8 +35,7 @@ public class Country extends Observable {
     /**
      * This is the constructor for Country
      *
-     * @param name this country name
-     * @param continentName this continent name
+     * @param name The name of this country
      */
     public Country(String name)
     {
@@ -176,7 +175,10 @@ public class Country extends Observable {
     }
 
     /**
-     * This is a method for returning countries that are connected and you own
+     * This is a method for get countries that are connected to the country the player chooses
+     * And all of those countries are occupied by the player
+     * 
+     * @return list The connected countries to the country the player selects
      */
     public ObservableList<Country> getConnectedOwned()
     {
@@ -192,7 +194,10 @@ public class Country extends Observable {
     }
 
     /**
-     * This is a methodn for returning connected countries that you don't own
+     * This is a method for returning connected enemy countries of the country the player selects
+     * And those countries are not owned by that player
+     * 
+     * @return list The enemy countries connected to the country the player selects
      */
     public ObservableList<Country> getConnectedEnemy()
     {
