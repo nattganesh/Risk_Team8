@@ -76,11 +76,13 @@ public class Validate {
     }
 
     /**
-     * Given a Country, this method recursively goes thru this country's
+     * Given a Country, this method recursively goes through this country's
      * neighbours and adds then to countriesModelValidationList If
      * (countriesModelValidationList.size() == map.getCountries().size()) then
      * from a given country, we can travel to all other countries, so map is
      * connected
+     * 
+     * @param origin The origin country whose neighbours will be added to countriesModelValidationList
      */
     public void mapConnected(Country origin)
     {

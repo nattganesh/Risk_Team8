@@ -91,7 +91,7 @@ public class Player extends Observable {
     /**
      * Gets the starting points of armies left
      *
-     * @return
+     * @return startingPoints The number of armies for set up
      */
     public int getStartingPoints()
     {
@@ -111,7 +111,7 @@ public class Player extends Observable {
     /**
      * gets the country occupied by player in arrayList
      *
-     * @return occupiedCountries returns ArrayList<Country> occupiedCountries
+     * @return occupiedCountries The countries occupied by the player
      */
     public ArrayList<Country> getOccupiedCountries()
     {
@@ -142,9 +142,9 @@ public class Player extends Observable {
     }
 
     /**
-     * gets the size of occupied country
+     * This method is used to get the number of occupied countries
      *
-     * @return returns length of the ArrayList<Country> occupiedCountries
+     * @return returns the number of countries occupied by the player
      */
     public int numbOccupied()
     {
@@ -153,8 +153,9 @@ public class Player extends Observable {
 
 
     /**
-     * gets country object associated with the name of the string
-     * @param occupiedCountries 
+     * This method is used to set occupied countries to the player
+     * 
+     * @param occupiedCountries The arraylist of occupied countries
      */
     public void setOccupiedCountries(ArrayList<Country> occupiedCountries)
     {
@@ -217,9 +218,9 @@ public class Player extends Observable {
     }
 
     /**
-     * This method sets the card observable list of player directly
+     * This method sets the card observable list to player directly
      * 
-     * @param cards
+     * @param cards The list of cards that are owned by the player
      */
     public void setCards(ObservableList<Card> cards)
     {
@@ -394,7 +395,6 @@ public class Player extends Observable {
      * This method is used to calculate the extra armies earned if the player
      * has occupied continents
      *
-     * @param currentPlayer The player who is in his reinforcement round
      * @return The result corresponding to the countries the player occupied
      */
     public int calculateReinforcementContinentControl()
@@ -427,7 +427,6 @@ public class Player extends Observable {
      * This method is used to calculate the extra armies based on the number of
      * countries the player already occupied
      *
-     * @param currentPlayer The player who is in his reinforcement round
      * @return The result corresponding to the countries the player occupied
      */
     public int calculateReinforcementOccupiedTerritory()
@@ -469,6 +468,8 @@ public class Player extends Observable {
     /**
      * This method is used to validate if the player selects two countries
      *
+     * @param firstCountry The first country the player selected
+     * @param secondCountry The second country the player selected
      * @return returns true if two countries have been selected. Otherwise, return false.
      */
    public boolean validateTerritorySelections(Country firstCountry, Country secondCountry)
@@ -486,6 +487,8 @@ public class Player extends Observable {
    /**
     *This method is used to validate if the two countries the player selects are the same
     *
+    * @param firstCountry The first country the player selected
+    * @param secondCountry The second country the player selected
     * @return returns true if two countries selected are not the same country. Otherwise, return false.
     */
   public boolean validateTerritorysTheSame(Country firstCountry, Country secondCountry)
@@ -503,6 +506,8 @@ public class Player extends Observable {
    /**
     * This method is used to validate if both attacker and defender select how many dice to roll
     * 
+    * @param attackDice The number of dice attacker chooses to roll
+    * @param defendDice The number of dice defender chooses to roll
     * @return returns true if defender and attacker both selected how many dice to roll. Otherwise, return false
     */
    public boolean validateDiceSelections(Integer attackDice, Integer defendDice)
@@ -520,6 +525,7 @@ public class Player extends Observable {
    /**
     * This method is used to validate if the country the player selects has enough armies for attack or fortification
     * 
+    * @param attack The country which invokes an attack or fortification
     * @return returns true if the country has enough armies. Otherwise, return false.
     */
    public boolean validateAttackerHasEnoughArmy(Country attack)

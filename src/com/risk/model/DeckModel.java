@@ -37,7 +37,8 @@ public class DeckModel extends Observable {
     }
 
     /**
-     * This method is used to initialize the deck with 44 cards.
+     * This method is used to initialize and shuffle the deck with 44 cards.
+     * 
      */
     public void initialize()
     {
@@ -82,15 +83,21 @@ public class DeckModel extends Observable {
     }
 
 
+    /**
+     * This method is used to get the whole card set
+     * 
+     * @return card The whole card set
+     */
     public Card[] getCards()
     {
         return card;
     }
     
     /**
-     * This method is used to send the card to a player.
+     * This method is used to send a card to a player.
      *
-     * @param player The name of the player
+     * @param player The current player
+     * @return card The card that is sent to the player
      */
     public Card sendCard(Player player)
     {

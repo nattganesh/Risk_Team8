@@ -40,9 +40,7 @@ public class ValidateTest {
 
     /**
      * Test of getValidateSize method, of class Validate.
-     * @throws FileNotFoundException 
-     * @throws DuplicatesException 
-     * @throws CannotFindException 
+     * To test if the size of validationList is correct.
      */
     @Test
     public void testGetValidateSize()
@@ -62,6 +60,8 @@ public class ValidateTest {
 
     /**
      * Test of continentChecks method, of class Validate.
+     * 
+     * @throws Exception 
      */
     @Test
     public void testContinentChecks() throws Exception
@@ -99,6 +99,8 @@ public class ValidateTest {
 
     /**
      * Test of validateMap method, of class Validate.
+     * 
+     * @throws Exception
      */
     @Test
     public void testValidateMap() throws Exception

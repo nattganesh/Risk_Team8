@@ -29,6 +29,8 @@ public class FileParserTest {
 	
     /**
      * Test of setCountriesInContinents method, of class FileParser.
+     * 
+     * @throws Exception
      */
     @Test
     public void testSetCountriesInContinents() throws Exception

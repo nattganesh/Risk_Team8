@@ -14,8 +14,9 @@ public class Card {
     private Player owner;
 
     /**
-     * @param category type of card
-     * @param owner player of that card
+     * This method is used to construct a new card
+     * 
+     * @param category The type of card
      */
     public Card(String category)
     {
@@ -23,6 +24,12 @@ public class Card {
         this.owner = null;
     }
 
+    /**
+     * This method is used to construct a new card
+     * 
+     * @param category The type of card
+     * @param owner The owner of card
+     */
     public Card(String category, Player owner)
     {
         this.category = category;

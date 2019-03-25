@@ -91,7 +91,6 @@ public class GamePhaseController implements Observer, Initializable {
     /**
      * This is a constructor for GamePhaseController
      *
-     * @param s Stage of Javafx application to set different phase in the game
      */
     public GamePhaseController()
     {
