@@ -144,7 +144,7 @@ public class MapEditorController implements Initializable {
         if (!TerritoryInput.getText().trim().isEmpty() && ContinentView.getSelectionModel().getSelectedItem() != null)
         {
 
-            if (searchTerritory(TerritoryInput.getText()) == null)
+            if (searchTerritory(ContinentView.getItems(), TerritoryInput.getText()) == null)
             {
                 Country country = new Country(TerritoryInput.getText());
                 country.setContinent(ContinentView.getSelectionModel().getSelectedItem());
@@ -156,23 +156,24 @@ public class MapEditorController implements Initializable {
         }
     }
 
+    
     /**
      * This method checks if the territory already exists in the map
-     *
+     * 
+     * @param continents arraylist of continents
      * @param countryName country to be searched in the map
      * @return if the country if it exists, otherwise null
      */
-    public Country searchTerritory(String countryName)
+    public Country searchTerritory(ObservableList<Continent> continents, String countryName)
     {
         Country territoryExists = null;
-        for (Continent continent : ContinentView.getItems())
+        for (Continent continent : continents)
         {
             for (Country country : continent.getCountries())
             {
                 if (country.getName().equals(countryName))
                 {
                     territoryExists = country;
-                    actions.addAction("territory exists");
                     break;
                 }
             }
@@ -198,9 +199,9 @@ public class MapEditorController implements Initializable {
             {
                 actions.addAction("Territory is already a neighbour");
             }
-            else if (searchTerritory(AdjacentInput.getText()) != null && !existsInAdjacentList(AdjacentInput.getText()))
+            else if (searchTerritory(ContinentView.getItems(), AdjacentInput.getText()) != null && !existsInAdjacentList(AdjacentInput.getText()))
             {
-                Country country = searchTerritory(AdjacentInput.getText());
+                Country country = searchTerritory(ContinentView.getItems(), AdjacentInput.getText());
                 TerritoryView.getSelectionModel().getSelectedItem().getConnectedCountries().add(country);
                 country.getConnectedCountries().add(TerritoryView.getSelectionModel().getSelectedItem());
                 adjacentObservableList.clear();
@@ -215,6 +216,7 @@ public class MapEditorController implements Initializable {
         }
     }
 
+    
     /**
      *
      * @param addingCountry name of the country to be searched in the adjacent
@@ -274,27 +276,33 @@ public class MapEditorController implements Initializable {
             Country selectedTerritory = TerritoryView.getSelectionModel().getSelectedItem();
             Country removingTerritory = AdjacentView.getSelectionModel().getSelectedItem();
             selectedTerritory.getConnectedCountries().remove(removingTerritory);
-
-            for (Continent continent : ContinentView.getItems())
-            {
-                for (Country country : continent.getCountries())
-                {
-                    if (country.getName().equals(removingTerritory.getName()))
-                    {
-                        for (Country adj : country.getConnectedCountries())
-                        {
-                            if (adj.getName().equals(selectedTerritory.getName()))
-                            {
-                                country.getConnectedCountries().remove(adj);
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
+            removeAdjacentCountry(ContinentView.getItems(), selectedTerritory, removingTerritory);
             adjacentObservableList.clear();
             adjacentObservableList.addAll(TerritoryView.getSelectionModel().getSelectedItem().getConnectedCountries());
         }
+    }
+        
+    /**
+     * This method remove adjacent territory and all of its connections
+     * 
+     * @param continentlist this is the list of all the continents
+     * @param selectedCountry territory that was selected
+     * @param removingCountry territory to remove from adjacency
+     */
+    public void removeAdjacentCountry(ObservableList<Continent> continentlist, Country selectedCountry, Country removingCountry)
+    {
+    	 String removingCountryName = removingCountry.getName();
+    	 for (Continent continent : continentlist)
+         {
+             for (Country country : continent.getCountries())
+             {
+                 if (country.getName().equals(removingCountryName))
+                 {
+                     country.getConnectedCountries().remove(selectedCountry);
+                     break;
+                 }
+             }
+         }
     }
 
     /**
@@ -384,6 +392,7 @@ public class MapEditorController implements Initializable {
             validated = 0;
             clearMapEditor();
             initializeContinents();
+            actions.addAction("This is a fixed map with the following continents");
 
             actions.addAction("New map");
 
@@ -426,8 +435,11 @@ public class MapEditorController implements Initializable {
                 setPlayers(numbPlayers);
                 setDeck();
                 calcStartingArmies();
+               
                 assignCountriesToPlayers();
+              
                 determinePlayersStartingOrder();
+                
                 if (startCardsID.isSelected())
                 {
                 	startWithCards();
@@ -516,7 +528,7 @@ public class MapEditorController implements Initializable {
         continent.add(new Continent("Asia", 10));
         continent.add(new Continent("Australia", 10));
         ContinentView.getItems().addAll(continent);
-        actions.addAction("This is a fixed map with the following continents");
+       
     }
 
 
