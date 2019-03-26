@@ -57,7 +57,7 @@ public class Card {
     /**
      * This method gets the name of the owner for the type of card
      *
-     * @return owner returns the owner name of the card
+     * @return owner returns the owner of the card
      */
     public Player getOwner()
     {

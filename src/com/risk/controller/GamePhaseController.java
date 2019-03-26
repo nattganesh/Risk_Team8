@@ -318,7 +318,10 @@ public class GamePhaseController implements Observer, Initializable {
         }
     }
 
-   
+    /**
+     * This method is used to update the domination of continent when the owner of continents changes
+     *
+     */
     public void updateContinentDominationView()
     {
         worldDomination3.setCellFactory(param -> new ListCell<Continent>() {

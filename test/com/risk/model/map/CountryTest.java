@@ -18,7 +18,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
+ * Test cases for country
+ * 
  * @author Natt 
  * @author Tianyi
  */

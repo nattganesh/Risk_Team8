@@ -20,6 +20,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
+ * Test cases for map model
  *
  * @author Natt
  * @author Tianyi

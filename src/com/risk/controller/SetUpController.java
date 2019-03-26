@@ -1,5 +1,5 @@
 /**
- * Necessary for handling business logic for Reinforcement phase.
+ * Necessary for handling business logic for Setup phase.
  *
  * @author Tianyi
  *

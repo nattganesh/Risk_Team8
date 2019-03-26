@@ -303,6 +303,7 @@ public class AttackController implements Initializable, Observer {
                     occupy = true;
                     child.setVisible(true);
                     conqueringController.setConquringArmy(defendingCountry);
+                    conqueringController.setDiceRoll(diceattack);
                     break;
                 }               
             }

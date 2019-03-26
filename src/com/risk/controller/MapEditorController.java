@@ -467,6 +467,9 @@ public class MapEditorController implements Initializable {
         }
     }
 
+    /**
+     * This method updates the view of continent, territory and adjacent territory
+     */
     public void renderView()
     {
         ContinentView.setCellFactory(param -> new ListCell<Continent>() {
@@ -535,7 +538,7 @@ public class MapEditorController implements Initializable {
 
 
     /**
-     * This method initalizes the 2 - 6 players in the UI
+     * This method initializes the 2 - 6 players in the UI
      */
     public void initializePlayers()
     {

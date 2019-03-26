@@ -17,8 +17,10 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
+ * Test cases for cards
+ * 
  * @author Natt
+ * @author Tianyi
  */
 public class CardTest {
     private Card card;

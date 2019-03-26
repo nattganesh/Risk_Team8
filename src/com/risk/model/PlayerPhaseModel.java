@@ -57,7 +57,8 @@ public class PlayerPhaseModel extends Observable implements Observer {
     }
 
     /**
-     *
+     * This method is used to get the index of the current player
+     *	
      * @return the index of the current player
      */
     public int getPlayerIndex()
@@ -66,6 +67,7 @@ public class PlayerPhaseModel extends Observable implements Observer {
     }
 
     /**
+     * This method is used to get the number of players
      *
      * @return number of total players
      */
@@ -75,7 +77,7 @@ public class PlayerPhaseModel extends Observable implements Observer {
     }
 
     /**
-     * this method gets the current player
+     * This method gets the current player
      *
      * @return current player
      */
@@ -85,7 +87,7 @@ public class PlayerPhaseModel extends Observable implements Observer {
     }
 
     /**
-     * this method adds player the player model
+     * This method adds player the player model
      *
      * @param player player to be added to the model
      */
@@ -106,7 +108,8 @@ public class PlayerPhaseModel extends Observable implements Observer {
     }
 
     /**
-     *
+     * This method is used to get the player phase model
+     * 
      * @return this PlayerModel class as a singleton
      */
     public static PlayerPhaseModel getPlayerModel()

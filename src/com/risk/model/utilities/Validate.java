@@ -27,11 +27,21 @@ public class Validate {
 
     }
 
+    /**
+     * This method is used to get the size of the validation list
+     * 
+     * @return return the size of validation list of countries model
+     */
     public int getValidateSize()
     {
         return countriesModelValidationList.size();
     }
 
+    /**
+     * This method is used to check if the number of countries in continents is equal to the maximum number
+     * that is set to the continent
+     * 
+     */
     public void continentChecks() throws CannotFindException, CountLimitException
     {
         for (Continent cont : map.getContinents())
@@ -117,6 +127,10 @@ public class Validate {
         }
     }
 
+    /**
+     * This method is used to validate the map by connecting country with its neighbours
+     * 
+     */
     public void validateMap() throws CannotFindException, CountLimitException
     {
 
@@ -126,6 +140,11 @@ public class Validate {
 
     }
 
+    /**
+     * This method is used to get the validation of connected countries
+     * 
+     * @return validate The validation of connected map
+     */
     public static Validate getValidate()
     {
         if (validate == null)

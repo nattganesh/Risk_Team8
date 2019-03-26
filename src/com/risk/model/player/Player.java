@@ -545,7 +545,7 @@ public class Player extends Observable {
     * 
     * @param attack The country that is attacking
     * @param defend The country that is defending 
-    * @return returns The array of roll limit for attacker and defender
+    * @return result The array of roll limit for attacker and defender
     */
    public int[] setRollLimit(Country attack, Country defend)
    {

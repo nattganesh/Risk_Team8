@@ -13,7 +13,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 /**
- *
+ * Suite for test cases of card
  * @author Natt
  */
 @RunWith(Suite.class)

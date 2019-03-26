@@ -13,7 +13,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 /**
- *
+ * Suite for test cases of models
+ * 
  * @author Natt
  */
 @RunWith(Suite.class)
