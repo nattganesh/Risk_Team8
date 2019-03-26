@@ -156,15 +156,9 @@ public class SetUpController implements Initializable {
     
     /**
      * This method is used to check if each country occupied has one army
-<<<<<<< HEAD
-     * 
-     * @param list observablelist of country to check for 1 army
-     * @return returns true if country has 1 army
-=======
      * @param list The observableList which is used to check if each county in it has one army
      * @return true if each country already has one army. Otherwise, return
      * false
->>>>>>> 6be2f8896186d5521a31710ba3a7e62b36b10d8b
      */
     public boolean checkIfEachCountryHasOneArmy(ObservableList <Country> list)
     {
