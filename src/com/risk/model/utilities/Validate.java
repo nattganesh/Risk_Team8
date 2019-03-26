@@ -41,6 +41,8 @@ public class Validate {
      * This method is used to check if the number of countries in continents is equal to the maximum number
      * that is set to the continent
      * 
+     * @throws CannotFindException Exception thrown when file formatting is
+     * @throws CountLimitException Exception thrown when number of country in a continent is different from fixed number.
      */
     public void continentChecks() throws CannotFindException, CountLimitException
     {
@@ -130,6 +132,8 @@ public class Validate {
     /**
      * This method is used to validate the map by connecting country with its neighbours
      * 
+     * @throws CannotFindException Exception thrown when file formatting is
+     * @throws CountLimitException Exception thrown when number of country in a continent is different from fixed number.
      */
     public void validateMap() throws CannotFindException, CountLimitException
     {

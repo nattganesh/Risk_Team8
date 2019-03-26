@@ -166,6 +166,7 @@ public class Country extends Observable {
     /**
      * This method is used to get the country which is connected to the country
      * 
+     * @param name The name of country which is connected to the country
      * @return country The country connected to the country
      */
     public Country getConnectedCountry(String name)
