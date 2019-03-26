@@ -35,17 +35,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 
-/**
- * @see javafx.fxml.Initializable
- */
+
 public class ReinforcementController implements Initializable {
 
     public int TotalReinforcement;
     public ArrayList<String> cards = new ArrayList<>();
 
-    /**
-     * @see javafx.fxml.XML
-     */
     @FXML
     FlowPane fPane;
 
@@ -104,9 +99,7 @@ public class ReinforcementController implements Initializable {
     }
 
     /**
-     * This method is data binding for connection between controller and UI. It
-     * also sets up observable list, in which the view listens for changes and
-     * update its view.
+     * This method is data binding for connection between controller and UI.
      *
      *
      * @see javafx.fxml.Initializable
@@ -118,9 +111,6 @@ public class ReinforcementController implements Initializable {
         cardController.addObserver(new cardObserver());
         player = PlayerPhaseModel.getPlayerModel().getCurrentPlayer();
         actions = ActionModel.getActionModel();
-        
-        actions.addAction(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getCards().size() + " here ");
-
         TotalReinforcement = player.getReinforcementArmy();
         armyAvailable.setText("Army: " + Integer.toString(TotalReinforcement));
         territoryObservableList.addAll(player.getOccupiedCountries());
@@ -222,7 +212,7 @@ public class ReinforcementController implements Initializable {
 
                 if (PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getCards().size() < 3)
                 {
-                	actions.addAction(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getCards().size() + " here ");
+                	
                     child.getChildren().clear();
                 }
             }

@@ -1,4 +1,7 @@
 /**
+ * This class is necesary for keeping state of the actions during game play
+ * 
+ * @author DKM
  *
  */
 package com.risk.model;
@@ -10,10 +13,6 @@ import com.risk.model.map.Continent;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-/**
- * @author DKM
- *
- */
 public class ActionModel extends Observable {
 
     private ObservableList<String> actions = FXCollections.observableArrayList();

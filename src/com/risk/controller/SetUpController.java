@@ -70,10 +70,7 @@ public class SetUpController implements Initializable {
     }
 
     /**
-     * This method is data binding for connection between controller and UI. It
-     * also sets up observable list, in which the view listens for changes and
-     * update its view.
-     *
+     * This method is data binding for connection between controller and UI.
      *
      * @see javafx.fxml.Initializable
      */
@@ -156,12 +153,12 @@ public class SetUpController implements Initializable {
         TotalArmies--;
         PlayerPhaseModel.getPlayerModel().getCurrentPlayer().setStartingPoints(TotalArmies);
     }
-
+    
     /**
      * This method is used to check if each country occupied has one army
-     *
-     * @return true if each country already has one army. Otherwise, return
-     * false
+     * 
+     * @param list observablelist of country to check for 1 army
+     * @return returns true if country has 1 army
      */
     public boolean checkIfEachCountryHasOneArmy(ObservableList <Country> list)
     {
@@ -225,7 +222,7 @@ public class SetUpController implements Initializable {
         }
     }
     
-    
+    	
     /**
      * This method is necessary for updating the view of the list
      */

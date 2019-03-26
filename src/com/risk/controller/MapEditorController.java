@@ -88,10 +88,9 @@ public class MapEditorController implements Initializable {
     ActionModel actions;
 
     /**
-     * (non-Javadoc)
-     *
-     * @see javafx.fxml.Initializable#initialize(java.net.URL,
-     * java.util.ResourceBundle)
+     * This method is data binding for connection between controller and UI.
+     * 
+     * @see javafx.fxml.Initializable
      */
     @Override
     public void initialize(URL arg0, ResourceBundle arg1)
@@ -216,14 +215,12 @@ public class MapEditorController implements Initializable {
             }
         }
     }
-
     
     /**
-     *
-     * @param addingCountry name of the country to be searched in the adjacent
-     * list
-     * @return true if the country already exists in the adjacent list, false
-     * otherwise
+     * 
+     * @param selectedCountry country selected to add a neighbour
+     * @param addingCountry name of the country to be searched in neighbour list
+     * @return true if country exists in adjacent list, otherwise false
      */
     public boolean existsInAdjacentList(Country selectedCountry, String addingCountry)
     {
@@ -411,7 +408,7 @@ public class MapEditorController implements Initializable {
     {
     	for (Player p : PlayerPhaseModel.getPlayerModel().getPlayers())
     	{
-    		for (int i = 0; i < 6; i++)
+    		for (int i = 0; i < 5; i++)
     		{
     			DeckModel.getCardModel().sendCard(p);
     		}
@@ -678,7 +675,7 @@ public class MapEditorController implements Initializable {
                 {
                     MapModel.getMapModel().getCountries().get(random).setRuler(p);
                     MapModel.getMapModel().getCountries().get(random).setIsOccupied(true);
-                    MapModel.getMapModel().getCountries().get(random).setArmyCount(1); //added army
+                    MapModel.getMapModel().getCountries().get(random).setArmyCount(1); 
                     p.setStartingPoints(p.getStartingPoints() - 1);
                     countryOccupied[random] = true;
                     p.addCountry(MapModel.getMapModel().getCountries().get(random));

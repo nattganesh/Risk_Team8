@@ -50,6 +50,8 @@ public class ConqueredController extends Observable implements Initializable {
 
  
     /**
+     * This method is data binding for connection between controller and UI.
+     * 
      * @see javafx.fxml.Initializable
      */
     @Override

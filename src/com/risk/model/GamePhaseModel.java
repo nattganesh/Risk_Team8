@@ -3,7 +3,7 @@
  * and notify GamePhaseController to set the new scene for the game when the state changes.
  *
  * @author DKM
- * @author Natheepan
+ * @version 2.0
  */
 package com.risk.model;
 

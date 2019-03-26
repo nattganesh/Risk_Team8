@@ -88,6 +88,8 @@ public class AttackController implements Initializable, Observer {
     }
 
     /**
+     * This method is data binding for connection between controller and UI.
+     * 
      * @see javafx.fxml.Initializable
      */
     @Override
@@ -357,15 +359,24 @@ public class AttackController implements Initializable, Observer {
      * This method sets the GamePhaseModel to fortification, which notifies the
      * subscribed GameController to set new scene
      *
-     * @param event listens for click event
      */
-    public void goToFortificationPhase(ActionEvent event)
+    @FXML
+    public void goToFortificationPhase()
     {
         if (occupy)
         {
             DeckModel.getCardModel().sendCard(PlayerPhaseModel.getPlayerModel().getCurrentPlayer());
         }
-        GamePhaseModel.getGamePhaseModel().setPhase("fortification");
+        if (!PlayerPhaseModel.getPlayerModel().getCurrentPlayer().isAnyCountriesConnected())
+        {
+            int currentIndex = PlayerPhaseModel.getPlayerModel().getPlayerIndex();
+            PlayerPhaseModel.getPlayerModel().setPlayerIndex((currentIndex + 1) % PlayerPhaseModel.getPlayerModel().getNumberOfPlayer());
+            GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
+        }
+        else {
+             GamePhaseModel.getGamePhaseModel().setPhase("fortification");
+        }
+       
     }
 
     /**

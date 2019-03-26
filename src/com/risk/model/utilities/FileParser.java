@@ -21,7 +21,7 @@ import com.risk.model.MapModel;
 public class FileParser {
 
     static MapModel maps = MapModel.getMapModel();
-    private String text = ""; // file parser
+    private String text = ""; 
 
     /**
      * This is used to construct a new FileParser
@@ -47,7 +47,6 @@ public class FileParser {
             {
                 text = input.nextLine();
                 int b = 1;
-//                while (input.hasNextLine() && b <= Country.MAX_NUMBER_OF_COUNTRIES)
                 while (input.hasNextLine() && !text.equals("SET NEIGHBORS"))
                 {
                     b++;

@@ -5,6 +5,8 @@
  * 
  * @author DKM
  * @author Tianyi
+ * @version 2.0
+ * 
  */
 package com.risk.controller;
 
@@ -79,6 +81,11 @@ public class CardController extends Observable implements Initializable {
         });
     }
 
+    /**
+     * This method is data binding for connection between controller and UI.
+     * 
+     * @see javafx.fxml.Initializable
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {

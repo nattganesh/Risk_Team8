@@ -1,21 +1,19 @@
 /**
+ * Thihs class is necessary for deck used in gameplay
+ * 
+ * @author DKM
+ * @author Tianyi
  *
  */
 package com.risk.model;
 
-import java.util.Collections;
-import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Random;
 
 import com.risk.model.card.Card;
 import com.risk.model.player.Player;
 
-/**
- * @author DKM
- * @author Tianyi
- *
- */
+
 public class DeckModel extends Observable {
     private static DeckModel deckModel;
     Card card[];

@@ -113,6 +113,7 @@ public class GamePhaseController implements Observer, Initializable {
     {
         ActionModel.getActionModel().clearAction();
         view = (String) phase;
+        System.out.println(view);
         
         if (view.equals("setup"))
         {
@@ -181,6 +182,7 @@ public class GamePhaseController implements Observer, Initializable {
             {
                 phaseID.setText(view);
                 playerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
+              
                 mainPane.getChildren().clear();
                 mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/Attack.fxml")));
             }
@@ -286,7 +288,7 @@ public class GamePhaseController implements Observer, Initializable {
      */
     private class mapObserver implements Observer {
 
-        @SuppressWarnings("unchecked")
+
 		@Override
         public void update(Observable o, Object arg)
         {
@@ -338,6 +340,11 @@ public class GamePhaseController implements Observer, Initializable {
         });
     }
 
+    /**
+     * This method is data binding for connection between controller and UI.
+     * 
+     * @see javafx.fxml.Initializable
+     */
     @Override
     public void initialize(URL arg0, ResourceBundle arg1)
     {
@@ -355,7 +362,6 @@ public class GamePhaseController implements Observer, Initializable {
         }
         catch (IOException e)
         {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

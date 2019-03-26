@@ -49,6 +49,7 @@ public class FortificationController implements Initializable {
     ArrayList<Country> CountriesArrivedbyPath;
     ActionModel actions;
     Player p = PlayerPhaseModel.getPlayerModel().getCurrentPlayer();
+    
     /**
      * This is a constructor of the FortificationController class
      */
@@ -58,10 +59,9 @@ public class FortificationController implements Initializable {
     }
 
     /**
-     * (non-Javadoc)
-     *
-     * @see javafx.fxml.Initializable#initialize(java.net.URL,
-     * java.util.ResourceBundle)
+     * This method is data binding for connection between controller and UI.
+     * 
+     * @see javafx.fxml.Initializable
      */
     @Override
     public void initialize(URL arg0, ResourceBundle arg1)
@@ -72,14 +72,7 @@ public class FortificationController implements Initializable {
         Territory.setItems(territoryObservableList);
         Adjacent.setItems(adjacentObservableList);
         updateView();
-
-        if (!PlayerPhaseModel.getPlayerModel().getCurrentPlayer().isAnyCountriesConnected())
-        {
-            int currentIndex = PlayerPhaseModel.getPlayerModel().getPlayerIndex();
-            PlayerPhaseModel.getPlayerModel().setPlayerIndex((currentIndex + 1) % PlayerPhaseModel.getPlayerModel().getNumberOfPlayer());
-            GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
-        }
-
+        
     }
 
     /**
