@@ -217,10 +217,14 @@ public class MapEditorController implements Initializable {
     }
     
     /**
+     * This method is used to check if the country input already exists in the adjacent list of the selected country
+     *
+     * @param selectedCountry The country which is selected
+     * @param addingCountry The name of country to be searched in the adjacent
+     * list
      * 
-     * @param selectedCountry country selected to add a neighbour
-     * @param addingCountry name of the country to be searched in neighbour list
-     * @return true if country exists in adjacent list, otherwise false
+     * @return true if the country already exists in the adjacent list, false
+     * otherwise
      */
     public boolean existsInAdjacentList(Country selectedCountry, String addingCountry)
     {
