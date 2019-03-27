@@ -13,13 +13,13 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 /**
- *
+ * Suite for test cases of card
  * @author Natt
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses(
 {
-    com.risk.model.card.DeckTest.class, com.risk.model.card.CardTest.class
+     com.risk.model.card.CardTest.class
 })
 public class CardSuite {
 

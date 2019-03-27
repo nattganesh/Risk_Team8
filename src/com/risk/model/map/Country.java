@@ -13,14 +13,7 @@ import javafx.collections.ObservableList;
 import java.util.ArrayList;
 import java.util.Observable;
 
-public class Country extends Observable {
-
-    public static final int MAX_NUMBER_OF_COUNTRIES = Continent.MAX_NUMBER_OF_COUNTRIES_IN_NORTH_AMERICA
-            + Continent.MAX_NUMBER_OF_COUNTRIES_IN_SOUTH_AMERICA
-            + Continent.MAX_NUMBER_OF_COUNTRIES_IN_EUROPE
-            + Continent.MAX_NUMBER_OF_COUNTRIES_IN_AFRICA
-            + Continent.MAX_NUMBER_OF_COUNTRIES_IN_ASIA
-            + Continent.MAX_NUMBER_OF_COUNTRIES_IN_AUSTRALIA;
+public class Country extends Observable {    
     private String name;
     private boolean isOccupied;
     private Player ruler;
@@ -32,24 +25,28 @@ public class Country extends Observable {
     /**
      * This is the constructor for Country
      *
-     * @param name this country name
-     * @param continentName this continent name
+     * @param name The name of this country
      */
     public Country(String name)
     {
         this.name = name;
         this.isOccupied = false;
         this.ruler = null;
-
     }
 
+    /**
+     * This method sets the continent of the country
+     * 
+     * @param continent object that is the continent of the country
+     */
     public void setContinent(Continent continent)
     {
         this.continent = continent;
     }
 
     /**
-     *
+     * This method is used to get the name of country
+     * 
      * @return name returns the country name
      */
     public String getName()
@@ -58,16 +55,18 @@ public class Country extends Observable {
     }
 
     /**
+     * This method is used to get the continent where the country belongs to
      *
-     * @return continentName returns the continent name
+     * @return continentName returns the continent
      */
     public Continent getContinent()
     {
         return continent;
     }
 
-    /**
-     *
+    /** 
+     * This method is used to get the number of army the country has
+     * 
      * @return armyCount returns the army count
      */
     public int getArmyCount()
@@ -76,12 +75,12 @@ public class Country extends Observable {
     }
 
     /**
-     *
+     * This method is used to increase the army of the country
+     * 
      * @param armyCount army to increase for a country
      */
     public void setArmyCount(int armyCount)
     {
-        System.out.println("added army");
         this.armyCount += armyCount;
         ruler.setTotalArmy(armyCount);
         setChanged();
@@ -90,12 +89,12 @@ public class Country extends Observable {
     }
 
     /**
-     *
+     * This method is used to reduce the army of the country
+     * 
      * @param armyCount army to decrease for a country
      */
     public void reduceArmyCount(int armyCount)
     {
-        System.out.println("added army");
         this.armyCount -= armyCount;
         ruler.reduceTotalArmy(armyCount);
         setChanged();
@@ -103,7 +102,8 @@ public class Country extends Observable {
     }
 
     /**
-     *
+     * This method is used to check if the country is occupied
+     * 
      * @return isOccupied true if country occupied, false otherwise
      */
     public boolean isIsOccupied()
@@ -112,7 +112,8 @@ public class Country extends Observable {
     }
 
     /**
-     *
+     * This method is used to set the occupy state of the country
+     * 
      * @param isOccupied boolean value to set the country's occupied state
      */
     public void setIsOccupied(boolean isOccupied)
@@ -121,7 +122,8 @@ public class Country extends Observable {
     }
 
     /**
-     *
+     * This method is used to get the owner of the country
+     * 
      * @return ruler The player object ruling the country
      */
     public Player getRuler()
@@ -130,7 +132,8 @@ public class Country extends Observable {
     }
 
     /**
-     *
+     * This method is used to set the owner of the country
+     * 
      * @param ruler sets the ruler of the country
      */
     public void setRuler(Player ruler)
@@ -140,7 +143,8 @@ public class Country extends Observable {
     }
 
     /**
-     *
+     * This method is used to get the connected countries to the country
+     * 
      * @return connectedCountries connected countries for the country
      */
     public ArrayList<Country> getConnectedCountries()
@@ -149,7 +153,8 @@ public class Country extends Observable {
     }
 
     /**
-     *
+     * This method is used to set the connected countries to the country
+     * 
      * @param connectedCountries sets the arraylist of connected countries for
      * the given country
      */
@@ -158,6 +163,12 @@ public class Country extends Observable {
         this.connectedCountries = connectedCountries;
     }
 
+    /**
+     * This method is used to get the country which is connected to the country
+     * 
+     * @param name The name of country which is connected to the country
+     * @return country The country connected to the country
+     */
     public Country getConnectedCountry(String name)
     {
         for (Country country : connectedCountries)
@@ -171,7 +182,10 @@ public class Country extends Observable {
     }
 
     /**
-     * This is a method for returning countries that are connected and you own
+     * This is a method for get countries that are connected to the country the player chooses
+     * And all of those countries are occupied by the player
+     * 
+     * @return list The connected countries to the country the player selects
      */
     public ObservableList<Country> getConnectedOwned()
     {
@@ -187,7 +201,10 @@ public class Country extends Observable {
     }
 
     /**
-     * This is a methodn for returning connected countries that you don't own
+     * This is a method for returning connected enemy countries of the country the player selects
+     * And those countries are not owned by that player
+     * 
+     * @return list The enemy countries connected to the country the player selects
      */
     public ObservableList<Country> getConnectedEnemy()
     {

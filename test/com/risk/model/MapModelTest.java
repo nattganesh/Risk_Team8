@@ -9,6 +9,8 @@ import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
 import java.util.ArrayList;
 import java.util.Observable;
+
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -18,11 +20,15 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
+ * Test cases for map model
  *
  * @author Natt
+ * @author Tianyi
  */
 public class MapModelTest {
-    
+    private MapModel mapModel;
+    private Country country1;
+    private Continent continent1;
     public MapModelTest()
     {
     }
@@ -40,6 +46,9 @@ public class MapModelTest {
     @Before
     public void setUp()
     {
+    	mapModel = new MapModel();
+    	country1 = new Country("China");
+    	continent1 = new Continent("Asia", 10);
     }
     
     @After
@@ -53,13 +62,9 @@ public class MapModelTest {
     @Test
     public void testGetExchangeTime()
     {
-        System.out.println("getExchangeTime");
-        MapModel instance = null;
-        int expResult = 0;
-        int result = instance.getExchangeTime();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int expResult =0;
+        int result = mapModel.getExchangeTime();
+        assertEquals(expResult,result);
     }
 
     /**
@@ -68,41 +73,13 @@ public class MapModelTest {
     @Test
     public void testSetExchangeTime()
     {
-        System.out.println("setExchangeTime");
-        int exchange = 0;
-        MapModel instance = null;
-        instance.setExchangeTime(exchange);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int exchange = 2;
+        mapModel.setExchangeTime(exchange);
+        int expResult =2;
+        int result = mapModel.getExchangeTime();
+        assertEquals(expResult,result);
     }
 
-    /**
-     * Test of addCountry method, of class MapModel.
-     */
-    @Test
-    public void testAddCountry()
-    {
-        System.out.println("addCountry");
-        Country country = null;
-        MapModel instance = null;
-        instance.addCountry(country);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of addContinent method, of class MapModel.
-     */
-    @Test
-    public void testAddContinent()
-    {
-        System.out.println("addContinent");
-        Continent continent = null;
-        MapModel instance = null;
-        instance.addContinent(continent);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
 
     /**
      * Test of getCountries method, of class MapModel.
@@ -110,13 +87,21 @@ public class MapModelTest {
     @Test
     public void testGetCountries()
     {
-        System.out.println("getCountries");
-        MapModel instance = null;
-        ArrayList<Country> expResult = null;
-        ArrayList<Country> result = instance.getCountries();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        ArrayList<Country> result = mapModel.getCountries();
+        assertTrue(result.isEmpty());
+    }
+    
+    /**
+     * Test of getCountries method, of class MapModel.
+     */
+    @Test
+    public void testGetCountries1()
+    {
+    	mapModel.addCountry(country1);
+    	ArrayList<Country> expResult = new ArrayList<Country>();
+    	expResult.add(country1);
+    	ArrayList<Country> result = mapModel.getCountries();
+    	assertEquals(expResult,result);
     }
 
     /**
@@ -125,42 +110,21 @@ public class MapModelTest {
     @Test
     public void testGetContinents()
     {
-        System.out.println("getContinents");
-        MapModel instance = null;
-        ObservableList<Continent> expResult = null;
-        ObservableList<Continent> result = instance.getContinents();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        ObservableList<Continent> result = mapModel.getContinents();
+        assertTrue(result.isEmpty());
     }
-
+    
     /**
-     * Test of getMapModel method, of class MapModel.
+     * Test of getContinents method, of class MapModel.
      */
     @Test
-    public void testGetMapModel()
+    public void testGetContinents1()
     {
-        System.out.println("getMapModel");
-        MapModel expResult = null;
-        MapModel result = MapModel.getMapModel();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    	mapModel.addContinent(continent1);
+    	ObservableList<Continent> expResult = FXCollections.observableArrayList(continent1);
+        ObservableList<Continent> result = mapModel.getContinents();
+        assertEquals(expResult,result);
     }
 
-    /**
-     * Test of update method, of class MapModel.
-     */
-    @Test
-    public void testUpdate()
-    {
-        System.out.println("update");
-        Observable o = null;
-        Object arg = null;
-        MapModel instance = null;
-        instance.update(o, arg);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
     
 }

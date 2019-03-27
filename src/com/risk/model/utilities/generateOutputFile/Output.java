@@ -21,6 +21,7 @@ public class Output {
     }
 
     /**
+     * This method is used to check if the file is generated
      *
      * @param nameOfFile file name
      * @return true if file has been generated, otherwise false

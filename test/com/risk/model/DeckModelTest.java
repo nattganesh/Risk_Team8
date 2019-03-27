@@ -5,7 +5,11 @@
  */
 package com.risk.model;
 
+import com.risk.model.card.Card;
 import com.risk.model.player.Player;
+
+import javafx.collections.ObservableList;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -14,11 +18,15 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
+ * Test cases for deck model
+ * 
  * @author Natt
+ * @author Tianyi
  */
 public class DeckModelTest {
-    
+    private DeckModel deckModel;
+	private Card cards[];
+	private Player p;
     public DeckModelTest()
     {
     }
@@ -36,6 +44,8 @@ public class DeckModelTest {
     @Before
     public void setUp()
     {
+    	deckModel = new DeckModel();
+    	p = new Player("Green");
     }
     
     @After
@@ -44,30 +54,41 @@ public class DeckModelTest {
     }
 
     /**
-     * Test of getCardModel method, of class DeckModel.
-     */
-    @Test
-    public void testGetCardModel()
-    {
-        System.out.println("getCardModel");
-        DeckModel expResult = null;
-        DeckModel result = DeckModel.getCardModel();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of initialize method, of class DeckModel.
      */
     @Test
     public void testInitialize()
     {
-        System.out.println("initialize");
-        DeckModel instance = new DeckModel();
-        instance.initialize();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    	int n1 = 0;
+		int n2 = 0;
+		int n3 = 0;
+		int n4 = 0;
+		deckModel.initialize();
+		cards = deckModel.getCards();
+		for (int i = 0; i < cards.length; i++) 
+		{
+			switch (cards[i].getCatagory()) 
+			{
+			case "Infantry":
+				n1++;
+				break;
+			case "Cavalry":
+				n2++;
+				break;
+			case "Artillery":
+				n3++;
+				break;
+			case "Wild":
+				n4++;
+				break;
+			}
+		}
+		int expResult1 = 14;
+		int expResult2 = 2;
+		assertEquals(expResult1, n1);
+		assertEquals(expResult1, n2);
+		assertEquals(expResult1, n3);
+		assertEquals(expResult2, n4);
     }
 
     /**
@@ -76,12 +97,12 @@ public class DeckModelTest {
     @Test
     public void testSendCard()
     {
-        System.out.println("sendCard");
-        Player player = null;
-        DeckModel instance = new DeckModel();
-        instance.sendCard(player);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    	deckModel.initialize();
+    	Card result = deckModel.sendCard(p);
+		ObservableList<Card> resultList = p.getCards();
+		Player resultPlayer = result.getOwner();
+		assertEquals(p, resultPlayer);
+		assertTrue(resultList.contains(result));
     }
     
 }

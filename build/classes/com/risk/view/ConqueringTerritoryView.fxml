@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.risk.controller.ConqueredController">
+    <children>
+        <ListView fx:id="countryOwnedID" layoutX="84.0" layoutY="136.0" prefHeight="200.0" prefWidth="200.0" />
+        <ListView fx:id="conqueredID" layoutX="300.0" layoutY="136.0" prefHeight="200.0" prefWidth="200.0" />
+        <Button layoutX="84.0" layoutY="391.0" mnemonicParsing="false" onAction="#moveArmyHandler" text="Move Army" />
+        <Text layoutX="138.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your Territory" />
+        <Text layoutX="333.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Conquered Territory" />
+        <TextField fx:id="armyCount" layoutX="84.0" layoutY="349.0" prefHeight="31.0" prefWidth="134.0" />
+        <Button layoutX="391.0" layoutY="349.0" mnemonicParsing="false" onAction="#moveComplete" text="Move Complete" />
+    </children>
+</AnchorPane>

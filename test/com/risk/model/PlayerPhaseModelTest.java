@@ -16,11 +16,14 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
+ * Test cases for player phase model
  * @author Natt
+ * @author Tianyi
  */
 public class PlayerPhaseModelTest {
-    
+    private PlayerPhaseModel PlayerPhaseModel;
+    private Player p1;
+    private Player p2;
     public PlayerPhaseModelTest()
     {
     }
@@ -38,6 +41,10 @@ public class PlayerPhaseModelTest {
     @Before
     public void setUp()
     {
+    	PlayerPhaseModel = new PlayerPhaseModel();
+    	p1 = new Player("Green");
+    	p2 = new Player("Red");
+    	PlayerPhaseModel.addPlayer(p1);
     }
     
     @After
@@ -51,14 +58,8 @@ public class PlayerPhaseModelTest {
     @Test
     public void testSetWinner()
     {
-        System.out.println("setWinner");
-        Player player = null;
-        PlayerPhaseModel instance = null;
-        Player expResult = null;
-        Player result = instance.setWinner(player);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    	Player result = PlayerPhaseModel.setWinner(p1);
+    	assertEquals(p1 , result);
     }
 
     /**
@@ -67,12 +68,11 @@ public class PlayerPhaseModelTest {
     @Test
     public void testSetPlayerIndex()
     {
-        System.out.println("setPlayerIndex");
-        int increment = 0;
-        PlayerPhaseModel instance = null;
-        instance.setPlayerIndex(increment);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int increment = 2;
+        PlayerPhaseModel.setPlayerIndex(increment);
+        int expResult =2;
+        int result = PlayerPhaseModel.getPlayerIndex();
+        assertEquals(expResult , result);
     }
 
     /**
@@ -81,13 +81,9 @@ public class PlayerPhaseModelTest {
     @Test
     public void testGetPlayerIndex()
     {
-        System.out.println("getPlayerIndex");
-        PlayerPhaseModel instance = null;
-        int expResult = 0;
-        int result = instance.getPlayerIndex();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    	 int expResult = 0;
+         int result = PlayerPhaseModel.getPlayerIndex();
+         assertEquals(expResult , result);
     }
 
     /**
@@ -96,13 +92,9 @@ public class PlayerPhaseModelTest {
     @Test
     public void testGetNumberOfPlayer()
     {
-        System.out.println("getNumberOfPlayer");
-        PlayerPhaseModel instance = null;
-        int expResult = 0;
-        int result = instance.getNumberOfPlayer();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    	int expResult = 1;
+        int result = PlayerPhaseModel.getNumberOfPlayer();
+        assertEquals(expResult , result);
     }
 
     /**
@@ -111,13 +103,8 @@ public class PlayerPhaseModelTest {
     @Test
     public void testGetCurrentPlayer()
     {
-        System.out.println("getCurrentPlayer");
-        PlayerPhaseModel instance = null;
-        Player expResult = null;
-        Player result = instance.getCurrentPlayer();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Player result = PlayerPhaseModel.getCurrentPlayer();
+        assertEquals(p1, result);
     }
 
     /**
@@ -126,12 +113,12 @@ public class PlayerPhaseModelTest {
     @Test
     public void testAddPlayer()
     {
-        System.out.println("addPlayer");
-        Player player = null;
-        PlayerPhaseModel instance = null;
-        instance.addPlayer(player);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    	PlayerPhaseModel.addPlayer(p2);
+    	ArrayList<Player> expResult = new ArrayList<Player>();
+        expResult.add(p1);
+        expResult.add(p2);
+        ArrayList<Player> result = PlayerPhaseModel.getPlayers();
+        assertEquals(expResult, result);
     }
 
     /**
@@ -140,87 +127,10 @@ public class PlayerPhaseModelTest {
     @Test
     public void testGetPlayers()
     {
-        System.out.println("getPlayers");
-        PlayerPhaseModel instance = null;
-        ArrayList<Player> expResult = null;
-        ArrayList<Player> result = instance.getPlayers();
+        ArrayList<Player> expResult = new ArrayList<Player>();
+        expResult.add(p1);
+        ArrayList<Player> result = PlayerPhaseModel.getPlayers();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getPlayerModel method, of class PlayerPhaseModel.
-     */
-    @Test
-    public void testGetPlayerModel()
-    {
-        System.out.println("getPlayerModel");
-        PlayerPhaseModel expResult = null;
-        PlayerPhaseModel result = PlayerPhaseModel.getPlayerModel();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of update method, of class PlayerPhaseModel.
-     */
-    @Test
-    public void testUpdate()
-    {
-        System.out.println("update");
-        Observable o = null;
-        Object country = null;
-        PlayerPhaseModel instance = null;
-        instance.update(o, country);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of calculateReinforcementContinentControl method, of class PlayerPhaseModel.
-     */
-    @Test
-    public void testCalculateReinforcementContinentControl()
-    {
-        System.out.println("calculateReinforcementContinentControl");
-        PlayerPhaseModel instance = null;
-        int expResult = 0;
-        int result = instance.calculateReinforcementContinentControl();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of calculateReinforcementOccupiedTerritory method, of class PlayerPhaseModel.
-     */
-    @Test
-    public void testCalculateReinforcementOccupiedTerritory()
-    {
-        System.out.println("calculateReinforcementOccupiedTerritory");
-        PlayerPhaseModel instance = null;
-        int expResult = 0;
-        int result = instance.calculateReinforcementOccupiedTerritory();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of calculateReinforcementFromCards method, of class PlayerPhaseModel.
-     */
-    @Test
-    public void testCalculateReinforcementFromCards()
-    {
-        System.out.println("calculateReinforcementFromCards");
-        PlayerPhaseModel instance = null;
-        int expResult = 0;
-        int result = instance.calculateReinforcementFromCards();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }

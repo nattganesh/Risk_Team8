@@ -1,4 +1,7 @@
 /**
+ * This class is necesary for keeping state of the actions during game play
+ * 
+ * @author DKM
  *
  */
 package com.risk.model;
@@ -10,26 +13,34 @@ import com.risk.model.map.Continent;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-/**
- * @author DKM
- *
- */
 public class ActionModel extends Observable {
 
     private ObservableList<String> actions = FXCollections.observableArrayList();
     private static ActionModel actionModel;
 
+    /**
+     * This method is necessary for adding game action to observableList
+     * 
+     * @param action The name of action
+     */
     public void addAction(String action)
     {
         actions.add(action);
-
     }
 
+    /**
+     * This method is necessary for clearing observableList
+     */
     public void clearAction()
     {
         actions.clear();
     }
 
+    /**
+     * This method returns the observableList of actions
+     * 
+     * @return actions The observableList of actions
+     */
     public ObservableList<String> getActions()
     {
         return actions;

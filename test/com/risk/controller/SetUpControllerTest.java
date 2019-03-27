@@ -5,9 +5,23 @@
  */
 package com.risk.controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
+import com.risk.model.ActionModel;
+import com.risk.model.DeckModel;
+import com.risk.model.GamePhaseModel;
+import com.risk.model.MapModel;
+import com.risk.model.PlayerPhaseModel;
+import com.risk.model.map.Continent;
+import com.risk.model.map.Country;
+import com.risk.model.player.Player;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Screen;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -16,7 +30,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
+ * Test cases for set up controller
+ * 
  * @author Natt
  */
 public class SetUpControllerTest {
@@ -38,109 +53,80 @@ public class SetUpControllerTest {
     @Before
     public void setUp()
     {
+    
+    	PlayerPhaseModel.getPlayerModel().getPlayers().clear();
+    	MapModel.getMapModel().getCountries().clear();
+    	
     }
     
     @After
     public void tearDown()
     {
+    	
     }
-
+    
     /**
-     * Test of initialize method, of class SetUpController.
-     */
-    @Test
-    public void testInitialize()
-    {
-        System.out.println("initialize");
-        URL url = null;
-        ResourceBundle resourceBundle = null;
-        SetUpController instance = new SetUpController();
-        instance.initialize(url, resourceBundle);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setArmy method, of class SetUpController.
-     */
-    @Test
-    public void testSetArmy()
-    {
-        System.out.println("setArmy");
-        SetUpController instance = new SetUpController();
-        instance.setArmy();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getArmies method, of class SetUpController.
-     */
-    @Test
-    public void testGetArmies()
-    {
-        System.out.println("getArmies");
-        SetUpController instance = new SetUpController();
-        int expResult = 0;
-        int result = instance.getArmies();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setStartingPoints method, of class SetUpController.
-     */
-    @Test
-    public void testSetStartingPoints()
-    {
-        System.out.println("setStartingPoints");
-        SetUpController instance = new SetUpController();
-        instance.setStartingPoints();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of checkIfEachCountryHasOneArmy method, of class SetUpController.
+     * This method tests when country all has one army
      */
     @Test
     public void testCheckIfEachCountryHasOneArmy()
     {
-        System.out.println("checkIfEachCountryHasOneArmy");
-        SetUpController instance = new SetUpController();
-        boolean expResult = false;
-        boolean result = instance.checkIfEachCountryHasOneArmy();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of next method, of class SetUpController.
-     */
-    @Test
-    public void testNext() throws Exception
-    {
-        System.out.println("next");
-        ActionEvent event = null;
-        SetUpController instance = new SetUpController();
-        instance.next(event);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of renderView method, of class SetUpController.
-     */
-    @Test
-    public void testRenderView()
-    {
-        System.out.println("renderView");
-        SetUpController instance = new SetUpController();
-        instance.renderView();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    	 ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
+    	 Country country1 = new Country("dummy");
+    	 Country country2 = new Country("dummy");
+    	 Country country3 = new Country("dummy");
+    	 Country country4 = new Country("dummy");
+    	 Country country5 = new Country("dummy");
+    	 
+    	 country1.setRuler(new Player("1"));
+    	 country2.setRuler(new Player("2"));
+    	 country3.setRuler(new Player("3"));
+    	 country4.setRuler(new Player("4"));
+    	 country5.setRuler(new Player("5"));
+    	 
+    	 
+    	 country1.setArmyCount(1);
+    	 country2.setArmyCount(1);
+    	 country3.setArmyCount(1);
+    	 country4.setArmyCount(1);
+    	 country5.setArmyCount(1);
+    	 
+    	 territoryObservableList.addAll(country1, country2, country3, country4, country5);
+    	 SetUpController instance = new SetUpController();
+    	 
+    	 assertTrue(instance.checkIfEachCountryHasOneArmy(territoryObservableList));
     }
     
+    /**
+     * This method tests when one country has 0 army
+     */
+    @Test
+    public void testCheckIfEachCountryHasOneArmy2()
+    {
+    	 ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
+    	 Country country1 = new Country("dummy");
+    	 Country country2 = new Country("dummy");
+    	 Country country3 = new Country("dummy");
+    	 Country country4 = new Country("dummy");
+    	 Country country5 = new Country("dummy");
+    	 
+    	 country1.setRuler(new Player("1"));
+    	 country2.setRuler(new Player("2"));
+    	 country3.setRuler(new Player("3"));
+    	 country4.setRuler(new Player("4"));
+    	 country5.setRuler(new Player("5"));
+    	 
+    	 
+    	 country1.setArmyCount(1);
+    	 country2.setArmyCount(1);
+    	 country3.setArmyCount(1);
+    	 country4.setArmyCount(1);
+    	 
+    	 territoryObservableList.addAll(country1, country2, country3, country4, country5);
+    	 SetUpController instance = new SetUpController();
+    	 
+    	 assertFalse(instance.checkIfEachCountryHasOneArmy(territoryObservableList));
+    }
+    
+
 }

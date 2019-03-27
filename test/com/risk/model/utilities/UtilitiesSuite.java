@@ -13,13 +13,14 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 /**
- *
+ * Suite of test cases for utilities
+ * 
  * @author Natt
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses(
 {
-    com.risk.model.utilities.generateOutputFile.GenerateOutputFileSuite.class, com.risk.model.utilities.FileParserTest.class, com.risk.model.utilities.ValidateTest.class
+    com.risk.model.utilities.FileParserTest.class, com.risk.model.utilities.ValidateTest.class
 })
 public class UtilitiesSuite {
 

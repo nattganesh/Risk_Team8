@@ -3,7 +3,7 @@
  * and notify GamePhaseController to set the new scene for the game when the state changes.
  *
  * @author DKM
- * @author Natheepan
+ * @version 2.0
  */
 package com.risk.model;
 
@@ -11,7 +11,7 @@ import java.util.Observable;
 
 public class GamePhaseModel extends Observable {
 
-    String phase = "setup";
+    public String phase = "setup";
     private static GamePhaseModel gamePhaseModel;
 
     /**
@@ -22,7 +22,8 @@ public class GamePhaseModel extends Observable {
     }
 
     /**
-     *
+     * This method is used to set the phase of game
+     * 
      * @param p name of the game phase
      */
     public void setPhase(String p)
@@ -33,7 +34,8 @@ public class GamePhaseModel extends Observable {
     }
 
     /**
-     *
+     * This method is used to get the game phase model
+     * 
      * @return this returns the GamePhaseModel class as a singleton
      */
     public static GamePhaseModel getGamePhaseModel()

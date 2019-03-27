@@ -6,6 +6,8 @@
 package com.risk.model.dice;
 
 import com.risk.model.map.Country;
+import com.risk.model.player.Player;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -14,10 +16,16 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
+ * Test cases for dice
+ * 
  * @author Natt
+ * @author Tianyi
  */
 public class DiceTest {
+	private Country country1;
+	private Country country2;
+	private Player p1;
+	private Player p2;
     
     public DiceTest()
     {
@@ -36,6 +44,14 @@ public class DiceTest {
     @Before
     public void setUp()
     {
+    	p1 = new Player("Green");
+    	p2 = new Player("Red");
+    	country1 = new Country("China");
+    	country2 = new Country("Siam");
+    	p1.addCountry(country1);
+    	p2.addCountry(country2);
+    	country1.setRuler(p1);
+    	country2.setRuler(p2);
     }
     
     @After
@@ -49,28 +65,8 @@ public class DiceTest {
     @Test
     public void testRoll()
     {
-        System.out.println("roll");
-        int expResult = 0;
         int result = Dice.roll();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setRollLimt method, of class Dice.
-     */
-    @Test
-    public void testSetRollLimt()
-    {
-        System.out.println("setRollLimt");
-        Country attack = null;
-        Country defend = null;
-        int[] expResult = null;
-        int[] result = Dice.setRollLimt(attack, defend);
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(0<result&&result<=6);
     }
     
 }

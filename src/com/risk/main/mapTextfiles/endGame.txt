@@ -1,0 +1,18 @@
+SET COUNTRIES IN CONTINENTS
+North America,Alaska
+South America,Argentina
+Europe,Southern Europe
+Africa,North Africa
+Asia,Siam
+Australia,Indonesia
+SET NEIGHBORS
+Alaska,Argentina
+Argentina,Alaska
+Argentina,Southern Europe
+Southern Europe,Argentina
+Southern Europe,North Africa
+North Africa,Southern Europe
+North Africa,Siam
+Siam,North Africa
+Siam,Indonesia
+Indonesia,Siam

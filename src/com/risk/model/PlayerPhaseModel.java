@@ -30,7 +30,7 @@ public class PlayerPhaseModel extends Observable implements Observer {
     /**
      * Constructor for PlayerModel class
      */
-    private PlayerPhaseModel()
+    PlayerPhaseModel()
     {
     }
 
@@ -48,7 +48,8 @@ public class PlayerPhaseModel extends Observable implements Observer {
 
     /**
      * This method increments the current player index
-     *
+     * 
+     * @param increment this is the index of player to increment
      */
     public void setPlayerIndex(int increment)
     {
@@ -56,7 +57,8 @@ public class PlayerPhaseModel extends Observable implements Observer {
     }
 
     /**
-     *
+     * This method is used to get the index of the current player
+     *	
      * @return the index of the current player
      */
     public int getPlayerIndex()
@@ -65,6 +67,7 @@ public class PlayerPhaseModel extends Observable implements Observer {
     }
 
     /**
+     * This method is used to get the number of players
      *
      * @return number of total players
      */
@@ -74,7 +77,7 @@ public class PlayerPhaseModel extends Observable implements Observer {
     }
 
     /**
-     * this method gets the current player
+     * This method gets the current player
      *
      * @return current player
      */
@@ -84,7 +87,7 @@ public class PlayerPhaseModel extends Observable implements Observer {
     }
 
     /**
-     * this method adds player the player model
+     * This method adds player the player model
      *
      * @param player player to be added to the model
      */
@@ -105,7 +108,8 @@ public class PlayerPhaseModel extends Observable implements Observer {
     }
 
     /**
-     *
+     * This method is used to get the player phase model
+     * 
      * @return this PlayerModel class as a singleton
      */
     public static PlayerPhaseModel getPlayerModel()
@@ -118,6 +122,7 @@ public class PlayerPhaseModel extends Observable implements Observer {
     }
 
     /**
+     * This method receives update from Player class
      * This method notifies GamePhaseModel, updating world domination phase
      */
     @Override
@@ -126,62 +131,4 @@ public class PlayerPhaseModel extends Observable implements Observer {
         setChanged();
         notifyObservers((Country) country);
     }
-
-    /**
-     * This method is used to calculate the extra armies earned if the player
-     * has occupied continents
-     *
-     * @param currentPlayer The player who is in his reinforcement round
-     * @return The result corresponding to the countries the player occupied
-     */
-    public int calculateReinforcementContinentControl()
-    {
-
-        int reinforcement = 0;
-        for (Continent continent : MapModel.getMapModel().getContinents())
-        {
-            boolean control = true;
-            for (Country country : continent.getCountries())
-            {
-                if (country.getRuler().getName() != playerList.get(0).getName())
-                {
-                    control = false;
-                    break;
-                }
-            }
-            if (control)
-            {
-                reinforcement = reinforcement + continent.getPointsWhenFullyOccupied();
-            }
-        }
-        return reinforcement;
-    }
-
-    /**
-     * This method is used to calculate the extra armies based on the number of
-     * countries the player already occupied
-     *
-     * @param currentPlayer The player who is in his reinforcement round
-     * @return The result corresponding to the countries the player occupied
-     */
-    public int calculateReinforcementOccupiedTerritory()
-    {
-        int reinforcement = (int) Math.floor(playerList.get(0).numbOccupied() / 3);
-        return reinforcement;
-    }
-
-    /**
-     * This method is used to calculate the extra armies earned by exchanging
-     * cards
-     *
-     * @return The result corresponding to the total exchange time.
-     */
-    public int calculateReinforcementFromCards()
-    {
-        int currentExchange = MapModel.getMapModel().getExchangeTime();
-        int reinforcement = (currentExchange + 1) * 5;
-        MapModel.getMapModel().setExchangeTime(currentExchange + 1);
-        return reinforcement;
-    }
-
 }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="0.0" prefWidth="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.risk.controller.SetUpController">
+    <children>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="450.0" prefWidth="700.0">
+            <children>
+                <Label layoutX="73.0" layoutY="45.0" text="Country Owned" />
+                <ListView fx:id="countryId" layoutX="77.0" layoutY="70.0" prefHeight="200.0" prefWidth="303.0" />
+                <Label fx:id="armyAvailable" layoutX="75.0" layoutY="284.0" text="Army Available" />
+                <Button fx:id="addArmy" layoutX="75.0" layoutY="309.0" mnemonicParsing="false" onMouseClicked="#setArmy" text="Add Army" />
+                <Button fx:id="NextRound" layoutX="324.0" layoutY="309.0" mnemonicParsing="false" onAction="#next" text="Next" /> 
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

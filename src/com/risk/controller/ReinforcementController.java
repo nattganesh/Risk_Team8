@@ -15,6 +15,7 @@ import java.util.Observer;
 import java.util.ResourceBundle;
 
 import com.risk.model.map.Country;
+import com.risk.model.player.Player;
 import com.risk.model.ActionModel;
 import com.risk.model.GamePhaseModel;
 import com.risk.model.PlayerPhaseModel;
@@ -34,17 +35,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 
-/**
- * @see javafx.fxml.Initializable
- */
+
 public class ReinforcementController implements Initializable {
 
     public int TotalReinforcement;
     public ArrayList<String> cards = new ArrayList<>();
 
-    /**
-     * @see javafx.fxml.XML
-     */
     @FXML
     FlowPane fPane;
 
@@ -90,8 +86,9 @@ public class ReinforcementController implements Initializable {
     ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
     ObservableList<Country> adjacentEnemyObservableList = FXCollections.observableArrayList();
     ObservableList<Country> adjacentOwnedObservableList = FXCollections.observableArrayList();
-    PlayerPhaseModel playerPhaseModel;
+    Player player;
     ActionModel actions;
+    
 
     /**
      * This is the constructor for the reinforcement controller
@@ -102,28 +99,21 @@ public class ReinforcementController implements Initializable {
     }
 
     /**
-     * This method is data binding for connection between controller and UI. It
-     * also sets up observable list, in which the view listens for changes and
-     * update its view.
+     * This method is data binding for connection between controller and UI.
      *
      *
-     * @see javafx.fxml.Initializable.initialize
-     * @see javafx.beans.value.ChangeListener;
-     * @see javafx.beans.value.ObservableValue;
+     * @see javafx.fxml.Initializable
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
+    	
         cardController.addObserver(new cardObserver());
-        playerPhaseModel = PlayerPhaseModel.getPlayerModel();
+        player = PlayerPhaseModel.getPlayerModel().getCurrentPlayer();
         actions = ActionModel.getActionModel();
-        TotalReinforcement = playerPhaseModel.calculateReinforcementOccupiedTerritory() + playerPhaseModel.calculateReinforcementContinentControl();
-        if (TotalReinforcement < 3)
-        {
-            TotalReinforcement = 3;
-        }
+        TotalReinforcement = player.getReinforcementArmy();
         armyAvailable.setText("Army: " + Integer.toString(TotalReinforcement));
-        territoryObservableList.addAll(playerPhaseModel.getCurrentPlayer().getOccupiedCountries());
+        territoryObservableList.addAll(player.getOccupiedCountries());
         countryId.setItems(territoryObservableList);
         adjacentEnemy.setItems(adjacentEnemyObservableList);
         adjacentOwned.setItems(adjacentOwnedObservableList);
@@ -131,7 +121,7 @@ public class ReinforcementController implements Initializable {
     }
 
     /**
-     * This method is reponsible for filling the listView with adjacent
+     * This method is responsible for filling the listView with adjacent
      * territories from currently selected territory
      */
     @FXML
@@ -145,7 +135,8 @@ public class ReinforcementController implements Initializable {
             adjacentOwnedObservableList.addAll(countryId.getSelectionModel().getSelectedItem().getConnectedOwned());
         }
     }
-
+    
+    
     /**
      * This method sets the number of available army to your occupied country
      */
@@ -175,7 +166,7 @@ public class ReinforcementController implements Initializable {
                 "Army: " + Integer.toString(TotalReinforcement));
     }
 
-    @FXML
+    
     /**
      * Method to set up the Attack.fxml view and set the controller
      * (AttackController) for the view. Then, changes the scene on the stage to
@@ -184,6 +175,7 @@ public class ReinforcementController implements Initializable {
      * @param event eventlistener for button clicked event
      * @throws IOException Exception thrown when view is not found
      */
+    @FXML
     public void goToAttackPhase(ActionEvent event) throws IOException
     {
         if (TotalReinforcement > 0)
@@ -220,6 +212,7 @@ public class ReinforcementController implements Initializable {
 
                 if (PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getCards().size() < 3)
                 {
+                	
                     child.getChildren().clear();
                 }
             }
@@ -250,6 +243,7 @@ public class ReinforcementController implements Initializable {
                 }
             }
         });
+        
         adjacentOwned.setCellFactory(param -> new ListCell<Country>() {
             @Override
             protected void updateItem(Country country, boolean empty)
@@ -266,6 +260,7 @@ public class ReinforcementController implements Initializable {
                 }
             }
         });
+        
         adjacentEnemy.setCellFactory(param -> new ListCell<Country>() {
             @Override
             protected void updateItem(Country country, boolean empty)

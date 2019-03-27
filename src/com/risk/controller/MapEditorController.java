@@ -47,6 +47,7 @@ import javafx.scene.input.MouseEvent;
 
 public class MapEditorController implements Initializable {
 
+
     @FXML
     ListView<Continent> ContinentView;
 
@@ -64,6 +65,9 @@ public class MapEditorController implements Initializable {
 
     @FXML
     TextField ExistingFile;
+    
+    @FXML
+    TextField ContinentInput;
 
     @FXML
     Label AdjacentError;
@@ -73,6 +77,9 @@ public class MapEditorController implements Initializable {
 
     @FXML
     RadioButton skipRobinID;
+    
+    @FXML
+    RadioButton startCardsID;
 
     private int validated = 0;
     ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
@@ -81,10 +88,9 @@ public class MapEditorController implements Initializable {
     ActionModel actions;
 
     /**
-     * (non-Javadoc)
-     *
-     * @see javafx.fxml.Initializable#initialize(java.net.URL,
-     * java.util.ResourceBundle)
+     * This method is data binding for connection between controller and UI.
+     * 
+     * @see javafx.fxml.Initializable
      */
     @Override
     public void initialize(URL arg0, ResourceBundle arg1)
@@ -94,7 +100,6 @@ public class MapEditorController implements Initializable {
         TerritoryView.setItems(territoryObservableList);
         AdjacentView.setItems(adjacentObservableList);
         renderView();
-
     }
 
     /**
@@ -138,7 +143,7 @@ public class MapEditorController implements Initializable {
         if (!TerritoryInput.getText().trim().isEmpty() && ContinentView.getSelectionModel().getSelectedItem() != null)
         {
 
-            if (searchTerritory(TerritoryInput.getText()) == null)
+            if (searchTerritory(ContinentView.getItems(), TerritoryInput.getText()) == null)
             {
                 Country country = new Country(TerritoryInput.getText());
                 country.setContinent(ContinentView.getSelectionModel().getSelectedItem());
@@ -150,23 +155,24 @@ public class MapEditorController implements Initializable {
         }
     }
 
+    
     /**
      * This method checks if the territory already exists in the map
-     *
+     * 
+     * @param continents arraylist of continents
      * @param countryName country to be searched in the map
      * @return if the country if it exists, otherwise null
      */
-    public Country searchTerritory(String countryName)
+    public Country searchTerritory(ObservableList<Continent> continents, String countryName)
     {
         Country territoryExists = null;
-        for (Continent continent : ContinentView.getItems())
+        for (Continent continent : continents)
         {
             for (Country country : continent.getCountries())
             {
                 if (country.getName().equals(countryName))
                 {
                     territoryExists = country;
-                    actions.addAction("territory exists");
                     break;
                 }
             }
@@ -182,19 +188,20 @@ public class MapEditorController implements Initializable {
     {
         if (!AdjacentInput.getText().trim().isEmpty() && TerritoryView.getSelectionModel().getSelectedItem() != null)
         {
-
+        	Country selectedCountry = TerritoryView.getSelectionModel().getSelectedItem();
             if (AdjacentInput.getText().equals(TerritoryView.getSelectionModel().getSelectedItem().getName()))
             {
                 actions.addAction("You can't add a territory as it's own neighbour");
 
             }
-            else if (existsInAdjacentList(AdjacentInput.getText()))
+          
+            else if (existsInAdjacentList(selectedCountry, AdjacentInput.getText()))
             {
                 actions.addAction("Territory is already a neighbour");
             }
-            else if (searchTerritory(AdjacentInput.getText()) != null && !existsInAdjacentList(AdjacentInput.getText()))
+            else if (searchTerritory(ContinentView.getItems(), AdjacentInput.getText()) != null && !existsInAdjacentList(selectedCountry, AdjacentInput.getText()))
             {
-                Country country = searchTerritory(AdjacentInput.getText());
+                Country country = searchTerritory(ContinentView.getItems(), AdjacentInput.getText());
                 TerritoryView.getSelectionModel().getSelectedItem().getConnectedCountries().add(country);
                 country.getConnectedCountries().add(TerritoryView.getSelectionModel().getSelectedItem());
                 adjacentObservableList.clear();
@@ -208,17 +215,20 @@ public class MapEditorController implements Initializable {
             }
         }
     }
-
+    
     /**
+     * This method is used to check if the country input already exists in the adjacent list of the selected country
      *
-     * @param addingCountry name of the country to be searched in the adjacent
+     * @param selectedCountry The country which is selected
+     * @param addingCountry The name of country to be searched in the adjacent
      * list
+     * 
      * @return true if the country already exists in the adjacent list, false
      * otherwise
      */
-    private boolean existsInAdjacentList(String addingCountry)
+    public boolean existsInAdjacentList(Country selectedCountry, String addingCountry)
     {
-        Country selectedCountry = TerritoryView.getSelectionModel().getSelectedItem();
+        
         for (Country country : selectedCountry.getConnectedCountries())
         {
             if (country.getName().equals(addingCountry))
@@ -228,7 +238,8 @@ public class MapEditorController implements Initializable {
         }
         return false;
     }
-
+    
+    
     /**
      * This method handles deleting a territory and all of it's connection in
      * the map
@@ -267,27 +278,33 @@ public class MapEditorController implements Initializable {
             Country selectedTerritory = TerritoryView.getSelectionModel().getSelectedItem();
             Country removingTerritory = AdjacentView.getSelectionModel().getSelectedItem();
             selectedTerritory.getConnectedCountries().remove(removingTerritory);
-
-            for (Continent continent : ContinentView.getItems())
-            {
-                for (Country country : continent.getCountries())
-                {
-                    if (country.getName().equals(removingTerritory.getName()))
-                    {
-                        for (Country adj : country.getConnectedCountries())
-                        {
-                            if (adj.getName().equals(selectedTerritory.getName()))
-                            {
-                                country.getConnectedCountries().remove(adj);
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
+            removeAdjacentCountry(ContinentView.getItems(), selectedTerritory, removingTerritory);
             adjacentObservableList.clear();
             adjacentObservableList.addAll(TerritoryView.getSelectionModel().getSelectedItem().getConnectedCountries());
         }
+    }
+        
+    /**
+     * This method remove adjacent territory and all of its connections
+     * 
+     * @param continentlist this is the list of all the continents
+     * @param selectedCountry territory that was selected
+     * @param removingCountry territory to remove from adjacency
+     */
+    public void removeAdjacentCountry(ObservableList<Continent> continentlist, Country selectedCountry, Country removingCountry)
+    {
+    	 String removingCountryName = removingCountry.getName();
+    	 for (Continent continent : continentlist)
+         {
+             for (Country country : continent.getCountries())
+             {
+                 if (country.getName().equals(removingCountryName))
+                 {
+                     country.getConnectedCountries().remove(selectedCountry);
+                     break;
+                 }
+             }
+         }
     }
 
     /**
@@ -321,7 +338,6 @@ public class MapEditorController implements Initializable {
                 }
                 else
                 {
-
                     actions.addAction("Disconnected Map. Might want to reassign territories");
                 }
             }
@@ -357,7 +373,6 @@ public class MapEditorController implements Initializable {
             }
             else
             {
-
                 actions.addAction("Can't Save Map it's an invalid map");
                 validated = 0;
             }
@@ -379,6 +394,7 @@ public class MapEditorController implements Initializable {
             validated = 0;
             clearMapEditor();
             initializeContinents();
+            actions.addAction("This is a fixed map with the following continents");
 
             actions.addAction("New map");
 
@@ -389,6 +405,20 @@ public class MapEditorController implements Initializable {
         }
     }
 
+	/**
+	 *  This method initialize the initial number of cards for each player
+	 */
+    public void startWithCards()
+    {
+    	for (Player p : PlayerPhaseModel.getPlayerModel().getPlayers())
+    	{
+    		for (int i = 0; i < 5; i++)
+    		{
+    			DeckModel.getCardModel().sendCard(p);
+    		}
+    	}
+    }
+    
     /**
      * This method handles setting number of players, calculating starting
      * armies in each country, it assigns countries to players and determines
@@ -400,14 +430,22 @@ public class MapEditorController implements Initializable {
     {
         if (validated == 1)
         {
+        	
             if (PlayerID.getSelectionModel().getSelectedItem() != null && !skipRobinID.isSelected())
             {
                 int numbPlayers = Integer.parseInt(PlayerID.getSelectionModel().getSelectedItem());
                 setPlayers(numbPlayers);
                 setDeck();
                 calcStartingArmies();
+               
                 assignCountriesToPlayers();
+              
                 determinePlayersStartingOrder();
+                
+                if (startCardsID.isSelected())
+                {
+                	startWithCards();
+                }
                 GamePhaseModel.getGamePhaseModel().setPhase("setup complete");
                 GamePhaseModel.getGamePhaseModel().setPhase("setup");
             }
@@ -419,12 +457,19 @@ public class MapEditorController implements Initializable {
                 calcStartingArmies();
                 autoAssignCountriesToPlayers();
                 determinePlayersStartingOrder();
+                if (startCardsID.isSelected())
+                {
+                	startWithCards();
+                }
                 GamePhaseModel.getGamePhaseModel().setPhase("setup complete");
                 GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
             }
         }
     }
 
+    /**
+     * This method updates the view of continent, territory and adjacent territory
+     */
     public void renderView()
     {
         ContinentView.setCellFactory(param -> new ListCell<Continent>() {
@@ -488,17 +533,23 @@ public class MapEditorController implements Initializable {
         continent.add(new Continent("Asia", 10));
         continent.add(new Continent("Australia", 10));
         ContinentView.getItems().addAll(continent);
-        actions.addAction("This is a fixed map with the following continents");
+       
     }
 
+
     /**
-     * This method initalizes the 2 - 6 players in the UI
+     * This method initializes the 2 - 6 players in the UI
      */
     public void initializePlayers()
     {
         PlayerID.getItems().clear();
-        PlayerID.getItems().addAll("2", "3", "4", "5", "6");
+        int numberContinent = MapModel.getMapModel().getContinents().size();
+        for (int i = 0; i < numberContinent-1; i++)
+        {
+        	PlayerID.getItems().add(Integer.toString(i+2));
+        }
     }
+   
 
     /**
      * This method is a helper method for clearing the UI board
@@ -578,16 +629,17 @@ public class MapEditorController implements Initializable {
      */
     public void assignCountriesToPlayers()
     {
-        boolean[] countryOccupied = new boolean[Country.MAX_NUMBER_OF_COUNTRIES];
+    	int totalCountrySize = MapModel.getMapModel().getCountries().size();
+        boolean[] countryOccupied = new boolean[totalCountrySize];
         int i = 0;
-        while (i < Country.MAX_NUMBER_OF_COUNTRIES)
+        while (i < totalCountrySize)
         {
             for (Player p : PlayerPhaseModel.getPlayerModel().getPlayers())
             {
-                int random = (int) (Math.random() * Country.MAX_NUMBER_OF_COUNTRIES);
+                int random = (int) (Math.random() * totalCountrySize);
                 while (countryOccupied[random])
                 {
-                    random = (int) (Math.random() * Country.MAX_NUMBER_OF_COUNTRIES);
+                    random = (int) (Math.random() * totalCountrySize);
                 }
                 if (!countryOccupied[random])
                 {
@@ -600,7 +652,7 @@ public class MapEditorController implements Initializable {
                     p.addCountry(MapModel.getMapModel().getCountries().get(random));
                     i++;
                 }
-                if (i >= Country.MAX_NUMBER_OF_COUNTRIES)
+                if (i >= totalCountrySize)
                 {
                     break;
                 }
@@ -614,30 +666,29 @@ public class MapEditorController implements Initializable {
      */
     public void autoAssignCountriesToPlayers()
     {
-        boolean[] countryOccupied = new boolean[Country.MAX_NUMBER_OF_COUNTRIES];
+    	int totalCountrySize = MapModel.getMapModel().getCountries().size();
+        boolean[] countryOccupied = new boolean[totalCountrySize];
         int i = 0;
-        while (i < Country.MAX_NUMBER_OF_COUNTRIES)
+        while (i < totalCountrySize)
         {
             for (Player p : PlayerPhaseModel.getPlayerModel().getPlayers())
             {
-                int random = (int) (Math.random() * Country.MAX_NUMBER_OF_COUNTRIES);
+                int random = (int) (Math.random() * totalCountrySize);
                 while (countryOccupied[random])
                 {
-                    random = (int) (Math.random() * Country.MAX_NUMBER_OF_COUNTRIES);
+                    random = (int) (Math.random() * totalCountrySize);
                 }
                 if (!countryOccupied[random])
                 {
                     MapModel.getMapModel().getCountries().get(random).setRuler(p);
                     MapModel.getMapModel().getCountries().get(random).setIsOccupied(true);
-                    System.out.println("setting army count by 1 from mapModel");
-                    MapModel.getMapModel().getCountries().get(random).setArmyCount(1); //added army
+                    MapModel.getMapModel().getCountries().get(random).setArmyCount(1); 
                     p.setStartingPoints(p.getStartingPoints() - 1);
                     countryOccupied[random] = true;
                     p.addCountry(MapModel.getMapModel().getCountries().get(random));
-
                     i++;
                 }
-                if (i >= Country.MAX_NUMBER_OF_COUNTRIES)
+                if (i >= totalCountrySize)
                 {
                     break;
                 }
@@ -656,7 +707,6 @@ public class MapEditorController implements Initializable {
                     int random = (int) (Math.random()
                             * PlayerPhaseModel.getPlayerModel().getPlayers().get(ii).numbOccupied());
 
-                    System.out.println("setting army count by 1 from playerModel");
                     PlayerPhaseModel.getPlayerModel().getPlayers().get(ii).getOccupiedCountries().get(random)
                             .setArmyCount(1);
                     PlayerPhaseModel.getPlayerModel().getPlayers().get(ii).setStartingPoints(PlayerPhaseModel.getPlayerModel().getPlayers().get(ii).getStartingPoints() - 1);

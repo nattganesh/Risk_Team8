@@ -27,11 +27,23 @@ public class Validate {
 
     }
 
+    /**
+     * This method is used to get the size of the validation list
+     * 
+     * @return return the size of validation list of countries model
+     */
     public int getValidateSize()
     {
         return countriesModelValidationList.size();
     }
 
+    /**
+     * This method is used to check if the number of countries in continents is equal to the maximum number
+     * that is set to the continent
+     * 
+     * @throws CannotFindException Exception thrown when file formatting is
+     * @throws CountLimitException Exception thrown when number of country in a continent is different from fixed number.
+     */
     public void continentChecks() throws CannotFindException, CountLimitException
     {
         for (Continent cont : map.getContinents())
@@ -76,11 +88,13 @@ public class Validate {
     }
 
     /**
-     * Given a Country, this method recursively goes thru this country's
+     * Given a Country, this method recursively goes through this country's
      * neighbours and adds then to countriesModelValidationList If
      * (countriesModelValidationList.size() == map.getCountries().size()) then
      * from a given country, we can travel to all other countries, so map is
      * connected
+     * 
+     * @param origin The origin country whose neighbours will be added to countriesModelValidationList
      */
     public void mapConnected(Country origin)
     {
@@ -115,16 +129,26 @@ public class Validate {
         }
     }
 
+    /**
+     * This method is used to validate the map by connecting country with its neighbours
+     * 
+     * @throws CannotFindException Exception thrown when file formatting is
+     * @throws CountLimitException Exception thrown when number of country in a continent is different from fixed number.
+     */
     public void validateMap() throws CannotFindException, CountLimitException
     {
 
         counter = 0;
         countriesModelValidationList.clear();
-        continentChecks();
         mapConnected(map.getCountries().get(0));
 
     }
 
+    /**
+     * This method is used to get the validation of connected countries
+     * 
+     * @return validate The validation of connected map
+     */
     public static Validate getValidate()
     {
         if (validate == null)

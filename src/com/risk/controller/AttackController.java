@@ -1,5 +1,7 @@
 /**
  * This class is necessary for Controller of the Attack Phase
+ * The JavaFx part is done by DKM
+ * The logic part is done by Tianyi
  *
  * @author DKM
  * @author Tianyi
@@ -8,6 +10,7 @@
 package com.risk.controller;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Observable;
 import java.util.Observer;
@@ -23,10 +26,7 @@ import com.risk.model.dice.Dice;
 import com.risk.model.map.Country;
 import com.risk.model.player.Player;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -38,7 +38,6 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.FlowPane;
 
 public class AttackController implements Initializable, Observer {
 
@@ -47,10 +46,7 @@ public class AttackController implements Initializable, Observer {
 
     @FXML
     Label inputArmyError;
-
-    @FXML
-    TextField ArmyCount;
-
+    
     @FXML
     ListView<Country> adjacentEnemy;
 
@@ -75,7 +71,7 @@ public class AttackController implements Initializable, Observer {
     @FXML
     AnchorPane child;
 
-    ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
+    ObservableList<Country> territoryOwnedObservableList = FXCollections.observableArrayList();
     ObservableList<Country> adjacentEnemyObservableList = FXCollections.observableArrayList();
     ObservableList<Country> adjacentOwnedObservableList = FXCollections.observableArrayList();
 
@@ -92,29 +88,20 @@ public class AttackController implements Initializable, Observer {
     }
 
     /**
-     * (non-Javadoc)
-     *
-     * @see javafx.fxml.Initializable#initialize(java.net.URL,s
-     * java.util.ResourceBundle)
+     * This method is data binding for connection between controller and UI.
+     * 
+     * @see javafx.fxml.Initializable
      */
     @Override
     public void initialize(URL arg0, ResourceBundle arg1)
     {
         conqueringController.addObserver(this);
         actions = ActionModel.getActionModel();
-        territoryObservableList.addAll(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
-        countryId.setItems(territoryObservableList);
+        territoryOwnedObservableList.setAll(p.getOccupiedCountries());
+        countryId.setItems(territoryOwnedObservableList);
         adjacentEnemy.setItems(adjacentEnemyObservableList);
         adjacentOwned.setItems(adjacentOwnedObservableList);
-        updateView();
-
-    }
-
-    public void updateView()
-    {
-        territoryObservableList.clear();
-        territoryObservableList.addAll(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
-        countryId.setItems(territoryObservableList);
+        
         countryId.setCellFactory(param -> new ListCell<Country>() {
             @Override
             protected void updateItem(Country country, boolean empty)
@@ -163,26 +150,28 @@ public class AttackController implements Initializable, Observer {
     }
 
     /**
+     * This method updates the view
+     * @param attacker current attacker
+     */
+    public void updateView(Country attacker)
+    {
+    	 adjacentEnemyObservableList.setAll(attacker.getConnectedEnemy());
+    	 adjacentOwnedObservableList.setAll(attacker.getConnectedOwned());
+    	 territoryOwnedObservableList.setAll(p.getOccupiedCountries());	
+    }
+
+    /**
      * this method is responsible for populating adjacent territories
      */
     @FXML
     public void territoryHandler()
     {
-
-        if (countryId.getSelectionModel().getSelectedItem() != null)
+    	Country attacker = countryId.getSelectionModel().getSelectedItem();   
+        if (attacker != null)
         {
-            // i dont' wannt them to be in sync
-            clearDiceRolls();
-
-            Country attacker = countryId.getSelectionModel().getSelectedItem();
-
-            adjacentEnemyObservableList.clear();
-            adjacentOwnedObservableList.clear();
-
-            adjacentEnemyObservableList.addAll(attacker.getConnectedEnemy());
-            adjacentOwnedObservableList.addAll(attacker.getConnectedOwned());
-            ArmyCount.setText(Integer.toString(attacker.getArmyCount()));
-
+            clearDiceRolls();    
+            adjacentEnemyObservableList.setAll(attacker.getConnectedEnemy());
+            adjacentOwnedObservableList.setAll(attacker.getConnectedOwned());
         }
     }
 
@@ -203,11 +192,10 @@ public class AttackController implements Initializable, Observer {
     @FXML
     public void adjacentEnemyHandler()
     {
-        if (adjacentEnemy.getSelectionModel().getSelectedItem() != null && countryId.getSelectionModel().getSelectedItem().getArmyCount() > 1)
+	    Country defender = adjacentEnemy.getSelectionModel().getSelectedItem();
+        Country attacker = countryId.getSelectionModel().getSelectedItem();
+        if (defender != null && attacker != null && attacker.getArmyCount() > 1)
         {
-            Country defender = adjacentEnemy.getSelectionModel().getSelectedItem();
-            Country attacker = countryId.getSelectionModel().getSelectedItem();
-
             actions.addAction("attacker == " + attacker.getName() + " (" + attacker.getArmyCount() + ")");
             actions.addAction("defender == " + defender.getName() + " (" + defender.getArmyCount() + ")");
             initializeDice();
@@ -220,20 +208,15 @@ public class AttackController implements Initializable, Observer {
         }
     }
 
-    @FXML
-    public void goToFortificationPhase()
-    {
-
-    }
-
     /**
      * this method initializes the number of dice roll available
      */
     public void initializeDice()
     {
-        if (validateTerritorySelections())
+    	boolean validateTerritorySelections = p.validateTerritorySelections(countryId.getSelectionModel().getSelectedItem(), adjacentEnemy.getSelectionModel().getSelectedItem());
+        if (validateTerritorySelections)
         {
-            rollLimit = setRollLimit(countryId.getSelectionModel().getSelectedItem(), adjacentEnemy.getSelectionModel().getSelectedItem());
+            rollLimit = p.setRollLimit(countryId.getSelectionModel().getSelectedItem(), adjacentEnemy.getSelectionModel().getSelectedItem());
             AttackerDice.getItems().clear();
             for (int i = 0; i < rollLimit[0]; i++)
             {
@@ -251,61 +234,34 @@ public class AttackController implements Initializable, Observer {
             }
         }
     }
+    
 
     /**
-     *
-     * @return returns true if attacker and defender has been selected
-     */
-    public boolean validateTerritorySelections()
-    {
-        boolean valid = false;
-        if (countryId.getSelectionModel().getSelectedItem() != null && adjacentEnemy.getSelectionModel().getSelectedItem() != null)
-        {
-            valid = true;
-        }
-        return valid;
-    }
-
-    /**
-     * @return returns true if defender and attacker both selected dice roll
-     */
-    public boolean validateDiceSelections()
-    {
-        boolean valid = false;
-        if (AttackerDice.getSelectionModel().getSelectedItem() != null && DefenderDice.getSelectionModel().getSelectedItem() != null)
-        {
-            valid = true;
-        }
-        return valid;
-    }
-
-    /**
-     * This is rolls the dice
+     * This is rolls the dice when click the roll dice button
      */
     @FXML
     public void rollDiceHandler()
     {
-        int attackerArmy = countryId.getSelectionModel().getSelectedItem().getArmyCount();
-
-        if (validateTerritorySelections() && validateDiceSelections() && attackerArmy > 1)
+    	boolean validateTerritorySelections = p.validateTerritorySelections(countryId.getSelectionModel().getSelectedItem(), adjacentEnemy.getSelectionModel().getSelectedItem());
+    	boolean validateDiceSelections = p.validateDiceSelections(AttackerDice.getSelectionModel().getSelectedItem(),DefenderDice.getSelectionModel().getSelectedItem());
+    	boolean validateAttackerHasEnoughArmy = p.validateAttackerHasEnoughArmy(countryId.getSelectionModel().getSelectedItem());
+    	if (validateTerritorySelections && validateDiceSelections && validateAttackerHasEnoughArmy)
         {
-            actions.addAction("rolling dice");
             int diceAttack = AttackerDice.getSelectionModel().getSelectedItem();
             int diceDefender = DefenderDice.getSelectionModel().getSelectedItem();
             actions.addAction("attacker rolled " + diceAttack + " dice");
             actions.addAction("defender rolled " + diceDefender + " dice");
-
             rollDice(diceAttack, diceDefender, countryId.getSelectionModel().getSelectedItem(), adjacentEnemy.getSelectionModel().getSelectedItem());
             initializeDice();
         }
-        else if (!validateTerritorySelections())
+        else if (!validateTerritorySelections)
         {
             actions.addAction("select attacker and defender");
         }
-        else if (!validateDiceSelections())
+        else if (!validateDiceSelections)
         {
             actions.addAction("select number of rolls");
-            AttackerDice.getItems().clear();
+            AttackerDice.getItems().clear(); 
             DefenderDice.getItems().clear();
         }
         else
@@ -313,7 +269,6 @@ public class AttackController implements Initializable, Observer {
             actions.addAction("you do not have enough army to attack");
             clearDiceRolls();
         }
-
     }
 
     /**
@@ -326,17 +281,19 @@ public class AttackController implements Initializable, Observer {
      * @param attackingCountry The country which invokes the attack
      * @param defendingCountry The country which is attacked
      */
+    
     public void rollDice(int diceattack, int dicedefend, Country attackingCountry, Country defendingCountry)
     {
-        int[] dattack = rollResult(diceattack);
-        int[] ddefend = rollResult(dicedefend);
-        int rolltime = setRollTime(diceattack, dicedefend);
+    	
+        int[] dattack = p.rollResult(diceattack);
+        int[] ddefend = p.rollResult(dicedefend);
+        int rolltime = p.setRollTime(diceattack, dicedefend);
+        
         for (int i = 0; i < rolltime; i++)
         {
             if (dattack[i] > ddefend[i])
             {
                 attackingCountry.getRuler().attack(attackingCountry, defendingCountry, 1);
-                adjacentEnemyObservableList.set(adjacentEnemyObservableList.indexOf(defendingCountry), defendingCountry);
                 actions.addAction("defender has lost 1 army");
                 if (defendingCountry.getArmyCount() == 0)
                 {
@@ -347,36 +304,39 @@ public class AttackController implements Initializable, Observer {
                     child.setVisible(true);
                     conqueringController.setConquringArmy(defendingCountry);
                     conqueringController.setDiceRoll(diceattack);
-//                    updateView();
                     break;
-                }
-                else
-                {
-                    adjacentEnemyObservableList.set(adjacentEnemyObservableList.indexOf(defendingCountry), defendingCountry);
-                }
+                }               
             }
             else
             {
 
                 attackingCountry.getRuler().attack(attackingCountry, defendingCountry, 3);
+                updateView(attackingCountry);
                 actions.addAction("attacker has lost 1 army");
-                updateView();
+                
             }
         }
-
+        updateView(attackingCountry);
     }
 
+    /**
+     * This method is used to roll dice automatically after the player chooses the attacker and defender
+     * It will stop when either the attacker has not enough army or the defender is conquered
+     * 
+     */
     @FXML
     public void AllOut()
     {
         Country attack = countryId.getSelectionModel().getSelectedItem();
         Country defend = adjacentEnemy.getSelectionModel().getSelectedItem();
-        if (attack != null && defend != null && attack.getArmyCount() > 1)
+        boolean validateTerritorySelections = p.validateTerritorySelections(attack, defend);
+    	boolean validateAttackerHasEnoughArmy = p.validateAttackerHasEnoughArmy(attack);
+        if (validateTerritorySelections && validateAttackerHasEnoughArmy)
         {
             boolean roll = true;
             while (roll)
             {
-                int result[] = setRollLimit(attack, defend);
+                int result[] = p.setRollLimit(attack, defend);
                 rollDice(result[0], result[1], attack, defend);
                 if (attack.getArmyCount() == 1 || defend.getArmyCount() == 0)
                 {
@@ -385,108 +345,49 @@ public class AttackController implements Initializable, Observer {
                 }
             }
         }
-        else
+        else if (!validateTerritorySelections)
         {
-            actions.addAction("invalid move");
-        }
-    }
-
-    public int[] setRollLimit(Country attack, Country defend)
-    {
-        int dicerange_attack;
-        int dicerange_defend;
-        int[] result = new int[2];
-        if ((attack.getArmyCount() - 1) > 3)
-        {
-            dicerange_attack = 3;
+            actions.addAction("select attacker and defender");
         }
         else
         {
-            dicerange_attack = attack.getArmyCount() - 1;
+            actions.addAction("you do not have enough army to attack");
+            clearDiceRolls();
         }
-        if (defend.getArmyCount() >= 2)
-        {
-            dicerange_defend = 2;
-        }
-        else
-        {
-            dicerange_defend = 1;
-        }
-        result[0] = dicerange_attack;
-        result[1] = dicerange_defend;
-        return result;
-    }
-
-    public int setRollTime(int diceattack, int dicedefend)
-    {
-        int rolltime;
-        if (diceattack >= dicedefend)
-        {
-            rolltime = dicedefend;
-        }
-        else
-        {
-            rolltime = diceattack;
-        }
-        return rolltime;
-    }
-
-    public int[] rollResult(int diceNumber)
-    {
-        int[] result = new int[diceNumber];
-        for (int i = 0; i < diceNumber; i++)
-        {
-            result[i] = Dice.roll();
-        }
-        int tmp;
-        for (int i = 0; i < diceNumber; i++)
-        {
-            for (int j = i + 1; j < diceNumber; j++)
-            {
-                if (result[i] < result[j])
-                {
-                    tmp = result[i];
-                    result[i] = result[j];
-                    result[j] = tmp;
-                }
-            }
-        }
-        return result;
     }
 
     /**
      * This method sets the GamePhaseModel to fortification, which notifies the
      * subscribed GameController to set new scene
      *
-     * @param event listens for click event
      */
-    public void goToFortificationPhase(ActionEvent event)
+    @FXML
+    public void goToFortificationPhase()
     {
         if (occupy)
         {
             DeckModel.getCardModel().sendCard(PlayerPhaseModel.getPlayerModel().getCurrentPlayer());
-            for (Card card : p.getCards())
-            {
-                System.out.println(card.getCatagory());
-            }
         }
-        GamePhaseModel.getGamePhaseModel().setPhase("fortification");
+        if (!PlayerPhaseModel.getPlayerModel().getCurrentPlayer().isAnyCountriesConnected())
+        {
+            int currentIndex = PlayerPhaseModel.getPlayerModel().getPlayerIndex();
+            PlayerPhaseModel.getPlayerModel().setPlayerIndex((currentIndex + 1) % PlayerPhaseModel.getPlayerModel().getNumberOfPlayer());
+            GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
+        }
+        else {
+             GamePhaseModel.getGamePhaseModel().setPhase("fortification");
+        }
+       
     }
 
-    /* (non-Javadoc)s
-	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+    /**
+     * This method is necessary for getting update from card exchange
      */
     @Override
     public void update(Observable o, Object arg)
     {
-
-        Country conquered = (Country) arg;
-
         child.setVisible(false);
         adjacentOwned.getItems().clear();
-        ArmyCount.setText(Integer.toString(countryId.getSelectionModel().getSelectedItem().getArmyCount()));
-
-        updateView();
-
+        territoryOwnedObservableList.setAll(p.getOccupiedCountries());	
     }
 }

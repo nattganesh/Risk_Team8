@@ -48,7 +48,8 @@ public class FortificationController implements Initializable {
     private boolean fortification = false;
     ArrayList<Country> CountriesArrivedbyPath;
     ActionModel actions;
-
+    Player p = PlayerPhaseModel.getPlayerModel().getCurrentPlayer();
+    
     /**
      * This is a constructor of the FortificationController class
      */
@@ -58,10 +59,9 @@ public class FortificationController implements Initializable {
     }
 
     /**
-     * (non-Javadoc)
-     *
-     * @see javafx.fxml.Initializable#initialize(java.net.URL,
-     * java.util.ResourceBundle)
+     * This method is data binding for connection between controller and UI.
+     * 
+     * @see javafx.fxml.Initializable
      */
     @Override
     public void initialize(URL arg0, ResourceBundle arg1)
@@ -72,16 +72,12 @@ public class FortificationController implements Initializable {
         Territory.setItems(territoryObservableList);
         Adjacent.setItems(adjacentObservableList);
         updateView();
-
-        if (!PlayerPhaseModel.getPlayerModel().getCurrentPlayer().isAnyCountriesConnected())
-        {
-            int currentIndex = PlayerPhaseModel.getPlayerModel().getPlayerIndex();
-            PlayerPhaseModel.getPlayerModel().setPlayerIndex((currentIndex + 1) % PlayerPhaseModel.getPlayerModel().getNumberOfPlayer());
-            GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
-        }
-
+        
     }
 
+    /**
+     * This method is necessary for updating the view of the list
+     */
     public void updateView()
     {
         Territory.setCellFactory(param -> new ListCell<Country>() {
@@ -119,8 +115,9 @@ public class FortificationController implements Initializable {
     }
 
     /**
-     * This method handles loading adjacent connected countries that current
-     * player owns
+     * This method handles loading adjacent connected countries of the country that current
+     * player chooses for fortification
+     * Only countries owned by the player will be displayed
      */
     @FXML
     public void territoryHandler()
@@ -136,7 +133,7 @@ public class FortificationController implements Initializable {
     }
 
     /**
-     * This method handles showing the army count of the adjacent country
+     * This method handles showing the army count of the adjacent country the player chooses
      */
     @FXML
     public void adjacentHandler()
@@ -154,9 +151,12 @@ public class FortificationController implements Initializable {
     @FXML
     public void moveHandler()
     {
-        if (Territory.getSelectionModel().getSelectedItem() != null
-                && Adjacent.getSelectionModel().getSelectedItem() != null
-                && Territory.getSelectionModel().getSelectedItem().getArmyCount() > 1
+    	Country firstCountry = Territory.getSelectionModel().getSelectedItem();
+        Country secondCountry = Adjacent.getSelectionModel().getSelectedItem();
+        boolean validateTerritorySelections = p.validateTerritorySelections(firstCountry, secondCountry);
+        boolean validateAttackerHasEnoughArmy = p.validateAttackerHasEnoughArmy(firstCountry);
+        if (validateTerritorySelections
+                && validateAttackerHasEnoughArmy
                 && !moveField.getText().trim().isEmpty() && !fortification)
         {
             int Armyinput = Integer.parseInt(moveField.getText());
@@ -168,7 +168,7 @@ public class FortificationController implements Initializable {
             else if (Armyinput <= Territory.getSelectionModel().getSelectedItem().getArmyCount() - 1)
             {
                 Player p = Territory.getSelectionModel().getSelectedItem().getRuler();
-                p.fortify(Territory.getSelectionModel().getSelectedItem(), Adjacent.getSelectionModel().getSelectedItem(), Armyinput);
+                p.fortify(firstCountry, secondCountry, Armyinput);
 
                 AdjacentArmy.setText(Integer.toString(Adjacent.getSelectionModel().getSelectedItem().getArmyCount()));
                 TerritoryArmy.setText(Integer.toString(Territory.getSelectionModel().getSelectedItem().getArmyCount()));

@@ -1,5 +1,5 @@
 /**
- * Necessary for handling business logic for Reinforcement phase.
+ * Necessary for handling business logic for Setup phase.
  *
  * @author Tianyi
  *
@@ -41,7 +41,7 @@ public class SetUpController implements Initializable {
 
     public int TotalArmies;
     public ArrayList<String> cards = new ArrayList<>();
-    private boolean setUp = false;
+    private boolean setUp = false;	
     /**
      * @see javafx.fxml.XML
      */
@@ -70,23 +70,33 @@ public class SetUpController implements Initializable {
     }
 
     /**
-     * This method is data binding for connection between controller and UI. It
-     * also sets up observable list, in which the view listens for changes and
-     * update its view.
+     * This method is data binding for connection between controller and UI.
      *
-     *
-     * @see javafx.fxml.Initializable.initialize
-     * @see javafx.beans.value.ObservableValue;
+     * @see javafx.fxml.Initializable
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
         actions = ActionModel.getActionModel();
-        TotalArmies = PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getStartingP();
+        TotalArmies = PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getStartingPoints();
         armyAvailable.setText("Army: " + Integer.toString(getArmies()));
         territoryObservableList.addAll(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
         countryId.setItems(territoryObservableList);
-        renderView();
+        countryId.setCellFactory(param -> new ListCell<Country>() {
+            @Override
+            protected void updateItem(Country country, boolean empty)
+            {
+                super.updateItem(country, empty);
+                if (empty || country == null || country.getName() == null)
+                {
+                    setText(null);
+                }
+                else
+                {
+                    setText(country.getName() + " (" + country.getArmyCount() + ")");
+                }
+            }
+        });
     }
 
     /**
@@ -110,7 +120,7 @@ public class SetUpController implements Initializable {
         else
         {
             Country selectedCountry = countryId.getSelectionModel().getSelectedItem();
-            if ((selectedCountry.getArmyCount() == 0) || checkIfEachCountryHasOneArmy())
+            if ((selectedCountry.getArmyCount() == 0) || checkIfEachCountryHasOneArmy(territoryObservableList))
             {
                 selectedCountry.setArmyCount(1);
                 setStartingPoints();
@@ -118,6 +128,8 @@ public class SetUpController implements Initializable {
                 setUp = true;
             }
         }
+        updateView();
+        
         armyAvailable.setText("Army: " + Integer.toString(getArmies()));
     }
 
@@ -141,17 +153,17 @@ public class SetUpController implements Initializable {
         TotalArmies--;
         PlayerPhaseModel.getPlayerModel().getCurrentPlayer().setStartingPoints(TotalArmies);
     }
-
+    
     /**
      * This method is used to check if each country occupied has one army
-     *
+     * @param list The observableList which is used to check if each county in it has one army
      * @return true if each country already has one army. Otherwise, return
      * false
      */
-    public boolean checkIfEachCountryHasOneArmy()
+    public boolean checkIfEachCountryHasOneArmy(ObservableList <Country> list)
     {
         int i = 1;
-        for (Country c : territoryObservableList)
+        for (Country c : list)
         {
             if (c.getArmyCount() == 0)
             {
@@ -168,7 +180,6 @@ public class SetUpController implements Initializable {
         }
     }
 
-    @FXML
     /**
      * Method to set up the Reinforcement.fxml or SetUp.fxml view and set the
      * controller for the view. Then, changes the scene on the stage to send
@@ -177,13 +188,14 @@ public class SetUpController implements Initializable {
      * @param event eventlistener for button clicked event
      * @throws IOException Exception thrown when view is not found
      */
+    @FXML
     public void next(ActionEvent event) throws IOException
     {
         int currentIndex = PlayerPhaseModel.getPlayerModel().getPlayerIndex();
         boolean isAnyPlayerPlacedAllArmies = true;
         for (Player p : PlayerPhaseModel.getPlayerModel().getPlayers())
         {
-            if (p.getStartingP() != 0)
+            if (p.getStartingPoints() != 0)
             {
                 isAnyPlayerPlacedAllArmies = false;
             }
@@ -209,23 +221,13 @@ public class SetUpController implements Initializable {
             actions.addAction("Please place one army in your country");
         }
     }
-
-    public void renderView()
+    
+    	
+    /**
+     * This method is necessary for updating the view of the list
+     */
+    public void updateView()
     {
-        countryId.setCellFactory(param -> new ListCell<Country>() {
-            @Override
-            protected void updateItem(Country country, boolean empty)
-            {
-                super.updateItem(country, empty);
-                if (empty || country == null || country.getName() == null)
-                {
-                    setText(null);
-                }
-                else
-                {
-                    setText(country.getName() + " (" + country.getArmyCount() + ")");
-                }
-            }
-        });
+    	territoryObservableList.setAll(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
     }
 }

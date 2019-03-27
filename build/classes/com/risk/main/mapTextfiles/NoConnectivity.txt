@@ -1,0 +1,194 @@
+SET COUNTRIES IN CONTINENTS
+North America,Alaska
+North America,Northwest Territory
+North America,Greenland
+North America,Alberta
+North America,Ontario
+North America,Quebec
+North America,Western United States
+North America,Eastern United States
+North America,Central America
+South America,Venezuela
+South America,Peru
+South America,Brazil
+South America,Argentina
+Europe,Iceland
+Europe,Scandinavia
+Europe,Ukraine
+Europe,Great Britian
+Europe,Northern Europe
+Europe,Southern Europe
+Europe,Western Europe
+Africa,North Africa
+Africa,Egypt
+Africa,East Africa
+Africa,Congo
+Africa,South Africa
+Africa,Madagascar
+Asia,Siam
+Asia,India
+Asia,China
+Asia,Mongolia
+Asia,Japan
+Asia,Irkutsk
+Asia,Yakutsk
+Asia,Kamchatka
+Asia,Siberia
+Asia,Afghanistan
+Asia,Ural
+Asia,Middle East
+Australia,Indonesia
+Australia,New Guinea
+Australia,Western Australia
+Australia,Eastern Australia
+SET NEIGHBORS
+Alaska,Kamchatka
+Alaska,Alberta
+Alaska,Northwest Territory
+Northwest Territory,Alaska
+Northwest Territory,Greenland
+Northwest Territory,Ontario
+Northwest Territory,Alberta
+Greenland,Northwest Territory
+Greenland,Ontario
+Greenland,Quebec
+Greenland,Iceland
+Alberta,Alaska
+Alberta,Northwest Territory
+Alberta,Ontario
+Alberta,Western United States
+Ontario,Northwest Territory
+Ontario,Greenland
+Ontario,Alberta
+Ontario,Quebec
+Ontario,Western United States
+Ontario,Eastern United States
+Quebec,Greenland
+Quebec,Ontario
+Quebec,Eastern United States
+Western United States,Alberta
+Western United States,Ontario
+Western United States,Central America
+Eastern United States,Ontario
+Eastern United States,Quebec
+Eastern United States,Central America
+Central America,Western United States
+Central America,Eastern United States
+Central America,Venezuela
+Venezuela,Central America
+Venezuela,Peru
+Venezuela,Brazil
+Peru,Venezuela
+Peru,Brazil
+Peru,Argentina
+Brazil,Venezuela
+Brazil,Peru
+Brazil,North Africa
+Argentina,Peru
+Iceland,Greenland
+Iceland,Scandinavia
+Iceland,Great Britian
+Scandinavia,Iceland
+Scandinavia,Great Britian
+Scandinavia,Northern Europe
+Scandinavia,Ukraine
+Ukraine,Scandinavia
+Ukraine,Northern Europe
+Ukraine,Southern Europe
+Ukraine,Ural
+Ukraine,Afghanistan
+Ukraine,Middle East
+Great Britian,Iceland
+Great Britian,Scandinavia
+Great Britian,Western Europe
+Great Britian,Northern Europe
+Northern Europe,Great Britian
+Northern Europe,Scandinavia
+Northern Europe,Southern Europe
+Northern Europe,Western Europe
+Northern Europe,Ukraine
+Southern Europe,North Africa
+Southern Europe,Egypt
+Southern Europe,Northern Europe
+Southern Europe,Western Europe
+Southern Europe,Ukraine
+Western Europe,North Africa
+Western Europe,Great Britian
+Western Europe,Northern Europe
+Western Europe,Southern Europe
+North Africa,Brazil
+North Africa,Southern Europe
+North Africa,Western Europe
+North Africa,Congo
+North Africa,Egypt
+North Africa,East Africa
+Egypt,North Africa
+Egypt,Southern Europe
+Egypt,Middle East
+Egypt,East Africa
+East Africa,North Africa
+East Africa,Egypt
+East Africa,Middle East
+East Africa,Congo
+East Africa,Madagascar
+Congo,North Africa
+Congo,East Africa
+Congo,South Africa
+South Africa,Congo
+South Africa,Madagascar
+Madagascar,East Africa
+Madagascar,South Africa
+Siam,India
+Siam,China
+India,Middle East
+India,Afghanistan
+India,Siam
+India,China
+China,Afghanistan
+China,Ural
+China,Siberia
+China,India
+China,Siam
+China,Mongolia
+Mongolia,Siberia
+Mongolia,China
+Mongolia,Irkutsk
+Mongolia,Kamchatka
+Mongolia,Japan
+Japan,Mongolia
+Japan,Kamchatka
+Irkutsk,Siberia
+Irkutsk,Mongolia
+Irkutsk,Kamchatka
+Yakutsk,Siberia
+Yakutsk,Kamchatka
+Kamchatka,Alaska
+Kamchatka,Mongolia
+Kamchatka,Japan
+Kamchatka,Irkutsk
+Kamchatka,Yakutsk
+Siberia,Ural
+Siberia,China
+Siberia,Mongolia
+Siberia,Yakutsk
+Siberia,Irkutsk
+Afghanistan,Ukraine
+Afghanistan,Middle East
+Afghanistan,India
+Afghanistan,Ural
+Afghanistan,China
+Ural,Ukraine
+Ural,Afghanistan
+Ural,Siberia
+Ural,China
+Middle East,Egypt
+Middle East,East Africa
+Middle East,Ukraine
+Middle East,Afghanistan
+Middle East,India
+New Guinea,Eastern Australia
+New Guinea,Western Australia
+Western Australia,Eastern Australia
+Western Australia,New Guinea
+Eastern Australia,Western Australia
+Eastern Australia,New Guinea

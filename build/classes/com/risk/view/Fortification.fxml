@@ -6,14 +6,21 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
-   <children>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0">
-         <children>
-            <Text layoutX="67.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fortification" />
-            <Button fx:id="nextPlayerID" layoutX="54.0" layoutY="136.0" mnemonicParsing="false" onAction="#onNextPlayer" text="reinforcement" />
-         </children>
-      </AnchorPane>
-   </children>
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.risk.controller.FortificationController">
+    <children>
+        <AnchorPane prefHeight="800.0" prefWidth="800.0">
+            <children>
+                <ListView fx:id="Territory" layoutX="23.0" layoutY="53.0" onMouseClicked="#territoryHandler" prefHeight="200.0" prefWidth="200.0" />
+                <ListView fx:id="Adjacent" layoutX="231.0" layoutY="53.0" onMouseClicked="#adjacentHandler" prefHeight="200.0" prefWidth="200.0" />
+                <TextField fx:id="moveField" layoutX="194.0" layoutY="325.0" prefHeight="31.0" prefWidth="58.0" />
+                <Button layoutX="194.0" layoutY="356.0" mnemonicParsing="false" onAction="#moveHandler" text="Move" />
+                <Label layoutX="77.0" layoutY="20.0" text="Your Territory" />
+                <Label layoutX="265.0" layoutY="20.0" text="Connected Territory" />
+                <TextField fx:id="TerritoryArmy" editable="false" layoutX="77.0" layoutY="254.0" prefHeight="31.0" prefWidth="92.0" />
+                <Text layoutX="31.0" layoutY="275.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Army" />
+                <TextField fx:id="AdjacentArmy" editable="false" layoutX="285.0" layoutY="255.0" prefHeight="31.0" prefWidth="92.0" />
+                <Text layoutX="245.0" layoutY="277.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Army" />
+            </children>
+        </AnchorPane>
+    </children>
 </AnchorPane>

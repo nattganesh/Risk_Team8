@@ -7,6 +7,8 @@ package com.risk.model.map;
 
 import com.risk.model.player.Player;
 import java.util.ArrayList;
+
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -16,11 +18,24 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
- * @author Natt
+ * Test cases for country
+ * 
+ * @author Natt 
+ * @author Tianyi
  */
 public class CountryTest {
-    
+	private Continent continent;
+	private Continent continent1;
+	private ArrayList<Country> countries;
+	private Country c1;
+	private Country c2;
+	private Country c3;
+	private Country c4;
+	private Country c5;
+	private Country c6;
+	private Player p;
+	private Player p1;
+	private ArrayList<Country> occupiedCountries1;
     public CountryTest()
     {
     }
@@ -38,6 +53,39 @@ public class CountryTest {
     @Before
     public void setUp()
     {
+    	p = new Player("Green");
+    	p1 = new Player("Red");
+    	occupiedCountries1 = new ArrayList<Country>();
+    	continent = new Continent("Asia",10);
+    	continent1 = new Continent("Europe",10);
+    	c1 = new Country("China");
+    	c2 = new Country("Japan");
+    	c3 = new Country("Siam");
+    	c4 = new Country("Korean");
+    	c5 = new Country("India");
+    	c6 = new Country("Iceland");
+    	occupiedCountries1.add(c1);
+		occupiedCountries1.add(c2);
+		occupiedCountries1.add(c3);
+    	c1.getConnectedCountries().add(c3);
+		c1.getConnectedCountries().add(c4);
+		c1.getConnectedCountries().add(c5);
+		c3.getConnectedCountries().add(c4);
+		p.setOccupiedCountries(occupiedCountries1);
+    	continent.setCountry(c1);
+    	continent.setCountry(c2);
+    	continent.setCountry(c3);
+    	continent.setCountry(c4);
+    	continent.setCountry(c5);
+    	continent.setRuler(p1);
+    	c1.setContinent(continent);
+    	c1.setRuler(p);
+    	c2.setRuler(p);
+    	c3.setRuler(p);
+    	c4.setRuler(p);
+    	c5.setRuler(p1);
+    	c1.setIsOccupied(true);
+    	c1.setArmyCount(10);
     }
     
     @After
@@ -51,12 +99,9 @@ public class CountryTest {
     @Test
     public void testSetContinent()
     {
-        System.out.println("setContinent");
-        Continent continent = null;
-        Country instance = null;
-        instance.setContinent(continent);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        c1.setContinent(continent1);
+        Continent result = c1.getContinent();
+        assertEquals(continent1, result);
     }
 
     /**
@@ -65,13 +110,9 @@ public class CountryTest {
     @Test
     public void testGetName()
     {
-        System.out.println("getName");
-        Country instance = null;
-        String expResult = "";
-        String result = instance.getName();
+        String expResult = "China";
+        String result = c1.getName();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -80,13 +121,8 @@ public class CountryTest {
     @Test
     public void testGetContinent()
     {
-        System.out.println("getContinent");
-        Country instance = null;
-        Continent expResult = null;
-        Continent result = instance.getContinent();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Continent result = c1.getContinent();
+        assertEquals(continent, result);
     }
 
     /**
@@ -95,13 +131,9 @@ public class CountryTest {
     @Test
     public void testGetArmyCount()
     {
-        System.out.println("getArmyCount");
-        Country instance = null;
-        int expResult = 0;
-        int result = instance.getArmyCount();
+    	int expResult = 10;
+        int result = c1.getArmyCount();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -110,12 +142,11 @@ public class CountryTest {
     @Test
     public void testSetArmyCount()
     {
-        System.out.println("setArmyCount");
-        int armyCount = 0;
-        Country instance = null;
-        instance.setArmyCount(armyCount);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    	int expResult = 15;
+        int armyCount = 5;
+        c1.setArmyCount(armyCount);
+        int result = c1.getArmyCount();
+        assertEquals(expResult, result);
     }
 
     /**
@@ -124,12 +155,11 @@ public class CountryTest {
     @Test
     public void testReduceArmyCount()
     {
-        System.out.println("reduceArmyCount");
-        int armyCount = 0;
-        Country instance = null;
-        instance.reduceArmyCount(armyCount);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    	int expResult = 5;
+        int armyCount = 5;
+        c1.reduceArmyCount(armyCount);
+        int result = c1.getArmyCount();
+        assertEquals(expResult, result);
     }
 
     /**
@@ -138,13 +168,21 @@ public class CountryTest {
     @Test
     public void testIsIsOccupied()
     {
-        System.out.println("isIsOccupied");
-        Country instance = null;
-        boolean expResult = false;
-        boolean result = instance.isIsOccupied();
+        boolean expResult = true;
+        boolean result = c1.isIsOccupied();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    }
+    
+    /**
+     * Test of isIsOccupied method, of class Country.
+     */
+    @Test
+    public void testIsIsOccupied1()
+    {
+        
+    	boolean expResult = false;
+        boolean result = c2.isIsOccupied();
+        assertEquals(expResult, result);
     }
 
     /**
@@ -153,12 +191,10 @@ public class CountryTest {
     @Test
     public void testSetIsOccupied()
     {
-        System.out.println("setIsOccupied");
-        boolean isOccupied = false;
-        Country instance = null;
-        instance.setIsOccupied(isOccupied);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        c1.setIsOccupied(false);
+        boolean expResult = false;
+        boolean result = c1.isIsOccupied();
+        assertEquals(expResult, result);
     }
 
     /**
@@ -167,13 +203,8 @@ public class CountryTest {
     @Test
     public void testGetRuler()
     {
-        System.out.println("getRuler");
-        Country instance = null;
-        Player expResult = null;
-        Player result = instance.getRuler();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Player result = c1.getRuler();
+        assertEquals(p, result);
     }
 
     /**
@@ -182,12 +213,11 @@ public class CountryTest {
     @Test
     public void testSetRuler()
     {
-        System.out.println("setRuler");
-        Player ruler = null;
-        Country instance = null;
-        instance.setRuler(ruler);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    	Player result = c6.getRuler();
+    	assertEquals(null, result);
+        c6.setRuler(p1);
+        result = c6.getRuler();
+        assertEquals(p1, result);
     }
 
     /**
@@ -196,13 +226,12 @@ public class CountryTest {
     @Test
     public void testGetConnectedCountries()
     {
-        System.out.println("getConnectedCountries");
-        Country instance = null;
-        ArrayList<Country> expResult = null;
-        ArrayList<Country> result = instance.getConnectedCountries();
+        ArrayList<Country> expResult = new ArrayList<Country>();
+        expResult.add(c3);
+        expResult.add(c4);
+        expResult.add(c5);
+        ArrayList<Country> result = c1.getConnectedCountries();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -211,12 +240,17 @@ public class CountryTest {
     @Test
     public void testSetConnectedCountries()
     {
-        System.out.println("setConnectedCountries");
-        ArrayList<Country> connectedCountries = null;
-        Country instance = null;
-        instance.setConnectedCountries(connectedCountries);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    	ArrayList<Country> result0 = c2.getConnectedCountries();
+    	assertEquals(0,result0.size());
+        ArrayList<Country> connectedCountries = new ArrayList<Country>();
+        connectedCountries.add(c3);
+        connectedCountries.add(c4);
+        c2.setConnectedCountries(connectedCountries);
+        ArrayList<Country> expResult = new ArrayList<Country>();
+        expResult.add(c3);
+        expResult.add(c4);
+        ArrayList<Country> result = c2.getConnectedCountries();
+        assertEquals(expResult, result);
     }
 
     /**
@@ -225,14 +259,8 @@ public class CountryTest {
     @Test
     public void testGetConnectedCountry()
     {
-        System.out.println("getConnectedCountry");
-        String name = "";
-        Country instance = null;
-        Country expResult = null;
-        Country result = instance.getConnectedCountry(name);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Country result = c1.getConnectedCountry("Siam");
+        assertEquals(c3, result);
     }
 
     /**
@@ -241,13 +269,9 @@ public class CountryTest {
     @Test
     public void testGetConnectedOwned()
     {
-        System.out.println("getConnectedOwned");
-        Country instance = null;
-        ObservableList<Country> expResult = null;
-        ObservableList<Country> result = instance.getConnectedOwned();
+        ObservableList<Country> expResult = FXCollections.observableArrayList(c3,c4);
+        ObservableList<Country> result = c1.getConnectedOwned();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -256,13 +280,9 @@ public class CountryTest {
     @Test
     public void testGetConnectedEnemy()
     {
-        System.out.println("getConnectedEnemy");
-        Country instance = null;
-        ObservableList<Country> expResult = null;
-        ObservableList<Country> result = instance.getConnectedEnemy();
+    	ObservableList<Country> expResult = FXCollections.observableArrayList(c5);
+        ObservableList<Country> result = c1.getConnectedEnemy();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }

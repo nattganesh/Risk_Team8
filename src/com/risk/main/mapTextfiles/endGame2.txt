@@ -1,0 +1,6 @@
+SET COUNTRIES IN CONTINENTS
+North America,Alaska
+South America,Argentina
+SET NEIGHBORS
+Alaska,Argentina
+Argentina,Alaska

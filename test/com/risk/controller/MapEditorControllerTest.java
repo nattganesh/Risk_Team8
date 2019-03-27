@@ -5,10 +5,16 @@
  */
 package com.risk.controller;
 
+import com.risk.model.ActionModel;
+import com.risk.model.DeckModel;
+import com.risk.model.MapModel;
+import com.risk.model.PlayerPhaseModel;
+import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.scene.input.MouseEvent;
+import com.risk.model.player.Player;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -17,7 +23,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
+ * Test cases for map editor controller
+ * 
  * @author Natt
  */
 public class MapEditorControllerTest {
@@ -39,68 +46,18 @@ public class MapEditorControllerTest {
     @Before
     public void setUp()
     {
+    
+    	PlayerPhaseModel.getPlayerModel().getPlayers().clear();
+    	MapModel.getMapModel().getCountries().clear();
+    	
     }
     
     @After
     public void tearDown()
     {
+    	
     }
 
-    /**
-     * Test of initialize method, of class MapEditorController.
-     */
-    @Test
-    public void testInitialize()
-    {
-        System.out.println("initialize");
-        URL arg0 = null;
-        ResourceBundle arg1 = null;
-        MapEditorController instance = new MapEditorController();
-        instance.initialize(arg0, arg1);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of loadTerritoryHandler method, of class MapEditorController.
-     */
-    @Test
-    public void testLoadTerritoryHandler()
-    {
-        System.out.println("loadTerritoryHandler");
-        MouseEvent arg0 = null;
-        MapEditorController instance = new MapEditorController();
-        instance.loadTerritoryHandler(arg0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of loadAdjacentHandler method, of class MapEditorController.
-     */
-    @Test
-    public void testLoadAdjacentHandler()
-    {
-        System.out.println("loadAdjacentHandler");
-        MouseEvent arg0 = null;
-        MapEditorController instance = new MapEditorController();
-        instance.loadAdjacentHandler(arg0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of territoryAddHandler method, of class MapEditorController.
-     */
-    @Test
-    public void testTerritoryAddHandler()
-    {
-        System.out.println("territoryAddHandler");
-        MapEditorController instance = new MapEditorController();
-        instance.territoryAddHandler();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
 
     /**
      * Test of searchTerritory method, of class MapEditorController.
@@ -109,157 +66,27 @@ public class MapEditorControllerTest {
     public void testSearchTerritory()
     {
         System.out.println("searchTerritory");
-        String countryName = "";
         MapEditorController instance = new MapEditorController();
-        Country expResult = null;
-        Country result = instance.searchTerritory(countryName);
+        Country country1 = new Country("country1");
+        Country country2 = new Country("country2");
+        Continent continent = new Continent("continent1", 10);
+        
+        continent.getCountries().add(country1);
+        continent.getCountries().add(country2);
+        country1.setContinent(continent);
+        country2.setContinent(continent);
+        ObservableList<Continent> continentslist = FXCollections.observableArrayList();
+        continentslist.add(continent);
+        
+        
+             
+        Country expResult = country1;
+        Country result = instance.searchTerritory(continentslist, country1.getName());
+      
+        
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of adjacentAddHandler method, of class MapEditorController.
-     */
-    @Test
-    public void testAdjacentAddHandler()
-    {
-        System.out.println("adjacentAddHandler");
-        MapEditorController instance = new MapEditorController();
-        instance.adjacentAddHandler();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of territoryDeleteHandler method, of class MapEditorController.
-     */
-    @Test
-    public void testTerritoryDeleteHandler()
-    {
-        System.out.println("territoryDeleteHandler");
-        MapEditorController instance = new MapEditorController();
-        instance.territoryDeleteHandler();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of adjacentDeleteHandler method, of class MapEditorController.
-     */
-    @Test
-    public void testAdjacentDeleteHandler()
-    {
-        System.out.println("adjacentDeleteHandler");
-        MapEditorController instance = new MapEditorController();
-        instance.adjacentDeleteHandler();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of loadMapHandler method, of class MapEditorController.
-     */
-    @Test
-    public void testLoadMapHandler() throws Exception
-    {
-        System.out.println("loadMapHandler");
-        MapEditorController instance = new MapEditorController();
-        instance.loadMapHandler();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of saveMapHandler method, of class MapEditorController.
-     */
-    @Test
-    public void testSaveMapHandler() throws Exception
-    {
-        System.out.println("saveMapHandler");
-        MapEditorController instance = new MapEditorController();
-        instance.saveMapHandler();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of newMapHandler method, of class MapEditorController.
-     */
-    @Test
-    public void testNewMapHandler()
-    {
-        System.out.println("newMapHandler");
-        MapEditorController instance = new MapEditorController();
-        instance.newMapHandler();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of startGameHandler method, of class MapEditorController.
-     */
-    @Test
-    public void testStartGameHandler()
-    {
-        System.out.println("startGameHandler");
-        MapEditorController instance = new MapEditorController();
-        instance.startGameHandler();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of renderView method, of class MapEditorController.
-     */
-    @Test
-    public void testRenderView()
-    {
-        System.out.println("renderView");
-        MapEditorController instance = new MapEditorController();
-        instance.renderView();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of initializeContinents method, of class MapEditorController.
-     */
-    @Test
-    public void testInitializeContinents()
-    {
-        System.out.println("initializeContinents");
-        MapEditorController instance = new MapEditorController();
-        instance.initializeContinents();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of initializePlayers method, of class MapEditorController.
-     */
-    @Test
-    public void testInitializePlayers()
-    {
-        System.out.println("initializePlayers");
-        MapEditorController instance = new MapEditorController();
-        instance.initializePlayers();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of clearMapEditor method, of class MapEditorController.
-     */
-    @Test
-    public void testClearMapEditor()
-    {
-        System.out.println("clearMapEditor");
-        MapEditorController instance = new MapEditorController();
-        instance.clearMapEditor();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
 
     /**
      * Test of setPlayers method, of class MapEditorController.
@@ -268,11 +95,18 @@ public class MapEditorControllerTest {
     public void testSetPlayers()
     {
         System.out.println("setPlayers");
-        int numberOfPlayer = 0;
+        
         MapEditorController instance = new MapEditorController();
-        instance.setPlayers(numberOfPlayer);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+	        
+        int numbPlayer = 5;
+        instance.setPlayers(numbPlayer);
+        
+        int expResult = 5;
+        int result =  PlayerPhaseModel.getPlayerModel().getPlayers().size();
+        
+        assertEquals(expResult, result);
+      
+        
     }
 
     /**
@@ -284,8 +118,10 @@ public class MapEditorControllerTest {
         System.out.println("setDeck");
         MapEditorController instance = new MapEditorController();
         instance.setDeck();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int expResult = 44;
+        int result =  DeckModel.getCardModel().getCards().length;
+        
+        assertEquals(result, expResult);
     }
 
     /**
@@ -296,22 +132,39 @@ public class MapEditorControllerTest {
     {
         System.out.println("determinePlayersStartingOrder");
         MapEditorController instance = new MapEditorController();
+        
+        PlayerPhaseModel.getPlayerModel().getPlayers().add(new Player("dummy1"));
+        PlayerPhaseModel.getPlayerModel().getPlayers().add(new Player("dummy2"));
         instance.determinePlayersStartingOrder();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        int expResult = 2;
+        int result =  PlayerPhaseModel.getPlayerModel().getNumberOfPlayer();
+        
+        assertEquals(expResult, result);
+       
     }
 
     /**
-     * Test of assignCountriesToPlayers method, of class MapEditorController.
+     * This is a test for assigning country to players
      */
     @Test
     public void testAssignCountriesToPlayers()
     {
         System.out.println("assignCountriesToPlayers");
+        PlayerPhaseModel.getPlayerModel().getPlayers().add(new Player("dummy1"));
+        PlayerPhaseModel.getPlayerModel().getPlayers().add(new Player("dummy2"));
+        MapModel.getMapModel().getCountries().add(new Country("country1"));
+        MapModel.getMapModel().getCountries().add(new Country("country2"));
+        
         MapEditorController instance = new MapEditorController();
         instance.assignCountriesToPlayers();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        
+        int expResult = 1;
+        int result =  PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries().get(0).getArmyCount();
+        
+        assertEquals(expResult, result);
+      
     }
 
     /**
@@ -320,11 +173,22 @@ public class MapEditorControllerTest {
     @Test
     public void testAutoAssignCountriesToPlayers()
     {
-        System.out.println("autoAssignCountriesToPlayers");
+    	System.out.println("assignCountriesToPlayers");
+        PlayerPhaseModel.getPlayerModel().getPlayers().add(new Player("dummy1"));
+        PlayerPhaseModel.getPlayerModel().getPlayers().add(new Player("dummy2"));
+
+        MapModel.getMapModel().getCountries().add(new Country("country1"));
+        MapModel.getMapModel().getCountries().add(new Country("country2"));
+
+        
         MapEditorController instance = new MapEditorController();
+        instance.calcStartingArmies();
         instance.autoAssignCountriesToPlayers();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+      
+        int expResult = 80;
+        int result1 =  PlayerPhaseModel.getPlayerModel().getPlayers().get(0).getOccupiedCountries().get(0).getArmyCount();
+        int result2 =  PlayerPhaseModel.getPlayerModel().getPlayers().get(1).getOccupiedCountries().get(0).getArmyCount();
+        assertEquals(expResult, result1 + result2);
     }
 
     /**
@@ -334,10 +198,18 @@ public class MapEditorControllerTest {
     public void testCalcStartingArmies()
     {
         System.out.println("calcStartingArmies");
+        
+        PlayerPhaseModel.getPlayerModel().getPlayers().add(new Player("dummy1"));
+        PlayerPhaseModel.getPlayerModel().getPlayers().add(new Player("dummy2"));
+
+        MapModel.getMapModel().getCountries().add(new Country("country1"));
+        MapModel.getMapModel().getCountries().add(new Country("country2"));
+        
         MapEditorController instance = new MapEditorController();
         instance.calcStartingArmies();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int result = 40;
+        int expResult = PlayerPhaseModel.getPlayerModel().getPlayers().get(0).getStartingPoints();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -347,13 +219,77 @@ public class MapEditorControllerTest {
     public void testCalcStartingArmiesHelper()
     {
         System.out.println("calcStartingArmiesHelper");
-        int getPlayerSize = 0;
+        int getPlayerSize = 6;
         MapEditorController instance = new MapEditorController();
-        int expResult = 0;
-        int result = instance.calcStartingArmiesHelper(getPlayerSize);
+        int expResult = 150;
+        int result = 0;
+        for (int i = 2; i <= getPlayerSize; i++)
+        {
+        	 result += instance.calcStartingArmiesHelper(i);
+        }
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+      
     }
     
+    /**
+     * This is a test for removing adjacent country
+     */
+    @Test
+    public void testRemoveAdjacentCountry()
+    {
+    	Country country = new Country("country1");
+    	Country country1 = new Country("country2");
+    	Continent continent1 = new Continent("continent1", 10);
+    	Continent continent2 = new Continent("continent2", 10);
+    	
+    	country.getConnectedCountries().add(country1);
+    	country1.getConnectedCountries().add(country);
+    	
+    	continent1.getCountries().add(country);
+    	continent2.getCountries().add(country1);
+    
+	    ObservableList<Continent> continentslist = FXCollections.observableArrayList();
+	    continentslist.add(continent1);
+	    continentslist.add(continent2);
+	    
+	    MapEditorController instance = new MapEditorController();
+	    instance.removeAdjacentCountry(continentslist, country, country1);
+	    
+	
+	    int expResult = 0; 
+	    int result = country1.getConnectedCountries().size();
+	    
+	    assertEquals(expResult, result);
+	    
+	     
+    }
+    
+    /**
+     * This method tests for whether country exists in the adjacent list
+     */
+    @Test
+    public void testExistsInAdjacentList()
+    {
+    	
+    	Country country1 = new Country ("hello1");
+    	Country connected1 = new Country ("exists");
+    	Country connected2 = new Country ("hello3");
+    	
+    	country1.getConnectedCountries().add(connected1);
+    	country1.getConnectedCountries().add(connected2);
+    	
+    	Country countryA = new Country ("hello1");
+    	Country connectedB = new Country ("does not");
+    	Country connectedC = new Country ("hello3");
+    	
+    	countryA.getConnectedCountries().add(connectedB);
+    	countryA.getConnectedCountries().add(connectedC);
+    	
+    	String countryName = "exists";
+    	MapEditorController instance = new MapEditorController();
+    	assertTrue(instance.existsInAdjacentList(country1, countryName));
+    	assertFalse(instance.existsInAdjacentList(countryA, countryName));
+
+    }
+        
 }

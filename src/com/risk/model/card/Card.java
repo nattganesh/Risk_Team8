@@ -14,8 +14,9 @@ public class Card {
     private Player owner;
 
     /**
-     * @param category type of card
-     * @param owner player of that card
+     * This method is used to construct a new card
+     * 
+     * @param category The type of card
      */
     public Card(String category)
     {
@@ -23,6 +24,12 @@ public class Card {
         this.owner = null;
     }
 
+    /**
+     * This method is used to construct a new card
+     * 
+     * @param category The type of card
+     * @param owner The owner of card
+     */
     public Card(String category, Player owner)
     {
         this.category = category;
@@ -50,7 +57,7 @@ public class Card {
     /**
      * This method gets the name of the owner for the type of card
      *
-     * @return owner returns the owner name of the card
+     * @return owner returns the owner of the card
      */
     public Player getOwner()
     {
@@ -67,9 +74,4 @@ public class Card {
         this.owner = player;
     }
 
-    public void removeCard(Player player)
-    {
-        this.owner = null;
-        player.removeCard(this);
-    }
 }

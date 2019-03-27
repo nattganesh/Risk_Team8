@@ -1,12 +1,17 @@
 /**
  * Necessary for handling card exchange logic for reinforcement phase
- *
+ * * The JavaFx part is done by DKM
+ * The logic part is done by Tianyi
+ * 
  * @author DKM
  * @author Tianyi
+ * @version 2.0
+ * 
  */
 package com.risk.controller;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.ResourceBundle;
 
@@ -15,6 +20,7 @@ import com.risk.model.MapModel;
 import com.risk.model.PlayerPhaseModel;
 import com.risk.model.card.Card;
 import com.risk.model.map.Country;
+import com.risk.model.player.Player;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,10 +30,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 
-/**
- * @author DKM
- *
- */
+
 public class CardController extends Observable implements Initializable {
 
     @FXML
@@ -39,7 +42,9 @@ public class CardController extends Observable implements Initializable {
     private int reinforcement;
 
     ActionModel actions;
-
+    Player player;
+    
+    ObservableList<Card> yourObservableList = FXCollections.observableArrayList();
     ObservableList<Card> tradeObservableList = FXCollections.observableArrayList();
 
     public void renderView()
@@ -59,14 +64,36 @@ public class CardController extends Observable implements Initializable {
                 }
             }
         });
+        tradeCard.setCellFactory(param -> new ListCell<Card>() {
+            @Override
+            protected void updateItem(Card card, boolean empty)
+            {
+                super.updateItem(card, empty);
+                if (empty || card == null || card.getCatagory() == null)
+                {
+                    setText(null);
+                }
+                else
+                {
+                    setText(card.getCatagory());
+                }
+            }
+        });
     }
 
+    /**
+     * This method is data binding for connection between controller and UI.
+     * 
+     * @see javafx.fxml.Initializable
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
         actions = ActionModel.getActionModel();
-        yourCard.setItems(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getCards());
+        yourCard.setItems(yourObservableList);
         tradeCard.setItems(tradeObservableList);
+        yourObservableList.addAll(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getCards());
+        player = PlayerPhaseModel.getPlayerModel().getCurrentPlayer();
         renderView();
     }
 
@@ -102,6 +129,7 @@ public class CardController extends Observable implements Initializable {
         }
     }
 
+    
     /**
      * This method is used to update the total reinforcement based on the cards
      * the player chooses And update the cards the player owned.
@@ -111,14 +139,11 @@ public class CardController extends Observable implements Initializable {
     {
         if (tradeCard.getItems().size() == 3)
         {
-            if (cardValidation(tradeCard.getItems()))
+            if (player.cardValidation(tradeCard.getItems()))
             {
-                reinforcement = PlayerPhaseModel.getPlayerModel().calculateReinforcementFromCards();
-                for (Card c : tradeCard.getItems())
-                {
-                    c.removeCard(PlayerPhaseModel.getPlayerModel().getCurrentPlayer());
-                }
-                System.out.println(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getCards());
+                reinforcement = player.calculateReinforcementFromCards();
+                               
+                player.exchangeCards(tradeCard.getItems());
                 tradeCard.getItems().clear();
                 actions.addAction("you exchanged cards");
                 setChanged();
@@ -136,14 +161,21 @@ public class CardController extends Observable implements Initializable {
         }
         else
         {
-            actions.addAction("you have less than 3 cards");
+            actions.addAction("you only can exchange 3 cards once");
         }
     }
 
+    /**
+     * This method handles skipping of card exchange
+     */
     @FXML
     public void skipExchangeHandler()
     {
-        if (PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getCards().size() > 5)
+    	if (yourCard.getItems().size() + tradeCard.getItems().size() >= 5)
+    	{
+    		actions.addAction("5+ cards == you must exchange");
+    	}
+    	else if (PlayerPhaseModel.getPlayerModel().getCurrentPlayer().checkIfCardsMaximum())
         {
             actions.addAction("5+ cards == you must exchange");
         }
@@ -151,32 +183,6 @@ public class CardController extends Observable implements Initializable {
         {
             setChanged();
             notifyObservers();
-        }
-    }
-
-    /**
-     * This method is used to validate the cards the player chooses to exchange
-     *
-     * @param selectedCards A list of cards the player chooses to exchange for
-     * armies
-     * @return The result corresponding to the countries the player occupied
-     */
-    public boolean cardValidation(ObservableList<Card> selectedCards)
-    {
-        ObservableList<Card> cards = FXCollections.observableArrayList();
-        cards = selectedCards;
-
-        if (((cards.get(0).getCatagory().equals(cards.get(1).getCatagory()))
-                && (cards.get(0).getCatagory().equals(cards.get(2).getCatagory())))
-                || ((!(cards.get(0).getCatagory().equals(cards.get(1).getCatagory())))
-                && (!(cards.get(0).getCatagory().equals(cards.get(2).getCatagory())))
-                && (!(cards.get(1).getCatagory().equals(cards.get(2).getCatagory())))))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
         }
     }
 

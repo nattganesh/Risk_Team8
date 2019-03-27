@@ -1,0 +1,44 @@
+SET COUNTRIES IN CONTINENTS
+North America,Alaska
+North America,Northwest Territory
+North America,Northwest Territory
+North America,Greenland
+North America,Alberta
+North America,Ontario
+North America,Quebec
+North America,Western United States
+North America,Eastern United States
+North America,Central America
+South America,Venezuela
+South America,Peru
+South America,Brazil
+South America,Argentina
+Europe,Iceland
+Europe,Scandinavia
+Europe,Ukraine
+Europe,Great Britian
+Europe,Northern Europe
+Europe,Southern Europe
+Europe,Western Europe
+Africa,North Africa
+Africa,Egypt
+Africa,East Africa
+Africa,Congo
+Africa,South Africa
+Africa,Madagascar
+Asia,Siam
+Asia,India
+Asia,China
+Asia,Mongolia
+Asia,Japan
+Asia,Irkutsk
+Asia,Yakutsk
+Asia,Kamchatka
+Asia,Siberia
+Asia,Afghanistan
+Asia,Ural
+Asia,Middle East
+Australia,Indonesia
+Australia,New Guinea
+Australia,Western Australia
+Australia,Eastern Australia

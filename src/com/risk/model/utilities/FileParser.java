@@ -21,10 +21,10 @@ import com.risk.model.MapModel;
 public class FileParser {
 
     static MapModel maps = MapModel.getMapModel();
-    private String text = ""; // file parser
+    private String text = ""; 
 
     /**
-     * @param m this is the model of the game
+     * This is used to construct a new FileParser
      */
     public FileParser()
     {
@@ -36,6 +36,7 @@ public class FileParser {
      * @param input Scanner of the input text file
      * @throws CannotFindException Exception thrown when file formatting is
      * wrong
+     * @throws DuplicatesException Exception thrown when a country appears more than once in the map
      */
     public void setCountriesInContinents(Scanner input) throws CannotFindException, DuplicatesException
     {
@@ -46,7 +47,7 @@ public class FileParser {
             {
                 text = input.nextLine();
                 int b = 1;
-                while (input.hasNextLine() && b <= Country.MAX_NUMBER_OF_COUNTRIES)
+                while (input.hasNextLine() && !text.equals("SET NEIGHBORS"))
                 {
                     b++;
                     String nameOfContinent = text.substring(0, text.indexOf(","));
@@ -113,8 +114,8 @@ public class FileParser {
      * countries. Throws error if formatting of text file is wrong or number of
      * country in each continent does not equal predefined number.
      *
+     * @param input The country name the player input
      * @throws CannotFindException Exception thrown when formatting is wrong
-     * @throws CountLimitException Exception thrown when number of country in
      * each continent does not equal predefined number
      */
     public void setNeighboringCountries(Scanner input) throws CannotFindException
