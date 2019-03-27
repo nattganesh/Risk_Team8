@@ -12,7 +12,6 @@
 package com.risk.model.player;
 
 import com.risk.model.MapModel;
-import com.risk.model.PlayerPhaseModel;
 import com.risk.model.card.Card;
 import com.risk.model.dice.Dice;
 import com.risk.model.map.Continent;
