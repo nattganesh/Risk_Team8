@@ -23,7 +23,7 @@ public class GamePhaseModel extends Observable {
 
     /**
      * This method is used to set the phase of game
-     * 
+     *
      * @param p name of the game phase
      */
     public void setPhase(String p)
@@ -34,8 +34,17 @@ public class GamePhaseModel extends Observable {
     }
 
     /**
+     * This method is used to get the phase of game
+     * @return String phase
+     */
+    public String getPhase()
+    {
+        return this.phase;
+    }
+
+    /**
      * This method is used to get the game phase model
-     * 
+     *
      * @return this returns the GamePhaseModel class as a singleton
      */
     public static GamePhaseModel getGamePhaseModel()
