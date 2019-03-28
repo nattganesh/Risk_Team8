@@ -11,6 +11,7 @@ import com.risk.model.MapModel;
 import com.risk.model.PlayerPhaseModel;
 import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
+import com.risk.model.player.HumanPlayer;
 import com.risk.model.player.Player;
 
 import javafx.collections.FXCollections;
@@ -133,8 +134,8 @@ public class MapEditorControllerTest {
         System.out.println("determinePlayersStartingOrder");
         MapEditorController instance = new MapEditorController();
         
-        PlayerPhaseModel.getPlayerModel().getPlayers().add(new Player("dummy1"));
-        PlayerPhaseModel.getPlayerModel().getPlayers().add(new Player("dummy2"));
+        PlayerPhaseModel.getPlayerModel().getPlayers().add(new HumanPlayer("dummy1"));
+        PlayerPhaseModel.getPlayerModel().getPlayers().add(new HumanPlayer("dummy2"));
         instance.determinePlayersStartingOrder();
         
         int expResult = 2;
@@ -151,8 +152,8 @@ public class MapEditorControllerTest {
     public void testAssignCountriesToPlayers()
     {
         System.out.println("assignCountriesToPlayers");
-        PlayerPhaseModel.getPlayerModel().getPlayers().add(new Player("dummy1"));
-        PlayerPhaseModel.getPlayerModel().getPlayers().add(new Player("dummy2"));
+        PlayerPhaseModel.getPlayerModel().getPlayers().add(new HumanPlayer("dummy1"));
+        PlayerPhaseModel.getPlayerModel().getPlayers().add(new HumanPlayer("dummy2"));
         MapModel.getMapModel().getCountries().add(new Country("country1"));
         MapModel.getMapModel().getCountries().add(new Country("country2"));
         
@@ -174,8 +175,8 @@ public class MapEditorControllerTest {
     public void testAutoAssignCountriesToPlayers()
     {
     	System.out.println("assignCountriesToPlayers");
-        PlayerPhaseModel.getPlayerModel().getPlayers().add(new Player("dummy1"));
-        PlayerPhaseModel.getPlayerModel().getPlayers().add(new Player("dummy2"));
+        PlayerPhaseModel.getPlayerModel().getPlayers().add(new HumanPlayer("dummy1"));
+        PlayerPhaseModel.getPlayerModel().getPlayers().add(new HumanPlayer("dummy2"));
 
         MapModel.getMapModel().getCountries().add(new Country("country1"));
         MapModel.getMapModel().getCountries().add(new Country("country2"));
@@ -199,8 +200,8 @@ public class MapEditorControllerTest {
     {
         System.out.println("calcStartingArmies");
         
-        PlayerPhaseModel.getPlayerModel().getPlayers().add(new Player("dummy1"));
-        PlayerPhaseModel.getPlayerModel().getPlayers().add(new Player("dummy2"));
+        PlayerPhaseModel.getPlayerModel().getPlayers().add(new HumanPlayer("dummy1"));
+        PlayerPhaseModel.getPlayerModel().getPlayers().add(new HumanPlayer("dummy2"));
 
         MapModel.getMapModel().getCountries().add(new Country("country1"));
         MapModel.getMapModel().getCountries().add(new Country("country2"));

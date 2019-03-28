@@ -6,6 +6,7 @@
 package com.risk.model;
 
 import com.risk.model.card.Card;
+import com.risk.model.player.HumanPlayer;
 import com.risk.model.player.Player;
 
 import javafx.collections.ObservableList;
@@ -45,7 +46,7 @@ public class DeckModelTest {
     public void setUp()
     {
     	deckModel = new DeckModel();
-    	p = new Player("Green");
+    	p = new HumanPlayer("Green");
     }
     
     @After

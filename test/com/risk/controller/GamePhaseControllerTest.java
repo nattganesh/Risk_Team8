@@ -12,6 +12,7 @@ import com.risk.model.MapModel;
 import com.risk.model.PlayerPhaseModel;
 import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
+import com.risk.model.player.HumanPlayer;
 import com.risk.model.player.Player;
 
 import javafx.collections.FXCollections;
@@ -75,7 +76,7 @@ public class GamePhaseControllerTest {
     	Country country2 = new Country("c2");
     	MapModel.getMapModel().addCountry(country1);
     	MapModel.getMapModel().addCountry(country2);
-    	Player p = new Player("player1");
+    	Player p = new HumanPlayer("player1");
     	p.addCountry(country1);
       	p.addCountry(country2);
     	

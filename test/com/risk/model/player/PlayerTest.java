@@ -46,6 +46,7 @@ public class PlayerTest {
 	private Card card1;
 	private Card card2;
 	private Card card3;
+	
     public PlayerTest()
     {
     }
@@ -53,8 +54,8 @@ public class PlayerTest {
     @Before
     public void setUp()
     {
-		p = new Player("Green");
-		p2 = new Player("Red");
+		p = new HumanPlayer("Green");
+		p2 = new HumanPlayer("Red");
 		occupiedCountries1 = new ArrayList<Country>();
 		occupiedCountries = new ArrayList<Country>();
 		continent = new Continent("Asia",10);

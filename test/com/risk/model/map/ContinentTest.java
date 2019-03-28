@@ -5,6 +5,7 @@
  */
 package com.risk.model.map;
 
+import com.risk.model.player.HumanPlayer;
 import com.risk.model.player.Player;
 import java.util.ArrayList;
 import org.junit.After;
@@ -50,8 +51,8 @@ public class ContinentTest {
     	c3 = new Country("Siam");
     	continent.setCountry(c1);
     	continent.setCountry(c2);
-    	p = new Player("Green");
-    	p1 = new Player("Red");
+    	p = new HumanPlayer("Green");
+    	p1 = new HumanPlayer("Red");
     	continent.setRuler(p1);
     }
     
