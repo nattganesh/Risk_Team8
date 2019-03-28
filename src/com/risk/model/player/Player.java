@@ -30,6 +30,27 @@ public abstract class Player extends Observable {
     private int totalArmy;
     private int startingPoints;
     private boolean playerLost = false;
+    private boolean isComputerPlayer;
+
+    /**
+     * Constructor for Player class
+     *
+     * @param name the name of the player in string
+     */
+    public Player(String name)
+    {
+        this.name = name;
+    }
+
+    public boolean isComputerPlayer()
+    {
+        return isComputerPlayer;
+    }
+
+    public void setIsComputerPlayer(boolean isComputerPlayer)
+    {
+        this.isComputerPlayer = isComputerPlayer;
+    }
 
     /**
      * This method increases total army of player object by count
@@ -59,17 +80,6 @@ public abstract class Player extends Observable {
     public int getTotalArmy()
     {
         return totalArmy;
-    }
-
-    /**
-     * Constructor for Player class
-     *
-     * @param name the name of the player in string
-     */
-    public Player(String name)
-    {
-        this.name = name;
-
     }
 
     /**
