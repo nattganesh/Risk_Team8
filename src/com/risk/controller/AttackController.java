@@ -369,9 +369,8 @@ public class AttackController implements Initializable, Observer {
         }
         if (!PlayerPhaseModel.getPlayerModel().getCurrentPlayer().isAnyCountriesConnected())
         {
-            int currentIndex = PlayerPhaseModel.getPlayerModel().getPlayerIndex();
-            PlayerPhaseModel.getPlayerModel().setPlayerIndex((currentIndex + 1) % PlayerPhaseModel.getPlayerModel().getNumberOfPlayer());
-            GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
+        	 PlayerPhaseModel.getPlayerModel().setNextPlayer();
+             GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
         }
         else {
              GamePhaseModel.getGamePhaseModel().setPhase("fortification");

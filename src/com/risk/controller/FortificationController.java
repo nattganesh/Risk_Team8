@@ -174,8 +174,7 @@ public class FortificationController implements Initializable {
                 TerritoryArmy.setText(Integer.toString(Territory.getSelectionModel().getSelectedItem().getArmyCount()));
                 actions.addAction("Move Successfully");
 
-                int currentIndex = PlayerPhaseModel.getPlayerModel().getPlayerIndex();
-                PlayerPhaseModel.getPlayerModel().setPlayerIndex((currentIndex + 1) % PlayerPhaseModel.getPlayerModel().getNumberOfPlayer());
+                PlayerPhaseModel.getPlayerModel().setNextPlayer();
                 GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
             }
             else

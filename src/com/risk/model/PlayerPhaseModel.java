@@ -64,6 +64,19 @@ public class PlayerPhaseModel extends Observable implements Observer {
     {
         return currentPlayerIndex;
     }
+    
+    public void setNextPlayer()
+    {
+    	
+    	while (true)
+    	{
+    		if (!playerList.get(++currentPlayerIndex % playerList.size()).isPlayerLost())
+    		{
+    			playerList.get(currentPlayerIndex % playerList.size());
+    			break;
+    		}
+    	}
+    }
 
     /**
      *
@@ -81,7 +94,7 @@ public class PlayerPhaseModel extends Observable implements Observer {
      */
     public Player getCurrentPlayer()
     {
-        return playerList.get(currentPlayerIndex);
+        return playerList.get(currentPlayerIndex % playerList.size());
     }
 
     /**

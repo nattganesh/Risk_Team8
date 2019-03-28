@@ -54,7 +54,13 @@ public class Player extends Observable {
      */
     public void reduceTotalArmy(int count)
     {
-        totalArmy = totalArmy - count;
+    	totalArmy = totalArmy - count;
+    	if (totalArmy <= 0)
+    	{
+    		System.out.println(getName() + " has lost");
+    		playerLost = true;
+    	}
+        
     }
 
     /**
@@ -267,8 +273,12 @@ public class Player extends Observable {
                 defend.reduceArmyCount(1);
                 break;
             case 2:
+            	defend.getRuler().removeCountry(defend);
+            	if (defend.getRuler().isPlayerLost())
+            	{
+            		attack.getRuler().getCards().addAll(defend.getRuler().getCards());
+            	}
                 defend.setRuler(this);
-                defend.getRuler().removeCountry(defend);
                 addCountry(defend);
                 break;
             case 3:
@@ -300,6 +310,7 @@ public class Player extends Observable {
     {
         from.reduceArmyCount(Armyinput);
         to.setArmyCount(Armyinput);
+        
     }
 
     /**

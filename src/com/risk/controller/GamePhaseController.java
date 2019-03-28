@@ -113,7 +113,6 @@ public class GamePhaseController implements Observer, Initializable {
     {
         ActionModel.getActionModel().clearAction();
         view = (String) phase;
-        System.out.println(view);
         
         if (view.equals("setup"))
         {
@@ -288,7 +287,6 @@ public class GamePhaseController implements Observer, Initializable {
      */
     private class mapObserver implements Observer {
 
-
 		@Override
         public void update(Observable o, Object arg)
         {
@@ -301,13 +299,13 @@ public class GamePhaseController implements Observer, Initializable {
             if (index == -1)
             {
                 barPlayersList.add(player);
-                serie.getData().add(new XYChart.Data<String, Integer>(player.getName(),(int)player.getTotalArmy()));
+                serie.getData().add(new XYChart.Data<String, Integer>(player.getName()+" ("+ player.getTotalArmy() +")",(int)player.getTotalArmy()));
             }
             
             else
             {
                 barPlayersList.set(index, player);
-                serie.getData().get(index).setXValue(player.getName());
+                serie.getData().get(index).setXValue(player.getName()+" ("+ player.getTotalArmy() +")");
                 serie.getData().get(index).setYValue((int)player.getTotalArmy()); 
             }
             if (!view.equals("setup"))
