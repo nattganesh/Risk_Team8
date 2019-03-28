@@ -8,6 +8,7 @@ package com.risk.model.player;
 import com.risk.model.map.Country;
 
 /**
+ * A human player that requires user interaction to make decisions.
  *
  * @author Natheepan
  */
@@ -16,6 +17,7 @@ public class HumanPlayer extends Player {
     public HumanPlayer(String name)
     {
         super(name);
+        setIsComputerPlayer(false);
     }
 
     /**
