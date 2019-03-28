@@ -57,6 +57,7 @@ public class ConqueredController extends Observable implements Initializable {
     @Override
     public void initialize(URL arg0, ResourceBundle arg1)
     {
+    	move = false;
         actions = ActionModel.getActionModel();
         countryOwnedID.setItems(territoryObservableList);
         conqueredID.setItems(conqueredObservableList);

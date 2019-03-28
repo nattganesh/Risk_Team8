@@ -24,7 +24,8 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 /**
- *
+ * Test cases for validation
+ * 
  * @author Natt
  */
 public class ValidateTest {

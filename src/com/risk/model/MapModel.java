@@ -95,6 +95,7 @@ public class MapModel extends Observable implements Observer {
     }
 
     /**
+     * This method is used to get the map model
      *
      * @return this returns MapModel class as a singleton
      */

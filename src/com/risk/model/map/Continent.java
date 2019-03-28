@@ -36,7 +36,7 @@ public class Continent {
     }
 
     /**
-     * this method is a getter for this continent name
+     * This method is a getter for this continent name
      *
      * @return this returns name of continent
      */
@@ -46,9 +46,9 @@ public class Continent {
     }
 
     /**
-     * this method is a getter for country within the continent
+     * This method is a getter for country within the continent
      *
-     * @return this returns conutries inside continent
+     * @return this returns countries inside continent
      */
     public ArrayList<Country> getCountries()
     {
@@ -86,6 +86,8 @@ public class Continent {
     }
 
     /**
+     * This method is used to get the extra number of army when a continent is occupied by a player
+     * 
      * @return this returns number of army when fully occupied by one ruler
      */
     public int getPointsWhenFullyOccupied()

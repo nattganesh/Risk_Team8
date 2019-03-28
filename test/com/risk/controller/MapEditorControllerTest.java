@@ -23,7 +23,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
+ * Test cases for map editor controller
+ * 
  * @author Natt
  */
 public class MapEditorControllerTest {

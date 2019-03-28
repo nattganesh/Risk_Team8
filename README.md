@@ -18,8 +18,8 @@ The project consists in building a simple “Risk” computer game. A Risk game cons
 
 More Info @ https://bitbucket.org/nattganesh/soen6441_riskgame/src/master/projectdescription/Project%20Description.pdf
 
-[2] Software process document for build 1:
+[2] Software process document for build 1/2:
 
-https://bitbucket.org/nattganesh/soen6441_riskgame/src/master/projectdescription/RiskBuild1Documentation.docx
+https://bitbucket.org/nattganesh/soen6441_riskgame/src/master/projectdescription/RiskBuildDocumentation.docx
 
 */

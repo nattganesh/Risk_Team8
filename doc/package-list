@@ -8,4 +8,3 @@ com.risk.model.map
 com.risk.model.player
 com.risk.model.utilities
 com.risk.model.utilities.generateOutputFile
-com.risk.view

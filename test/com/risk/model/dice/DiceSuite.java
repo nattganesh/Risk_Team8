@@ -13,7 +13,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 /**
- *
+ * Suite of test cases for dice
  * @author Natt
  */
 @RunWith(Suite.class)

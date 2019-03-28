@@ -16,7 +16,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
+ * Test cases for player phase model
  * @author Natt
  * @author Tianyi
  */

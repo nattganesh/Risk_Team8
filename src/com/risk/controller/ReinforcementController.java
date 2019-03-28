@@ -121,7 +121,7 @@ public class ReinforcementController implements Initializable {
     }
 
     /**
-     * This method is reponsible for filling the listView with adjacent
+     * This method is responsible for filling the listView with adjacent
      * territories from currently selected territory
      */
     @FXML

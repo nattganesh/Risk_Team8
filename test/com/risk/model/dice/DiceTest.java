@@ -16,7 +16,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
+ * Test cases for dice
+ * 
  * @author Natt
  * @author Tianyi
  */
@@ -66,51 +67,6 @@ public class DiceTest {
     {
         int result = Dice.roll();
         assertTrue(0<result&&result<=6);
-    }
-
-    /**
-     * Test of setRollLimt method, of class Dice.
-     */
-    @Test
-    public void testSetRollLimt()
-    {
-        country1.setArmyCount(5);
-        country2.setArmyCount(1);
-        int[] expResult = new int[2];
-        expResult[0]=3;
-        expResult[1]=1;
-        int[] result = Dice.setRollLimt(country1, country2);
-        assertArrayEquals(expResult, result);
-    }
-    
-    /**
-     * Test of setRollLimt method, of class Dice.
-     */
-    @Test
-    public void testSetRollLimt2()
-    {
-        country1.setArmyCount(3);
-        country2.setArmyCount(1);
-        int[] expResult = new int[2];
-        expResult[0]=2;
-        expResult[1]=1;
-        int[] result = Dice.setRollLimt(country1, country2);
-        assertArrayEquals(expResult, result);
-    }
-    
-    /**
-     * Test of setRollLimt method, of class Dice.
-     */
-    @Test
-    public void testSetRollLimt3()
-    {
-        country1.setArmyCount(5);
-        country2.setArmyCount(3);
-        int[] expResult = new int[2];
-        expResult[0]=3;
-        expResult[1]=2;
-        int[] result = Dice.setRollLimt(country1, country2);
-        assertArrayEquals(expResult, result);
     }
     
 }
