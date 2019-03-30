@@ -48,7 +48,7 @@ public class BenevolentPlayer extends ComputerPlayer {
     {
         reinforce(Armyinput);
     }
-    
+
     public void reinforce(int Armyinput)
     {
         ArrayList<Country> weakestCountries = getWeakestCountries();
@@ -77,7 +77,7 @@ public class BenevolentPlayer extends ComputerPlayer {
     {
         // Never Attacks
     }
-    
+
     public void attack()
     {
         // Never Attacks
@@ -88,7 +88,7 @@ public class BenevolentPlayer extends ComputerPlayer {
     {
         fortify(Armyinput);
     }
-    
+
     public void fortify(int Armyinput)
     {
         getWeakestCountries().get(0).setArmyCount(Armyinput);
