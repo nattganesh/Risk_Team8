@@ -85,7 +85,6 @@ public class Country extends Observable {
         ruler.setTotalArmy(armyCount);
         setChanged();
         notifyObservers(this);
-
     }
 
     /**
@@ -209,6 +208,23 @@ public class Country extends Observable {
     public ObservableList<Country> getConnectedEnemy()
     {
         ObservableList<Country> list = FXCollections.observableArrayList();
+        for (Country country : connectedCountries)
+        {
+            if (!country.getRuler().getName().equals(ruler.getName()))
+            {
+                list.add(country);
+            }
+        }
+        return list;
+    }
+    /**
+     * This is a method for returning connected enemy countries of the current country
+     * 
+     * @return list The enemy countries connected to the country the player selects
+     */
+    public ArrayList<Country> getConnectedEnemyArrayList()
+    {
+        ArrayList<Country> list = new ArrayList<>();
         for (Country country : connectedCountries)
         {
             if (!country.getRuler().getName().equals(ruler.getName()))
