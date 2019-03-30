@@ -77,6 +77,11 @@ public class BenevolentPlayer extends ComputerPlayer {
     {
         // Never Attacks
     }
+    
+    public void attack()
+    {
+        // Never Attacks
+    }
 
     @Override
     public void fortify(Country from, Country to, int Armyinput)
