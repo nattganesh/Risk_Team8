@@ -34,7 +34,6 @@ public class SaveGame {
      *
      * @param gameFileName name of file to save game
      * @param mapName name of map file used in game
-     * @param currentPlayerName name of current player
      * @return true if file has been generated, otherwise false
      */
     public static boolean generate(String gameFileName, String mapName)
