@@ -681,4 +681,23 @@ public abstract class Player extends Observable {
             removeCard(c);
         }
     }
+
+    public static Player getStrategy(String type, String playerName)
+    {
+        switch (type)
+        {
+            case "HumanPlayer":
+                return new HumanPlayer(playerName);
+            case "AggressivePlayer":
+                return new AggressivePlayer(playerName);
+            case "BenevolentPlayer":
+                return new BenevolentPlayer(playerName);
+            case "CheaterPlayer":
+                return new CheaterPlayer(playerName);
+            case "RandomPlayer":
+                return new RandomPlayer(playerName);
+            default:
+                return new RandomPlayer(playerName);
+        }
+    }
 }
