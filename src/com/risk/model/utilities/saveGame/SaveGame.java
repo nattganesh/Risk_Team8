@@ -12,7 +12,6 @@ import com.risk.model.card.Card;
 import com.risk.model.map.Country;
 import com.risk.model.player.Player;
 import com.sun.media.jfxmedia.logging.Logger;
-import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 
@@ -40,6 +39,7 @@ public class SaveGame {
     {
         ArrayList<Country> countries = MapModel.getMapModel().getCountries();
         ArrayList<Player> players = PlayerPhaseModel.getPlayerModel().getPlayers();
+        Player currentPlayer = PlayerPhaseModel.getPlayerModel().getCurrentPlayer();
         String currentPhaseName = GamePhaseModel.getGamePhaseModel().getPhase();
 
         try (PrintStream fileOut = new PrintStream("src/com/risk/main/savedGameFiles/" + gameFileName + ".txt"))
@@ -49,6 +49,11 @@ public class SaveGame {
             System.out.println("NAME OF MAP FILE");
             System.out.println(mapName);
             System.out.println("SET PLAYER ORDER AND CARDS");
+            while (currentPlayer != players.get(0))
+            {
+                Player temp = players.remove(0);
+                players.add(temp);
+            }
             for (Player player : players)
             {
                 System.out.print(player.getName());
@@ -66,7 +71,7 @@ public class SaveGame {
             System.out.println("CURRENT PHASE");
             System.out.println(currentPhaseName);
             System.out.println("CURRENT PLAYER");
-            System.out.println(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
+            System.out.println(currentPlayer.getName());
             return true;
         }
         catch (Exception ex)
