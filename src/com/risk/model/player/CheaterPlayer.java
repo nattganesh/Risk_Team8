@@ -17,18 +17,18 @@ import com.risk.model.map.Country;
  * @author Natheepan
  */
 public class CheaterPlayer extends ComputerPlayer {
-    
+
     public CheaterPlayer(String name)
     {
         super(name);
     }
-    
+
     @Override
     public void reinforce(Country myCountry, int Armyinput)
     {
         reinforce(Armyinput);
     }
-    
+
     public void reinforce(int Armyinput)
     {
         for (Country c : getOccupiedCountries())
@@ -36,13 +36,13 @@ public class CheaterPlayer extends ComputerPlayer {
             c.setArmyCount(2 * Armyinput);
         }
     }
-    
+
     @Override
     public void attack(Country attack, Country defend, int caseType)
     {
         attack();
     }
-    
+
     public void attack()
     {
         for (Country c : getOccupiedCountries())
@@ -53,13 +53,13 @@ public class CheaterPlayer extends ComputerPlayer {
             }
         }
     }
-    
+
     @Override
     public void fortify(Country from, Country to, int Armyinput)
     {
         fortify(Armyinput);
     }
-    
+
     public void fortify(int Armyinput)
     {
         for (Country c : getOccupiedCountries())
@@ -70,5 +70,5 @@ public class CheaterPlayer extends ComputerPlayer {
             }
         }
     }
-    
+
 }

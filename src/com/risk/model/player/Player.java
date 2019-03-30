@@ -70,13 +70,13 @@ public abstract class Player extends Observable {
      */
     public void reduceTotalArmy(int count)
     {
-    	totalArmy = totalArmy - count;
-    	if (totalArmy <= 0)
-    	{
-    		System.out.println(getName() + " has lost");
-    		playerLost = true;
-    	}
-        
+        totalArmy = totalArmy - count;
+        if (totalArmy <= 0)
+        {
+            System.out.println(getName() + " has lost");
+            playerLost = true;
+        }
+
     }
 
     /**
