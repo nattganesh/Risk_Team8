@@ -46,6 +46,11 @@ public class BenevolentPlayer extends ComputerPlayer {
     @Override
     public void reinforce(Country myCountry, int Armyinput)
     {
+        reinforce(Armyinput);
+    }
+    
+    public void reinforce(int Armyinput)
+    {
         ArrayList<Country> weakestCountries = getWeakestCountries();
         if (weakestCountries.size() == 1)
         {
@@ -75,6 +80,11 @@ public class BenevolentPlayer extends ComputerPlayer {
 
     @Override
     public void fortify(Country from, Country to, int Armyinput)
+    {
+        fortify(Armyinput);
+    }
+    
+    public void fortify(int Armyinput)
     {
         getWeakestCountries().get(0).setArmyCount(Armyinput);
     }
