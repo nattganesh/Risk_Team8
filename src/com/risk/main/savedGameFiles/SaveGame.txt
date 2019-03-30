@@ -1,0 +1,56 @@
+NAME OF MAP FILE
+input
+SET PLAYER ORDER AND CARDS
+Player4,Artillery,Cavalry
+Player3,Infantry,Artillery,Cavalry,Wild,Artillery
+Player2,Infantry,Artillery,Infantry,Infantry,Infantry
+Player1,Artillery,Cavalry,Cavalry,Artillery,Artillery
+Player6,Artillery,Infantry,Cavalry,Artillery,Cavalry
+Player5,Infantry,Artillery,Cavalry,Artillery,Infantry
+SET PLAYERS AND ARMY IN COUNTRY
+Alaska,Player1,4
+Northwest Territory,Player4,4
+Greenland,Player2,5
+Alberta,Player6,2
+Ontario,Player3,3
+Quebec,Player5,1
+Western United States,Player4,2
+Eastern United States,Player5,1
+Central America,Player6,2
+Venezuela,Player2,2
+Peru,Player3,2
+Brazil,Player3,1
+Argentina,Player5,6
+Iceland,Player3,4
+Scandinavia,Player1,2
+Ukraine,Player2,2
+Great Britian,Player6,4
+Northern Europe,Player2,4
+Southern Europe,Player5,3
+Western Europe,Player5,2
+North Africa,Player1,3
+Egypt,Player4,14
+East Africa,Player1,2
+Congo,Player5,4
+South Africa,Player4,3
+Madagascar,Player2,1
+Siam,Player1,3
+India,Player3,2
+China,Player6,3
+Mongolia,Player1,3
+Japan,Player4,1
+Irkutsk,Player2,4
+Yakutsk,Player3,4
+Kamchatka,Player6,3
+Siberia,Player4,1
+Afghanistan,Player2,2
+Ural,Player6,3
+Middle East,Player5,3
+Indonesia,Player6,3
+New Guinea,Player3,4
+Western Australia,Player4,3
+Eastern Australia,Player1,3
+CURRENT PHASE
+attack
+CURRENT PLAYER
+Player4

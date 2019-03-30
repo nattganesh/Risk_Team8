@@ -37,13 +37,13 @@ public class SaveGame {
      * @param currentPlayerName name of current player
      * @return true if file has been generated, otherwise false
      */
-    public static boolean generate(String gameFileName, String mapName, String currentPlayerName)
+    public static boolean generate(String gameFileName, String mapName)
     {
         ArrayList<Country> countries = MapModel.getMapModel().getCountries();
         ArrayList<Player> players = PlayerPhaseModel.getPlayerModel().getPlayers();
         String currentPhaseName = GamePhaseModel.getGamePhaseModel().getPhase();
 
-        try (PrintStream fileOut = new PrintStream("src/com/risk/main/mapTextFiles/" + gameFileName + ".txt"))
+        try (PrintStream fileOut = new PrintStream("src/com/risk/main/savedGameFiles/" + gameFileName + ".txt"))
         {
             System.setOut(fileOut);
 
@@ -57,7 +57,7 @@ public class SaveGame {
                 {
                     System.out.print("," + card.getCatagory());
                 }
-                System.out.print("/n");
+                System.out.print("\n");
             }
             System.out.println("SET PLAYERS AND ARMY IN COUNTRY");
             for (Country country : countries)
@@ -67,7 +67,7 @@ public class SaveGame {
             System.out.println("CURRENT PHASE");
             System.out.println(currentPhaseName);
             System.out.println("CURRENT PLAYER");
-            System.out.println(currentPlayerName);
+            System.out.println(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
             return true;
         }
         catch (Exception ex)
