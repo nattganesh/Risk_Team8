@@ -9,7 +9,6 @@ import com.risk.model.exceptions.CannotFindException;
 import com.risk.model.exceptions.CountLimitException;
 import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
-import com.risk.controller.MapEditorController;
 import com.risk.model.ActionModel;
 import com.risk.model.MapModel;
 import java.util.ArrayList;
@@ -117,7 +116,7 @@ public class Validate {
         //if country is already checked before
         for (Country a : countriesModelValidationList)
         {
-            if (a.getName() == origin.getName())
+            if (a.getName().equalsIgnoreCase(origin.getName()))
             {
                 return;
             }
@@ -141,11 +140,9 @@ public class Validate {
      */
     public void validateMap() throws CannotFindException, CountLimitException
     {
-
         counter = 0;
         countriesModelValidationList.clear();
         mapConnected(map.getCountries().get(0));
-
     }
 
     /**
@@ -159,8 +156,6 @@ public class Validate {
         {
             validate = new Validate();
         }
-
         return validate;
     }
-
 }
