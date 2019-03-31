@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+    <children>
+        <AnchorPane prefHeight="600.0" prefWidth="1400.0">
+            <children>
+                <Text layoutX="116.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TOURNAMENT MODE">
+                    <font>
+                        <Font size="42.0" />
+                    </font>
+                </Text>
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

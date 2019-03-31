@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <AnchorPane prefHeight="600.0" prefWidth="1400.0">
+            <children>
+                <ComboBox fx:id="modeID" layoutX="261.0" layoutY="285.0" prefWidth="150.0" />
+                <Text layoutX="289.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RISK">
+                    <font>
+                        <Font size="48.0" />
+                    </font>
+                </Text>
+                <Text layoutX="284.0" layoutY="271.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose a mode" />
+                <Button layoutX="411.0" layoutY="285.0" mnemonicParsing="false" onAction="#selectGameHandler" text="Select" />
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>
