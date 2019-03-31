@@ -59,7 +59,7 @@ public class StartUpController implements Initializable{
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/risk/view/TournamentMode.fxml"));
 		        TournamentModeController tournamentController = new TournamentModeController();
 		        loader.setController(tournamentController);
-		        
+		  
 				try {
 					stage.getScene().setRoot(loader.load());
 				} catch (IOException e) {
