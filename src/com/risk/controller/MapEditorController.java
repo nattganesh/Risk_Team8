@@ -568,7 +568,7 @@ public class MapEditorController implements Initializable {
     {
         while (numberOfPlayer > 0)
         {
-            Player player = new HumanPlayer(PlayerPhaseModel.playerName[numberOfPlayer - 1]);
+            Player player = Player.getStrategy("HumanPlayer", PlayerPhaseModel.playerName[numberOfPlayer - 1]);
             PlayerPhaseModel.getPlayerModel().addPlayer(player);
             numberOfPlayer--;
         }
