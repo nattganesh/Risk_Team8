@@ -83,6 +83,11 @@ public class MapModel extends Observable implements Observer {
     {
         return countriesModel;
     }
+    
+    public void setCountries(ArrayList<Country> countries)
+    {
+        countriesModel = countries;
+    }
 
     /**
      * This method gets the continents in the continent model

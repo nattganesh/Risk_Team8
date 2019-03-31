@@ -98,6 +98,16 @@ public class PlayerPhaseModel extends Observable implements Observer {
     {
         return playerList.get(currentPlayerIndex % playerList.size());
     }
+    
+    /**
+     * This method gets the current player
+     *
+     * @return current player
+     */
+    public void setCurrentPlayer(int index)
+    {
+        currentPlayerIndex = index;
+    }
 
     /**
      * This method adds player the player model
@@ -118,6 +128,11 @@ public class PlayerPhaseModel extends Observable implements Observer {
     public ArrayList<Player> getPlayers()
     {
         return playerList;
+    }
+    
+    public void setPlayers(ArrayList<Player> players)
+    {
+        playerList = players;
     }
 
     /**
