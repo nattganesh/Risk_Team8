@@ -24,21 +24,51 @@ public class CheaterPlayer extends ComputerPlayer {
     }
 
     @Override
-    public void attack(Country attack, Country defend, int caseType)
+    public void reinforce(Country myCountry, int Armyinput)
     {
+        reinforce(Armyinput);
+    }
 
+    public void reinforce(int Armyinput)
+    {
+        for (Country c : getOccupiedCountries())
+        {
+            c.setArmyCount(2 * Armyinput);
+        }
     }
 
     @Override
-    public void reinforce(Country myCountry, int Armyinput)
+    public void attack(Country attack, Country defend, int caseType)
     {
+        attack();
+    }
 
+    public void attack()
+    {
+        for (Country c : getOccupiedCountries())
+        {
+            for (Country cNeighbors : c.getConnectedCountries())
+            {
+                cNeighbors.setRuler(this);
+            }
+        }
     }
 
     @Override
     public void fortify(Country from, Country to, int Armyinput)
     {
+        fortify(Armyinput);
+    }
 
+    public void fortify(int Armyinput)
+    {
+        for (Country c : getOccupiedCountries())
+        {
+            if (!c.getConnectedEnemyArrayList().isEmpty())
+            {
+                c.setArmyCount(2 * c.getArmyCount());
+            }
+        }
     }
 
 }

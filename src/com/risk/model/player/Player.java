@@ -70,13 +70,13 @@ public abstract class Player extends Observable {
      */
     public void reduceTotalArmy(int count)
     {
-    	totalArmy = totalArmy - count;
-    	if (totalArmy <= 0)
-    	{
-    		System.out.println(getName() + " has lost");
-    		playerLost = true;
-    	}
-        
+        totalArmy = totalArmy - count;
+        if (totalArmy <= 0)
+        {
+            System.out.println(getName() + " has lost");
+            playerLost = true;
+        }
+
     }
 
     /**
@@ -348,11 +348,7 @@ public abstract class Player extends Observable {
                 }
             }
         }
-        if (i == 0)
-        {
-            return true;
-        }
-        return false;
+        return (i == 0);
     }
 
     /**
@@ -465,14 +461,7 @@ public abstract class Player extends Observable {
      */
     public boolean validateTerritorySelections(Country firstCountry, Country secondCountry)
     {
-        if (firstCountry != null && secondCountry != null)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return (firstCountry != null && secondCountry != null);
     }
 
     /**
@@ -486,14 +475,7 @@ public abstract class Player extends Observable {
      */
     public boolean validateTerritorysTheSame(Country firstCountry, Country secondCountry)
     {
-        if (firstCountry != secondCountry)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return (firstCountry != secondCountry);
     }
 
     /**
@@ -507,14 +489,7 @@ public abstract class Player extends Observable {
      */
     public boolean validateDiceSelections(Integer attackDice, Integer defendDice)
     {
-        if (attackDice != null && defendDice != null)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return (attackDice != null && defendDice != null);
     }
 
     /**
@@ -527,14 +502,7 @@ public abstract class Player extends Observable {
      */
     public boolean validateAttackerHasEnoughArmy(Country attack)
     {
-        if (attack.getArmyCount() > 1)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return (attack.getArmyCount() > 1);
     }
 
     /**
@@ -632,14 +600,7 @@ public abstract class Player extends Observable {
     public boolean checkIfCardsMaximum()
     {
         System.out.println("check if maximum: " + (getCards().size()));
-        if (getCards().size() >= 5)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return (getCards().size() >= 5);
     }
 
     /**
@@ -652,18 +613,11 @@ public abstract class Player extends Observable {
      */
     public boolean cardValidation(ObservableList<Card> selectedCards)
     {
-        if (((selectedCards.get(0).getCatagory().equals(selectedCards.get(1).getCatagory()))
+        return (((selectedCards.get(0).getCatagory().equals(selectedCards.get(1).getCatagory()))
                 && (selectedCards.get(0).getCatagory().equals(selectedCards.get(2).getCatagory())))
                 || ((!(selectedCards.get(0).getCatagory().equals(selectedCards.get(1).getCatagory())))
                 && (!(selectedCards.get(0).getCatagory().equals(selectedCards.get(2).getCatagory())))
-                && (!(selectedCards.get(1).getCatagory().equals(selectedCards.get(2).getCatagory())))))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+                && (!(selectedCards.get(1).getCatagory().equals(selectedCards.get(2).getCatagory())))));
     }
 
     /**
@@ -679,6 +633,25 @@ public abstract class Player extends Observable {
         for (Card c : observableList)
         {
             removeCard(c);
+        }
+    }
+
+    public static Player getStrategy(String type, String playerName)
+    {
+        switch (type)
+        {
+            case "HumanPlayer":
+                return new HumanPlayer(playerName);
+            case "AggressivePlayer":
+                return new AggressivePlayer(playerName);
+            case "BenevolentPlayer":
+                return new BenevolentPlayer(playerName);
+            case "CheaterPlayer":
+                return new CheaterPlayer(playerName);
+            case "RandomPlayer":
+                return new RandomPlayer(playerName);
+            default:
+                return new HumanPlayer(playerName);
         }
     }
 }

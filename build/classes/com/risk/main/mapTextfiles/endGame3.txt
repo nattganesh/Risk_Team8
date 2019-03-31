@@ -1,0 +1,9 @@
+SET COUNTRIES IN CONTINENTS
+North America,Alaska
+South America,Argentina
+Asia,Siam
+SET NEIGHBORS
+Alaska,Argentina
+Argentina,Alaska
+Argentina,Siam
+Siam,Argentina

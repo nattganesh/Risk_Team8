@@ -11,10 +11,8 @@ package com.risk.model;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
-
 import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -84,6 +82,11 @@ public class MapModel extends Observable implements Observer {
         return countriesModel;
     }
 
+    public void setCountries(ArrayList<Country> countries)
+    {
+        countriesModel = countries;
+    }
+
     /**
      * This method gets the continents in the continent model
      *
@@ -109,7 +112,7 @@ public class MapModel extends Observable implements Observer {
     }
 
     /**
-     * This method receives update from change in army from country 
+     * This method receives update from change in army from country
      */
     @Override
     public void update(Observable o, Object arg)

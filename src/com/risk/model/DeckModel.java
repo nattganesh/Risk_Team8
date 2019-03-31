@@ -1,6 +1,6 @@
 /**
  * Thihs class is necessary for deck used in gameplay
- * 
+ *
  * @author DKM
  * @author Tianyi
  *
@@ -9,12 +9,11 @@ package com.risk.model;
 
 import java.util.Observable;
 import java.util.Random;
-
 import com.risk.model.card.Card;
 import com.risk.model.player.Player;
 
-
 public class DeckModel extends Observable {
+
     private static DeckModel deckModel;
     Card card[];
     int n = 44;
@@ -36,11 +35,11 @@ public class DeckModel extends Observable {
 
     /**
      * This method is used to initialize and shuffle the deck with 44 cards.
-     * 
+     *
      */
     public void initialize()
     {
-    	card = new Card[n];
+        card = new Card[n];
         String category[] =
         {
             "Infantry", "Cavalry", "Artillery", "Wild"
@@ -48,23 +47,26 @@ public class DeckModel extends Observable {
 
         for (int i = 0; i < n; i++)
         {
-        	if(i<14) 
-        	{
-        		card[i]=new Card(category[0]);
-        	}else if(i<28) 
-        	{
-        		card[i]=new Card(category[1]);
-        	}else if(i<42) 
-        	{
-        		card[i]=new Card(category[2]);
-        	}else 
-        	{
-        		card[i]=new Card(category[3]);
-        	}
+            if (i < 14)
+            {
+                card[i] = new Card(category[0]);
+            }
+            else if (i < 28)
+            {
+                card[i] = new Card(category[1]);
+            }
+            else if (i < 42)
+            {
+                card[i] = new Card(category[2]);
+            }
+            else
+            {
+                card[i] = new Card(category[3]);
+            }
         }
         shuffleCard();
     }
-    
+
     /**
      * This method is used to shuffle the deck randomly.
      */
@@ -80,17 +82,16 @@ public class DeckModel extends Observable {
         }
     }
 
-
     /**
      * This method is used to get the whole card set
-     * 
+     *
      * @return card The whole card set
      */
     public Card[] getCards()
     {
         return card;
     }
-    
+
     /**
      * This method is used to send a card to a player.
      *
@@ -104,7 +105,7 @@ public class DeckModel extends Observable {
         {
             if (card[i].getOwner() == null)
             {
-            	card[i].setOwner(player);
+                card[i].setOwner(player);
                 player.addCard(card[i]);
                 return card[i];
             }

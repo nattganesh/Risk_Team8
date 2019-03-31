@@ -10,18 +10,16 @@ package com.risk.model.utilities;
 import java.util.Scanner;
 
 import com.risk.model.exceptions.CannotFindException;
-import com.risk.model.exceptions.CountLimitException;
 import com.risk.model.exceptions.DuplicatesException;
 import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
-import com.risk.controller.MapEditorController;
 import com.risk.model.ActionModel;
 import com.risk.model.MapModel;
 
 public class FileParser {
 
     static MapModel maps = MapModel.getMapModel();
-    private String text = ""; 
+    private String text = "";
 
     /**
      * This is used to construct a new FileParser
@@ -36,7 +34,8 @@ public class FileParser {
      * @param input Scanner of the input text file
      * @throws CannotFindException Exception thrown when file formatting is
      * wrong
-     * @throws DuplicatesException Exception thrown when a country appears more than once in the map
+     * @throws DuplicatesException Exception thrown when a country appears more
+     * than once in the map
      */
     public void setCountriesInContinents(Scanner input) throws CannotFindException, DuplicatesException
     {

@@ -31,7 +31,7 @@
                 <ComboBox fx:id="PlayerID" layoutX="21.0" layoutY="464.0" prefWidth="150.0" />
                 <TextField fx:id="ExistingFile" layoutX="16.0" layoutY="64.0" />
                 <RadioButton fx:id="skipRobinID" layoutX="21.0" layoutY="436.0" mnemonicParsing="false" text="Skip Robin" />
-            <RadioButton fx:id="startCardsID" layoutX="21.0" layoutY="406.0" mnemonicParsing="false" text="Starting with cards" />
+                <RadioButton fx:id="startCardsID" layoutX="21.0" layoutY="406.0" mnemonicParsing="false" text="Starting with cards" />
             </children>
         </AnchorPane>
     </children>

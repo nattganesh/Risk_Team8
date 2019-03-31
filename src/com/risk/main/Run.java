@@ -13,14 +13,7 @@
  */
 package com.risk.main;
 
-import com.risk.controller.GamePhaseController;
-import com.risk.controller.MapEditorController;
-import com.risk.controller.ReinforcementController;
 import com.risk.controller.StartUpController;
-import com.risk.model.exceptions.CannotFindException;
-import com.risk.model.exceptions.CountLimitException;
-import com.risk.model.exceptions.DuplicatesException;
-
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -60,7 +53,7 @@ public class Run extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/risk/view/StartUp.fxml"));
         StartUpController sController = new StartUpController(primaryStage);
         loader.setController(sController);
-        
+
 //        GamePhaseController gamephase = new GamePhaseController();
 //        loader.setController(gamephase);
         Parent root = loader.load();
@@ -72,7 +65,7 @@ public class Run extends Application {
         primaryStage.setHeight(bounds.getHeight() / 1.5);
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();
-        
+
     }
 
 }

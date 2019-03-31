@@ -40,11 +40,11 @@ public class HumanPlayer extends Player {
                 defend.reduceArmyCount(1);
                 break;
             case 2:
-            	defend.getRuler().removeCountry(defend);
-            	if (defend.getRuler().isPlayerLost())
-            	{
-            		attack.getRuler().getCards().addAll(defend.getRuler().getCards());
-            	}
+                defend.getRuler().removeCountry(defend);
+                if (defend.getRuler().isPlayerLost())
+                {
+                    attack.getRuler().getCards().addAll(defend.getRuler().getCards());
+                }
                 defend.setRuler(this);
                 addCountry(defend);
                 break;
@@ -79,7 +79,7 @@ public class HumanPlayer extends Player {
     {
         from.reduceArmyCount(Armyinput);
         to.setArmyCount(Armyinput);
-        
+
     }
 
 }

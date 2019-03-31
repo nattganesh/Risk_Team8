@@ -49,7 +49,7 @@ public class FortificationController implements Initializable {
     ArrayList<Country> CountriesArrivedbyPath;
     ActionModel actions;
     Player p = PlayerPhaseModel.getPlayerModel().getCurrentPlayer();
-    
+
     /**
      * This is a constructor of the FortificationController class
      */
@@ -60,7 +60,7 @@ public class FortificationController implements Initializable {
 
     /**
      * This method is data binding for connection between controller and UI.
-     * 
+     *
      * @see javafx.fxml.Initializable
      */
     @Override
@@ -72,7 +72,7 @@ public class FortificationController implements Initializable {
         Territory.setItems(territoryObservableList);
         Adjacent.setItems(adjacentObservableList);
         updateView();
-        
+
     }
 
     /**
@@ -115,9 +115,9 @@ public class FortificationController implements Initializable {
     }
 
     /**
-     * This method handles loading adjacent connected countries of the country that current
-     * player chooses for fortification
-     * Only countries owned by the player will be displayed
+     * This method handles loading adjacent connected countries of the country
+     * that current player chooses for fortification Only countries owned by the
+     * player will be displayed
      */
     @FXML
     public void territoryHandler()
@@ -133,7 +133,8 @@ public class FortificationController implements Initializable {
     }
 
     /**
-     * This method handles showing the army count of the adjacent country the player chooses
+     * This method handles showing the army count of the adjacent country the
+     * player chooses
      */
     @FXML
     public void adjacentHandler()
@@ -151,7 +152,7 @@ public class FortificationController implements Initializable {
     @FXML
     public void moveHandler()
     {
-    	Country firstCountry = Territory.getSelectionModel().getSelectedItem();
+        Country firstCountry = Territory.getSelectionModel().getSelectedItem();
         Country secondCountry = Adjacent.getSelectionModel().getSelectedItem();
         boolean validateTerritorySelections = p.validateTerritorySelections(firstCountry, secondCountry);
         boolean validateAttackerHasEnoughArmy = p.validateAttackerHasEnoughArmy(firstCountry);

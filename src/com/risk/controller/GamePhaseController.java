@@ -48,11 +48,10 @@ public class GamePhaseController implements Observer, Initializable {
     AttackController aController;
     FortificationController fController;
     SetUpController sController;
-    
 
     ObservableList<XYChart.Series<String, Integer>> barData = FXCollections.observableArrayList();
-    ObservableList<Data <String, Integer>> data = FXCollections.observableArrayList();
-    XYChart.Series<String, Integer> serie = new XYChart.Series<String, Integer>();    
+    ObservableList<Data<String, Integer>> data = FXCollections.observableArrayList();
+    XYChart.Series<String, Integer> serie = new XYChart.Series<String, Integer>();
     ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
 
     ArrayList<Player> piePlayersList = new ArrayList<>();
@@ -88,10 +87,10 @@ public class GamePhaseController implements Observer, Initializable {
 
     @FXML
     ListView<String> actionMessage;
-    
+
     @FXML
     AnchorPane winnerPane;
-    
+
     @FXML
     Text winnerID;
 
@@ -113,7 +112,7 @@ public class GamePhaseController implements Observer, Initializable {
     {
         ActionModel.getActionModel().clearAction();
         view = (String) phase;
-        
+
         if (view.equals("setup"))
         {
             try
@@ -130,11 +129,11 @@ public class GamePhaseController implements Observer, Initializable {
         }
         else if (view.equals("winner"))
         {
-                phaseID.setText(view);
-                winnerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName() + " is the winner");
-                mainPane.getChildren().clear();
-                winnerPane.setVisible(true);	
-        
+            phaseID.setText(view);
+            winnerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName() + " is the winner");
+            mainPane.getChildren().clear();
+            winnerPane.setVisible(true);
+
         }
         else if (view.equals("setup complete"))
         {
@@ -156,7 +155,7 @@ public class GamePhaseController implements Observer, Initializable {
                 }
                 s.clear();
             }
-            worldDomination2.getData().setAll(serie);  
+            worldDomination2.getData().setAll(serie);
             worldDomination3.setItems(MapModel.getMapModel().getContinents());
             updateContinentDominationView();
         }
@@ -181,7 +180,7 @@ public class GamePhaseController implements Observer, Initializable {
             {
                 phaseID.setText(view);
                 playerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
-              
+
                 mainPane.getChildren().clear();
                 mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/Attack.fxml")));
             }
@@ -208,7 +207,8 @@ public class GamePhaseController implements Observer, Initializable {
     }
 
     /**
-     * This method observes the PlayerPhaseModel when a country has been occupied
+     * This method observes the PlayerPhaseModel when a country has been
+     * occupied
      */
     private class playerObserver implements Observer {
 
@@ -218,13 +218,13 @@ public class GamePhaseController implements Observer, Initializable {
             Country c = (Country) arg;
             Player player = c.getRuler();
             int index = piePlayersList.indexOf(player);
-            
-            System.out.println((player.getOccupiedCountries().size() + " / "  + MapModel.getMapModel().getCountries().size()));
+
+            System.out.println((player.getOccupiedCountries().size() + " / " + MapModel.getMapModel().getCountries().size()));
             if (checkWinner(player))
             {
-            	GamePhaseModel.getGamePhaseModel().setPhase("winner");
+                GamePhaseModel.getGamePhaseModel().setPhase("winner");
             }
-           
+
             if (index == -1)
             {
                 piePlayersList.add(player);
@@ -238,22 +238,24 @@ public class GamePhaseController implements Observer, Initializable {
                 pieChartData.get(index).setPieValue(player.getOccupiedCountries().size() * 100.0 / 42);
             }
         }
-       
+
         public boolean checkWinner(Player p)
         {
-        	
-        	return p.getOccupiedCountries().size()  == MapModel.getMapModel().getCountries().size();
-            
+
+            return p.getOccupiedCountries().size() == MapModel.getMapModel().getCountries().size();
+
         }
 
     }
 
     /**
-     * 
-     * This method observes the PlayerPhaseModel when a country has been occupied
-     * 
+     *
+     * This method observes the PlayerPhaseModel when a country has been
+     * occupied
+     *
      */
     private class continentObserver implements Observer {
+
         @Override
         public void update(Observable arg0, Object arg)
         {
@@ -281,43 +283,45 @@ public class GamePhaseController implements Observer, Initializable {
     }
 
     /**
-     * This method observes the PlayerPhaseModel when a country has been occupied
+     * This method observes the PlayerPhaseModel when a country has been
+     * occupied
+     *
      * @author DKM
      *
      */
     private class mapObserver implements Observer {
 
-		@Override
+        @Override
         public void update(Observable o, Object arg)
         {
             Country country = (Country) arg;
 
             Player player = country.getRuler();
             int index = barPlayersList.indexOf(player);
-            
-            
+
             if (index == -1)
             {
                 barPlayersList.add(player);
-                serie.getData().add(new XYChart.Data<String, Integer>(player.getName()+" ("+ player.getTotalArmy() +")",(int)player.getTotalArmy()));
+                serie.getData().add(new XYChart.Data<String, Integer>(player.getName() + " (" + player.getTotalArmy() + ")", (int) player.getTotalArmy()));
             }
-            
+
             else
             {
                 barPlayersList.set(index, player);
-                serie.getData().get(index).setXValue(player.getName()+" ("+ player.getTotalArmy() +")");
-                serie.getData().get(index).setYValue((int)player.getTotalArmy()); 
+                serie.getData().get(index).setXValue(player.getName() + " (" + player.getTotalArmy() + ")");
+                serie.getData().get(index).setYValue((int) player.getTotalArmy());
             }
             if (!view.equals("setup"))
             {
-            	worldDomination2.getData().setAll(serie);  
+                worldDomination2.getData().setAll(serie);
             }
-          
+
         }
     }
 
     /**
-     * This method is used to update the domination of continent when the owner of continents changes
+     * This method is used to update the domination of continent when the owner
+     * of continents changes
      *
      */
     public void updateContinentDominationView()
@@ -343,7 +347,7 @@ public class GamePhaseController implements Observer, Initializable {
 
     /**
      * This method is data binding for connection between controller and UI.
-     * 
+     *
      * @see javafx.fxml.Initializable
      */
     @Override
@@ -355,7 +359,7 @@ public class GamePhaseController implements Observer, Initializable {
 
         actionMessage.setItems(ActionModel.getActionModel().getActions());
         worldDomination1.setData(pieChartData);
-        
+
         try
         {
             mainPane.getChildren().clear();

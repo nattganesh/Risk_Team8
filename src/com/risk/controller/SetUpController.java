@@ -41,7 +41,7 @@ public class SetUpController implements Initializable {
 
     public int TotalArmies;
     public ArrayList<String> cards = new ArrayList<>();
-    private boolean setUp = false;	
+    private boolean setUp = false;
     /**
      * @see javafx.fxml.XML
      */
@@ -129,7 +129,7 @@ public class SetUpController implements Initializable {
             }
         }
         updateView();
-        
+
         armyAvailable.setText("Army: " + Integer.toString(getArmies()));
     }
 
@@ -153,14 +153,16 @@ public class SetUpController implements Initializable {
         TotalArmies--;
         PlayerPhaseModel.getPlayerModel().getCurrentPlayer().setStartingPoints(TotalArmies);
     }
-    
+
     /**
      * This method is used to check if each country occupied has one army
-     * @param list The observableList which is used to check if each county in it has one army
+     *
+     * @param list The observableList which is used to check if each county in
+     * it has one army
      * @return true if each country already has one army. Otherwise, return
      * false
      */
-    public boolean checkIfEachCountryHasOneArmy(ObservableList <Country> list)
+    public boolean checkIfEachCountryHasOneArmy(ObservableList<Country> list)
     {
         int i = 1;
         for (Country c : list)
@@ -221,13 +223,12 @@ public class SetUpController implements Initializable {
             actions.addAction("Please place one army in your country");
         }
     }
-    
-    	
+
     /**
      * This method is necessary for updating the view of the list
      */
     public void updateView()
     {
-    	territoryObservableList.setAll(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
+        territoryObservableList.setAll(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
     }
 }

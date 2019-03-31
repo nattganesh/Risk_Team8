@@ -12,7 +12,6 @@ import com.risk.model.card.Card;
 import com.risk.model.map.Country;
 import com.risk.model.player.Player;
 import com.sun.media.jfxmedia.logging.Logger;
-import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 
@@ -34,30 +33,37 @@ public class SaveGame {
      *
      * @param gameFileName name of file to save game
      * @param mapName name of map file used in game
-     * @param currentPlayerName name of current player
      * @return true if file has been generated, otherwise false
      */
-    public static boolean generate(String gameFileName, String mapName, String currentPlayerName)
+    public static boolean generate(String gameFileName, String mapName)
     {
         ArrayList<Country> countries = MapModel.getMapModel().getCountries();
         ArrayList<Player> players = PlayerPhaseModel.getPlayerModel().getPlayers();
+        Player currentPlayer = PlayerPhaseModel.getPlayerModel().getCurrentPlayer();
         String currentPhaseName = GamePhaseModel.getGamePhaseModel().getPhase();
 
-        try (PrintStream fileOut = new PrintStream("src/com/risk/main/mapTextFiles/" + gameFileName + ".txt"))
+        try (PrintStream fileOut = new PrintStream("src/com/risk/main/savedGameFiles/" + gameFileName + ".txt"))
         {
             System.setOut(fileOut);
 
             System.out.println("NAME OF MAP FILE");
             System.out.println(mapName);
+
             System.out.println("SET PLAYER ORDER AND CARDS");
             for (Player player : players)
             {
+                // Player Name
                 System.out.print(player.getName());
+                // Player Type
+                String playerType = player.getClass().getName();
+                int i = playerType.lastIndexOf(".");
+                System.out.print("," + playerType.substring(i + 1));
+                // Cards
                 for (Card card : player.getCards())
                 {
                     System.out.print("," + card.getCatagory());
                 }
-                System.out.print("/n");
+                System.out.print("\n");
             }
             System.out.println("SET PLAYERS AND ARMY IN COUNTRY");
             for (Country country : countries)
@@ -67,7 +73,7 @@ public class SaveGame {
             System.out.println("CURRENT PHASE");
             System.out.println(currentPhaseName);
             System.out.println("CURRENT PLAYER");
-            System.out.println(currentPlayerName);
+            System.out.println(currentPlayer.getName());
             return true;
         }
         catch (Exception ex)

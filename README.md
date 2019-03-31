@@ -1,6 +1,4 @@
-/**
-
-SOEN 6441 Team #8 Winter 2019
+SOEN 6441 Team 8 Winter 2019
 
 Members: 
 		
@@ -21,5 +19,3 @@ More Info @ https://bitbucket.org/nattganesh/soen6441_riskgame/src/master/projec
 [2] Software process document for build 1/2:
 
 https://bitbucket.org/nattganesh/soen6441_riskgame/src/master/projectdescription/RiskBuildDocumentation.docx
-
-*/

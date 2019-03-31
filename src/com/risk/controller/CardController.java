@@ -2,11 +2,11 @@
  * Necessary for handling card exchange logic for reinforcement phase
  * * The JavaFx part is done by DKM
  * The logic part is done by Tianyi
- * 
+ *
  * @author DKM
  * @author Tianyi
  * @version 2.0
- * 
+ *
  */
 package com.risk.controller;
 
@@ -30,7 +30,6 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 
-
 public class CardController extends Observable implements Initializable {
 
     @FXML
@@ -43,7 +42,7 @@ public class CardController extends Observable implements Initializable {
 
     ActionModel actions;
     Player player;
-    
+
     ObservableList<Card> yourObservableList = FXCollections.observableArrayList();
     ObservableList<Card> tradeObservableList = FXCollections.observableArrayList();
 
@@ -83,7 +82,7 @@ public class CardController extends Observable implements Initializable {
 
     /**
      * This method is data binding for connection between controller and UI.
-     * 
+     *
      * @see javafx.fxml.Initializable
      */
     @Override
@@ -129,7 +128,6 @@ public class CardController extends Observable implements Initializable {
         }
     }
 
-    
     /**
      * This method is used to update the total reinforcement based on the cards
      * the player chooses And update the cards the player owned.
@@ -142,7 +140,7 @@ public class CardController extends Observable implements Initializable {
             if (player.cardValidation(tradeCard.getItems()))
             {
                 reinforcement = player.calculateReinforcementFromCards();
-                               
+
                 player.exchangeCards(tradeCard.getItems());
                 tradeCard.getItems().clear();
                 actions.addAction("you exchanged cards");
@@ -171,11 +169,11 @@ public class CardController extends Observable implements Initializable {
     @FXML
     public void skipExchangeHandler()
     {
-    	if (yourCard.getItems().size() + tradeCard.getItems().size() >= 5)
-    	{
-    		actions.addAction("5+ cards == you must exchange");
-    	}
-    	else if (PlayerPhaseModel.getPlayerModel().getCurrentPlayer().checkIfCardsMaximum())
+        if (yourCard.getItems().size() + tradeCard.getItems().size() >= 5)
+        {
+            actions.addAction("5+ cards == you must exchange");
+        }
+        else if (PlayerPhaseModel.getPlayerModel().getCurrentPlayer().checkIfCardsMaximum())
         {
             actions.addAction("5+ cards == you must exchange");
         }
