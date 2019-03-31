@@ -102,7 +102,7 @@ public class PlayerPhaseModel extends Observable implements Observer {
     /**
      * This method gets the current player
      *
-     * @return current player
+     * @param index position in arraylist
      */
     public void setCurrentPlayer(int index)
     {
