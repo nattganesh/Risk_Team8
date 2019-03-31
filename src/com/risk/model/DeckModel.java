@@ -9,7 +9,6 @@ package com.risk.model;
 
 import java.util.Observable;
 import java.util.Random;
-
 import com.risk.model.card.Card;
 import com.risk.model.player.Player;
 

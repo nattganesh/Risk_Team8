@@ -6,8 +6,6 @@
  */
 package com.risk.model.dice;
 
-import com.risk.model.map.Country;
-
 public class Dice {
 
     /**

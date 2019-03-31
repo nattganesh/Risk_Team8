@@ -6,7 +6,6 @@
 package com.risk.model.map;
 
 import java.util.ArrayList;
-
 import com.risk.model.player.Player;
 
 public class Continent {

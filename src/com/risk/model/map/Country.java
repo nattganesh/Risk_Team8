@@ -6,10 +6,8 @@
 package com.risk.model.map;
 
 import com.risk.model.player.Player;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import java.util.ArrayList;
 import java.util.Observable;
 

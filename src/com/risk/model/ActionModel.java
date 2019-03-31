@@ -7,9 +7,6 @@
 package com.risk.model;
 
 import java.util.Observable;
-
-import com.risk.model.map.Continent;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

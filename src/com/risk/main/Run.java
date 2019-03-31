@@ -13,14 +13,7 @@
  */
 package com.risk.main;
 
-import com.risk.controller.GamePhaseController;
-import com.risk.controller.MapEditorController;
-import com.risk.controller.ReinforcementController;
 import com.risk.controller.StartUpController;
-import com.risk.model.exceptions.CannotFindException;
-import com.risk.model.exceptions.CountLimitException;
-import com.risk.model.exceptions.DuplicatesException;
-
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

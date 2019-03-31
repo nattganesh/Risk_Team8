@@ -11,8 +11,6 @@ package com.risk.model;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
-
-import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
 import com.risk.model.player.Player;
 
