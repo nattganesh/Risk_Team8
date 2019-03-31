@@ -26,7 +26,6 @@ import com.risk.model.exceptions.CountLimitException;
 import com.risk.model.exceptions.DuplicatesException;
 import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
-import com.risk.model.player.HumanPlayer;
 import com.risk.model.player.Player;
 import com.risk.model.utilities.FileParser;
 import com.risk.model.utilities.Validate;
@@ -568,7 +567,7 @@ public class MapEditorController implements Initializable {
     {
         while (numberOfPlayer > 0)
         {
-            Player player = Player.getStrategy("HumanPlayer", PlayerPhaseModel.playerName[numberOfPlayer - 1]);
+            Player player = new Player(PlayerPhaseModel.playerName[numberOfPlayer - 1]);
             PlayerPhaseModel.getPlayerModel().addPlayer(player);
             numberOfPlayer--;
         }

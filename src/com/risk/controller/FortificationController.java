@@ -14,6 +14,7 @@ import com.risk.model.ActionModel;
 import com.risk.model.GamePhaseModel;
 import com.risk.model.PlayerPhaseModel;
 import com.risk.model.map.Country;
+import com.risk.model.strategy.behavior.human.HumanFortifyStrategy;
 import com.risk.model.player.Player;
 
 import javafx.collections.FXCollections;
@@ -169,7 +170,8 @@ public class FortificationController implements Initializable {
             else if (Armyinput <= Territory.getSelectionModel().getSelectedItem().getArmyCount() - 1)
             {
                 Player p = Territory.getSelectionModel().getSelectedItem().getRuler();
-                p.fortify(firstCountry, secondCountry, Armyinput);
+                p.setStrategyFortify(new HumanFortifyStrategy(firstCountry, secondCountry));
+                p.executeStrategyFortify(Armyinput);
 
                 AdjacentArmy.setText(Integer.toString(Adjacent.getSelectionModel().getSelectedItem().getArmyCount()));
                 TerritoryArmy.setText(Integer.toString(Territory.getSelectionModel().getSelectedItem().getArmyCount()));

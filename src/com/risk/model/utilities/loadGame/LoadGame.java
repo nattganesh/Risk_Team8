@@ -84,7 +84,7 @@ public class LoadGame {
                             text = text.substring(text.indexOf(",") + 1, text.length());
                         }
 
-                        Player p = Player.getStrategy(typeOfPlayer, nameOfPlayer);
+                        Player p = new Player(nameOfPlayer); 
                         players.add(p);
                         if (!text.trim().isEmpty() && !text.contains(","))
                         {
