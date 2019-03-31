@@ -35,7 +35,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 
-
 public class ReinforcementController implements Initializable {
 
     public int TotalReinforcement;
@@ -88,7 +87,6 @@ public class ReinforcementController implements Initializable {
     ObservableList<Country> adjacentOwnedObservableList = FXCollections.observableArrayList();
     Player player;
     ActionModel actions;
-    
 
     /**
      * This is the constructor for the reinforcement controller
@@ -107,7 +105,7 @@ public class ReinforcementController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
-    	
+
         cardController.addObserver(new cardObserver());
         player = PlayerPhaseModel.getPlayerModel().getCurrentPlayer();
         actions = ActionModel.getActionModel();
@@ -135,8 +133,7 @@ public class ReinforcementController implements Initializable {
             adjacentOwnedObservableList.addAll(countryId.getSelectionModel().getSelectedItem().getConnectedOwned());
         }
     }
-    
-    
+
     /**
      * This method sets the number of available army to your occupied country
      */
@@ -166,7 +163,6 @@ public class ReinforcementController implements Initializable {
                 "Army: " + Integer.toString(TotalReinforcement));
     }
 
-    
     /**
      * Method to set up the Attack.fxml view and set the controller
      * (AttackController) for the view. Then, changes the scene on the stage to
@@ -212,7 +208,7 @@ public class ReinforcementController implements Initializable {
 
                 if (PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getCards().size() < 3)
                 {
-                	
+
                     child.getChildren().clear();
                 }
             }
@@ -243,7 +239,7 @@ public class ReinforcementController implements Initializable {
                 }
             }
         });
-        
+
         adjacentOwned.setCellFactory(param -> new ListCell<Country>() {
             @Override
             protected void updateItem(Country country, boolean empty)
@@ -260,7 +256,7 @@ public class ReinforcementController implements Initializable {
                 }
             }
         });
-        
+
         adjacentEnemy.setCellFactory(param -> new ListCell<Country>() {
             @Override
             protected void updateItem(Country country, boolean empty)

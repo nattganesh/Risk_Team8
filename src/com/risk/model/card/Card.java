@@ -15,7 +15,7 @@ public class Card {
 
     /**
      * This method is used to construct a new card
-     * 
+     *
      * @param category The type of card
      */
     public Card(String category)
@@ -26,7 +26,7 @@ public class Card {
 
     /**
      * This method is used to construct a new card
-     * 
+     *
      * @param category The type of card
      * @param owner The owner of card
      */

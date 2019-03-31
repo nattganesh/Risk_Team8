@@ -48,7 +48,7 @@ public class PlayerPhaseModel extends Observable implements Observer {
 
     /**
      * This method increments the current player index
-     * 
+     *
      * @param increment this is the index of player to increment
      */
     public void setPlayerIndex(int increment)
@@ -58,25 +58,25 @@ public class PlayerPhaseModel extends Observable implements Observer {
 
     /**
      * This method is used to get the index of the current player
-     *	
+     *
      * @return the index of the current player
      */
     public int getPlayerIndex()
     {
         return currentPlayerIndex;
     }
-    
+
     public void setNextPlayer()
     {
-    	
-    	while (true)
-    	{
-    		if (!playerList.get(++currentPlayerIndex % playerList.size()).isPlayerLost())
-    		{
-    			playerList.get(currentPlayerIndex % playerList.size());
-    			break;
-    		}
-    	}
+
+        while (true)
+        {
+            if (!playerList.get(++currentPlayerIndex % playerList.size()).isPlayerLost())
+            {
+                playerList.get(currentPlayerIndex % playerList.size());
+                break;
+            }
+        }
     }
 
     /**
@@ -98,7 +98,7 @@ public class PlayerPhaseModel extends Observable implements Observer {
     {
         return playerList.get(currentPlayerIndex % playerList.size());
     }
-    
+
     /**
      * This method gets the current player
      *
@@ -129,7 +129,7 @@ public class PlayerPhaseModel extends Observable implements Observer {
     {
         return playerList;
     }
-    
+
     public void setPlayers(ArrayList<Player> players)
     {
         playerList = players;
@@ -137,7 +137,7 @@ public class PlayerPhaseModel extends Observable implements Observer {
 
     /**
      * This method is used to get the player phase model
-     * 
+     *
      * @return this PlayerModel class as a singleton
      */
     public static PlayerPhaseModel getPlayerModel()
@@ -150,8 +150,8 @@ public class PlayerPhaseModel extends Observable implements Observer {
     }
 
     /**
-     * This method receives update from Player class
-     * This method notifies GamePhaseModel, updating world domination phase
+     * This method receives update from Player class This method notifies
+     * GamePhaseModel, updating world domination phase
      */
     @Override
     public void update(Observable o, Object country)

@@ -21,7 +21,7 @@ public class Continent {
     private ArrayList<Country> countries = new ArrayList<>();
     private int pointsWhenFullyOccupied;
     private Player ruler;
-    
+
     /**
      * This is the constructor for Continent
      *
@@ -57,7 +57,7 @@ public class Continent {
 
     /**
      * This method sets the ruler of continent
-     * 
+     *
      * @param p player object
      */
     public void setRuler(Player p)
@@ -66,8 +66,8 @@ public class Continent {
     }
 
     /**
-     * This method gets the ruler of the continent 
-     * 
+     * This method gets the ruler of the continent
+     *
      * @return returns player object
      */
     public Player getRuler()
@@ -86,8 +86,9 @@ public class Continent {
     }
 
     /**
-     * This method is used to get the extra number of army when a continent is occupied by a player
-     * 
+     * This method is used to get the extra number of army when a continent is
+     * occupied by a player
+     *
      * @return this returns number of army when fully occupied by one ruler
      */
     public int getPointsWhenFullyOccupied()

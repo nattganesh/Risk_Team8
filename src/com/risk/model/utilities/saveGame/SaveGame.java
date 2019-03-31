@@ -48,7 +48,7 @@ public class SaveGame {
 
             System.out.println("NAME OF MAP FILE");
             System.out.println(mapName);
-            
+
             System.out.println("SET PLAYER ORDER AND CARDS");
             for (Player player : players)
             {
@@ -57,7 +57,7 @@ public class SaveGame {
                 // Player Type
                 String playerType = player.getClass().getName();
                 int i = playerType.lastIndexOf(".");
-                System.out.print("," + playerType.substring(i+1));
+                System.out.print("," + playerType.substring(i + 1));
                 // Cards
                 for (Card card : player.getCards())
                 {

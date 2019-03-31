@@ -60,7 +60,7 @@ public class Run extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/risk/view/StartUp.fxml"));
         StartUpController sController = new StartUpController(primaryStage);
         loader.setController(sController);
-        
+
 //        GamePhaseController gamephase = new GamePhaseController();
 //        loader.setController(gamephase);
         Parent root = loader.load();
@@ -72,7 +72,7 @@ public class Run extends Application {
         primaryStage.setHeight(bounds.getHeight() / 1.5);
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();
-        
+
     }
 
 }

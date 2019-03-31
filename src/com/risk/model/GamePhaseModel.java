@@ -35,6 +35,7 @@ public class GamePhaseModel extends Observable {
 
     /**
      * This method is used to get the phase of game
+     *
      * @return String phase
      */
     public String getPhase()

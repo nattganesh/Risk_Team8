@@ -83,7 +83,7 @@ public class MapModel extends Observable implements Observer {
     {
         return countriesModel;
     }
-    
+
     public void setCountries(ArrayList<Country> countries)
     {
         countriesModel = countries;
@@ -114,7 +114,7 @@ public class MapModel extends Observable implements Observer {
     }
 
     /**
-     * This method receives update from change in army from country 
+     * This method receives update from change in army from country
      */
     @Override
     public void update(Observable o, Object arg)

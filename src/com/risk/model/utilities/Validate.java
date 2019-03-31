@@ -29,7 +29,7 @@ public class Validate {
 
     /**
      * This method is used to get the size of the validation list
-     * 
+     *
      * @return return the size of validation list of countries model
      */
     public int getValidateSize()
@@ -38,11 +38,12 @@ public class Validate {
     }
 
     /**
-     * This method is used to check if the number of countries in continents is equal to the maximum number
-     * that is set to the continent
-     * 
+     * This method is used to check if the number of countries in continents is
+     * equal to the maximum number that is set to the continent
+     *
      * @throws CannotFindException Exception thrown when file formatting is
-     * @throws CountLimitException Exception thrown when number of country in a continent is different from fixed number.
+     * @throws CountLimitException Exception thrown when number of country in a
+     * continent is different from fixed number.
      */
     public void continentChecks() throws CannotFindException, CountLimitException
     {
@@ -93,8 +94,9 @@ public class Validate {
      * (countriesModelValidationList.size() == map.getCountries().size()) then
      * from a given country, we can travel to all other countries, so map is
      * connected
-     * 
-     * @param origin The origin country whose neighbours will be added to countriesModelValidationList
+     *
+     * @param origin The origin country whose neighbours will be added to
+     * countriesModelValidationList
      */
     public void mapConnected(Country origin)
     {
@@ -130,10 +132,12 @@ public class Validate {
     }
 
     /**
-     * This method is used to validate the map by connecting country with its neighbours
-     * 
+     * This method is used to validate the map by connecting country with its
+     * neighbours
+     *
      * @throws CannotFindException Exception thrown when file formatting is
-     * @throws CountLimitException Exception thrown when number of country in a continent is different from fixed number.
+     * @throws CountLimitException Exception thrown when number of country in a
+     * continent is different from fixed number.
      */
     public void validateMap() throws CannotFindException, CountLimitException
     {
@@ -146,7 +150,7 @@ public class Validate {
 
     /**
      * This method is used to get the validation of connected countries
-     * 
+     *
      * @return validate The validation of connected map
      */
     public static Validate getValidate()

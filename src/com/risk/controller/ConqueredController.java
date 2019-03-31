@@ -1,6 +1,6 @@
 /**
  * This class is necessary for moving army after conquer
- * 
+ *
  * @author DKM
  *
  */
@@ -26,7 +26,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
-
 public class ConqueredController extends Observable implements Initializable {
 
     ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
@@ -48,16 +47,15 @@ public class ConqueredController extends Observable implements Initializable {
     TextField armyCount;
     boolean move = false;
 
- 
     /**
      * This method is data binding for connection between controller and UI.
-     * 
+     *
      * @see javafx.fxml.Initializable
      */
     @Override
     public void initialize(URL arg0, ResourceBundle arg1)
     {
-    	move = false;
+        move = false;
         actions = ActionModel.getActionModel();
         countryOwnedID.setItems(territoryObservableList);
         conqueredID.setItems(conqueredObservableList);
@@ -74,7 +72,7 @@ public class ConqueredController extends Observable implements Initializable {
         Country conquered = conqueredID.getSelectionModel().getSelectedItem();
         boolean validateTerritorySelections = p.validateTerritorySelections(reinforcement, conquered);
         boolean validateTerritorysTheSame = p.validateTerritorysTheSame(reinforcement, conquered);
-        if (validateTerritorySelections && !armyCount.getText().trim().isEmpty()&&validateTerritorysTheSame)
+        if (validateTerritorySelections && !armyCount.getText().trim().isEmpty() && validateTerritorysTheSame)
         {
             int army = Integer.parseInt(armyCount.getText());
             if (army < reinforcement.getArmyCount())
@@ -93,20 +91,25 @@ public class ConqueredController extends Observable implements Initializable {
             {
                 actions.addAction("invalid move");
             }
-        }else if(!validateTerritorySelections) 
+        }
+        else if (!validateTerritorySelections)
         {
-        	actions.addAction("please choose countries first");
-        }else if(armyCount.getText().trim().isEmpty()) {
-        	actions.addAction("please enter the number of army first");
-        } else {
-        	actions.addAction("countries you choose should not be the same");
+            actions.addAction("please choose countries first");
+        }
+        else if (armyCount.getText().trim().isEmpty())
+        {
+            actions.addAction("please enter the number of army first");
+        }
+        else
+        {
+            actions.addAction("countries you choose should not be the same");
         }
     }
 
     /**
-     * This method ends the conquer move
-     * When the number of army moved is equal or more than the number of dice the player rolled
-     * Then it allows him to end the move
+     * This method ends the conquer move When the number of army moved is equal
+     * or more than the number of dice the player rolled Then it allows him to
+     * end the move
      */
     @FXML
     public void moveComplete()
@@ -131,14 +134,13 @@ public class ConqueredController extends Observable implements Initializable {
      */
     public void setConquringArmy(Country c)
     {
-    	territoryObservableList.clear();
+        territoryObservableList.clear();
         conqueredObservableList.clear();
         conqueredObservableList.add(c);
         conquered = c;
         territoryObservableList.addAll(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
     }
 
-   
     /**
      * This method sets the number of army to move in ComboBox
      *
