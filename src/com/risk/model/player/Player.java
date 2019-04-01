@@ -17,6 +17,7 @@ import com.risk.model.card.Card;
 import com.risk.model.dice.Dice;
 import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
+import com.risk.model.strategy.Strategy;
 import com.risk.model.strategy.StrategyAttack;
 import com.risk.model.strategy.StrategyFortify;
 import com.risk.model.strategy.StrategyReinforcement;
@@ -38,7 +39,7 @@ public class Player extends Observable {
     private StrategyReinforcement strategyReinforcement;
     private StrategyAttack strategyAttack;
     private StrategyFortify strategyFortify;
-
+    private Strategy strategy;
     /**
      * Constructor for Player class
      *
@@ -48,7 +49,7 @@ public class Player extends Observable {
     {
         this.name = name;
     }
-
+    
     public boolean isComputerPlayer()
     {
         return isComputerPlayer;
@@ -688,5 +689,30 @@ public class Player extends Observable {
             }
         }
         return weakCountries;
+    }
+    
+    public void setStrategy(Strategy strategy) {
+    	this.strategy = strategy;
+    }
+    
+    public boolean attackStrategy(Player p,boolean status) {
+    	return this.strategy.attack(p, status);
+    }
+    
+    public boolean reinforceStrategy(Player p,boolean status) {
+    	return this.strategy.reinforce(p,status);
+    }
+    
+    public boolean fortifyStrategy(Player p,boolean status) {
+    	return this.strategy.fortify(p,status);
+    }
+    
+    public void moveCards(Player a) {
+    	ObservableList<Card> loserCard = a.getCards();
+    	for(Card c: loserCard) {
+    		addCard(c);
+    		c.setOwner(this);
+    	}
+    	a.getCards().clear();
     }
 }
