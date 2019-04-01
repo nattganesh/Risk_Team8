@@ -17,13 +17,16 @@ import com.risk.model.card.Card;
 import com.risk.model.dice.Dice;
 import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
+import com.risk.model.strategy.StrategyAttack;
+import com.risk.model.strategy.StrategyFortify;
+import com.risk.model.strategy.StrategyReinforcement;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Observable;
 
-public abstract class Player extends Observable {
+public class Player extends Observable {
 
     private String name;
     private ArrayList<Country> occupiedCountries = new ArrayList<>();
@@ -32,6 +35,9 @@ public abstract class Player extends Observable {
     private int startingPoints;
     private boolean playerLost = false;
     private boolean isComputerPlayer;
+    private StrategyReinforcement strategyReinforcement;
+    private StrategyAttack strategyAttack;
+    private StrategyFortify strategyFortify;
 
     /**
      * Constructor for Player class
@@ -258,36 +264,50 @@ public abstract class Player extends Observable {
         this.playerLost = playerLost;
     }
 
-    /**
-     * This method is used to decrease the army amount or change the owner of
-     * country when it is occupied In case1, the defender lost in dice so it
-     * lost 1 army In case2, the attacker conquered the defender, so the owner
-     * of defender changes In case3, the attacker lost in dice so it lost 1 army
-     *
-     * @param attack country that is attacking
-     * @param defend country being attacked
-     * @param caseType the type of attack
-     *
-     */
-    public abstract void attack(Country attack, Country defend, int caseType);
+    public StrategyReinforcement getStrategyReinforcement()
+    {
+        return strategyReinforcement;
+    }
 
-    /**
-     * This method is necessary for reinforcement The number of armies in the
-     * country will be add with the number the player inputs
-     *
-     * @param myCountry the country to be reinforced
-     * @param Armyinput the number of army to reinforce
-     */
-    public abstract void reinforce(Country myCountry, int Armyinput);
+    public void setStrategyReinforcement(StrategyReinforcement strategyReinforcement)
+    {
+        this.strategyReinforcement = strategyReinforcement;
+    }
 
-    /**
-     * This method is necessary for fortify a country
-     *
-     * @param from The country which the player moves the armies from
-     * @param to The country which the player moves the armies to
-     * @param Armyinput The number of armies to move
-     */
-    public abstract void fortify(Country from, Country to, int Armyinput);
+    public void executeStrategyReinforcement(int Armyinput)
+    {
+        this.strategyReinforcement.reinforce(Armyinput);
+    }
+
+    public StrategyAttack getStrategyAttack()
+    {
+        return strategyAttack;
+    }
+
+    public void setStrategyAttack(StrategyAttack strategyAttack)
+    {
+        this.strategyAttack = strategyAttack;
+    }
+
+    public void executeStrategyAttack()
+    {
+        this.strategyAttack.attack();
+    }
+
+    public StrategyFortify getStrategyFortify()
+    {
+        return strategyFortify;
+    }
+
+    public void setStrategyFortify(StrategyFortify strategyFortify)
+    {
+        this.strategyFortify = strategyFortify;
+    }
+
+    public void executeStrategyFortify(int Armyinput)
+    {
+        this.strategyFortify.fortify(Armyinput);
+    }
 
     /**
      * This method is used to get all accessible countries of the country player
@@ -636,22 +656,37 @@ public abstract class Player extends Observable {
         }
     }
 
-    public static Player getStrategy(String type, String playerName)
+    public Country getStrongestCountry()
     {
-        switch (type)
+        Country strongestCountry = getOccupiedCountries().get(0);
+        for (int i = 1; i < getOccupiedCountries().size(); i++)
         {
-            case "HumanPlayer":
-                return new HumanPlayer(playerName);
-            case "AggressivePlayer":
-                return new AggressivePlayer(playerName);
-            case "BenevolentPlayer":
-                return new BenevolentPlayer(playerName);
-            case "CheaterPlayer":
-                return new CheaterPlayer(playerName);
-            case "RandomPlayer":
-                return new RandomPlayer(playerName);
-            default:
-                return new HumanPlayer(playerName);
+            if (getOccupiedCountries().get(i).getArmyCount() > strongestCountry.getArmyCount())
+            {
+                strongestCountry = getOccupiedCountries().get(i);
+            }
         }
+        return strongestCountry;
+    }
+
+    public ArrayList<Country> getWeakestCountries()
+    {
+        Country weakestCountry = getOccupiedCountries().get(0);
+        ArrayList<Country> weakCountries = new ArrayList<>();
+        weakCountries.add(weakestCountry);
+        for (int i = 1; i < getOccupiedCountries().size(); i++)
+        {
+            if (getOccupiedCountries().get(i).getArmyCount() < weakestCountry.getArmyCount())
+            {
+                weakCountries.clear();
+                weakestCountry = getOccupiedCountries().get(i);
+                weakCountries.add(weakestCountry);
+            }
+            else if (getOccupiedCountries().get(i).getArmyCount() == weakestCountry.getArmyCount())
+            {
+                weakCountries.add(getOccupiedCountries().get(i));
+            }
+        }
+        return weakCountries;
     }
 }

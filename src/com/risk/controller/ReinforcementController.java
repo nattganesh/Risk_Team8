@@ -20,6 +20,8 @@ import com.risk.model.ActionModel;
 import com.risk.model.GamePhaseModel;
 import com.risk.model.PlayerPhaseModel;
 import com.risk.model.card.Card;
+import com.risk.model.strategy.behavior.human.HumanReinforcementStrategy;
+import com.risk.model.strategy.StrategyReinforcement;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -150,7 +152,8 @@ public class ReinforcementController implements Initializable {
 
             if (Armyinput <= TotalReinforcement)
             {
-                selectedCountry.getRuler().reinforce(selectedCountry, Armyinput);
+                selectedCountry.getRuler().setStrategyReinforcement(new HumanReinforcementStrategy(selectedCountry));
+                selectedCountry.getRuler().executeStrategyReinforcement(Armyinput);
                 TotalReinforcement = TotalReinforcement - Armyinput;
                 updateView();
                 actions.addAction("Added " + Armyinput + " Army to " + selectedCountry.getName());

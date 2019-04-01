@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.risk.model.player;
+package com.risk.model.strategy.behavior.aggressive;
 
+import com.risk.model.player.Player;
 import com.risk.model.map.Country;
+import com.risk.model.strategy.StrategyAttack;
 import java.util.ArrayList;
 
 /**
@@ -15,56 +17,33 @@ import java.util.ArrayList;
  *
  * @author Natheepan
  */
-public class AggressivePlayer extends ComputerPlayer {
+public class AggressiveAttackStrategy implements StrategyAttack {
 
-    private Country strongestCountry;
+    private final Player player;
+    private final int[] dattack;
+    private final int[] ddefend;
+    private final int rolltime;
 
-    public AggressivePlayer(String name)
+    public AggressiveAttackStrategy(Player player, int[] dattack, int[] ddefend, int rolltime)
     {
-        super(name);
-    }
-
-    public Country getStrongestCountry()
-    {
-        strongestCountry = getOccupiedCountries().get(0);
-        for (int i = 1; i < getOccupiedCountries().size(); i++)
-        {
-            if (getOccupiedCountries().get(i).getArmyCount() > strongestCountry.getArmyCount())
-            {
-                strongestCountry = getOccupiedCountries().get(i);
-            }
-        }
-        return strongestCountry;
+        this.player = player;
+        this.dattack = dattack;
+        this.ddefend = ddefend;
+        this.rolltime = rolltime;
     }
 
     @Override
-    public void reinforce(Country myCountry, int Armyinput)
-    {
-        reinforce(Armyinput);
-    }
-
-    public void reinforce(int Armyinput)
-    {
-        Country strongestCountry = getStrongestCountry();
-        strongestCountry.setArmyCount(Armyinput);
-    }
-
-    @Override
-    public void attack(Country attack, Country defend, int caseType)
-    {
-        attack();
-    }
-
     public void attack()
     {
+        Country strongestCountry = player.getStrongestCountry();
         ArrayList<Country> neighboursOfStrongestCountry = strongestCountry.getConnectedEnemyArrayList();
 
         while (!neighboursOfStrongestCountry.isEmpty() && strongestCountry.getArmyCount() > 1)
         {
             Country defendingCountry = neighboursOfStrongestCountry.get(0);
-            int[] dattack = rollResult(3);
-            int[] ddefend = rollResult(2);
-            int rolltime = setRollTime(3, 2);
+//            int[] dattack = rollResult(3);
+//            int[] ddefend = rollResult(2);
+//            int rolltime = setRollTime(3, 2);
 
             for (int i = 0; i < rolltime; i++)
             {
@@ -76,10 +55,10 @@ public class AggressivePlayer extends ComputerPlayer {
                         defendingCountry.getRuler().removeCountry(defendingCountry);
                         if (defendingCountry.getRuler().isPlayerLost())
                         {
-                            getCards().addAll(defendingCountry.getRuler().getCards());
+                            player.getCards().addAll(defendingCountry.getRuler().getCards());
                         }
-                        defendingCountry.setRuler(this);
-                        addCountry(defendingCountry);
+                        defendingCountry.setRuler(player);
+                        player.addCountry(defendingCountry);
                         neighboursOfStrongestCountry.remove(0);
                         break;
                     }
@@ -91,17 +70,4 @@ public class AggressivePlayer extends ComputerPlayer {
             }
         }
     }
-
-    @Override
-    public void fortify(Country from, Country to, int Armyinput)
-    {
-        fortify(Armyinput);
-    }
-
-    public void fortify(int Armyinput)
-    {
-        Country strongestCountry = getStrongestCountry();
-        strongestCountry.setArmyCount(Armyinput);
-    }
-
 }

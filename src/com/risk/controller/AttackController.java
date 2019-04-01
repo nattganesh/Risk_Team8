@@ -24,6 +24,7 @@ import com.risk.model.PlayerPhaseModel;
 import com.risk.model.card.Card;
 import com.risk.model.dice.Dice;
 import com.risk.model.map.Country;
+import com.risk.model.strategy.behavior.human.HumanAttackStrategy;
 import com.risk.model.player.Player;
 
 import javafx.collections.FXCollections;
@@ -292,13 +293,15 @@ public class AttackController implements Initializable, Observer {
         {
             if (dattack[i] > ddefend[i])
             {
-                attackingCountry.getRuler().attack(attackingCountry, defendingCountry, 1);
+                attackingCountry.getRuler().setStrategyAttack(new HumanAttackStrategy(attackingCountry.getRuler(), attackingCountry, defendingCountry, 1));
+                attackingCountry.getRuler().executeStrategyAttack();
                 actions.addAction("defender has lost 1 army");
                 if (defendingCountry.getArmyCount() == 0)
                 {
                     actions.addAction("You have already occupied this country!");
                     actions.addAction("Please move armies to your new country!");
-                    attackingCountry.getRuler().attack(attackingCountry, defendingCountry, 2);
+                    attackingCountry.getRuler().setStrategyAttack(new HumanAttackStrategy(attackingCountry.getRuler(), attackingCountry, defendingCountry, 2));
+                    attackingCountry.getRuler().executeStrategyAttack();
                     occupy = true;
                     child.setVisible(true);
                     conqueringController.setConquringArmy(defendingCountry);
@@ -308,8 +311,8 @@ public class AttackController implements Initializable, Observer {
             }
             else
             {
-
-                attackingCountry.getRuler().attack(attackingCountry, defendingCountry, 3);
+                attackingCountry.getRuler().setStrategyAttack(new HumanAttackStrategy(attackingCountry.getRuler(),attackingCountry, defendingCountry, 3));
+                attackingCountry.getRuler().executeStrategyAttack();
                 updateView(attackingCountry);
                 actions.addAction("attacker has lost 1 army");
 
