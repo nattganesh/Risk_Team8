@@ -116,6 +116,7 @@ public class ReinforcementController implements Initializable {
         adjacentEnemy.setItems(adjacentEnemyObservableList);
         adjacentOwned.setItems(adjacentOwnedObservableList);
         updateView();
+        
     }
 
     /**

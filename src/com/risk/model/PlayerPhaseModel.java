@@ -31,6 +31,15 @@ public class PlayerPhaseModel extends Observable implements Observer {
     PlayerPhaseModel()
     {
     }
+    
+    /**
+     * This method clears the state
+     */
+    public void clear()
+    {
+    	playerList.clear();
+    	currentPlayerIndex = 0;
+    }
 
     /**
      * Sets the winner of the game

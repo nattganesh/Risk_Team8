@@ -41,6 +41,7 @@ public class SaveGame {
         ArrayList<Player> players = PlayerPhaseModel.getPlayerModel().getPlayers();
         Player currentPlayer = PlayerPhaseModel.getPlayerModel().getCurrentPlayer();
         String currentPhaseName = GamePhaseModel.getGamePhaseModel().getPhase();
+        PrintStream printOut = System.out;
 
         try (PrintStream fileOut = new PrintStream("src/com/risk/main/savedGameFiles/" + gameFileName + ".txt"))
         {
@@ -74,6 +75,8 @@ public class SaveGame {
             System.out.println(currentPhaseName);
             System.out.println("CURRENT PLAYER");
             System.out.println(currentPlayer.getName());
+            fileOut.close();
+            System.setOut(printOut);
             return true;
         }
         catch (Exception ex)

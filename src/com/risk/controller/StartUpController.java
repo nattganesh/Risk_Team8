@@ -45,7 +45,7 @@ public class StartUpController implements Initializable {
             if (mode.equals("single"))
             {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/risk/view/LayoutView.fxml"));
-                GamePhaseController gamephase = new GamePhaseController();
+                GamePhaseController gamephase = new GamePhaseController(stage);
                 loader.setController(gamephase);
 
                 try
@@ -78,17 +78,3 @@ public class StartUpController implements Initializable {
     }
 }
 
-
-/*
- * if (view.equals("reinforcement")) {
-			FXMLLoader reinforcementLoader = new FXMLLoader(getClass().getResource("/com/risk/view/Reinforcement.fxml"));
-			reinforcementLoader.setController(rController);
-			try {
-				stage.getScene().setRoot(reinforcementLoader.load());
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			stage.show();
-		}
- */

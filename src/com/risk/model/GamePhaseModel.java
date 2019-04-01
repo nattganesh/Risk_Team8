@@ -42,7 +42,7 @@ public class GamePhaseModel extends Observable {
     {
         return this.phase;
     }
-
+    
     /**
      * This method is used to get the game phase model
      *
