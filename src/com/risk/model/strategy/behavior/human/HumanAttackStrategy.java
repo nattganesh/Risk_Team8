@@ -21,9 +21,9 @@ public class HumanAttackStrategy implements StrategyAttack {
     private final Country defend;
     private int caseType;
 
-    public HumanAttackStrategy(Player player, Country attack, Country defend, int caseType)
+    public HumanAttackStrategy(Country attack, Country defend, int caseType)
     {
-        this.player = player;
+        this.player = attack.getRuler();
         this.attack = attack;
         this.defend = defend;
         this.caseType = caseType;
