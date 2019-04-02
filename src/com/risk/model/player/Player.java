@@ -272,16 +272,28 @@ public class Player extends Observable {
 
     public void reinforce(int Armyinput)
     {
+        if (this.strategy == null)
+        {
+            return;
+        }
         this.strategy.reinforce(Armyinput);
     }
 
     public void attack()
     {
+        if (this.strategy == null)
+        {
+            return;
+        }
         this.strategy.attack();
     }
 
     public void fortify(int Armyinput)
     {
+        if (this.strategy == null)
+        {
+            return;
+        }
         this.strategy.fortify(Armyinput);
     }
 
