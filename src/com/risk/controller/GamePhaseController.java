@@ -227,7 +227,7 @@ public class GamePhaseController implements Observer, Initializable {
                 if (PlayerPhaseModel.getPlayerModel().getCurrentPlayer().isComputerPlayer())
                 {
                 	// checks if it's computer player?
-                	 phaseID.setText(view);
+                	 phaseID.setText("automatic");
                      playerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
                      mainPane.getChildren().clear();
                 }  
