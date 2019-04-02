@@ -58,4 +58,19 @@ public class Benevolent implements Strategy {
 		}
 		
 	}
+
+	@Override
+	public void setup(Player p) {
+		int army = p.getStartingPoints();
+		while (army > 0) {
+			for (Country c : p.getOccupiedCountries()) {
+				c.setArmyCount(1);
+				army--;
+				if (army == 0) {
+					p.setStartingPoints(0);
+					return;
+				}
+			}
+		}
+	}
 }

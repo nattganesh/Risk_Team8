@@ -39,6 +39,10 @@ public class Random implements Strategy{
 							defend.setRuler(p);
 							p.addCountry(defend);
 							occupy = true;
+							int army = attack.getArmyCount()-1-result[0];
+							int armyinput = result[0] + getRandomNumber(army);
+							attack.reduceArmyCount(armyinput);
+							defend.setArmyCount(armyinput);
 							break;
 						}
 					} else {
@@ -86,5 +90,15 @@ public class Random implements Strategy{
 			randomTo.setArmyCount(armyInput);
 		}
 		
+	}
+
+	@Override
+	public void setup(Player p) {
+		int army = p.getStartingPoints();
+		for(int i=0; i<army; i++) {
+			Country random = p.getOccupiedCountries().get(getRandomNumber(p.getOccupiedCountries().size()));
+	        random.setArmyCount(1);
+		}
+		p.setStartingPoints(0);
 	}
 }

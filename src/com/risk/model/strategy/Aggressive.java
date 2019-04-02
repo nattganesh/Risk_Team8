@@ -26,6 +26,8 @@ public class Aggressive implements Strategy {
 					}
 					defendingCountry.setRuler(p);
 					p.addCountry(defendingCountry);
+					strongestCountry.reduceArmyCount(result[0]);
+					defendingCountry.setArmyCount(result[0]);
 					break;
 				}
 			} else {
@@ -49,7 +51,6 @@ public class Aggressive implements Strategy {
 	@Override
 	public void fortify(Player p) {
 		int tmp = 0;
-		ArrayList<Country> countriesHaveConnectedPath = new ArrayList<Country>();
 		ArrayList<Country> maximumArmy = new ArrayList<Country>();
 		if(p.isAnyCountriesConnected()) {
 			for(Country c: p.getOccupiedCountries() ) {
@@ -73,6 +74,19 @@ public class Aggressive implements Strategy {
 			c1.reduceArmyCount(armyinput);
 			c2.setArmyCount(armyinput);
 		}
+	}
+
+	public int getRandomNumber(int limit)
+	{ 
+		return (int) (Math.random() * limit);
+	}
+	 
+	@Override
+	public void setup(Player p) {
+		Country c = p.getOccupiedCountries().get(getRandomNumber(p.getOccupiedCountries().size()));
+		int armyimput = p.getStartingPoints();
+		c.setArmyCount(armyimput);
+		p.setStartingPoints(0);
 	}
 
 }

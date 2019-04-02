@@ -18,6 +18,8 @@ public class Cheater implements Strategy{
 				}
 				cNeighbors.setRuler(p);
 				p.addCountry(cNeighbors);
+				c.reduceArmyCount(1);
+				cNeighbors.setArmyCount(1);
             }
         }
 		status = true;
@@ -26,9 +28,11 @@ public class Cheater implements Strategy{
 
 	@Override
 	public void reinforce(Player p) {
-		Country strongestCountry = p.getStrongestCountry();
-		int Armyinput = p.getReinforcementArmy();
-		strongestCountry.setArmyCount(Armyinput);
+		for (Country c : p.getOccupiedCountries())
+        {
+			int army = c.getArmyCount();
+			c.setArmyCount(army*2);
+        }
 	}
 
 	@Override
@@ -40,5 +44,18 @@ public class Cheater implements Strategy{
 				c.setArmyCount(army*2);
 			}
         }
+	}
+	public int getRandomNumber(int limit)
+	{
+		return (int) (Math.random() * limit);
+	}
+	@Override
+	public void setup(Player p) {
+		int army = p.getStartingPoints();
+		for(int i=0; i<army; i++) {
+			Country random = p.getOccupiedCountries().get(getRandomNumber(p.getOccupiedCountries().size()));
+	        random.setArmyCount(1);
+		}
+		p.setStartingPoints(0);	
 	}
 }
