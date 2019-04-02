@@ -31,12 +31,12 @@ public class HumanStrategy implements Strategy {
         this.defendingCountry = defendingCountry;
         this.caseType = attackingCaseType;
     }
-    
+
     public HumanStrategy(Country reinforceingCountry)
     {
         this.reinforceingCountry = reinforceingCountry;
     }
-    
+
     public HumanStrategy(Country fortifyingFrom, Country fortifyingTo)
     {
         this.fortifyingFrom = fortifyingFrom;
@@ -57,6 +57,10 @@ public class HumanStrategy implements Strategy {
     @Override
     public void reinforce(int Armyinput)
     {
+        if (reinforceingCountry == null)
+        {
+            return;
+        }
         reinforceingCountry.setArmyCount(Armyinput);
     }
 
@@ -70,6 +74,10 @@ public class HumanStrategy implements Strategy {
     @Override
     public void attack()
     {
+        if (defendingCountry == null || attackingCountry == null || caseType < 1 || caseType < 3)
+        {
+            return;
+        }
         switch (caseType)
         {
             case 1:
@@ -98,6 +106,10 @@ public class HumanStrategy implements Strategy {
     @Override
     public void fortify(int Armyinput)
     {
+        if (fortifyingFrom == null || fortifyingTo == null)
+        {
+            return;
+        }
         fortifyingFrom.reduceArmyCount(Armyinput);
         fortifyingTo.setArmyCount(Armyinput);
     }
