@@ -9,8 +9,9 @@ package com.risk.model.strategy;
  *
  * @author Natheepan
  */
-public interface StrategyAttack {
+public interface Strategy {
     
+    public void reinforce(int Armyinput);
     public void attack();
-    
+    public void fortify(int Armyinput);
 }
