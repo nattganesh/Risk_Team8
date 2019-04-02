@@ -20,16 +20,10 @@ import java.util.ArrayList;
 public class AggressiveAttackStrategy implements StrategyAttack {
 
     private final Player player;
-    private final int[] dattack;
-    private final int[] ddefend;
-    private final int rolltime;
 
-    public AggressiveAttackStrategy(Player player, int[] dattack, int[] ddefend, int rolltime)
+    public AggressiveAttackStrategy(Player player)
     {
         this.player = player;
-        this.dattack = dattack;
-        this.ddefend = ddefend;
-        this.rolltime = rolltime;
     }
 
     @Override
@@ -41,9 +35,9 @@ public class AggressiveAttackStrategy implements StrategyAttack {
         while (!neighboursOfStrongestCountry.isEmpty() && strongestCountry.getArmyCount() > 1)
         {
             Country defendingCountry = neighboursOfStrongestCountry.get(0);
-//            int[] dattack = rollResult(3);
-//            int[] ddefend = rollResult(2);
-//            int rolltime = setRollTime(3, 2);
+            int[] dattack = player.rollResult(3);
+            int[] ddefend = player.rollResult(2);
+            int rolltime = player.setRollTime(3, 2);
 
             for (int i = 0; i < rolltime; i++)
             {
