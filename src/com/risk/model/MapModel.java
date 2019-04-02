@@ -30,7 +30,17 @@ public class MapModel extends Observable implements Observer {
     {
 
     }
-
+    
+    /**
+     * This method clears the state
+     */
+    public void clear()
+    {
+        continentsModel.clear();
+        countriesModel.clear();
+        exchangeTime = 0;
+    }
+    
     /**
      *
      * @return this gets the number of time the card was exchanged in the
@@ -96,7 +106,8 @@ public class MapModel extends Observable implements Observer {
     {
         return continentsModel;
     }
-
+    
+    
     /**
      * This method is used to get the map model
      *
@@ -121,4 +132,5 @@ public class MapModel extends Observable implements Observer {
         setChanged();
         notifyObservers(country);
     }
+    
 }

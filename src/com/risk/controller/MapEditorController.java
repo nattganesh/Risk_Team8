@@ -30,6 +30,7 @@ import com.risk.model.player.Player;
 import com.risk.model.utilities.FileParser;
 import com.risk.model.utilities.Validate;
 import com.risk.model.utilities.generateOutputFile.Output;
+import com.risk.model.utilities.loadGame.LoadGame;
 
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
@@ -37,6 +38,7 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -79,11 +81,23 @@ public class MapEditorController implements Initializable {
 
     @FXML
     RadioButton startCardsID;
+    
+    //
+    @FXML
+    ListView<Player> behaviourViewID;
+    	
+    @FXML
+    ComboBox <String> playerForBehaviourID;
+    
+    @FXML
+    ComboBox <String> typeOfBehaviourID;
 
     private int validated = 0;
     ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
     ObservableList<Country> adjacentObservableList = FXCollections.observableArrayList();
-
+    ObservableList<Player> behaviourObservableList = FXCollections.observableArrayList();
+    
+    
     ActionModel actions;
 
     /**
@@ -94,13 +108,61 @@ public class MapEditorController implements Initializable {
     @Override
     public void initialize(URL arg0, ResourceBundle arg1)
     {
+    	behaviourViewID.setItems(behaviourObservableList);
         actions = ActionModel.getActionModel();
         ContinentView.setItems(MapModel.getMapModel().getContinents());
         TerritoryView.setItems(territoryObservableList);
         AdjacentView.setItems(adjacentObservableList);
         renderView();
     }
-
+    
+    @FXML
+    public void selectNumbPlayers()
+    {
+    	if (PlayerID.getSelectionModel().getSelectedItem() != null)
+    	{
+    		typeOfBehaviourID.getItems().clear();
+    		typeOfBehaviourID.getItems().addAll("AggressivePlayer", "HumanPlayer", "BenevolentPlayer", "CheaterPlayer", "RandomPlayer");
+    		playerForBehaviourID.getItems().clear();
+    		int number = Integer.parseInt(PlayerID.getSelectionModel().getSelectedItem());
+    		for (int i = 1; i <= number; i++)
+    		{
+    			playerForBehaviourID.getItems().add(Integer.toString(i));
+    		}
+    	}
+    }
+    
+    /**
+     * This method assigns behaviour to players
+     */
+    @FXML
+    public void assignBehaviour()
+    {
+    	if (playerForBehaviourID.getSelectionModel().getSelectedItem() != null && typeOfBehaviourID.getSelectionModel().getSelectedItem() != null)
+    	{
+    		String behaviour = typeOfBehaviourID.getSelectionModel().getSelectedItem();
+    		int playerIndex = Integer.parseInt(playerForBehaviourID.getSelectionModel().getSelectedItem());
+    		Player player = Player.getStrategy(behaviour, "Player" + playerIndex);
+    		
+    		int index = 0;
+    		boolean notExist = true;
+    		for (Player p: behaviourObservableList)
+    		{
+    			if (p.getName().equals(player.getName()))
+    			{
+    				behaviourObservableList.set(index, player);
+    				notExist = false;
+    				break;
+    			}
+    			index++;
+    		}
+    		if (notExist)
+    		{
+    			behaviourObservableList.add(player);
+    		}
+		}   	
+    }
+    
     /**
      * This method loads the territory in the selected continent
      *
@@ -320,8 +382,13 @@ public class MapEditorController implements Initializable {
     {
         validated = 0;
         clearMapEditor();
-        String inputFile = "src/com/risk/main/mapTextFiles/" + ExistingFile.getText() + ".txt";
-        if (!ExistingFile.getText().trim().isEmpty() && new File(inputFile).isFile())
+        String inputFile = "src/com/risk/main/mapTextFiles/" + ExistingFile.getText() + ".txt"; 
+        String savedGameFile = "src/com/risk/main/savedGameFiles/" + ExistingFile.getText() + ".txt";
+       
+        if (!ExistingFile.getText().trim().isEmpty() && LoadGame.generate(ExistingFile.getText())) {
+        	 actions.addAction("Loaded save map");
+        }
+        else if (!ExistingFile.getText().trim().isEmpty() && new File(inputFile).isFile())
         {
             MapModel.getMapModel().getContinents().clear();
             MapModel.getMapModel().getCountries().clear();
@@ -432,35 +499,43 @@ public class MapEditorController implements Initializable {
             if (PlayerID.getSelectionModel().getSelectedItem() != null && !skipRobinID.isSelected())
             {
                 int numbPlayers = Integer.parseInt(PlayerID.getSelectionModel().getSelectedItem());
-                setPlayers(numbPlayers);
-                setDeck();
-                calcStartingArmies();
-
-                assignCountriesToPlayers();
-
-                determinePlayersStartingOrder();
-
-                if (startCardsID.isSelected())
+                if (numbPlayers == behaviourObservableList.size())
                 {
-                    startWithCards();
+                    setPlayers(behaviourObservableList);
+                    setDeck();
+                    calcStartingArmies();
+
+                    assignCountriesToPlayers();
+
+                    determinePlayersStartingOrder();
+
+                    if (startCardsID.isSelected())
+                    {
+                        startWithCards();
+                    }
+                    GamePhaseModel.getGamePhaseModel().setPhase("setup complete");
+                    GamePhaseModel.getGamePhaseModel().setPhase("setup");
                 }
-                GamePhaseModel.getGamePhaseModel().setPhase("setup complete");
-                GamePhaseModel.getGamePhaseModel().setPhase("setup");
             }
             else
             {
-                int numbPlayers = Integer.parseInt(PlayerID.getSelectionModel().getSelectedItem());
-                setPlayers(numbPlayers);
-                setDeck();
-                calcStartingArmies();
-                autoAssignCountriesToPlayers();
-                determinePlayersStartingOrder();
-                if (startCardsID.isSelected())
+            	int numbPlayers = Integer.parseInt(PlayerID.getSelectionModel().getSelectedItem());
+            	if (numbPlayers == behaviourObservableList.size())
                 {
-                    startWithCards();
+            		 setPlayers(behaviourObservableList);
+                     setDeck();
+                     calcStartingArmies();
+                     autoAssignCountriesToPlayers();
+                     determinePlayersStartingOrder();
+                     if (startCardsID.isSelected())
+                     {
+                         startWithCards();
+                     }
+                     GamePhaseModel.getGamePhaseModel().setPhase("setup complete");
+                     GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
                 }
-                GamePhaseModel.getGamePhaseModel().setPhase("setup complete");
-                GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
+              
+               
             }
         }
     }
@@ -483,6 +558,21 @@ public class MapEditorController implements Initializable {
                 else
                 {
                     setText(continent.getName());
+                }
+            }
+        });
+        behaviourViewID.setCellFactory(param -> new ListCell<Player>() {
+            @Override
+            protected void updateItem(Player player, boolean empty)
+            {
+                super.updateItem(player, empty);
+                if (empty || player == null || player.getName() == null)
+                {
+                    setText(null);
+                }
+                else
+                {
+                    setText(player.getName() + " ( "+ player.getClass().toString().replaceAll("class com.risk.model.player.", "") + " )");
                 }
             }
         });
@@ -563,14 +653,12 @@ public class MapEditorController implements Initializable {
      *
      * @param numberOfPlayer the number of players
      */
-    public void setPlayers(int numberOfPlayer)
-    {
-        while (numberOfPlayer > 0)
-        {
-            Player player = new Player(PlayerPhaseModel.playerName[numberOfPlayer - 1]);
-            PlayerPhaseModel.getPlayerModel().addPlayer(player);
-            numberOfPlayer--;
-        }
+    public void setPlayers(ObservableList <Player> players)
+    {    	
+    	for (Player player : players)
+    	{
+    		 PlayerPhaseModel.getPlayerModel().addPlayer(player);
+    	}
     }
 
     public void setDeck()

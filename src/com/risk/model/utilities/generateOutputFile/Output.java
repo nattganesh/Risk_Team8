@@ -42,7 +42,6 @@ public class Output {
             {
                 System.out.println(country.getContinent().getName() + "," + country.getName());
             }
-
             System.out.println("SET NEIGHBORS");
             for (Country country : countries)
             {

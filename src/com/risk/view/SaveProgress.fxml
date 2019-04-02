@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.embed.swing.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="saveProgressID" prefHeight="250.0" prefWidth="250.0" style="-fx-background-color: #f0f0f0; -fx-border-color: black;" visible="false" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.risk.controller.SaveProgressController">
+   <children>
+      <TextField fx:id="mapID" layoutX="60.0" layoutY="154.0" prefHeight="31.0" prefWidth="130.0" />
+      <TextField fx:id="fileID" layoutX="60.0" layoutY="94.0" prefHeight="31.0" prefWidth="130.0" />
+      <Text layoutX="93.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FileName" />
+      <Text layoutX="90.0" layoutY="149.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MapName" />
+      <Button layoutX="69.0" layoutY="205.0" mnemonicParsing="false" onAction="#saveProgress" text="Save Progress" />
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#closeSaveProgress" text="Close" />
+   </children>
+</AnchorPane>

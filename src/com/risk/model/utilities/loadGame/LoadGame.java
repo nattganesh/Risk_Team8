@@ -14,6 +14,7 @@ import com.risk.model.player.Player;
 import com.risk.model.utilities.FileParser;
 import com.sun.media.jfxmedia.logging.Logger;
 import java.io.File;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -37,6 +38,7 @@ public class LoadGame {
      */
     public static boolean generate(String gameFileName)
     {
+    	PrintStream printOut = System.out;
         String gameFile = "src/com/risk/main/savedGameFiles/" + gameFileName + ".txt";
         String text = "";
         try (Scanner inputGame = new Scanner(new File(gameFile)))
@@ -55,6 +57,7 @@ public class LoadGame {
                     }
                 }
                 ArrayList<Country> countries = MapModel.getMapModel().getCountries();
+                System.out.println("here "  + countries.size());
                 if (countries.isEmpty())
                 {
                     return false;
@@ -133,6 +136,7 @@ public class LoadGame {
                                         c.setRuler(p);
                                         c.setArmyCount(numberOfArmy);
                                         c.setIsOccupied(true);
+                                        p.addCountry(c);
                                         break;
                                     }
                                 }
@@ -145,7 +149,9 @@ public class LoadGame {
                 if (text.equalsIgnoreCase("CURRENT PHASE") && inputGame.hasNextLine())
                 {
                     text = inputGame.nextLine();
+                   
                     GamePhaseModel.getGamePhaseModel().setPhase(text);
+                   
                     text = inputGame.nextLine();
                 }
                 if (text.equalsIgnoreCase("CURRENT PLAYER") && inputGame.hasNextLine())
@@ -162,6 +168,7 @@ public class LoadGame {
                 }
 
             }
+            System.setOut(printOut);
             return true;
         }
         catch (Exception ex)

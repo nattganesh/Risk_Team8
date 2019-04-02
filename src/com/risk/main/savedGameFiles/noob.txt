@@ -1,0 +1,12 @@
+NAME OF MAP FILE
+input
+SET PLAYER ORDER AND CARDS
+Player1,HumanPlayer
+Player2,HumanPlayer
+SET PLAYERS AND ARMY IN COUNTRY
+Alaska,Player1,40
+Argentina,Player2,40
+CURRENT PHASE
+reinforcement
+CURRENT PLAYER
+Player1

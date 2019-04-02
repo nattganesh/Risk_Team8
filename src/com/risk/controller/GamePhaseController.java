@@ -21,12 +21,14 @@ import com.risk.model.PlayerPhaseModel;
 import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
 import com.risk.model.player.Player;
+import com.risk.model.utilities.saveGame.SaveGame;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
@@ -35,12 +37,15 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
 
 public class GamePhaseController implements Observer, Initializable {
 
@@ -48,6 +53,9 @@ public class GamePhaseController implements Observer, Initializable {
     AttackController aController;
     FortificationController fController;
     SetUpController sController;
+    
+    @FXML
+    SaveProgressController saveController;
 
     ObservableList<XYChart.Series<String, Integer>> barData = FXCollections.observableArrayList();
     ObservableList<Data<String, Integer>> data = FXCollections.observableArrayList();
@@ -60,10 +68,14 @@ public class GamePhaseController implements Observer, Initializable {
     Scene scene;
     Parent root;
     String view = "setup";
+    Stage primaryStage;
 
     @FXML
     Pane mainPane;
 
+    @FXML
+    AnchorPane savePane;
+    
     @FXML
     TextField playerID;
 
@@ -87,21 +99,48 @@ public class GamePhaseController implements Observer, Initializable {
 
     @FXML
     ListView<String> actionMessage;
+    
+    @FXML
+    AnchorPane phaseDominationViewID;
 
     @FXML
     AnchorPane winnerPane;
 
     @FXML
     Text winnerID;
+    
+    @FXML
+    Button saveID;
+    
+    @FXML
+    Button newID;
 
     /**
      * This is a constructor for GamePhaseController
      *
      */
-    public GamePhaseController()
+    public GamePhaseController(Stage stage)
     {
         GamePhaseModel.getGamePhaseModel().addObserver(this);
+        primaryStage = stage;
     }
+
+    /**
+     * this method saves the progress of the current game
+     */
+    @FXML
+    public void saveProgress()
+    {
+    	saveController.showSaveProgress();
+    }
+    
+    @FXML
+    public void newGame()
+    {
+    	GamePhaseModel.getGamePhaseModel().setPhase("startup");
+    	newID.setVisible(false);
+    }
+
 
     /**
      * This method receives notification from the changes in the state from the
@@ -112,7 +151,15 @@ public class GamePhaseController implements Observer, Initializable {
     {
         ActionModel.getActionModel().clearAction();
         view = (String) phase;
+        System.out.println("phase notified " + view);
+        
 
+        
+        if (!view.equals("setup") && !view.equals("startup"))
+        {	
+        	saveID.setVisible(true);
+        	phaseDominationViewID.setVisible(true);
+        }	
         if (view.equals("setup"))
         {
             try
@@ -127,13 +174,27 @@ public class GamePhaseController implements Observer, Initializable {
                 e.printStackTrace();
             }
         }
+        else if (view.equals("startup"))
+        {
+        	saveController.closeSaveProgress();
+        	saveID.setVisible(true);
+        	phaseDominationViewID.setVisible(false);
+        	restartGame();
+        	
+            
+          	for (Player p : PlayerPhaseModel.getPlayerModel().getPlayers())
+          	{
+          		System.out.println(p.getCards().size());
+          	}
+            
+        }
         else if (view.equals("winner"))
         {
             phaseID.setText(view);
             winnerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName() + " is the winner");
             mainPane.getChildren().clear();
+            saveID.setVisible(false);
             winnerPane.setVisible(true);
-
         }
         else if (view.equals("setup complete"))
         {
@@ -163,11 +224,21 @@ public class GamePhaseController implements Observer, Initializable {
         {
             try
             {
-                phaseID.setText(view);
-                playerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
-                mainPane.getChildren().clear();
-                mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/Reinforcement.fxml")));
-
+                if (PlayerPhaseModel.getPlayerModel().getCurrentPlayer().isComputerPlayer())
+                {
+                	// checks if it's computer player?
+                	 phaseID.setText(view);
+                     playerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
+                     mainPane.getChildren().clear();
+                }  
+                else 
+                {
+                	 // else it's human
+                	 phaseID.setText(view);
+                     playerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
+                     mainPane.getChildren().clear();
+                     mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/Reinforcement.fxml")));
+                }
             }
             catch (IOException e)
             {
@@ -356,7 +427,6 @@ public class GamePhaseController implements Observer, Initializable {
         PlayerPhaseModel.getPlayerModel().addObserver(new playerObserver());
         PlayerPhaseModel.getPlayerModel().addObserver(new continentObserver());
         MapModel.getMapModel().addObserver(new mapObserver());
-
         actionMessage.setItems(ActionModel.getActionModel().getActions());
         worldDomination1.setData(pieChartData);
 
@@ -370,5 +440,41 @@ public class GamePhaseController implements Observer, Initializable {
             e.printStackTrace();
         }
     }
+    
+    
+    public void restartGame()
+    {
+
+        barData.clear();
+        data.clear();
+        serie.getData().clear();
+        pieChartData.clear();
+        piePlayersList.clear();
+        barPlayersList.clear();
+        
+    	
+    	 MapModel.getMapModel().clear();
+    	 PlayerPhaseModel.getPlayerModel().clear();
+    	 
+    	
+	   	 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/risk/view/StartUp.fxml"));
+	     StartUpController sController = new StartUpController(primaryStage);
+	     loader.setController(sController);
+	     Parent root = null;
+			try {
+				root = loader.load();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+	     Screen screen = Screen.getPrimary();
+	     Rectangle2D bounds = screen.getVisualBounds();
+	     primaryStage.setX((bounds.getWidth() - primaryStage.getWidth()));
+	     primaryStage.setY((bounds.getHeight() - primaryStage.getHeight()));
+	     primaryStage.setWidth(bounds.getWidth() / 1.25);
+	     primaryStage.setHeight(bounds.getHeight() / 1.5);
+	     primaryStage.setScene(new Scene(root, 300, 275));
+	     primaryStage.show();
+	    }
 
 }
