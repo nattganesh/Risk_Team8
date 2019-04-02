@@ -5,6 +5,6 @@ import com.risk.model.player.Player;
 
 public interface Strategy {
 	boolean attack(Player p,boolean status);
-	boolean reinforce(Player p,boolean status);
-	boolean fortify(Player p,boolean status);
+	void reinforce(Player p);
+	void fortify(Player p);
 }

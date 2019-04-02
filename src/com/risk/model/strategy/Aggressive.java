@@ -1,4 +1,4 @@
-package com.risk.model.strategy.behavior.aggressive;
+package com.risk.model.strategy;
 
 import java.util.ArrayList;
 
@@ -32,23 +32,47 @@ public class Aggressive implements Strategy {
 				strongestCountry.reduceArmyCount(1);
 			}
 		}
-		if(!neighboursOfStrongestCountry.isEmpty() && strongestCountry.getArmyCount() > 1) {
+		if (!neighboursOfStrongestCountry.isEmpty() && strongestCountry.getArmyCount() > 1) {
 			return true;
-		}else {
+		} else {
 			return false;
 		}
 	}
 
 	@Override
-	public boolean reinforce(Player p, boolean status) {
-		// TODO Auto-generated method stub
-		return false;
+	public void reinforce(Player p) {
+		Country strongestCountry = p.getStrongestCountry();
+		int Armyinput = p.getReinforcementArmy();
+		strongestCountry.setArmyCount(Armyinput);
 	}
 
 	@Override
-	public boolean fortify(Player p, boolean status) {
-		// TODO Auto-generated method stub
-		return false;
+	public void fortify(Player p) {
+		int tmp = 0;
+		ArrayList<Country> countriesHaveConnectedPath = new ArrayList<Country>();
+		ArrayList<Country> maximumArmy = new ArrayList<Country>();
+		if(p.isAnyCountriesConnected()) {
+			for(Country c: p.getOccupiedCountries() ) {
+				ArrayList<Country> connected = new ArrayList<Country>();
+				connected = p.getCountriesArrivedbyPath(c, c, connected);
+				if(!connected.isEmpty()) {
+					for(Country connect: connected) {
+						int armysum = c.getArmyCount()+connect.getArmyCount()-1;
+						if(armysum>tmp) {
+							tmp = armysum;
+							maximumArmy.clear();
+							maximumArmy.add(c);
+							maximumArmy.add(connect);
+						}
+					}
+				}
+			}
+			Country c1 = maximumArmy.get(0);
+			Country c2 = maximumArmy.get(1);
+			int armyinput = c1.getArmyCount()-1;
+			c1.reduceArmyCount(armyinput);
+			c2.setArmyCount(armyinput);
+		}
 	}
 
 }

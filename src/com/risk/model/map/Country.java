@@ -237,5 +237,25 @@ public class Country extends Observable {
         }
         return list;
     }
+    
+    /**
+     * This is a method for returning connected enemy countries of the current
+     * country
+     *
+     * @return list The enemy countries connected to the country the player
+     * selects
+     */
+    public ArrayList<Country> getConnectedOwnedArrayList()
+    {
+        ArrayList<Country> list = new ArrayList<>();
+        for (Country country : connectedCountries)
+        {
+            if (country.getRuler().getName().equals(ruler.getName()))
+            {
+                list.add(country);
+            }
+        }
+        return list;
+    }
 
 }

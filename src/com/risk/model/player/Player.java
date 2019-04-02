@@ -699,12 +699,12 @@ public class Player extends Observable {
     	return this.strategy.attack(p, status);
     }
     
-    public boolean reinforceStrategy(Player p,boolean status) {
-    	return this.strategy.reinforce(p,status);
+    public void reinforceStrategy(Player p) {
+    	this.strategy.reinforce(p);
     }
     
-    public boolean fortifyStrategy(Player p,boolean status) {
-    	return this.strategy.fortify(p,status);
+    public void fortifyStrategy(Player p) {
+    	this.strategy.fortify(p);
     }
     
     public void moveCards(Player a) {
