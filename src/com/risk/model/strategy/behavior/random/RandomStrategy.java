@@ -7,7 +7,7 @@ package com.risk.model.strategy.behavior.random;
 
 import com.risk.model.player.Player;
 import com.risk.model.map.Country;
-import com.risk.model.strategy.StrategyAttack;
+import com.risk.model.strategy.Strategy;
 
 /**
  * A random computer player strategy that reinforces random a random country,
@@ -16,13 +16,19 @@ import com.risk.model.strategy.StrategyAttack;
  *
  * @author Natheepan
  */
-public class RandomAttackStrategy implements StrategyAttack {
+public class RandomStrategy implements Strategy {
 
     private final Player player;
-    
-    public RandomAttackStrategy(Player player)
+
+    public RandomStrategy(Player player)
     {
         this.player = player;
+    }
+
+    @Override
+    public void reinforce(int Armyinput)
+    {
+        player.getOccupiedCountries().get(getRandomNumber(player.getOccupiedCountries().size())).setArmyCount(Armyinput);
     }
 
     @Override
@@ -36,7 +42,13 @@ public class RandomAttackStrategy implements StrategyAttack {
             }
         }
     }
-    
+
+    @Override
+    public void fortify(int Armyinput)
+    {
+        player.getOccupiedCountries().get(getRandomNumber(player.getOccupiedCountries().size())).setArmyCount(Armyinput);
+    }
+
     public int getRandomNumber(int limit)
     {
         return (int) (Math.random() * limit);

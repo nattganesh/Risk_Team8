@@ -7,8 +7,8 @@ package com.risk.model.strategy.behavior.aggressive;
 
 import com.risk.model.player.Player;
 import com.risk.model.map.Country;
-import com.risk.model.strategy.StrategyAttack;
 import java.util.ArrayList;
+import com.risk.model.strategy.Strategy;
 
 /**
  * An aggressive computer player strategy that focuses on attack (reinforces its
@@ -17,15 +17,22 @@ import java.util.ArrayList;
  *
  * @author Natheepan
  */
-public class AggressiveAttackStrategy implements StrategyAttack {
+public class AggressiveStrategy implements Strategy {
 
     private final Player player;
 
-    public AggressiveAttackStrategy(Player player)
+    public AggressiveStrategy(Player player)
     {
         this.player = player;
     }
 
+    @Override
+    public void reinforce(int Armyinput)
+    {
+        Country strongestCountry = player.getStrongestCountry();
+        strongestCountry.setArmyCount(Armyinput);
+    }
+    
     @Override
     public void attack()
     {
@@ -63,5 +70,12 @@ public class AggressiveAttackStrategy implements StrategyAttack {
                 }
             }
         }
+    }
+    
+    @Override
+    public void fortify(int Armyinput)
+    {
+        Country strongestCountry = player.getStrongestCountry();
+        strongestCountry.setArmyCount(Armyinput);
     }
 }

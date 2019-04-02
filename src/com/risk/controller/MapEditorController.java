@@ -27,7 +27,7 @@ import com.risk.model.exceptions.DuplicatesException;
 import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
 import com.risk.model.player.Player;
-import com.risk.model.strategy.behavior.aggressive.AggressiveAttackStrategy;
+import com.risk.model.strategy.behavior.aggressive.AggressiveStrategy;
 import com.risk.model.utilities.FileParser;
 import com.risk.model.utilities.Validate;
 import com.risk.model.utilities.generateOutputFile.Output;

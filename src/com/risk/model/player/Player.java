@@ -17,14 +17,12 @@ import com.risk.model.card.Card;
 import com.risk.model.dice.Dice;
 import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
-import com.risk.model.strategy.StrategyAttack;
-import com.risk.model.strategy.StrategyFortify;
-import com.risk.model.strategy.StrategyReinforcement;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Observable;
+import com.risk.model.strategy.Strategy;
 
 public class Player extends Observable {
 
@@ -35,9 +33,7 @@ public class Player extends Observable {
     private int startingPoints;
     private boolean playerLost = false;
     private boolean isComputerPlayer;
-    private StrategyReinforcement strategyReinforcement;
-    private StrategyAttack strategyAttack;
-    private StrategyFortify strategyFortify;
+    private Strategy strategy;
 
     /**
      * Constructor for Player class
@@ -264,49 +260,29 @@ public class Player extends Observable {
         this.playerLost = playerLost;
     }
 
-    public StrategyReinforcement getStrategyReinforcement()
+    public Strategy getStrategy()
     {
-        return strategyReinforcement;
+        return strategy;
     }
 
-    public void setStrategyReinforcement(StrategyReinforcement strategyReinforcement)
+    public void setStrategy(Strategy strategy)
     {
-        this.strategyReinforcement = strategyReinforcement;
+        this.strategy = strategy;
     }
 
-    public void executeStrategyReinforcement(int Armyinput)
+    public void reinforce(int Armyinput)
     {
-        this.strategyReinforcement.reinforce(Armyinput);
+        this.strategy.reinforce(Armyinput);
     }
 
-    public StrategyAttack getStrategyAttack()
+    public void attack()
     {
-        return strategyAttack;
+        this.strategy.attack();
     }
 
-    public void setStrategyAttack(StrategyAttack strategyAttack)
+    public void fortify(int Armyinput)
     {
-        this.strategyAttack = strategyAttack;
-    }
-
-    public void executeStrategyAttack()
-    {
-        this.strategyAttack.attack();
-    }
-
-    public StrategyFortify getStrategyFortify()
-    {
-        return strategyFortify;
-    }
-
-    public void setStrategyFortify(StrategyFortify strategyFortify)
-    {
-        this.strategyFortify = strategyFortify;
-    }
-
-    public void executeStrategyFortify(int Armyinput)
-    {
-        this.strategyFortify.fortify(Armyinput);
+        this.strategy.fortify(Armyinput);
     }
 
     /**

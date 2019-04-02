@@ -7,31 +7,57 @@ package com.risk.model.strategy.behavior.human;
 
 import com.risk.model.player.Player;
 import com.risk.model.map.Country;
-import com.risk.model.strategy.StrategyAttack;
+import com.risk.model.strategy.Strategy;
 
 /**
  * A human player that requires user interaction to make decisions.
  *
  * @author Natheepan
  */
-public class HumanAttackStrategy implements StrategyAttack {
+public class HumanStrategy implements Strategy {
 
-    private final Player player;
-    private final Country attack;
-    private final Country defend;
-    private int caseType;
+    private Player player = null;
+    private Country attackingCountry = null;
+    private Country defendingCountry = null;
+    private Country reinforceingCountry = null;
+    private Country fortifyingFrom = null;
+    private Country fortifyingTo = null;
+    private int caseType = -1;
 
-    public HumanAttackStrategy(Country attack, Country defend, int caseType)
+    public HumanStrategy(Country attackingCountry, Country defendingCountry, int attackingCaseType)
     {
-        this.player = attack.getRuler();
-        this.attack = attack;
-        this.defend = defend;
-        this.caseType = caseType;
+        this.player = attackingCountry.getRuler();
+        this.attackingCountry = attackingCountry;
+        this.defendingCountry = defendingCountry;
+        this.caseType = attackingCaseType;
+    }
+    
+    public HumanStrategy(Country reinforceingCountry)
+    {
+        this.reinforceingCountry = reinforceingCountry;
+    }
+    
+    public HumanStrategy(Country fortifyingFrom, Country fortifyingTo)
+    {
+        this.fortifyingFrom = fortifyingFrom;
+        this.fortifyingTo = fortifyingTo;
     }
 
-    public void setCaseType(int caseType)
+    public void setCaseType(int attackingCaseType)
     {
-        this.caseType = caseType;
+        this.caseType = attackingCaseType;
+    }
+
+    /**
+     * This method is necessary for reinforcement The number of armies in the
+     * country will be add with the number the player inputs
+     *
+     * @param Armyinput the number of army to reinforce
+     */
+    @Override
+    public void reinforce(int Armyinput)
+    {
+        reinforceingCountry.setArmyCount(Armyinput);
     }
 
     /**
@@ -47,20 +73,32 @@ public class HumanAttackStrategy implements StrategyAttack {
         switch (caseType)
         {
             case 1:
-                defend.reduceArmyCount(1);
+                defendingCountry.reduceArmyCount(1);
                 break;
             case 2:
-                defend.getRuler().removeCountry(defend);
-                if (defend.getRuler().isPlayerLost())
+                defendingCountry.getRuler().removeCountry(defendingCountry);
+                if (defendingCountry.getRuler().isPlayerLost())
                 {
-                    attack.getRuler().getCards().addAll(defend.getRuler().getCards());
+                    attackingCountry.getRuler().getCards().addAll(defendingCountry.getRuler().getCards());
                 }
-                defend.setRuler(player);
-                player.addCountry(defend);
+                defendingCountry.setRuler(player);
+                player.addCountry(defendingCountry);
                 break;
             case 3:
-                attack.reduceArmyCount(1);
+                attackingCountry.reduceArmyCount(1);
                 break;
         }
+    }
+
+    /**
+     * This method is necessary for fortify a country
+     *
+     * @param Armyinput The number of armies to move
+     */
+    @Override
+    public void fortify(int Armyinput)
+    {
+        fortifyingFrom.reduceArmyCount(Armyinput);
+        fortifyingTo.setArmyCount(Armyinput);
     }
 }

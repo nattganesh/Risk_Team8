@@ -14,7 +14,7 @@ import java.util.ResourceBundle;
 import com.risk.model.ActionModel;
 import com.risk.model.PlayerPhaseModel;
 import com.risk.model.map.Country;
-import com.risk.model.strategy.behavior.human.HumanFortifyStrategy;
+import com.risk.model.strategy.behavior.human.HumanStrategy;
 import com.risk.model.player.Player;
 
 import javafx.collections.FXCollections;
@@ -79,8 +79,8 @@ public class ConqueredController extends Observable implements Initializable {
             if (army < reinforcement.getArmyCount())
             {
                 moved = moved + army;
-                p.setStrategyFortify(new HumanFortifyStrategy(reinforcement, conquered));
-                p.executeStrategyFortify(army);
+                p.setStrategy(new HumanStrategy(reinforcement, conquered));
+                p.fortify(army);
                 actions.addAction("moving army");
                 renderView();
 

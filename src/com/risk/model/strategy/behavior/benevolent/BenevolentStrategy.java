@@ -5,7 +5,10 @@
  */
 package com.risk.model.strategy.behavior.benevolent;
 
-import com.risk.model.strategy.StrategyAttack;
+import com.risk.model.map.Country;
+import com.risk.model.player.Player;
+import com.risk.model.strategy.Strategy;
+import java.util.ArrayList;
 
 /**
  * A benevolent computer player strategy that focuses on protecting its weak
@@ -14,16 +17,48 @@ import com.risk.model.strategy.StrategyAttack;
  *
  * @author Natheepan
  */
-public class BenevolentAttackStrategy implements StrategyAttack {
+public class BenevolentStrategy implements Strategy {
 
-    public BenevolentAttackStrategy()
+    private final Player player;
+
+    public BenevolentStrategy(Player player)
     {
+        this.player = player;
+    }
 
+    @Override
+    public void reinforce(int Armyinput)
+    {
+        ArrayList<Country> weakestCountries = player.getWeakestCountries();
+        if (weakestCountries.size() == 1)
+        {
+            weakestCountries.get(0).setArmyCount(Armyinput);
+            return;
+        }
+        int army = Armyinput;
+        while (army > 0)
+        {
+            for (Country c : weakestCountries)
+            {
+                c.setArmyCount(1);
+                army--;
+                if (army == 0)
+                {
+                    return;
+                }
+            }
+        }
     }
 
     @Override
     public void attack()
     {
         // Never Attacks
+    }
+
+    @Override
+    public void fortify(int Armyinput)
+    {
+        player.getWeakestCountries().get(0).setArmyCount(Armyinput);
     }
 }
