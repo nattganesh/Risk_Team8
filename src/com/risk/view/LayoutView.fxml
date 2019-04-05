@@ -13,7 +13,12 @@
             <children>
                 <Pane fx:id="content" />
             </children>
-        </Pane>
+        </Pane> 
+      <AnchorPane fx:id="savePane" layoutX="280.0" layoutY="120.0" prefHeight="294.0" prefWidth="230.0">
+          <children>
+              <fx:include fx:id="save" source="SaveProgress.fxml" />
+          </children>
+      </AnchorPane>
         <AnchorPane fx:id="winnerPane" layoutX="9.0" prefHeight="600.0" prefWidth="1400.0" style="-fx-background-color: white;" visible="false">
             <children>
                 <Text fx:id="winnerID" layoutX="353.0" layoutY="284.0" strokeType="OUTSIDE" strokeWidth="0.0">
@@ -23,12 +28,7 @@
                 </Text>
             <Button fx:id="newID" layoutX="1199.0" layoutY="516.0" mnemonicParsing="false" onAction="#newGame" text="New Game" />
             </children>
-        </AnchorPane> 
-      <AnchorPane fx:id="savePane" layoutX="553.0" layoutY="151.0" prefHeight="294.0" prefWidth="230.0">
-          <children>
-              <fx:include fx:id="save" source="SaveProgress.fxml" />
-          </children>
-      </AnchorPane>
+        </AnchorPane>
       <AnchorPane fx:id="phaseDominationViewID" layoutX="672.0" layoutY="6.0" prefHeight="590.0" prefWidth="653.0" visible="false">
          <children>
               <ListView fx:id="worldDomination3" layoutX="35.0" layoutY="376.0" prefHeight="200.0" prefWidth="230.0" />
