@@ -5,9 +5,9 @@
  */
 package com.risk.model.strategy.behavior.benevolent;
 
-import com.risk.model.player.Player;
 import com.risk.model.map.Country;
-import com.risk.model.strategy.StrategyReinforcement;
+import com.risk.model.player.Player;
+import com.risk.model.strategy.Strategy;
 import java.util.ArrayList;
 
 /**
@@ -17,11 +17,11 @@ import java.util.ArrayList;
  *
  * @author Natheepan
  */
-public class BenevolentReinforcementStrategy implements StrategyReinforcement {
+public class BenevolentStrategy implements Strategy {
 
     private final Player player;
 
-    public BenevolentReinforcementStrategy(Player player)
+    public BenevolentStrategy(Player player)
     {
         this.player = player;
     }
@@ -48,5 +48,17 @@ public class BenevolentReinforcementStrategy implements StrategyReinforcement {
                 }
             }
         }
+    }
+
+    @Override
+    public void attack()
+    {
+        // Never Attacks
+    }
+
+    @Override
+    public void fortify(int Armyinput)
+    {
+        player.getWeakestCountries().get(0).setArmyCount(Armyinput);
     }
 }

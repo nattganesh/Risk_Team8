@@ -26,6 +26,7 @@ import javafx.collections.ObservableList;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Observable;
+import com.risk.model.strategy.Strategy;
 
 public class Player extends Observable {
 
@@ -265,49 +266,41 @@ public class Player extends Observable {
         this.playerLost = playerLost;
     }
 
-    public StrategyReinforcement getStrategyReinforcement()
+    public Strategy getStrategy()
     {
-        return strategyReinforcement;
+        return strategy;
     }
 
-    public void setStrategyReinforcement(StrategyReinforcement strategyReinforcement)
+    public void setStrategy(Strategy strategy)
     {
-        this.strategyReinforcement = strategyReinforcement;
+        this.strategy = strategy;
     }
 
-    public void executeStrategyReinforcement(int Armyinput)
+    public void reinforce(int Armyinput)
     {
-        this.strategyReinforcement.reinforce(Armyinput);
+        if (this.strategy == null)
+        {
+            return;
+        }
+        this.strategy.reinforce(Armyinput);
     }
 
-    public StrategyAttack getStrategyAttack()
+    public void attack()
     {
-        return strategyAttack;
+        if (this.strategy == null)
+        {
+            return;
+        }
+        this.strategy.attack();
     }
 
-    public void setStrategyAttack(StrategyAttack strategyAttack)
+    public void fortify(int Armyinput)
     {
-        this.strategyAttack = strategyAttack;
-    }
-
-    public void executeStrategyAttack()
-    {
-        this.strategyAttack.attack();
-    }
-
-    public StrategyFortify getStrategyFortify()
-    {
-        return strategyFortify;
-    }
-
-    public void setStrategyFortify(StrategyFortify strategyFortify)
-    {
-        this.strategyFortify = strategyFortify;
-    }
-
-    public void executeStrategyFortify(int Armyinput)
-    {
-        this.strategyFortify.fortify(Armyinput);
+        if (this.strategy == null)
+        {
+            return;
+        }
+        this.strategy.fortify(Armyinput);
     }
 
     /**

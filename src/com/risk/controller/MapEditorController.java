@@ -135,7 +135,7 @@ public class MapEditorController implements Initializable {
     		}
     	}
     }
-    
+        
     /**
      * This method assigns behaviour to players
      */
@@ -159,7 +159,7 @@ public class MapEditorController implements Initializable {
     				break;
     			}
     			index++;
-    		}
+    		}	
     		if (notExist)
     		{
     			behaviourObservableList.add(player);
@@ -583,7 +583,7 @@ public class MapEditorController implements Initializable {
                 }
                 else
                 {
-                    setText(player.getName() + " ( "+ player.getClass().toString().replaceAll("class com.risk.model.player.", "") + " )");
+                    setText(player.getName());
                 }
             }
         });

@@ -7,8 +7,8 @@ package com.risk.model.strategy.behavior.aggressive;
 
 import com.risk.model.player.Player;
 import com.risk.model.map.Country;
-import com.risk.model.strategy.StrategyAttack;
 import java.util.ArrayList;
+import com.risk.model.strategy.Strategy;
 
 /**
  * An aggressive computer player strategy that focuses on attack (reinforces its
@@ -17,21 +17,22 @@ import java.util.ArrayList;
  *
  * @author Natheepan
  */
-public class AggressiveAttackStrategy implements StrategyAttack {
+public class AggressiveStrategy implements Strategy {
 
     private final Player player;
-    private final int[] dattack;
-    private final int[] ddefend;
-    private final int rolltime;
 
-    public AggressiveAttackStrategy(Player player, int[] dattack, int[] ddefend, int rolltime)
+    public AggressiveStrategy(Player player)
     {
         this.player = player;
-        this.dattack = dattack;
-        this.ddefend = ddefend;
-        this.rolltime = rolltime;
     }
 
+    @Override
+    public void reinforce(int Armyinput)
+    {
+        Country strongestCountry = player.getStrongestCountry();
+        strongestCountry.setArmyCount(Armyinput);
+    }
+    
     @Override
     public void attack()
     {
@@ -41,9 +42,9 @@ public class AggressiveAttackStrategy implements StrategyAttack {
         while (!neighboursOfStrongestCountry.isEmpty() && strongestCountry.getArmyCount() > 1)
         {
             Country defendingCountry = neighboursOfStrongestCountry.get(0);
-//            int[] dattack = rollResult(3);
-//            int[] ddefend = rollResult(2);
-//            int rolltime = setRollTime(3, 2);
+            int[] dattack = player.rollResult(3);
+            int[] ddefend = player.rollResult(2);
+            int rolltime = player.setRollTime(3, 2);
 
             for (int i = 0; i < rolltime; i++)
             {
@@ -69,5 +70,12 @@ public class AggressiveAttackStrategy implements StrategyAttack {
                 }
             }
         }
+    }
+    
+    @Override
+    public void fortify(int Armyinput)
+    {
+        Country strongestCountry = player.getStrongestCountry();
+        strongestCountry.setArmyCount(Armyinput);
     }
 }

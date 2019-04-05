@@ -309,7 +309,6 @@ public class AttackController implements Initializable, Observer {
             }
             else
             {
-
                 attackingCountry.getRuler().attack(attackingCountry, defendingCountry, 3);
                 updateView(attackingCountry);
                 actions.addAction("attacker has lost 1 army");
