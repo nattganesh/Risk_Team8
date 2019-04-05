@@ -79,8 +79,7 @@ public class ConqueredController extends Observable implements Initializable {
             if (army < reinforcement.getArmyCount())
             {
                 moved = moved + army;
-                p.setStrategy(new HumanStrategy(reinforcement, conquered));
-                p.fortify(army);
+                p.fortify(reinforcement, conquered, army);
                 actions.addAction("moving army");
                 renderView();
 

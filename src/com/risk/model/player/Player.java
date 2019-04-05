@@ -18,9 +18,6 @@ import com.risk.model.dice.Dice;
 import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
 import com.risk.model.strategy.Strategy;
-import com.risk.model.strategy.StrategyAttack;
-import com.risk.model.strategy.StrategyFortify;
-import com.risk.model.strategy.StrategyReinforcement;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.util.ArrayList;
@@ -37,9 +34,6 @@ public class Player extends Observable {
     private int startingPoints;
     private boolean playerLost = false;
     private boolean isComputerPlayer;
-    private StrategyReinforcement strategyReinforcement;
-    private StrategyAttack strategyAttack;
-    private StrategyFortify strategyFortify;
     private Strategy strategy;
     /**
      * Constructor for Player class
@@ -269,38 +263,6 @@ public class Player extends Observable {
     public Strategy getStrategy()
     {
         return strategy;
-    }
-
-    public void setStrategy(Strategy strategy)
-    {
-        this.strategy = strategy;
-    }
-
-    public void reinforce(int Armyinput)
-    {
-        if (this.strategy == null)
-        {
-            return;
-        }
-        this.strategy.reinforce(Armyinput);
-    }
-
-    public void attack()
-    {
-        if (this.strategy == null)
-        {
-            return;
-        }
-        this.strategy.attack();
-    }
-
-    public void fortify(int Armyinput)
-    {
-        if (this.strategy == null)
-        {
-            return;
-        }
-        this.strategy.fortify(Armyinput);
     }
 
     /**

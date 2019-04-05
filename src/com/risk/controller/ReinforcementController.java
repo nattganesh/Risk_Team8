@@ -151,8 +151,8 @@ public class ReinforcementController implements Initializable {
 
             if (Armyinput <= TotalReinforcement)
             {
-                selectedCountry.getRuler().setStrategy(new HumanStrategy(selectedCountry));
-                selectedCountry.getRuler().reinforce(Armyinput);
+          
+                selectedCountry.getRuler().reinforce(selectedCountry, Armyinput);
                 TotalReinforcement = TotalReinforcement - Armyinput;
                 updateView();
                 actions.addAction("Added " + Armyinput + " Army to " + selectedCountry.getName());

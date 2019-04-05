@@ -170,8 +170,7 @@ public class FortificationController implements Initializable {
             else if (Armyinput <= Territory.getSelectionModel().getSelectedItem().getArmyCount() - 1)
             {
                 Player p = Territory.getSelectionModel().getSelectedItem().getRuler();
-                p.setStrategy(new HumanStrategy(firstCountry, secondCountry));
-                p.fortify(Armyinput);
+                p.fortify(firstCountry, secondCountry, Armyinput);
 
                 AdjacentArmy.setText(Integer.toString(Adjacent.getSelectionModel().getSelectedItem().getArmyCount()));
                 TerritoryArmy.setText(Integer.toString(Territory.getSelectionModel().getSelectedItem().getArmyCount()));
