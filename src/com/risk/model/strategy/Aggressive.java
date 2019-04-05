@@ -8,7 +8,7 @@ import com.risk.model.strategy.*;
 
 public class Aggressive implements Strategy {
 	@Override
-	public boolean attack(Player p, boolean status) {
+	public void attack(Player p) {
 		Country strongestCountry = p.getStrongestCountry();
 		ArrayList<Country> neighboursOfStrongestCountry = strongestCountry.getConnectedEnemyArrayList();
 		Country defendingCountry = neighboursOfStrongestCountry.get(0);
@@ -34,10 +34,9 @@ public class Aggressive implements Strategy {
 				strongestCountry.reduceArmyCount(1);
 			}
 		}
-		if (!neighboursOfStrongestCountry.isEmpty() && strongestCountry.getArmyCount() > 1) {
-			return true;
-		} else {
-			return false;
+		while(!neighboursOfStrongestCountry.isEmpty() && strongestCountry.getArmyCount() > 1)
+		{
+			attack(p);	
 		}
 	}
 

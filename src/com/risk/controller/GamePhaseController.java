@@ -226,14 +226,26 @@ public class GamePhaseController implements Observer, Initializable {
             {
                 if (PlayerPhaseModel.getPlayerModel().getCurrentPlayer().isComputerPlayer())
                 {
+                	ActionModel.getActionModel().addAction(PlayerPhaseModel.getPlayerModel().getCurrentPlayer() + "'s turn");
                 	// checks if it's computer player?
-                	 phaseID.setText(view);
+                	 phaseID.setText("automatic");
                      playerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
                      mainPane.getChildren().clear();
+	                     // reinforces
+                     PlayerPhaseModel.getPlayerModel().getCurrentPlayer().reinforceStrategy(PlayerPhaseModel.getPlayerModel().getCurrentPlayer());
+	                     //attack
+                     PlayerPhaseModel.getPlayerModel().getCurrentPlayer().attackStrategy(PlayerPhaseModel.getPlayerModel().getCurrentPlayer());
+	                     //forityf
+                     PlayerPhaseModel.getPlayerModel().getCurrentPlayer().fortifyStrategy(PlayerPhaseModel.getPlayerModel().getCurrentPlayer());
+	                     // setnextplayer
+                     PlayerPhaseModel.getPlayerModel().setNextPlayer();
+                     GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
+	            
+                     
                 }  
                 else 
                 {
-                	 // else it's human
+                	System.out.println(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
                 	 phaseID.setText(view);
                      playerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
                      mainPane.getChildren().clear();

@@ -7,7 +7,7 @@ import com.risk.model.player.Player;
 
 public class Random implements Strategy{
 	@Override
-	public boolean attack(Player p, boolean status) {
+	public void attack(Player p) {
 		ArrayList<Country> countryWithEnoughArmy = new ArrayList<Country>();
 		for(Country c: p.getOccupiedCountries()) {
 			if(c.getArmyCount()>1&&(!c.getConnectedEnemyArrayList().isEmpty())) {
@@ -51,8 +51,6 @@ public class Random implements Strategy{
 				}
 			}
 		}
-		status = true;
-		return status;
 	}
 
 	@Override

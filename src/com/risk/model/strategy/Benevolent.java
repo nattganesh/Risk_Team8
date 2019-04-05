@@ -7,9 +7,7 @@ import com.risk.model.player.Player;
 
 public class Benevolent implements Strategy {
 	@Override
-	public boolean attack(Player p, boolean status) {
-		status = true;
-		return status;
+	public void attack(Player p) {
 	}
 
 	@Override
@@ -53,10 +51,9 @@ public class Benevolent implements Strategy {
 				}
 				
 			}
-			fortify.get(0).setArmyCount(Armyinput-1);
+			fortify.get(0).setArmyCount(Armyinput-1);	
 			fortify.get(1).reduceArmyCount(Armyinput-1);
 		}
-		
 	}
 
 	@Override

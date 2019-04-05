@@ -24,7 +24,6 @@ import com.risk.model.PlayerPhaseModel;
 import com.risk.model.card.Card;
 import com.risk.model.dice.Dice;
 import com.risk.model.map.Country;
-import com.risk.model.strategy.behavior.human.HumanAttackStrategy;
 import com.risk.model.player.Player;
 
 import javafx.collections.FXCollections;
@@ -47,7 +46,7 @@ public class AttackController implements Initializable, Observer {
 
     @FXML
     Label inputArmyError;
-
+    
     @FXML
     ListView<Country> adjacentEnemy;
 
@@ -90,7 +89,7 @@ public class AttackController implements Initializable, Observer {
 
     /**
      * This method is data binding for connection between controller and UI.
-     *
+     * 
      * @see javafx.fxml.Initializable
      */
     @Override
@@ -102,7 +101,7 @@ public class AttackController implements Initializable, Observer {
         countryId.setItems(territoryOwnedObservableList);
         adjacentEnemy.setItems(adjacentEnemyObservableList);
         adjacentOwned.setItems(adjacentOwnedObservableList);
-
+        
         countryId.setCellFactory(param -> new ListCell<Country>() {
             @Override
             protected void updateItem(Country country, boolean empty)
@@ -152,14 +151,13 @@ public class AttackController implements Initializable, Observer {
 
     /**
      * This method updates the view
-     *
      * @param attacker current attacker
      */
     public void updateView(Country attacker)
     {
-        adjacentEnemyObservableList.setAll(attacker.getConnectedEnemy());
-        adjacentOwnedObservableList.setAll(attacker.getConnectedOwned());
-        territoryOwnedObservableList.setAll(p.getOccupiedCountries());
+    	 adjacentEnemyObservableList.setAll(attacker.getConnectedEnemy());
+    	 adjacentOwnedObservableList.setAll(attacker.getConnectedOwned());
+    	 territoryOwnedObservableList.setAll(p.getOccupiedCountries());	
     }
 
     /**
@@ -168,10 +166,10 @@ public class AttackController implements Initializable, Observer {
     @FXML
     public void territoryHandler()
     {
-        Country attacker = countryId.getSelectionModel().getSelectedItem();
+    	Country attacker = countryId.getSelectionModel().getSelectedItem();   
         if (attacker != null)
         {
-            clearDiceRolls();
+            clearDiceRolls();    
             adjacentEnemyObservableList.setAll(attacker.getConnectedEnemy());
             adjacentOwnedObservableList.setAll(attacker.getConnectedOwned());
         }
@@ -194,7 +192,7 @@ public class AttackController implements Initializable, Observer {
     @FXML
     public void adjacentEnemyHandler()
     {
-        Country defender = adjacentEnemy.getSelectionModel().getSelectedItem();
+	    Country defender = adjacentEnemy.getSelectionModel().getSelectedItem();
         Country attacker = countryId.getSelectionModel().getSelectedItem();
         if (defender != null && attacker != null && attacker.getArmyCount() > 1)
         {
@@ -215,7 +213,7 @@ public class AttackController implements Initializable, Observer {
      */
     public void initializeDice()
     {
-        boolean validateTerritorySelections = p.validateTerritorySelections(countryId.getSelectionModel().getSelectedItem(), adjacentEnemy.getSelectionModel().getSelectedItem());
+    	boolean validateTerritorySelections = p.validateTerritorySelections(countryId.getSelectionModel().getSelectedItem(), adjacentEnemy.getSelectionModel().getSelectedItem());
         if (validateTerritorySelections)
         {
             rollLimit = p.setRollLimit(countryId.getSelectionModel().getSelectedItem(), adjacentEnemy.getSelectionModel().getSelectedItem());
@@ -236,6 +234,7 @@ public class AttackController implements Initializable, Observer {
             }
         }
     }
+    
 
     /**
      * This is rolls the dice when click the roll dice button
@@ -243,10 +242,10 @@ public class AttackController implements Initializable, Observer {
     @FXML
     public void rollDiceHandler()
     {
-        boolean validateTerritorySelections = p.validateTerritorySelections(countryId.getSelectionModel().getSelectedItem(), adjacentEnemy.getSelectionModel().getSelectedItem());
-        boolean validateDiceSelections = p.validateDiceSelections(AttackerDice.getSelectionModel().getSelectedItem(), DefenderDice.getSelectionModel().getSelectedItem());
-        boolean validateAttackerHasEnoughArmy = p.validateAttackerHasEnoughArmy(countryId.getSelectionModel().getSelectedItem());
-        if (validateTerritorySelections && validateDiceSelections && validateAttackerHasEnoughArmy)
+    	boolean validateTerritorySelections = p.validateTerritorySelections(countryId.getSelectionModel().getSelectedItem(), adjacentEnemy.getSelectionModel().getSelectedItem());
+    	boolean validateDiceSelections = p.validateDiceSelections(AttackerDice.getSelectionModel().getSelectedItem(),DefenderDice.getSelectionModel().getSelectedItem());
+    	boolean validateAttackerHasEnoughArmy = p.validateAttackerHasEnoughArmy(countryId.getSelectionModel().getSelectedItem());
+    	if (validateTerritorySelections && validateDiceSelections && validateAttackerHasEnoughArmy)
         {
             int diceAttack = AttackerDice.getSelectionModel().getSelectedItem();
             int diceDefender = DefenderDice.getSelectionModel().getSelectedItem();
@@ -262,7 +261,7 @@ public class AttackController implements Initializable, Observer {
         else if (!validateDiceSelections)
         {
             actions.addAction("select number of rolls");
-            AttackerDice.getItems().clear();
+            AttackerDice.getItems().clear(); 
             DefenderDice.getItems().clear();
         }
         else
@@ -282,50 +281,48 @@ public class AttackController implements Initializable, Observer {
      * @param attackingCountry The country which invokes the attack
      * @param defendingCountry The country which is attacked
      */
+    
     public void rollDice(int diceattack, int dicedefend, Country attackingCountry, Country defendingCountry)
     {
-
+    	
         int[] dattack = p.rollResult(diceattack);
         int[] ddefend = p.rollResult(dicedefend);
         int rolltime = p.setRollTime(diceattack, dicedefend);
-
+        
         for (int i = 0; i < rolltime; i++)
         {
             if (dattack[i] > ddefend[i])
             {
-                attackingCountry.getRuler().setStrategyAttack(new HumanAttackStrategy(attackingCountry.getRuler(), attackingCountry, defendingCountry, 1));
-                attackingCountry.getRuler().executeStrategyAttack();
+                attackingCountry.getRuler().attack(attackingCountry, defendingCountry, 1);
                 actions.addAction("defender has lost 1 army");
                 if (defendingCountry.getArmyCount() == 0)
                 {
                     actions.addAction("You have already occupied this country!");
                     actions.addAction("Please move armies to your new country!");
-                    attackingCountry.getRuler().setStrategyAttack(new HumanAttackStrategy(attackingCountry.getRuler(), attackingCountry, defendingCountry, 2));
-                    attackingCountry.getRuler().executeStrategyAttack();
+                    attackingCountry.getRuler().attack(attackingCountry, defendingCountry, 2);
                     occupy = true;
                     child.setVisible(true);
                     conqueringController.setConquringArmy(defendingCountry);
                     conqueringController.setDiceRoll(diceattack);
                     break;
-                }
+                }               
             }
             else
             {
-                attackingCountry.getRuler().setStrategyAttack(new HumanAttackStrategy(attackingCountry.getRuler(),attackingCountry, defendingCountry, 3));
-                attackingCountry.getRuler().executeStrategyAttack();
+
+                attackingCountry.getRuler().attack(attackingCountry, defendingCountry, 3);
                 updateView(attackingCountry);
                 actions.addAction("attacker has lost 1 army");
-
+                
             }
         }
         updateView(attackingCountry);
     }
 
     /**
-     * This method is used to roll dice automatically after the player chooses
-     * the attacker and defender It will stop when either the attacker has not
-     * enough army or the defender is conquered
-     *
+     * This method is used to roll dice automatically after the player chooses the attacker and defender
+     * It will stop when either the attacker has not enough army or the defender is conquered
+     * 
      */
     @FXML
     public void AllOut()
@@ -333,7 +330,7 @@ public class AttackController implements Initializable, Observer {
         Country attack = countryId.getSelectionModel().getSelectedItem();
         Country defend = adjacentEnemy.getSelectionModel().getSelectedItem();
         boolean validateTerritorySelections = p.validateTerritorySelections(attack, defend);
-        boolean validateAttackerHasEnoughArmy = p.validateAttackerHasEnoughArmy(attack);
+    	boolean validateAttackerHasEnoughArmy = p.validateAttackerHasEnoughArmy(attack);
         if (validateTerritorySelections && validateAttackerHasEnoughArmy)
         {
             boolean roll = true;
@@ -373,14 +370,13 @@ public class AttackController implements Initializable, Observer {
         }
         if (!PlayerPhaseModel.getPlayerModel().getCurrentPlayer().isAnyCountriesConnected())
         {
-            PlayerPhaseModel.getPlayerModel().setNextPlayer();
-            GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
+        	 PlayerPhaseModel.getPlayerModel().setNextPlayer();
+             GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
         }
-        else
-        {
-            GamePhaseModel.getGamePhaseModel().setPhase("fortification");
+        else {
+             GamePhaseModel.getGamePhaseModel().setPhase("fortification");
         }
-
+       
     }
 
     /**
@@ -391,6 +387,6 @@ public class AttackController implements Initializable, Observer {
     {
         child.setVisible(false);
         adjacentOwned.getItems().clear();
-        territoryOwnedObservableList.setAll(p.getOccupiedCountries());
+        territoryOwnedObservableList.setAll(p.getOccupiedCountries());	
     }
 }

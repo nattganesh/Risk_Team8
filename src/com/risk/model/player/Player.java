@@ -691,12 +691,68 @@ public class Player extends Observable {
         return weakCountries;
     }
     
+    /**
+	 * This method is used to decrease the army amount or change the owner of country when it is occupied
+	 * In case1, the defender lost in dice so it lost 1 army
+	 * In case2, the attacker conquered the defender, so the owner of defender changes
+	 * In case3, the attacker lost in dice so it lost 1 army 
+	 * 
+	 * @param attack country that is attacking
+	 * @param defend country being attacked
+	 * @param caseType the type of attack
+	 * 
+	 */
+    public void attack(Country attack, Country defend, int caseType)
+    {
+        switch (caseType)
+        {
+            case 1:
+                defend.reduceArmyCount(1);
+                break;
+            case 2:
+            	defend.getRuler().removeCountry(defend);
+                defend.setRuler(this);
+                addCountry(defend);
+                break;
+            case 3:
+                attack.reduceArmyCount(1);
+                break;
+        }
+    }
+
+    /**
+     * This method is necessary for reinforcement
+     * The number of armies in the country will be add with the number the player inputs
+     * 
+     * @param myCountry the country to be reinforced
+     * @param Armyinput the number of army to reinforce
+     */
+    public void reinforce(Country myCountry, int Armyinput)
+    {
+        myCountry.setArmyCount(Armyinput);
+    }
+
+    /**
+     * This method is necessary for fortify a country
+     * 
+     * @param from The country which the player moves the armies from
+     * @param to The country which the player moves the armies to
+     * @param Armyinput The number of armies to move
+     */
+    public void fortify(Country from, Country to, int Armyinput)
+    {
+        from.reduceArmyCount(Armyinput);
+        to.setArmyCount(Armyinput);
+    }
+
+    
     public void setStrategy(Strategy strategy) {
+    	isComputerPlayer = true;
     	this.strategy = strategy;
     }
     
-    public boolean attackStrategy(Player p,boolean status) {
-    	return this.strategy.attack(p, status);
+    public void attackStrategy(Player p) {
+    	this.strategy.attack(p);
     }
     
     public void reinforceStrategy(Player p) {

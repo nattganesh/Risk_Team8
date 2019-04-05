@@ -7,7 +7,7 @@ import com.risk.model.player.Player;
 
 public class Cheater implements Strategy{
 	@Override
-	public boolean attack(Player p, boolean status) {
+	public void attack(Player p) {
 		for (Country c : p.getOccupiedCountries())
         {
             for (Country cNeighbors : c.getConnectedEnemyArrayList())
@@ -22,8 +22,6 @@ public class Cheater implements Strategy{
 				cNeighbors.setArmyCount(1);
             }
         }
-		status = true;
-		return status;
 	}
 
 	@Override
