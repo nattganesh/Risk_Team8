@@ -88,7 +88,7 @@ public class LoadGame {
                         }
 
                         Player p = new Player(nameOfPlayer); 
-                        players.add(p);
+                        PlayerPhaseModel.getPlayerModel().addPlayer(p);
                         if (!text.trim().isEmpty() && !text.contains(","))
                         {
                             p.addCard(new Card(text, p));
@@ -149,7 +149,7 @@ public class LoadGame {
                 if (text.equalsIgnoreCase("CURRENT PHASE") && inputGame.hasNextLine())
                 {
                     text = inputGame.nextLine();
-                   
+                    GamePhaseModel.getGamePhaseModel().setPhase("setup complete");
                     GamePhaseModel.getGamePhaseModel().setPhase(text);
                    
                     text = inputGame.nextLine();

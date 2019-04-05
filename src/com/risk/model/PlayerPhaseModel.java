@@ -124,6 +124,7 @@ public class PlayerPhaseModel extends Observable implements Observer {
     public void addPlayer(Player player)
     {
         playerList.add(player);
+        System.out.println("adding p");
         player.addObserver(this);
     }
 

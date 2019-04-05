@@ -294,10 +294,11 @@ public class GamePhaseController implements Observer, Initializable {
      * occupied
      */
     private class playerObserver implements Observer {
-
+        
         @Override
         public void update(Observable o, Object arg)
         {
+        	System.out.println("pie chart");
             Country c = (Country) arg;
             Player player = c.getRuler();
             int index = piePlayersList.indexOf(player);
