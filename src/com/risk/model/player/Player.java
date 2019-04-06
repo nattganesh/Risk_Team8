@@ -21,7 +21,9 @@ import com.risk.model.strategy.Strategy;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Observable;
 import com.risk.model.strategy.Strategy;
 
@@ -199,6 +201,14 @@ public class Player extends Observable {
     public ObservableList<Card> getCards()
     {
         return cards;
+    }
+    
+    public ArrayList<Card> getCardList(){
+    	ArrayList<Card> card = new ArrayList<Card>();
+    	for(Card c: cards) {
+    		card.add(c);
+    	}
+    	return card;
     }
 
     /**
@@ -716,6 +726,50 @@ public class Player extends Observable {
     
     public void fortifyStrategy(Player p) {
     	this.strategy.fortify(p);
+    }
+    
+    public void exchangeCardForComputer() {
+    	while(getCardList().size()>=5) {
+    		ArrayList<Card> cards = getCardList();
+    		ArrayList<String> exchangecards = new ArrayList<String>();
+    		Map<String, Integer> map = new HashMap<>();
+    		for(Card c: cards) {
+    			String s = c.getCatagory();
+                if (map.containsKey(s)) {
+                    map.put(s, map.get(s) + 1);
+                } else {
+                    map.put(s, 1);
+                }
+    		}
+    		if(map.size()>=3) {
+    			while(exchangecards.size()<3) {
+    				for(Card card: cards) {
+    					String s = card.getCatagory();
+        				if(exchangecards.contains(s)) 
+        					continue;
+        				else {
+        					exchangecards.add(s);
+        					removeCard(card);
+        				}
+        			}
+    			}
+    		}else {
+    			int i =0;
+        		for(String s: map.keySet()) {
+        			if(map.get(s)>=3) {
+        				for(Card card: cards) {
+        					if(card.getCatagory().equals(s)) {
+        						removeCard(card);
+        						i++;
+        						if(i==3) {
+        							break;
+        						}
+        					}
+        				}
+        			}
+        		}
+    		}
+    	}
     }
     
     public void moveCards(Player a) {

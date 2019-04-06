@@ -46,7 +46,7 @@ public class CardTest {
     {
     	card = new Card("Wild");
     	card2 = new Card("Infantry");
-    	p = new HumanPlayer("Green");
+    	p = new Player("Green");
     	card.setOwner(p);
     	p.addCard(card);
     }

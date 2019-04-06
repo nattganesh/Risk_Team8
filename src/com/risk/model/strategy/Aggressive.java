@@ -1,5 +1,9 @@
 package com.risk.model.strategy;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 
 import com.risk.model.map.Country;
@@ -11,32 +15,30 @@ public class Aggressive implements Strategy {
 	public void attack(Player p) {
 		Country strongestCountry = p.getStrongestCountry();
 		ArrayList<Country> neighboursOfStrongestCountry = strongestCountry.getConnectedEnemyArrayList();
-		Country defendingCountry = neighboursOfStrongestCountry.get(0);
-		int result[] = p.setRollLimit(strongestCountry, defendingCountry);
-		int[] dattack = p.rollResult(result[0]);
-		int[] ddefend = p.rollResult(result[1]);
-		int rolltime = Integer.min(result[0], result[1]);
-		for (int i = 0; i < rolltime; i++) {
-			if (dattack[i] > ddefend[i]) {
-				defendingCountry.reduceArmyCount(1);
-				if (defendingCountry.getArmyCount() == 0) {
-					defendingCountry.getRuler().removeCountry(defendingCountry);
-					if (defendingCountry.getRuler().isPlayerLost()) {
-						p.moveCards(defendingCountry.getRuler());
+		while(!neighboursOfStrongestCountry.isEmpty() && strongestCountry.getArmyCount() > 1) {
+			Country defendingCountry = neighboursOfStrongestCountry.get(0);
+			int result[] = p.setRollLimit(strongestCountry, defendingCountry);
+			int[] dattack = p.rollResult(result[0]);
+			int[] ddefend = p.rollResult(result[1]);
+			int rolltime = Integer.min(result[0], result[1]);
+			for (int i = 0; i < rolltime; i++) {
+				if (dattack[i] > ddefend[i]) {
+					defendingCountry.reduceArmyCount(1);
+					if (defendingCountry.getArmyCount() == 0) {
+						defendingCountry.getRuler().removeCountry(defendingCountry);
+						if (defendingCountry.getRuler().isPlayerLost()) {
+							p.moveCards(defendingCountry.getRuler());
+						}
+						defendingCountry.setRuler(p);
+						p.addCountry(defendingCountry);
+						strongestCountry.reduceArmyCount(result[0]);
+						defendingCountry.setArmyCount(result[0]);
+						break;
 					}
-					defendingCountry.setRuler(p);
-					p.addCountry(defendingCountry);
-					strongestCountry.reduceArmyCount(result[0]);
-					defendingCountry.setArmyCount(result[0]);
-					break;
+				} else {
+					strongestCountry.reduceArmyCount(1);
 				}
-			} else {
-				strongestCountry.reduceArmyCount(1);
-			}
-		}
-		while(!neighboursOfStrongestCountry.isEmpty() && strongestCountry.getArmyCount() > 1)
-		{
-			attack(p);	
+			}	
 		}
 	}
 
