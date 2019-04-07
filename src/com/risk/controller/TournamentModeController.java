@@ -3,14 +3,25 @@
  */
 
 package com.risk.controller;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
+import com.risk.model.MapModel;
+import com.risk.model.PlayerPhaseModel;
+import com.risk.model.exceptions.CannotFindException;
+import com.risk.model.exceptions.DuplicatesException;
 import com.risk.model.player.Player;
 import com.risk.model.strategy.Aggressive;
 import com.risk.model.strategy.Benevolent;
 import com.risk.model.strategy.Cheater;
 import com.risk.model.strategy.Random;
+import com.risk.model.utilities.FileParser;
+import com.risk.model.utilities.Validate;
+import com.risk.model.utilities.loadGame.LoadGame;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -70,6 +81,8 @@ public class TournamentModeController implements Initializable {
     // these are the data you need arya
     ObservableList<Player> playerObservableList = FXCollections.observableArrayList();
     ObservableList<String> mapObservableList = FXCollections.observableArrayList();
+    ArrayList<String> files = new ArrayList<String>(); 
+   
     int turns;
     int games;
 
@@ -108,9 +121,12 @@ public class TournamentModeController implements Initializable {
 	
 	/**
 	 * this method is necessary to start the game
+	 * @throws FileNotFoundException 
+	 * @throws DuplicatesException 
+	 * @throws CannotFindException 
 	 */
 	@FXML
-	public void startTournament()
+	public void startTournament() throws FileNotFoundException, CannotFindException, DuplicatesException
 	{
 		if (selectMapID.getSelectionModel().getSelectedItem() != null && selectPlayerID.getSelectionModel().getSelectedItem() != null)
 		{
@@ -119,12 +135,37 @@ public class TournamentModeController implements Initializable {
 					&& numberGamesID.getSelectionModel().getSelectedItem() != null
 					&& !numberTurnsID.getText().trim().isEmpty())
 			{
+				MapModel.getMapModel().getContinents().clear();
+	            MapModel.getMapModel().getCountries().clear();
+	            PlayerPhaseModel.getPlayerModel().getPlayers().clear();
+	            files.clear();
+	           
 				
 				turns = Integer.parseInt(numberTurnsID.getText());
-			
 				games = numberGamesID.getSelectionModel().getSelectedItem();
 				
-			    
+				
+				for (int i = 0 ; i < mapObservableList.size(); i++)
+				{
+					files.add(i, "src/com/risk/main/mapTextFiles/" + mapObservableList.get(i) + ".txt");
+				}
+				
+
+	            
+				MapEditorController mapEditor = new MapEditorController();
+				
+				Scanner scan = new Scanner (new File (files.get(0)));
+				FileParser fileParser = new FileParser();
+
+				fileParser.init(scan);
+				
+				mapEditor.setPlayers(playerObservableList);
+				mapEditor.setDeck();
+				mapEditor.autoAssignCountriesToPlayers();
+				mapEditor.determinePlayersStartingOrder();
+				
+				System.out.println("in here " + MapModel.getMapModel().getCountries().size());
+							    
 				
 				// this is where you can start the game
 			}
