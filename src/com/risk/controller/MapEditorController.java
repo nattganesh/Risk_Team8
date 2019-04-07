@@ -402,6 +402,7 @@ public class MapEditorController implements Initializable {
         {
             MapModel.getMapModel().getContinents().clear();
             MapModel.getMapModel().getCountries().clear();
+            PlayerPhaseModel.getPlayerModel().getPlayers().clear();
             Scanner scan = new Scanner(new File(inputFile));
             FileParser fileParser = new FileParser();
             if (fileParser.init(scan))
@@ -519,8 +520,8 @@ public class MapEditorController implements Initializable {
 
                     assignCountriesToPlayers();
                     
-                    determinePlayersStartingOrder();
-                    
+                    determinePlayersStartingOrder(); 
+                 
                     ActionModel.getActionModel().addAction("order of player goes ");
                     ActionModel.getActionModel().addAction("---------------------");
                     for (Player p : PlayerPhaseModel.getPlayerModel().getPlayers())
