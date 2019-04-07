@@ -132,6 +132,14 @@ public class GamePhaseController implements Observer, Initializable {
         GamePhaseModel.getGamePhaseModel().addObserver(this);
         primaryStage = stage;
     }
+    
+    /**
+     * This is a default constructor
+     */
+    public GamePhaseController()
+    {
+    	
+    }
 
     /**
      * this method saves the progress of the current game
@@ -205,9 +213,6 @@ public class GamePhaseController implements Observer, Initializable {
 //      ActionModel.getActionModel().clearAction();
         view = (String) phase;
 
-        
-
-        
         if (!view.equals("setup") && !view.equals("startup"))
         {	
         	saveID.setVisible(true);

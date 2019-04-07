@@ -54,8 +54,8 @@ public class PlayerTest {
     @Before
     public void setUp()
     {
-		p = new HumanPlayer("Green");
-		p2 = new HumanPlayer("Red");
+		p = new Player("Green");
+		p2 = new Player("Red");
 		occupiedCountries1 = new ArrayList<Country>();
 		occupiedCountries = new ArrayList<Country>();
 		continent = new Continent("Asia",10);

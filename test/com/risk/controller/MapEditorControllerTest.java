@@ -9,9 +9,10 @@ import com.risk.model.ActionModel;
 import com.risk.model.DeckModel;
 import com.risk.model.MapModel;
 import com.risk.model.PlayerPhaseModel;
+import com.risk.model.card.Card;
 import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
-import com.risk.model.player.HumanPlayer;
+import com.risk.model.player.Player;
 import com.risk.model.player.Player;
 
 import javafx.collections.FXCollections;
@@ -99,10 +100,13 @@ public class MapEditorControllerTest {
         
         MapEditorController instance = new MapEditorController();
 	        
-        int numbPlayer = 5;
-        instance.setPlayers(numbPlayer);
+        ObservableList<Player> behaviourObservableList = FXCollections.observableArrayList();
+        behaviourObservableList.add(new Player("AggressivePlayer1"));
+        behaviourObservableList.add(new Player("HumanPlayer2"));
+        instance.setPlayers(behaviourObservableList);
         
-        int expResult = 5;
+        
+        int expResult = 2;
         int result =  PlayerPhaseModel.getPlayerModel().getPlayers().size();
         
         assertEquals(expResult, result);
@@ -134,8 +138,8 @@ public class MapEditorControllerTest {
         System.out.println("determinePlayersStartingOrder");
         MapEditorController instance = new MapEditorController();
         
-        PlayerPhaseModel.getPlayerModel().getPlayers().add(new HumanPlayer("dummy1"));
-        PlayerPhaseModel.getPlayerModel().getPlayers().add(new HumanPlayer("dummy2"));
+        PlayerPhaseModel.getPlayerModel().getPlayers().add(new Player("dummy1"));
+        PlayerPhaseModel.getPlayerModel().getPlayers().add(new Player("dummy2"));
         instance.determinePlayersStartingOrder();
         
         int expResult = 2;
@@ -152,8 +156,8 @@ public class MapEditorControllerTest {
     public void testAssignCountriesToPlayers()
     {
         System.out.println("assignCountriesToPlayers");
-        PlayerPhaseModel.getPlayerModel().getPlayers().add(new HumanPlayer("dummy1"));
-        PlayerPhaseModel.getPlayerModel().getPlayers().add(new HumanPlayer("dummy2"));
+        PlayerPhaseModel.getPlayerModel().getPlayers().add(new Player("dummy1"));
+        PlayerPhaseModel.getPlayerModel().getPlayers().add(new Player("dummy2"));
         MapModel.getMapModel().getCountries().add(new Country("country1"));
         MapModel.getMapModel().getCountries().add(new Country("country2"));
         
@@ -175,8 +179,8 @@ public class MapEditorControllerTest {
     public void testAutoAssignCountriesToPlayers()
     {
     	System.out.println("assignCountriesToPlayers");
-        PlayerPhaseModel.getPlayerModel().getPlayers().add(new HumanPlayer("dummy1"));
-        PlayerPhaseModel.getPlayerModel().getPlayers().add(new HumanPlayer("dummy2"));
+        PlayerPhaseModel.getPlayerModel().getPlayers().add(new Player("dummy1"));
+        PlayerPhaseModel.getPlayerModel().getPlayers().add(new Player("dummy2"));
 
         MapModel.getMapModel().getCountries().add(new Country("country1"));
         MapModel.getMapModel().getCountries().add(new Country("country2"));
@@ -200,8 +204,8 @@ public class MapEditorControllerTest {
     {
         System.out.println("calcStartingArmies");
         
-        PlayerPhaseModel.getPlayerModel().getPlayers().add(new HumanPlayer("dummy1"));
-        PlayerPhaseModel.getPlayerModel().getPlayers().add(new HumanPlayer("dummy2"));
+        PlayerPhaseModel.getPlayerModel().getPlayers().add(new Player("dummy1"));
+        PlayerPhaseModel.getPlayerModel().getPlayers().add(new Player("dummy2"));
 
         MapModel.getMapModel().getCountries().add(new Country("country1"));
         MapModel.getMapModel().getCountries().add(new Country("country2"));
@@ -292,5 +296,26 @@ public class MapEditorControllerTest {
     	assertFalse(instance.existsInAdjacentList(countryA, countryName));
 
     }
-        
+    
+    /**
+     * This method test for starting a game with cards
+     */
+    @Test
+    public void testSTartWithCards()
+    {
+    	  MapEditorController instance = new MapEditorController();
+    	  PlayerPhaseModel.getPlayerModel().getPlayers().add(new Player("dummy1"));
+          PlayerPhaseModel.getPlayerModel().getPlayers().add(new Player("dummy2"));
+          DeckModel.getCardModel().initialize();
+          instance.startWithCards();
+          
+          int expResult = 10;
+          int result = 0;
+          for (Player player : PlayerPhaseModel.getPlayerModel().getPlayers())
+          {
+        	 result += player.getCards().size();
+          }
+          assertEquals(expResult, result);
+          
+    }        
 }

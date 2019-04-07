@@ -94,7 +94,6 @@ public class ReinforcementController implements Initializable {
      */
     public ReinforcementController()
     {
-
     }
 
     /**

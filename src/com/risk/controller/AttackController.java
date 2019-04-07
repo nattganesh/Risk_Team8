@@ -374,8 +374,7 @@ public class AttackController implements Initializable, Observer {
         }
         else {
              GamePhaseModel.getGamePhaseModel().setPhase("fortification");
-        }
-       
+        }  
     }
 
     /**
