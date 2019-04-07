@@ -42,6 +42,7 @@ public class Benevolent implements Strategy {
 		}
 	}
 
+	
 	@Override
 	public void fortify(Player p) {
 		ArrayList<Country> weakestCountries = p.getWeakestCountries();
