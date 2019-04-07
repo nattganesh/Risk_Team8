@@ -25,7 +25,7 @@ public class Cheater implements Strategy{
 		ActionModel.getActionModel().addAction("Attack Phase:");
 		ArrayList<Country> occupy = p.getOccupiedCountries();
 		
-		for (int i =0; i< occupy.size(); i++)
+		for (int i = 0; i< occupy.size(); i++)
         {
 			Country c = occupy.get(i);
             for (Country cNeighbors : c.getConnectedEnemyArrayList())

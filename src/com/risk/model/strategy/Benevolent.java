@@ -43,7 +43,7 @@ public class Benevolent implements Strategy {
 			int initialArmy = weakestCountries.get(0).getArmyCount();
 			weakestCountries.get(0).setArmyCount(Armyinput);
 			ActionModel.getActionModel().addAction("added " + Armyinput + " to " + weakestCountries.get(0).getName() + "(" + initialArmy + ")");
-			
+		
 			return;
 		}
 		int army = Armyinput;
