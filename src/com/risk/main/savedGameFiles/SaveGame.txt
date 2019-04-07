@@ -1,12 +1,12 @@
 NAME OF MAP FILE
 input
 SET PLAYER ORDER AND CARDS
-Player6,HumanPlayer
-Player5,HumanPlayer,Artillery,Cavalry,Cavalry,Infantry,Artillery
-Player4,HumanPlayer,Artillery,Artillery,Artillery,Cavalry,Cavalry
-Player3,HumanPlayer,Cavalry,Cavalry,Artillery,Infantry,Cavalry
-Player2,HumanPlayer,Wild,Artillery,Artillery,Infantry,Infantry
-Player1,HumanPlayer,Infantry,Infantry,Cavalry,Cavalry,Infantry
+Player6,Player
+Player5,Player,Artillery,Cavalry,Cavalry,Infantry,Artillery
+Player4,Player,Artillery,Artillery,Artillery,Cavalry,Cavalry
+Player3,Player,Cavalry,Cavalry,Artillery,Infantry,Cavalry
+Player2,Player,Wild,Artillery,Artillery,Infantry,Infantry
+Player1,Player,Infantry,Infantry,Cavalry,Cavalry,Infantry
 SET PLAYERS AND ARMY IN COUNTRY
 Alaska,Player5,3
 Northwest Territory,Player5,2
@@ -51,6 +51,6 @@ New Guinea,Player6,1
 Western Australia,Player5,1
 Eastern Australia,Player4,3
 CURRENT PHASE
-attack
+fortification
 CURRENT PLAYER
 Player6
