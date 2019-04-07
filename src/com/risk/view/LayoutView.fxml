@@ -14,7 +14,7 @@
                 <Pane fx:id="content" />
             </children>
         </Pane> 
-      <AnchorPane fx:id="savePane" layoutX="405.0" prefHeight="294.0" prefWidth="230.0">
+      <AnchorPane fx:id="savePane" layoutX="764.0" layoutY="43.0" prefHeight="294.0" prefWidth="230.0">
           <children>
               <fx:include fx:id="save" source="SaveProgress.fxml" />
           </children>

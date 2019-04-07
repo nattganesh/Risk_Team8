@@ -133,7 +133,9 @@ public class TournamentModeController implements Initializable {
 			if (mapObservableList.size() == numberMapsID.getSelectionModel().getSelectedItem() 
 					&& playerObservableList.size() == numberPlayersID.getSelectionModel().getSelectedItem()
 					&& numberGamesID.getSelectionModel().getSelectedItem() != null
-					&& !numberTurnsID.getText().trim().isEmpty())
+					&& !numberTurnsID.getText().trim().isEmpty()
+					&& Integer.parseInt(numberTurnsID.getText()) >= 10
+					&& Integer.parseInt(numberTurnsID.getText()) <= 50)
 			{
 				MapModel.getMapModel().getContinents().clear();
 	            MapModel.getMapModel().getCountries().clear();
