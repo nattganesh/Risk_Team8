@@ -18,6 +18,7 @@ public class Benevolent implements Strategy {
 
 	@Override
 	public void reinforce(Player p) {
+		ActionModel.getActionModel().addAction("Reinforcement Phase:");
 		ArrayList<Country> weakestCountries = p.getWeakestCountries();
 		int Armyinput = p.getReinforcementArmy();
 		if (weakestCountries.size() == 1) {
@@ -44,6 +45,7 @@ public class Benevolent implements Strategy {
 
 	@Override
 	public void fortify(Player p) {
+		ActionModel.getActionModel().addAction("Fortification Phase:");
 		ArrayList<Country> weakestCountries = p.getWeakestCountries();
 		int Armyinput=0;
 		ArrayList<Country> fortify = new ArrayList<Country>();
@@ -67,7 +69,7 @@ public class Benevolent implements Strategy {
 			
 			fortify.get(0).setArmyCount(Armyinput-1);	
 			fortify.get(1).reduceArmyCount(Armyinput-1);
-			
+			ActionModel.getActionModel().addAction(" move " + (Armyinput-1) + " army from "+ fortify.get(1).getName() + " to " + fortify.get(0).getName());
 		}
 	}
 
