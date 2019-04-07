@@ -103,7 +103,6 @@ public class MapEditorController implements Initializable {
     ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
     ObservableList<Country> adjacentObservableList = FXCollections.observableArrayList();
     ObservableList<Player> behaviourObservableList = FXCollections.observableArrayList();
-
     
     
     ActionModel actions;
@@ -138,7 +137,7 @@ public class MapEditorController implements Initializable {
     		{
     			playerForBehaviourID.getItems().add(Integer.toString(i));
     		}
-    		actions.addAction("CPU behaviour can't repeat");
+    	
     	}
     }
         
@@ -161,62 +160,15 @@ public class MapEditorController implements Initializable {
     		{
     			if (p.getName().charAt(p.getName().length()-1) == player.getName().charAt(player.getName().length()-1))
     			{
-    				if (behaviour.equals("HumanPlayer"))
-    				{
-    					behaviourObservableList.set(index, player);
-    					int playerNumber = index+1;
-    					actions.addAction("replaced Player" + playerNumber + " with " + player.getName());
-    				}
-    				else 
-    				{
-    					boolean e = false;
-    					for (Player p2 : behaviourObservableList)
-    					{
-    						if (p2.getName().substring(0, p2.getName().length()-1).equals(behaviour))
-    						{
-    							e = true;
-    							actions.addAction("CPU behaviour exists");
-    							break;
-    						}
-    					}
-    					if (!e)
-    					{
-    						behaviourObservableList.set(index, player);
-    						int playerNumber = index+1;
-        					actions.addAction("replaced Player"+playerNumber + " with " +  player.getName());
-    					}
-    				}
+    				behaviourObservableList.set(index, player);
     				notExist = false;
-    				break;
+     				break;
     			}
     			index++;
     		}	
     		if (notExist)
     		{
-    			if (behaviour.equals("HumanPlayer"))
-				{
-
-        			behaviourObservableList.add(player);
-					actions.addAction("added " +  player.getName());
-				}
-				else 
-				{	
-					boolean e = false;
-					for (Player p2 : behaviourObservableList)
-					{
-						if (p2.getName().substring(0, p2.getName().length()-1).equals(behaviour))
-						{
-							e = true;
-							actions.addAction("CPU behaviour exists");
-							break;
-						}
-					}
-					if (!e)
-					{
-						behaviourObservableList.add(player);
-						actions.addAction("added " +  player.getName());
-					}
-				}
+    			behaviourObservableList.add(player);
     		}
 		}   	
     }
