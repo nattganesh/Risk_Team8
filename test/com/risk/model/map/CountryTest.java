@@ -5,7 +5,6 @@
  */
 package com.risk.model.map;
 
-import com.risk.model.player.HumanPlayer;
 import com.risk.model.player.Player;
 import java.util.ArrayList;
 
@@ -54,8 +53,8 @@ public class CountryTest {
     @Before
     public void setUp()
     {
-    	p = new HumanPlayer("Green");
-    	p1 = new HumanPlayer("Red");
+    	p = new Player("Green");
+    	p1 = new Player("Red");
     	occupiedCountries1 = new ArrayList<Country>();
     	continent = new Continent("Asia",10);
     	continent1 = new Continent("Europe",10);

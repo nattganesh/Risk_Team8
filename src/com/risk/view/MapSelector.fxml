@@ -8,7 +8,7 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.risk.controller.MapEditorController">
     <children>
-        <AnchorPane layoutY="-7.0" prefHeight="500.0" prefWidth="1000.0">
+        <AnchorPane layoutY="-7.0" prefHeight="500.0" prefWidth="1400.0">
             <children>
                 <Label layoutX="70.0" layoutY="118.0" text="CONTINENT" />
                 <TextField fx:id="TerritoryInput" layoutX="296.0" layoutY="346.0" prefHeight="25.0" prefWidth="77.0" />
@@ -39,6 +39,8 @@
             <ListView fx:id="behaviourViewID" layoutX="719.0" layoutY="339.0" prefHeight="92.0" prefWidth="222.0" />
             <Button layoutX="764.0" layoutY="245.0" mnemonicParsing="false" onAction="#assignBehaviour" text="assign behaviour" />
             <Text layoutX="771.0" layoutY="328.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Behaviours" />
+            <ListView fx:id="mapActionBoard" layoutX="976.0" layoutY="280.0" prefHeight="153.0" prefWidth="334.0" />
+            <Label layoutX="1100.0" layoutY="250.0" text="Action Board" />
             </children>
         </AnchorPane>
     </children>

@@ -27,7 +27,10 @@ import com.risk.model.exceptions.DuplicatesException;
 import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
 import com.risk.model.player.Player;
-import com.risk.model.strategy.behavior.aggressive.AggressiveStrategy;
+import com.risk.model.strategy.Aggressive;
+import com.risk.model.strategy.Benevolent;
+import com.risk.model.strategy.Cheater;
+import com.risk.model.strategy.Random;
 import com.risk.model.utilities.FileParser;
 import com.risk.model.utilities.Validate;
 import com.risk.model.utilities.generateOutputFile.Output;
@@ -83,6 +86,9 @@ public class MapEditorController implements Initializable {
     @FXML
     RadioButton startCardsID;
     
+    @FXML
+    ListView <String> mapActionBoard;
+    
     //
     @FXML
     ListView<Player> behaviourViewID;
@@ -109,6 +115,7 @@ public class MapEditorController implements Initializable {
     @Override
     public void initialize(URL arg0, ResourceBundle arg1)
     {
+    	mapActionBoard.setItems(ActionModel.getActionModel().getActions());
     	behaviourViewID.setItems(behaviourObservableList);
         actions = ActionModel.getActionModel();
         ContinentView.setItems(MapModel.getMapModel().getContinents());
@@ -121,7 +128,7 @@ public class MapEditorController implements Initializable {
     public void selectNumbPlayers()
     {
     	if (PlayerID.getSelectionModel().getSelectedItem() != null)
-    	{
+    	{	
     		typeOfBehaviourID.getItems().clear();
     		typeOfBehaviourID.getItems().addAll("AggressivePlayer", "HumanPlayer", "BenevolentPlayer", "CheaterPlayer", "RandomPlayer");
     		playerForBehaviourID.getItems().clear();
@@ -130,6 +137,7 @@ public class MapEditorController implements Initializable {
     		{
     			playerForBehaviourID.getItems().add(Integer.toString(i));
     		}
+    	
     	}
     }
         
@@ -143,21 +151,18 @@ public class MapEditorController implements Initializable {
     	{
     		String behaviour = typeOfBehaviourID.getSelectionModel().getSelectedItem();
     		int playerIndex = Integer.parseInt(playerForBehaviourID.getSelectionModel().getSelectedItem());
-    		Player player = new Player(behaviour+playerIndex);    	
-    		if (!behaviour.equals("HumanPlayer"))
-    		{
-    			player.setIsComputerPlayer(true);
-    		}
-    		
+    		Player player = new Player(behaviour+playerIndex);
+
     		int index = 0;
     		boolean notExist = true;
+    		
     		for (Player p: behaviourObservableList)
     		{
-    			if (p.getName().charAt(p.getName().length()-1) == (player.getName().charAt(player.getName().length()-1)))
+    			if (p.getName().charAt(p.getName().length()-1) == player.getName().charAt(player.getName().length()-1))
     			{
     				behaviourObservableList.set(index, player);
     				notExist = false;
-    				break;
+     				break;
     			}
     			index++;
     		}	
@@ -503,17 +508,26 @@ public class MapEditorController implements Initializable {
 
             if (PlayerID.getSelectionModel().getSelectedItem() != null && !skipRobinID.isSelected())
             {
+            	
                 int numbPlayers = Integer.parseInt(PlayerID.getSelectionModel().getSelectedItem());
                 if (numbPlayers == behaviourObservableList.size())
                 {
                     setPlayers(behaviourObservableList);
                     setDeck();
+                    
                     calcStartingArmies();
 
                     assignCountriesToPlayers();
-
+                    
                     determinePlayersStartingOrder();
-
+                    
+                    ActionModel.getActionModel().addAction("order of player goes ");
+                    ActionModel.getActionModel().addAction("---------------------");
+                    for (Player p : PlayerPhaseModel.getPlayerModel().getPlayers())
+                    {
+                    	 ActionModel.getActionModel().addAction(p.getName());
+                    }
+                    ActionModel.getActionModel().addAction("---------------------");
                     if (startCardsID.isSelected())
                     {
                         startWithCards();
@@ -524,14 +538,28 @@ public class MapEditorController implements Initializable {
             }
             else
             {
+            	
             	int numbPlayers = Integer.parseInt(PlayerID.getSelectionModel().getSelectedItem());
             	if (numbPlayers == behaviourObservableList.size())
                 {
             		 setPlayers(behaviourObservableList);
                      setDeck();
+             
                      calcStartingArmies();
+                     
                      autoAssignCountriesToPlayers();
+                     
+                    
                      determinePlayersStartingOrder();
+                     
+                     ActionModel.getActionModel().addAction("order of player goes ");
+                     ActionModel.getActionModel().addAction("---------------------");
+                     for (Player p : PlayerPhaseModel.getPlayerModel().getPlayers())
+                     {
+                     	 ActionModel.getActionModel().addAction(p.getName());
+                     }
+                     ActionModel.getActionModel().addAction("---------------------");
+                     
                      if (startCardsID.isSelected())
                      {
                          startWithCards();
@@ -659,12 +687,13 @@ public class MapEditorController implements Initializable {
      * @param numberOfPlayer the number of players
      */
     public void setPlayers(ObservableList <Player> players)
-    {    	
+    {     
     	for (Player player : players)
-    	{
-    		 PlayerPhaseModel.getPlayerModel().addPlayer(player);
+    	{	
+    		PlayerPhaseModel.getPlayerModel().addPlayer(player);
     	}
     }
+    
 
     public void setDeck()
     {
@@ -720,8 +749,11 @@ public class MapEditorController implements Initializable {
      */
     public void assignCountriesToPlayers()
     {
+    	System.out.println("sdf");
         int totalCountrySize = MapModel.getMapModel().getCountries().size();
+        System.out.println(totalCountrySize);
         boolean[] countryOccupied = new boolean[totalCountrySize];
+        System.out.println(countryOccupied);
         int i = 0;
         while (i < totalCountrySize)
         {
@@ -757,13 +789,16 @@ public class MapEditorController implements Initializable {
      */
     public void autoAssignCountriesToPlayers()
     {
+    	
         int totalCountrySize = MapModel.getMapModel().getCountries().size();
         boolean[] countryOccupied = new boolean[totalCountrySize];
+        
         int i = 0;
         while (i < totalCountrySize)
         {
             for (Player p : PlayerPhaseModel.getPlayerModel().getPlayers())
             {
+            	
                 int random = (int) (Math.random() * totalCountrySize);
                 while (countryOccupied[random])
                 {

@@ -17,10 +17,13 @@ import com.risk.model.card.Card;
 import com.risk.model.dice.Dice;
 import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
+import com.risk.model.strategy.Strategy;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Observable;
 import com.risk.model.strategy.Strategy;
 
@@ -34,7 +37,6 @@ public class Player extends Observable {
     private boolean playerLost = false;
     private boolean isComputerPlayer;
     private Strategy strategy;
-
     /**
      * Constructor for Player class
      *
@@ -44,7 +46,7 @@ public class Player extends Observable {
     {
         this.name = name;
     }
-
+    
     public boolean isComputerPlayer()
     {
         return isComputerPlayer;
@@ -200,6 +202,14 @@ public class Player extends Observable {
     {
         return cards;
     }
+    
+    public ArrayList<Card> getCardList(){
+    	ArrayList<Card> card = new ArrayList<Card>();
+    	for(Card c: cards) {
+    		card.add(c);
+    	}
+    	return card;
+    }
 
     /**
      * This method adds a card to player
@@ -263,38 +273,6 @@ public class Player extends Observable {
     public Strategy getStrategy()
     {
         return strategy;
-    }
-
-    public void setStrategy(Strategy strategy)
-    {
-        this.strategy = strategy;
-    }
-
-    public void reinforce(int Armyinput)
-    {
-        if (this.strategy == null)
-        {
-            return;
-        }
-        this.strategy.reinforce(Armyinput);
-    }
-
-    public void attack()
-    {
-        if (this.strategy == null)
-        {
-            return;
-        }
-        this.strategy.attack();
-    }
-
-    public void fortify(int Armyinput)
-    {
-        if (this.strategy == null)
-        {
-            return;
-        }
-        this.strategy.fortify(Armyinput);
     }
 
     /**
@@ -676,5 +654,130 @@ public class Player extends Observable {
             }
         }
         return weakCountries;
+    }
+    
+    /**
+	 * This method is used to decrease the army amount or change the owner of country when it is occupied
+	 * In case1, the defender lost in dice so it lost 1 army
+	 * In case2, the attacker conquered the defender, so the owner of defender changes
+	 * In case3, the attacker lost in dice so it lost 1 army 
+	 * 
+	 * @param attack country that is attacking
+	 * @param defend country being attacked
+	 * @param caseType the type of attack
+	 * 
+	 */
+    public void attack(Country attack, Country defend, int caseType)
+    {
+        switch (caseType)
+        {
+            case 1:
+                defend.reduceArmyCount(1);
+                break;
+            case 2:
+            	defend.getRuler().removeCountry(defend);
+                defend.setRuler(this);
+                addCountry(defend);
+                break;
+            case 3:
+                attack.reduceArmyCount(1);
+                break;
+        }
+    }
+
+    /**
+     * This method is necessary for reinforcement
+     * The number of armies in the country will be add with the number the player inputs
+     * 
+     * @param myCountry the country to be reinforced
+     * @param Armyinput the number of army to reinforce
+     */
+    public void reinforce(Country myCountry, int Armyinput)
+    {
+        myCountry.setArmyCount(Armyinput);
+    }
+
+    /**
+     * This method is necessary for fortify a country
+     * 
+     * @param from The country which the player moves the armies from
+     * @param to The country which the player moves the armies to
+     * @param Armyinput The number of armies to move
+     */
+    public void fortify(Country from, Country to, int Armyinput)
+    {
+        from.reduceArmyCount(Armyinput);
+        to.setArmyCount(Armyinput);
+    }
+
+    
+    public void setStrategy(Strategy strategy) {
+    	isComputerPlayer = true;
+    	this.strategy = strategy;
+    }
+    
+    public void attackStrategy(Player p) {
+    	this.strategy.attack(p);
+    }
+    
+    public void reinforceStrategy(Player p) {
+    	this.strategy.reinforce(p);
+    }
+    
+    public void fortifyStrategy(Player p) {
+    	this.strategy.fortify(p);
+    }
+    
+    public void exchangeCardForComputer() {
+    	while(getCardList().size()>=5) {
+    		ArrayList<Card> cards = getCardList();
+    		ArrayList<String> exchangecards = new ArrayList<String>();
+    		Map<String, Integer> map = new HashMap<>();
+    		for(Card c: cards) {
+    			String s = c.getCatagory();
+                if (map.containsKey(s)) {
+                    map.put(s, map.get(s) + 1);
+                } else {
+                    map.put(s, 1);
+                }
+    		}
+    		if(map.size()>=3) {
+    			while(exchangecards.size()<3) {
+    				for(Card card: cards) {
+    					String s = card.getCatagory();
+        				if(exchangecards.contains(s)) 
+        					continue;
+        				else {
+        					exchangecards.add(s);
+        					removeCard(card);
+        				}
+        			}
+    			}
+    		}else {
+    			int i =0;
+        		for(String s: map.keySet()) {
+        			if(map.get(s)>=3) {
+        				for(Card card: cards) {
+        					if(card.getCatagory().equals(s)) {
+        						removeCard(card);
+        						i++;
+        						if(i==3) {
+        							break;
+        						}
+        					}
+        				}
+        			}
+        		}
+    		}
+    	}
+    }
+    
+    public void moveCards(Player a) {
+    	ObservableList<Card> loserCard = a.getCards();
+    	for(Card c: loserCard) {
+    		addCard(c);
+    		c.setOwner(this);
+    	}
+    	a.getCards().clear();
     }
 }

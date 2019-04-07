@@ -80,6 +80,7 @@ public class CardController extends Observable implements Initializable {
         });
     }
 
+    
     /**
      * This method is data binding for connection between controller and UI.
      *

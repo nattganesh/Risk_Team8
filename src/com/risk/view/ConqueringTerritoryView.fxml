@@ -14,6 +14,6 @@
         <Text layoutX="138.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your Territory" />
         <Text layoutX="333.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Conquered Territory" />
         <TextField fx:id="armyCount" layoutX="84.0" layoutY="349.0" prefHeight="31.0" prefWidth="134.0" />
-        <Button layoutX="391.0" layoutY="349.0" mnemonicParsing="false" onAction="#moveComplete" text="Move Complete" />
+        <Button layoutX="350.0" layoutY="391.0" mnemonicParsing="false" onAction="#moveComplete" text="Move Complete" />
     </children>
 </AnchorPane>
