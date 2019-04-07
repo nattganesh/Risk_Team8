@@ -1,3 +1,9 @@
+/**
+ * Necessary for implement cheater strategy for cheater player
+ * Including the implementation of setup, reinforcement, attack and fortification.
+ * @author Tianyi
+ * @author Nat
+ */
 package com.risk.model.strategy;
 
 import java.util.ArrayList;
@@ -7,6 +13,13 @@ import com.risk.model.map.Country;
 import com.risk.model.player.Player;
 
 public class Cheater implements Strategy{
+	
+	/**
+	 * This method is used to do the attack for cheater player
+	 * The cheater player occupies all his neighbor enemies and put one army to each new occupied country
+	 * 
+	 * @param p The player who is going to attack
+	 */
 	@Override
 	public void attack(Player p) {
 		ActionModel.getActionModel().addAction("Attack Phase:");
@@ -29,7 +42,13 @@ public class Cheater implements Strategy{
             }
         }
 	}
-
+	
+	/**
+	 * This method is used to do the reinforcement for cheater player
+	 * The cheater player gets his armies of countries doubled at reinforcement phase
+	 * 
+	 * @param p The player who is going to reinforce
+	 */
 	@Override
 	public void reinforce(Player p) {
 		ActionModel.getActionModel().addAction("Reinforcement Phase:");
@@ -41,7 +60,13 @@ public class Cheater implements Strategy{
         }
 		
 	}
-
+	
+	/**
+	 * This method is used to do the fortification for cheater player
+	 * The cheater player gets his armies of countries which have neighbor enemy doubled at fortification phase
+	 * 
+	 * @param p The player who is going to fortify
+	 */
 	@Override
 	public void fortify(Player p) {
 		ActionModel.getActionModel().addAction("Fortification Phase:");
@@ -55,11 +80,23 @@ public class Cheater implements Strategy{
         }
 	}
 	
+	/**
+	 * This method is used to get a random number within the given limit
+	 * 
+	 * @param limit The limit of numbers, like the amount of armies
+	 * @return The random number 
+	 */
 	public int getRandomNumber(int limit)
 	{
 		return (int) (Math.random() * limit);
 	}
 	
+	/**
+	 * This method is used to do the set up for cheater player
+	 * The cheater player randomly assigns armies to his countries at set up phase
+	 * 
+	 * @param p The player who is going to set up
+	 */
 	@Override
 	public void setup(Player p) {
 		if (p.getStartingPoints() == 0)

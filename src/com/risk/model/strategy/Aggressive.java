@@ -1,3 +1,9 @@
+/**
+ * Necessary for implement aggressive strategy for aggressive player
+ * Including the implementation of setup, reinforcement, attack and fortification.
+ * @author Tianyi
+ * @author Nat
+ */
 package com.risk.model.strategy;
 
 import java.io.File;
@@ -13,7 +19,13 @@ import com.risk.model.strategy.*;
 
 public class Aggressive implements Strategy {
 	
-
+	/**
+	 * This method is used to do the attack for aggressive player
+	 * The aggressive player uses his strongest country to do the attack
+	 * until it has no enough armies
+	 * 
+	 * @param p The player who is going to attack
+	 */
 	@Override
 	public void attack(Player p) {
 		ActionModel.getActionModel().addAction("Attack Phase:");
@@ -63,6 +75,12 @@ public class Aggressive implements Strategy {
 		}
 	}
 
+	/**
+	 * This method is used to do the reinforcement for aggressive player
+	 * The aggressive player only reinforces his strongest country
+	 * 
+	 * @param p The player who is going to reinforce
+	 */
 	@Override
 	public void reinforce(Player p) {
 		ActionModel.getActionModel().addAction("Reinforcement Phase:");
@@ -73,7 +91,12 @@ public class Aggressive implements Strategy {
 		ActionModel.getActionModel().addAction("added " + Armyinput + " to " + strongestCountry.getName() + "(" + initialArmy + ")");
 	}
 	
-
+	/**
+	 * This method is used to do the fortification for aggressive player
+	 * The aggressive player only fortifies his strongest country
+	 * 
+	 * @param p The player who is going to fortify
+	 */
 	@Override
 	public void fortify(Player p) {
 		ActionModel.getActionModel().addAction("Fortification Phase:");
@@ -104,11 +127,23 @@ public class Aggressive implements Strategy {
 		}
 	}
 
+	/**
+	 * This method is used to get a random number within the given limit
+	 * 
+	 * @param limit The limit of numbers, like the amount of armies
+	 * @return The random number 
+	 */
 	public int getRandomNumber(int limit)
 	{ 
 		return (int) (Math.random() * limit);
 	}
 	 
+	/**
+	 * This method is used to do the set up for aggressive player
+	 * The aggressive player will choose one country randomly and put all his starting armies to that country
+	 * 
+	 * @param p The player who is going to set up
+	 */
 	@Override
 	public void setup(Player p) {
 		if (p.getStartingPoints() == 0)

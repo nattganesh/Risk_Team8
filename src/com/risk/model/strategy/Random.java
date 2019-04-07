@@ -1,3 +1,9 @@
+/**
+ * Necessary for implement random strategy for random player
+ * Including the implementation of setup, reinforcement, attack and fortification.
+ * @author Tianyi
+ * @author Nat
+ */
 package com.risk.model.strategy;
 
 import java.util.ArrayList;
@@ -9,6 +15,12 @@ import com.risk.model.player.Player;
 import javafx.collections.ObservableList;
 
 public class Random implements Strategy{
+	/**
+	 * This method is used to do the attack for cheater player
+	 * The cheater player occupies all his neighbor enemies and put one army to each new occupied country
+	 * 
+	 * @param p The player who is going to attack
+	 */
 	@Override
 	public void attack(Player p) {
 		ActionModel.getActionModel().addAction("Attack Phase:");
