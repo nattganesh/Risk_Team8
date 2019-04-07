@@ -25,6 +25,7 @@ import java.util.Scanner;
  */
 public class LoadGame {
 
+	static String currentPhase;
     /**
      * This is a constructor for the Output class
      */
@@ -32,6 +33,7 @@ public class LoadGame {
     {
     }
 
+    
     /**
      * @param gameFileName name of file to load game from
      * @return true if file has been generated, otherwise false
@@ -71,6 +73,7 @@ public class LoadGame {
                 if (text.equalsIgnoreCase("SET PLAYER ORDER AND CARDS") && inputGame.hasNextLine())
                 {
                     text = inputGame.nextLine();
+                   
                     while (inputGame.hasNextLine() && !text.equals("SET PLAYERS AND ARMY IN COUNTRY"))
                     {
                         String nameOfPlayer = text.substring(0, text.indexOf(","));
@@ -86,7 +89,7 @@ public class LoadGame {
                             typeOfPlayer = text.substring(0, text.indexOf(","));
                             text = text.substring(text.indexOf(",") + 1, text.length());
                         }
-                        
+                       
                         Player p = new Player(nameOfPlayer);                         
                         PlayerPhaseModel.getPlayerModel().addPlayer(p);
                         if (!text.trim().isEmpty() && !text.contains(","))
@@ -149,19 +152,22 @@ public class LoadGame {
                 if (text.equalsIgnoreCase("CURRENT PHASE") && inputGame.hasNextLine())
                 {
                     text = inputGame.nextLine();
-                    GamePhaseModel.getGamePhaseModel().setPhase("setup complete");
-                    GamePhaseModel.getGamePhaseModel().setPhase(text);
-                   
+                    currentPhase = text;
                     text = inputGame.nextLine();
                 }
                 if (text.equalsIgnoreCase("CURRENT PLAYER") && inputGame.hasNextLine())
                 {
                     text = inputGame.nextLine();
+                    System.out.println("CURRENT PLAYER FROM LOAD IS: " + text);
                     for (int i = 0; i < players.size(); i++)
                     {
                         if (players.get(i).getName().equals(text))
                         {
                             PlayerPhaseModel.getPlayerModel().setCurrentPlayer(i);
+                            System.out.println("THAT PLAYER INDEX IS : " + i);
+                            GamePhaseModel.getGamePhaseModel().setPhase("setup complete");
+                            GamePhaseModel.getGamePhaseModel().setPhase(currentPhase);
+                            
                             break;
                         }
                     }

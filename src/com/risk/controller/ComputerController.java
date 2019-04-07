@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 
 import com.risk.model.GamePhaseModel;
 import com.risk.model.PlayerPhaseModel;
+import com.risk.model.card.Card;
 import com.risk.model.map.Country;
 
 import javafx.collections.FXCollections;
@@ -19,6 +20,7 @@ public class ComputerController implements Initializable {
 	ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
     ObservableList<Country> adjacentEnemyObservableList = FXCollections.observableArrayList();
     ObservableList<Country> adjacentOwnedObservableList = FXCollections.observableArrayList();
+    ObservableList<Card> cardOwnedObservableList = FXCollections.observableArrayList();
 	
     @FXML
     private ListView<Country> adjacentEnemy;
@@ -28,6 +30,9 @@ public class ComputerController implements Initializable {
 
     @FXML
     private ListView<Country> countryId;
+    
+    @FXML
+    private ListView<Card> cardView;
 
     @FXML
     void territoryHandler() {
@@ -35,6 +40,7 @@ public class ComputerController implements Initializable {
           {
               adjacentEnemyObservableList.clear();
               adjacentOwnedObservableList.clear();
+              
               adjacentEnemyObservableList.addAll(countryId.getSelectionModel().getSelectedItem().getConnectedEnemy());
               adjacentOwnedObservableList.addAll(countryId.getSelectionModel().getSelectedItem().getConnectedOwned());
           }
@@ -46,10 +52,14 @@ public class ComputerController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
         territoryObservableList.addAll(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
+        cardOwnedObservableList.addAll(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getCards());
+        
         countryId.setItems(territoryObservableList);
         adjacentEnemy.setItems(adjacentEnemyObservableList);
         adjacentOwned.setItems(adjacentOwnedObservableList);
+        cardView.setItems(cardOwnedObservableList);
         updateView();
+        
 	}
 	
 	/**
@@ -125,6 +135,21 @@ public class ComputerController implements Initializable {
 
                     setText(country.getName() + " (" + country.getArmyCount() + ")");
                 }
+            }
+        });
+        cardView.setCellFactory(param -> new ListCell<Card>() {
+            @Override
+            protected void updateItem(Card card, boolean empty)
+            {
+            	 super.updateItem(card, empty);
+                 if (empty || card == null || card.getCatagory() == null)
+                 {
+                     setText(null);
+                 }
+                 else
+                 {
+                     setText(card.getCatagory());
+                 }
             }
         });
     }

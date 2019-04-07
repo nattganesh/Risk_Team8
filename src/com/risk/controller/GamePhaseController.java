@@ -212,11 +212,12 @@ public class GamePhaseController implements Observer, Initializable {
     {
 //      ActionModel.getActionModel().clearAction();
         view = (String) phase;
-
+        System.out.println("CURRENT PHASE : " + view);
         if (!view.equals("setup") && !view.equals("startup"))
         {	
         	saveID.setVisible(true);
         	phaseDominationViewID.setVisible(true);
+        	System.out.println("HERHRE");
         }	
         if (view.equals("setup"))
         {
@@ -310,12 +311,14 @@ public class GamePhaseController implements Observer, Initializable {
             worldDomination3.setItems(MapModel.getMapModel().getContinents());
             updateContinentDominationView();
         }
+        
         else if (view.equals("reinforcement"))
         {
             try
             {
                 if (PlayerPhaseModel.getPlayerModel().getCurrentPlayer().isComputerPlayer())
                 {
+                	
                 	ActionModel.getActionModel().addAction(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName() + "'s turn");
                 	phaseID.setText(view);
                     playerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
@@ -335,6 +338,7 @@ public class GamePhaseController implements Observer, Initializable {
                      playerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
                      mainPane.getChildren().clear();
                      mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/Reinforcement.fxml")));
+                     
                 }
             }
             catch (IOException e)
@@ -580,7 +584,8 @@ public class GamePhaseController implements Observer, Initializable {
  
     public void restartGame()
     {
-
+    	
+    	ActionModel.getActionModel().getActions().clear();
         barData.clear();
         data.clear();
         serie.getData().clear();
