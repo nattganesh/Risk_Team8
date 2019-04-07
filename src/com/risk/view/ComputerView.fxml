@@ -18,6 +18,8 @@
             <Text layoutX="281.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Territory Occupied" />
             <Text layoutX="451.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Surrounding Reinforcement" />
             <Button layoutX="608.0" layoutY="486.0" mnemonicParsing="false" onAction="#nextComputerPhase" text="Next" />
+            <ListView fx:id="cardView" layoutX="9.0" layoutY="419.0" prefHeight="110.0" prefWidth="200.0" />
+            <Text layoutX="97.0" layoutY="414.0" strokeType="OUTSIDE" strokeWidth="0.0" text="card View" />
          </children>
       </AnchorPane>
    </children>

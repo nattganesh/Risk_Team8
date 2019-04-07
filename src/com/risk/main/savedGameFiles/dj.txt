@@ -1,0 +1,52 @@
+NAME OF MAP FILE
+valid1
+SET PLAYER ORDER AND CARDS
+HumanPlayer2,HumanPlayer
+BenevolentPlayer1,BenevolentPlayer
+SET PLAYERS AND ARMY IN COUNTRY
+Alaska,BenevolentPlayer1,5
+Northwest Territory,HumanPlayer2,2
+Greenland,HumanPlayer2,2
+Alberta,BenevolentPlayer1,4
+Ontario,BenevolentPlayer1,2
+Quebec,HumanPlayer2,2
+Western United States,HumanPlayer2,8
+Eastern United States,HumanPlayer2,1
+Central America,BenevolentPlayer1,5
+Venezuela,HumanPlayer2,3
+Peru,BenevolentPlayer1,2
+Brazil,BenevolentPlayer1,2
+Argentina,HumanPlayer2,3
+Iceland,BenevolentPlayer1,2
+Scandinavia,HumanPlayer2,8
+Ukraine,BenevolentPlayer1,2
+Great Britian,BenevolentPlayer1,2
+Northern Europe,BenevolentPlayer1,3
+Southern Europe,HumanPlayer2,3
+Western Europe,HumanPlayer2,1
+North Africa,BenevolentPlayer1,2
+Egypt,HumanPlayer2,2
+East Africa,BenevolentPlayer1,2
+Congo,HumanPlayer2,4
+South Africa,HumanPlayer2,1
+Madagascar,BenevolentPlayer1,3
+Siam,BenevolentPlayer1,2
+India,BenevolentPlayer1,2
+China,HumanPlayer2,2
+Mongolia,HumanPlayer2,3
+Japan,BenevolentPlayer1,3
+Irkutsk,BenevolentPlayer1,3
+Yakutsk,BenevolentPlayer1,8
+Kamchatka,BenevolentPlayer1,2
+Siberia,HumanPlayer2,1
+Afghanistan,BenevolentPlayer1,3
+Ural,HumanPlayer2,1
+Middle East,HumanPlayer2,2
+Indonesia,HumanPlayer2,1
+New Guinea,BenevolentPlayer1,2
+Western Australia,HumanPlayer2,2
+Eastern Australia,HumanPlayer2,2
+CURRENT PHASE
+reinforcement
+CURRENT PLAYER
+BenevolentPlayer1

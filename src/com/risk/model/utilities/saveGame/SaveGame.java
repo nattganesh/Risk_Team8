@@ -29,6 +29,7 @@ public class SaveGame {
     {
     }
 
+    
     /**
      *
      * @param gameFileName name of file to save game
@@ -56,7 +57,7 @@ public class SaveGame {
                 // Player Name
                 System.out.print(player.getName());
                 // Player Type
-                String playerType = player.getClass().getName();
+                String playerType = player.getName().substring(0, player.getName().length()-1);
                 int i = playerType.lastIndexOf(".");
                 System.out.print("," + playerType.substring(i + 1));
                 // Cards
