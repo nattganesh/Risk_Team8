@@ -698,7 +698,7 @@ public class Player extends Observable {
     }
 
     /**
-     * This method is necessary for fortify a country
+     * This method is necessary for fortify a countrys
      * 
      * @param from The country which the player moves the armies from
      * @param to The country which the player moves the armies to

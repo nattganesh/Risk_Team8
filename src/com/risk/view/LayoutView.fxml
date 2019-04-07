@@ -13,12 +13,7 @@
             <children>
                 <Pane fx:id="content" />
             </children>
-        </Pane> 
-      <AnchorPane fx:id="savePane" layoutX="764.0" layoutY="43.0" prefHeight="294.0" prefWidth="230.0">
-          <children>
-              <fx:include fx:id="save" source="SaveProgress.fxml" />
-          </children>
-      </AnchorPane>
+        </Pane>
         <AnchorPane fx:id="winnerPane" layoutX="9.0" prefHeight="600.0" prefWidth="1400.0" style="-fx-background-color: white;" visible="false">
             <children>
                 <Text fx:id="winnerID" layoutX="353.0" layoutY="284.0" strokeType="OUTSIDE" strokeWidth="0.0">
@@ -47,6 +42,11 @@
               </BarChart>
               <PieChart fx:id="worldDomination1" animated="false" layoutX="313.0" layoutY="304.0" prefHeight="272.0" prefWidth="326.0" title="Percentage" />
          </children>
+      </AnchorPane> 
+      <AnchorPane fx:id="savePane" layoutX="692.0" layoutY="106.0" prefHeight="294.0" prefWidth="230.0" visible="false">
+          <children>
+              <fx:include fx:id="save" source="SaveProgress.fxml" />
+          </children>
       </AnchorPane> 
     </children>
 </AnchorPane>

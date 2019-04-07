@@ -151,16 +151,13 @@ public class TournamentModeController implements Initializable {
 				{
 					files.add(i, "src/com/risk/main/mapTextFiles/" + mapObservableList.get(i) + ".txt");
 				}
-				
-
-	            
+				            
 				MapEditorController mapEditor = new MapEditorController();
 				
 				Scanner scan = new Scanner (new File (files.get(0)));
 				FileParser fileParser = new FileParser();
 
 				fileParser.init(scan);
-				
 				mapEditor.setPlayers(playerObservableList);
 				mapEditor.setDeck();
 				mapEditor.autoAssignCountriesToPlayers();

@@ -147,6 +147,7 @@ public class GamePhaseController implements Observer, Initializable {
     @FXML
     public void saveProgress()
     {
+    	savePane.setVisible(true);
     	saveController.showSaveProgress();
     }
     
@@ -203,6 +204,7 @@ public class GamePhaseController implements Observer, Initializable {
         pause.play();
     }
 
+   
     /**
      * This method receives notification from the changes in the state from the
      * GamePhaseModel, then changes the scene to the next phase.
