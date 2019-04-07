@@ -14,7 +14,6 @@ import java.util.ResourceBundle;
 import com.risk.model.ActionModel;
 import com.risk.model.PlayerPhaseModel;
 import com.risk.model.map.Country;
-import com.risk.model.strategy.behavior.human.HumanStrategy;
 import com.risk.model.player.Player;
 
 import javafx.collections.FXCollections;

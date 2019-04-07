@@ -124,6 +124,8 @@ public class TournamentModeController implements Initializable {
 			
 				games = numberGamesID.getSelectionModel().getSelectedItem();
 				
+			    
+				
 				// this is where you can start the game
 			}
 		}

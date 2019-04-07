@@ -224,10 +224,29 @@ public class GamePhaseController implements Observer, Initializable {
             {
 	        	 if (PlayerPhaseModel.getPlayerModel().getCurrentPlayer().isComputerPlayer())
 	             {
-	        		ActionModel.getActionModel().addAction("computer added army in setup");
-	        		PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getStrategy().setup(PlayerPhaseModel.getPlayerModel().getCurrentPlayer());
-	        		PlayerPhaseModel.getPlayerModel().setNextPlayer();
-	        		GamePhaseModel.getGamePhaseModel().setPhase("setup");
+        	        
+        	        boolean isAnyPlayerPlacedAllArmies = true;
+        	        for (Player p : PlayerPhaseModel.getPlayerModel().getPlayers())
+        	        {
+        	            if (p.getStartingPoints() != 0)
+        	            {
+        	                isAnyPlayerPlacedAllArmies = false;
+        	            }
+        	        } 
+        	        
+        	        if (isAnyPlayerPlacedAllArmies)
+        	        {
+        	        	PlayerPhaseModel.getPlayerModel().setNextPlayer();
+                        GamePhaseModel.getGamePhaseModel().setPhase("setup complete");
+                        GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
+        	        } 
+        	        else
+        	        {
+        	        	ActionModel.getActionModel().addAction("computer added army in setup");
+    	        		PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getStrategy().setup(PlayerPhaseModel.getPlayerModel().getCurrentPlayer());
+    	        		PlayerPhaseModel.getPlayerModel().setNextPlayer();
+    	        		GamePhaseModel.getGamePhaseModel().setPhase("setup");
+        	        }	        		
 	             } 
 	        	 
 	        	 else 

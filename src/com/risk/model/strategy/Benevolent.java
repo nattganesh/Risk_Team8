@@ -61,17 +61,15 @@ public class Benevolent implements Strategy {
 							fortify.clear();
 							fortify.add(c);
 							fortify.add(connect);
-							
 						}
 					}
 				}
 				
 			}
 			
-//			ActionModel.getActionModel().addAction("weakest country (" + weakestCountries + ")" + "("+ weakestCountries.getArmyCount()+")");
+			ActionModel.getActionModel().addAction(" move " + (Armyinput-1) + " army from "+ fortify.get(1).getName() + "(" + fortify.get(1).getArmyCount() + ")"+ " to " + fortify.get(0).getName() + "(" + fortify.get(0).getArmyCount() + ")");
 			fortify.get(0).setArmyCount(Armyinput-1);	
 			fortify.get(1).reduceArmyCount(Armyinput-1);
-			ActionModel.getActionModel().addAction(" move " + (Armyinput-1) + " army from "+ fortify.get(1).getName() + " to " + fortify.get(0).getName());
 		}
 	}
 
@@ -80,6 +78,7 @@ public class Benevolent implements Strategy {
 		if (p.getStartingPoints() == 0)
 		{
 			return;
+			
 		}
 		else {
 			int army = p.getStartingPoints();

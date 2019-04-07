@@ -20,7 +20,7 @@ import com.risk.model.ActionModel;
 import com.risk.model.GamePhaseModel;
 import com.risk.model.PlayerPhaseModel;
 import com.risk.model.card.Card;
-import com.risk.model.strategy.behavior.human.HumanStrategy;
+
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
