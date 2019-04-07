@@ -16,6 +16,7 @@ public class Aggressive implements Strategy {
 
 	@Override
 	public void attack(Player p) {
+		ActionModel.getActionModel().addAction("Attack Phase:");
 		Country strongestCountry = p.getStrongestCountry();
 		ActionModel.getActionModel().addAction("strongest country (" + strongestCountry + ")" + "("+ strongestCountry.getArmyCount()+")");
 
@@ -50,7 +51,8 @@ public class Aggressive implements Strategy {
 						p.addCountry(defendingCountry);
 						strongestCountry.reduceArmyCount(result[0]);
 						defendingCountry.setArmyCount(result[0]);
-						
+						ActionModel.getActionModel().addAction(strongestCountry.getName()+" conquers "+defendingCountry.getName());
+						neighboursOfStrongestCountry = strongestCountry.getConnectedEnemyArrayList();
 						break;
 					}
 				} else {
@@ -63,7 +65,7 @@ public class Aggressive implements Strategy {
 
 	@Override
 	public void reinforce(Player p) {
-		
+		ActionModel.getActionModel().addAction("Reinforcement Phase:");
 		Country strongestCountry = p.getStrongestCountry();
 		int initialArmy = strongestCountry.getArmyCount();
 		int Armyinput = p.getReinforcementArmy();
@@ -74,6 +76,7 @@ public class Aggressive implements Strategy {
 
 	@Override
 	public void fortify(Player p) {
+		ActionModel.getActionModel().addAction("Fortification Phase:");
 		int tmp = 0;
 		ArrayList<Country> maximumArmy = new ArrayList<Country>();
 		if(p.isAnyCountriesConnected()) {
@@ -97,6 +100,7 @@ public class Aggressive implements Strategy {
 			int armyinput = c1.getArmyCount()-1;
 			c1.reduceArmyCount(armyinput);
 			c2.setArmyCount(armyinput);
+			ActionModel.getActionModel().addAction(" move " + armyinput+ " army from "+ c1.getName() + " to " + c2.getName());
 		}
 	}
 
