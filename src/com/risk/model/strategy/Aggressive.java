@@ -11,6 +11,8 @@ import com.risk.model.player.Player;
 import com.risk.model.strategy.*;
 
 public class Aggressive implements Strategy {
+	
+
 	@Override
 	public void attack(Player p) {
 		Country strongestCountry = p.getStrongestCountry();
@@ -33,6 +35,7 @@ public class Aggressive implements Strategy {
 						p.addCountry(defendingCountry);
 						strongestCountry.reduceArmyCount(result[0]);
 						defendingCountry.setArmyCount(result[0]);
+						
 						break;
 					}
 				} else {
@@ -84,10 +87,18 @@ public class Aggressive implements Strategy {
 	 
 	@Override
 	public void setup(Player p) {
-		Country c = p.getOccupiedCountries().get(getRandomNumber(p.getOccupiedCountries().size()));
-		int armyimput = p.getStartingPoints();
-		c.setArmyCount(armyimput);
-		p.setStartingPoints(0);
+		if (p.getStartingPoints() == 0)
+		{
+			return;
+		} 
+		else {
+			Country c = p.getOccupiedCountries().get(getRandomNumber(p.getOccupiedCountries().size()));
+			int armyimput = p.getStartingPoints();
+			c.setArmyCount(armyimput);
+			p.setStartingPoints(0);
+		}
 	}
+
+
 
 }

@@ -49,11 +49,20 @@ public class Cheater implements Strategy{
 	}
 	@Override
 	public void setup(Player p) {
-		int army = p.getStartingPoints();
-		for(int i=0; i<army; i++) {
-			Country random = p.getOccupiedCountries().get(getRandomNumber(p.getOccupiedCountries().size()));
-	        random.setArmyCount(1);
+		if (p.getStartingPoints() == 0)
+		{
+			return;
 		}
-		p.setStartingPoints(0);	
+		else
+		{
+			int army = p.getStartingPoints();
+			for(int i=0; i<army; i++) {
+				Country random = p.getOccupiedCountries().get(getRandomNumber(p.getOccupiedCountries().size()));
+		        random.setArmyCount(1);
+			}
+			p.setStartingPoints(0);		
+		}
 	}
+
+
 }

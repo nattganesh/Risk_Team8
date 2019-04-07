@@ -247,8 +247,7 @@ public class TournamentModeController implements Initializable {
 					Player player =  new Player(behaviour);
 					player = setStrategy(player);
 					playerObservableList.set(playerIndex-1, player);
-				}
-				
+				}	
 			}
 		}
 	}

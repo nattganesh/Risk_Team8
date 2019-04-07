@@ -86,8 +86,8 @@ public class LoadGame {
                             typeOfPlayer = text.substring(0, text.indexOf(","));
                             text = text.substring(text.indexOf(",") + 1, text.length());
                         }
-
-                        Player p = new Player(nameOfPlayer); 
+                        
+                        Player p = new Player(nameOfPlayer);                         
                         PlayerPhaseModel.getPlayerModel().addPlayer(p);
                         if (!text.trim().isEmpty() && !text.contains(","))
                         {

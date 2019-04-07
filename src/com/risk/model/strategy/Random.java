@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import com.risk.model.map.Country;
 import com.risk.model.player.Player;
 
+import javafx.collections.ObservableList;
+
 public class Random implements Strategy{
 	@Override
 	public void attack(Player p) {
@@ -92,11 +94,19 @@ public class Random implements Strategy{
 
 	@Override
 	public void setup(Player p) {
-		int army = p.getStartingPoints();
-		for(int i=0; i<army; i++) {
-			Country random = p.getOccupiedCountries().get(getRandomNumber(p.getOccupiedCountries().size()));
-	        random.setArmyCount(1);
+		if (p.getStartingPoints() == 0)
+		{
+			return;
 		}
-		p.setStartingPoints(0);
+		else {
+			int army = p.getStartingPoints();
+			for(int i=0; i<army; i++) {
+				Country random = p.getOccupiedCountries().get(getRandomNumber(p.getOccupiedCountries().size()));
+		        random.setArmyCount(1);
+			}
+			p.setStartingPoints(0);	
+		}
 	}
+
+
 }

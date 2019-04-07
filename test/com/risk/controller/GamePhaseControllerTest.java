@@ -12,7 +12,6 @@ import com.risk.model.MapModel;
 import com.risk.model.PlayerPhaseModel;
 import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
-import com.risk.model.player.HumanPlayer;
 import com.risk.model.player.Player;
 
 import javafx.collections.FXCollections;

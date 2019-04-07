@@ -13,6 +13,8 @@ import java.util.HashSet;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import com.risk.model.ActionModel;
 import com.risk.model.GamePhaseModel;
@@ -23,6 +25,7 @@ import com.risk.model.map.Country;
 import com.risk.model.player.Player;
 import com.risk.model.utilities.saveGame.SaveGame;
 
+import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -46,6 +49,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class GamePhaseController implements Observer, Initializable {
 
@@ -53,6 +57,7 @@ public class GamePhaseController implements Observer, Initializable {
     AttackController aController;
     FortificationController fController;
     SetUpController sController;
+    ComputerController cpuController;
     
     @FXML
     SaveProgressController saveController;
@@ -114,6 +119,9 @@ public class GamePhaseController implements Observer, Initializable {
     
     @FXML
     Button newID;
+    
+    PauseTransition pause;
+    
 
     /**
      * This is a constructor for GamePhaseController
@@ -141,6 +149,51 @@ public class GamePhaseController implements Observer, Initializable {
     	newID.setVisible(false);
     }
 
+    public void delayNextPhase(String phase, int second)
+    {
+    	pause = new PauseTransition(Duration.seconds(second));
+        pause.setOnFinished(event -> {
+           if (phase.equals("attack"))
+           {
+        	   GamePhaseModel.getGamePhaseModel().setPhase("attack"); 
+           } 
+           else if (phase.equals("fortification"))
+           {
+        	   GamePhaseModel.getGamePhaseModel().setPhase("fortification"); 
+           } 
+           else if (phase.equals("next"))
+           {
+        	   ActionModel.getActionModel().addAction(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName() + " has finished move");
+        	   PlayerPhaseModel.getPlayerModel().setNextPlayer();
+               GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");   
+           }
+        });
+        pause.play();
+    }
+    
+    public void delayPhaseAction(String phase, int second)
+    {
+    	pause = new PauseTransition(Duration.seconds(second));
+        pause.setOnFinished(event -> {
+       	
+           if (phase.equals("reinforced"))
+           {
+        	   PlayerPhaseModel.getPlayerModel().getCurrentPlayer().reinforceStrategy(PlayerPhaseModel.getPlayerModel().getCurrentPlayer());
+        	
+           }        
+           else if (phase.equals("attacked"))
+           {
+        	   PlayerPhaseModel.getPlayerModel().getCurrentPlayer().attackStrategy(PlayerPhaseModel.getPlayerModel().getCurrentPlayer());
+               
+           } 
+           else if (phase.equals("fortified"))
+           {
+        	   PlayerPhaseModel.getPlayerModel().getCurrentPlayer().fortifyStrategy(PlayerPhaseModel.getPlayerModel().getCurrentPlayer());
+              
+           } 
+        });
+        pause.play();
+    }
 
     /**
      * This method receives notification from the changes in the state from the
@@ -149,9 +202,9 @@ public class GamePhaseController implements Observer, Initializable {
     @Override
     public void update(Observable o, Object phase)
     {
-        ActionModel.getActionModel().clearAction();
+//      ActionModel.getActionModel().clearAction();
         view = (String) phase;
-        System.out.println("phase notified " + view);
+
         
 
         
@@ -164,10 +217,22 @@ public class GamePhaseController implements Observer, Initializable {
         {
             try
             {
-                phaseID.setText(view);
-                playerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
-                mainPane.getChildren().clear();
-                mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/SetUp.fxml")));
+	        	 if (PlayerPhaseModel.getPlayerModel().getCurrentPlayer().isComputerPlayer())
+	             {
+	        		ActionModel.getActionModel().addAction("computer added army in setup");
+	        		PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getStrategy().setup(PlayerPhaseModel.getPlayerModel().getCurrentPlayer());
+	        		PlayerPhaseModel.getPlayerModel().setNextPlayer();
+	        		GamePhaseModel.getGamePhaseModel().setPhase("setup");
+	             } 
+	        	 
+	        	 else 
+	        	 {
+	        		 phaseID.setText(view);
+	                 playerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
+	                 mainPane.getChildren().clear();
+	                 mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/SetUp.fxml")));
+	        	 }
+               
             }
             catch (IOException e)
             {
@@ -226,21 +291,16 @@ public class GamePhaseController implements Observer, Initializable {
             {
                 if (PlayerPhaseModel.getPlayerModel().getCurrentPlayer().isComputerPlayer())
                 {
-                	ActionModel.getActionModel().addAction(PlayerPhaseModel.getPlayerModel().getCurrentPlayer() + "'s turn");
-                	// checks if it's computer player?
-                	 phaseID.setText("automatic");
-                     playerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
-                     mainPane.getChildren().clear();
-	                     // reinforces
-                     PlayerPhaseModel.getPlayerModel().getCurrentPlayer().reinforceStrategy(PlayerPhaseModel.getPlayerModel().getCurrentPlayer());
-	                     //attack
-                     PlayerPhaseModel.getPlayerModel().getCurrentPlayer().attackStrategy(PlayerPhaseModel.getPlayerModel().getCurrentPlayer());
-	                     //forityf
-                     PlayerPhaseModel.getPlayerModel().getCurrentPlayer().fortifyStrategy(PlayerPhaseModel.getPlayerModel().getCurrentPlayer());
-	                     // setnextplayer
-                     PlayerPhaseModel.getPlayerModel().setNextPlayer();
-                     GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
-	            
+                	ActionModel.getActionModel().addAction(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName() + "'s turn");
+                	phaseID.setText(view);
+                    playerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
+                    mainPane.getChildren().clear();
+                    
+                    mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/ComputerView.fxml")));
+                     
+                    delayPhaseAction("reinforced",2);
+//                    delayNextPhase("attack", 10);
+                  
                      
                 }  
                 else 
@@ -261,11 +321,25 @@ public class GamePhaseController implements Observer, Initializable {
         {
             try
             {
-                phaseID.setText(view);
-                playerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
+            	 if (PlayerPhaseModel.getPlayerModel().getCurrentPlayer().isComputerPlayer())
+                 {
+            		  phaseID.setText(view);
+                      playerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
+                     
+                      mainPane.getChildren().clear();
+                      
+                      mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/ComputerView.fxml")));
+                      delayPhaseAction("attacked",2);
+//                      delayNextPhase("fortification", 10);
+                 }
+            	 else {
+            		  phaseID.setText(view);
+                      playerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
 
-                mainPane.getChildren().clear();
-                mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/Attack.fxml")));
+                      mainPane.getChildren().clear();
+                      mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/Attack.fxml")));
+            	 }
+              
             }
             catch (IOException e)
             {
@@ -277,10 +351,24 @@ public class GamePhaseController implements Observer, Initializable {
         {
             try
             {
-                phaseID.setText(view);
-                playerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
-                mainPane.getChildren().clear();
-                mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/Fortification.fxml")));
+              	 if (PlayerPhaseModel.getPlayerModel().getCurrentPlayer().isComputerPlayer())
+                 {
+            		  phaseID.setText(view);
+                      playerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
+                      mainPane.getChildren().clear();
+                      
+                      mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/ComputerView.fxml")));
+                      
+                      delayPhaseAction("fortified",2);
+//                      delayNextPhase("next", 10);
+                 }
+            	 else {
+            		  phaseID.setText(view);
+                      playerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
+                      mainPane.getChildren().clear();
+                      mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/Fortification.fxml")));
+            	 }
+              
             }
             catch (IOException e)
             {
@@ -378,6 +466,16 @@ public class GamePhaseController implements Observer, Initializable {
         @Override
         public void update(Observable o, Object arg)
         {
+        	if (PlayerPhaseModel.getPlayerModel().getCurrentPlayer().isComputerPlayer())
+        	{
+        		 mainPane.getChildren().clear();
+                 
+                 try {
+					mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/ComputerView.fxml")));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+        	}
             Country country = (Country) arg;
 
             Player player = country.getRuler();
@@ -395,11 +493,10 @@ public class GamePhaseController implements Observer, Initializable {
                 serie.getData().get(index).setXValue(player.getName() + " (" + player.getTotalArmy() + ")");
                 serie.getData().get(index).setYValue((int) player.getTotalArmy());
             }
-            if (!view.equals("setup"))
-            {
+//            if (!view.equals("setup"))
+//            {
                 worldDomination2.getData().setAll(serie);
-            }
-
+//            }
         }
     }
 
@@ -455,6 +552,7 @@ public class GamePhaseController implements Observer, Initializable {
     }
     
     
+ 
     public void restartGame()
     {
 

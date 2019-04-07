@@ -126,6 +126,7 @@ public class SetUpController implements Initializable {
                 setStartingPoints();
                 actions.addAction("Added 1 Army to " + selectedCountry.getName());
                 setUp = true;
+                next();	
             }
         }
         updateView();
@@ -190,9 +191,9 @@ public class SetUpController implements Initializable {
      * @param event eventlistener for button clicked event
      * @throws IOException Exception thrown when view is not found
      */
-    @FXML
-    public void next(ActionEvent event) throws IOException
+    public void next()
     {
+    	
         int currentIndex = PlayerPhaseModel.getPlayerModel().getPlayerIndex();
         boolean isAnyPlayerPlacedAllArmies = true;
         for (Player p : PlayerPhaseModel.getPlayerModel().getPlayers())
@@ -206,15 +207,13 @@ public class SetUpController implements Initializable {
         {
             if (isAnyPlayerPlacedAllArmies)
             {
-                PlayerPhaseModel.getPlayerModel()
-                        .setPlayerIndex((currentIndex + 1) % PlayerPhaseModel.getPlayerModel().getNumberOfPlayer());
+            	PlayerPhaseModel.getPlayerModel().setNextPlayer();
                 GamePhaseModel.getGamePhaseModel().setPhase("setup complete");
                 GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
             }
             else
             {
-                PlayerPhaseModel.getPlayerModel()
-                        .setPlayerIndex((currentIndex + 1) % PlayerPhaseModel.getPlayerModel().getNumberOfPlayer());
+            	PlayerPhaseModel.getPlayerModel().setNextPlayer();
                 GamePhaseModel.getGamePhaseModel().setPhase("setup");
             }
         }

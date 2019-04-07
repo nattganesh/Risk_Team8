@@ -13,6 +13,10 @@ import java.util.Observable;
 import java.util.Observer;
 import com.risk.model.map.Country;
 import com.risk.model.player.Player;
+import com.risk.model.strategy.Aggressive;
+import com.risk.model.strategy.Benevolent;
+import com.risk.model.strategy.Cheater;
+import com.risk.model.strategy.Random;
 
 public class PlayerPhaseModel extends Observable implements Observer {
 
@@ -123,6 +127,7 @@ public class PlayerPhaseModel extends Observable implements Observer {
      */
     public void addPlayer(Player player)
     {
+    	setStrategy(player);
         playerList.add(player);
         System.out.println("adding p");
         player.addObserver(this);
@@ -156,6 +161,37 @@ public class PlayerPhaseModel extends Observable implements Observer {
         }
         return playerModel;
     }
+    
+    /**
+     * This sets the strategy of the player
+     * 
+     * @param player this is the player without strategy
+     */
+    public void setStrategy(Player player)
+    {
+    	String behaviour = player.getName().substring(0, player.getName().length()-1);
+    	System.out.println(behaviour);
+    	if (behaviour.equals("AggressivePlayer"))
+    	{
+    		player.setStrategy(new Aggressive());
+    	}
+    	else if (behaviour.equals("BenevolentPlayer"))
+    	{
+    		player.setStrategy(new Benevolent());
+    	}
+    	else if (behaviour.equals("CheaterPlayer"))
+    	{
+    		player.setStrategy(new Cheater());
+    	}
+    	else if (behaviour.equals("RandomPlayer"))
+    	{
+    		player.setStrategy(new Random());
+    	}
+    	else {
+    		return;
+    	}
+    }
+    
 
     /**
      * This method receives update from Player class This method notifies

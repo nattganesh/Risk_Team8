@@ -86,6 +86,9 @@ public class MapEditorController implements Initializable {
     @FXML
     RadioButton startCardsID;
     
+    @FXML
+    ListView <String> mapActionBoard;
+    
     //
     @FXML
     ListView<Player> behaviourViewID;
@@ -100,6 +103,7 @@ public class MapEditorController implements Initializable {
     ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
     ObservableList<Country> adjacentObservableList = FXCollections.observableArrayList();
     ObservableList<Player> behaviourObservableList = FXCollections.observableArrayList();
+
     
     
     ActionModel actions;
@@ -112,6 +116,7 @@ public class MapEditorController implements Initializable {
     @Override
     public void initialize(URL arg0, ResourceBundle arg1)
     {
+    	mapActionBoard.setItems(ActionModel.getActionModel().getActions());
     	behaviourViewID.setItems(behaviourObservableList);
         actions = ActionModel.getActionModel();
         ContinentView.setItems(MapModel.getMapModel().getContinents());
@@ -133,6 +138,7 @@ public class MapEditorController implements Initializable {
     		{
     			playerForBehaviourID.getItems().add(Integer.toString(i));
     		}
+    		actions.addAction("CPU behaviour can't repeat");
     	}
     }
         
@@ -150,11 +156,36 @@ public class MapEditorController implements Initializable {
 
     		int index = 0;
     		boolean notExist = true;
+    		
     		for (Player p: behaviourObservableList)
     		{
     			if (p.getName().charAt(p.getName().length()-1) == player.getName().charAt(player.getName().length()-1))
     			{
-    				behaviourObservableList.set(index, player);
+    				if (behaviour.equals("HumanPlayer"))
+    				{
+    					behaviourObservableList.set(index, player);
+    					int playerNumber = index+1;
+    					actions.addAction("replaced Player" + playerNumber + " with " + player.getName());
+    				}
+    				else 
+    				{
+    					boolean e = false;
+    					for (Player p2 : behaviourObservableList)
+    					{
+    						if (p2.getName().substring(0, p2.getName().length()-1).equals(behaviour))
+    						{
+    							e = true;
+    							actions.addAction("CPU behaviour exists");
+    							break;
+    						}
+    					}
+    					if (!e)
+    					{
+    						behaviourObservableList.set(index, player);
+    						int playerNumber = index+1;
+        					actions.addAction("replaced Player"+playerNumber + " with " +  player.getName());
+    					}
+    				}
     				notExist = false;
     				break;
     			}
@@ -162,7 +193,30 @@ public class MapEditorController implements Initializable {
     		}	
     		if (notExist)
     		{
-    			behaviourObservableList.add(player);
+    			if (behaviour.equals("HumanPlayer"))
+				{
+
+        			behaviourObservableList.add(player);
+					actions.addAction("added " +  player.getName());
+				}
+				else 
+				{	
+					boolean e = false;
+					for (Player p2 : behaviourObservableList)
+					{
+						if (p2.getName().substring(0, p2.getName().length()-1).equals(behaviour))
+						{
+							e = true;
+							actions.addAction("CPU behaviour exists");
+							break;
+						}
+					}
+					if (!e)
+					{
+						behaviourObservableList.add(player);
+						actions.addAction("added " +  player.getName());
+					}
+				}
     		}
 		}   	
     }
@@ -514,7 +568,14 @@ public class MapEditorController implements Initializable {
                     assignCountriesToPlayers();
                     
                     determinePlayersStartingOrder();
-
+                    
+                    ActionModel.getActionModel().addAction("order of player goes ");
+                    ActionModel.getActionModel().addAction("---------------------");
+                    for (Player p : PlayerPhaseModel.getPlayerModel().getPlayers())
+                    {
+                    	 ActionModel.getActionModel().addAction(p.getName());
+                    }
+                    ActionModel.getActionModel().addAction("---------------------");
                     if (startCardsID.isSelected())
                     {
                         startWithCards();
@@ -536,7 +597,16 @@ public class MapEditorController implements Initializable {
                      
                      autoAssignCountriesToPlayers();
                      
+                    
                      determinePlayersStartingOrder();
+                     
+                     ActionModel.getActionModel().addAction("order of player goes ");
+                     ActionModel.getActionModel().addAction("---------------------");
+                     for (Player p : PlayerPhaseModel.getPlayerModel().getPlayers())
+                     {
+                     	 ActionModel.getActionModel().addAction(p.getName());
+                     }
+                     ActionModel.getActionModel().addAction("---------------------");
                      
                      if (startCardsID.isSelected())
                      {
@@ -668,41 +738,11 @@ public class MapEditorController implements Initializable {
     {     
     	for (Player player : players)
     	{	
-    		setStrategy(player);
     		PlayerPhaseModel.getPlayerModel().addPlayer(player);
     	}
     }
     
-    /**
-     * This sets the strategy of the player
-     * 
-     * @param player this is the player without strategy
-     */
-    public void setStrategy(Player player)
-    {
-    	String behaviour = player.getName().substring(0, player.getName().length()-1);
-    	System.out.println(behaviour);
-    	if (behaviour.equals("AggressivePlayer"))
-    	{
-    		player.setStrategy(new Aggressive());
-    	}
-    	else if (behaviour.equals("BenevolentPlayer"))
-    	{
-    		player.setStrategy(new Benevolent());
-    	}
-    	else if (behaviour.equals("CheaterPlayer"))
-    	{
-    		player.setStrategy(new Cheater());
-    	}
-    	else if (behaviour.equals("RandomPlayer"))
-    	{
-    		player.setStrategy(new Random());
-    	}
-    	else {
-    		return;
-    	}
-    }
-    
+
     public void setDeck()
     {
         DeckModel.getCardModel().initialize();

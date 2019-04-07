@@ -1,0 +1,52 @@
+NAME OF MAP FILE
+valid1
+SET PLAYER ORDER AND CARDS
+AggressivePlayer2,Player
+HumanPlayer1,Player
+SET PLAYERS AND ARMY IN COUNTRY
+Alaska,AggressivePlayer2,2
+Northwest Territory,AggressivePlayer2,2
+Greenland,AggressivePlayer2,2
+Alberta,HumanPlayer1,2
+Ontario,AggressivePlayer2,1
+Quebec,HumanPlayer1,2
+Western United States,AggressivePlayer2,2
+Eastern United States,HumanPlayer1,1
+Central America,HumanPlayer1,1
+Venezuela,HumanPlayer1,2
+Peru,AggressivePlayer2,2
+Brazil,HumanPlayer1,1
+Argentina,AggressivePlayer2,2
+Iceland,HumanPlayer1,3
+Scandinavia,AggressivePlayer2,1
+Ukraine,HumanPlayer1,1
+Great Britian,AggressivePlayer2,1
+Northern Europe,AggressivePlayer2,1
+Southern Europe,HumanPlayer1,2
+Western Europe,HumanPlayer1,2
+North Africa,AggressivePlayer2,2
+Egypt,HumanPlayer1,2
+East Africa,AggressivePlayer2,3
+Congo,HumanPlayer1,2
+South Africa,HumanPlayer1,2
+Madagascar,AggressivePlayer2,3
+Siam,AggressivePlayer2,3
+India,AggressivePlayer2,1
+China,HumanPlayer1,2
+Mongolia,AggressivePlayer2,2
+Japan,HumanPlayer1,2
+Irkutsk,HumanPlayer1,2
+Yakutsk,AggressivePlayer2,3
+Kamchatka,AggressivePlayer2,1
+Siberia,HumanPlayer1,3
+Afghanistan,HumanPlayer1,1
+Ural,HumanPlayer1,2
+Middle East,AggressivePlayer2,2
+Indonesia,AggressivePlayer2,3
+New Guinea,AggressivePlayer2,1
+Western Australia,HumanPlayer1,2
+Eastern Australia,AggressivePlayer2,1
+CURRENT PHASE
+reinforcement
+CURRENT PLAYER
+HumanPlayer1

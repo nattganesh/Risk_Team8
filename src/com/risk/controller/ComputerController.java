@@ -1,0 +1,131 @@
+
+package com.risk.controller;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import com.risk.model.GamePhaseModel;
+import com.risk.model.PlayerPhaseModel;
+import com.risk.model.map.Country;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+
+public class ComputerController implements Initializable {
+
+	ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
+    ObservableList<Country> adjacentEnemyObservableList = FXCollections.observableArrayList();
+    ObservableList<Country> adjacentOwnedObservableList = FXCollections.observableArrayList();
+	
+    @FXML
+    private ListView<Country> adjacentEnemy;
+
+    @FXML
+    private ListView<Country> adjacentOwned;
+
+    @FXML
+    private ListView<Country> countryId;
+
+    @FXML
+    void territoryHandler() {
+    	  if (countryId.getSelectionModel().getSelectedItem() != null)
+          {
+              adjacentEnemyObservableList.clear();
+              adjacentOwnedObservableList.clear();
+              adjacentEnemyObservableList.addAll(countryId.getSelectionModel().getSelectedItem().getConnectedEnemy());
+              adjacentOwnedObservableList.addAll(countryId.getSelectionModel().getSelectedItem().getConnectedOwned());
+          }
+    }
+
+    /**
+     * This is method for initializing ComputerController
+     */
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+        territoryObservableList.addAll(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
+        countryId.setItems(territoryObservableList);
+        adjacentEnemy.setItems(adjacentEnemyObservableList);
+        adjacentOwned.setItems(adjacentOwnedObservableList);
+        updateView();
+	}
+	
+	/**
+	 * This method is responsible for going to next phase
+	 */
+	@FXML
+	public void nextComputerPhase()
+	{
+		if (GamePhaseModel.getGamePhaseModel().getPhase().equals("reinforcement"))
+		{
+			GamePhaseModel.getGamePhaseModel().setPhase("attack");
+		}
+		else if (GamePhaseModel.getGamePhaseModel().getPhase().equals("attack"))
+		{
+			GamePhaseModel.getGamePhaseModel().setPhase("fortify");
+		}
+		else if (GamePhaseModel.getGamePhaseModel().getPhase().equals("fortify"))
+		{
+			 PlayerPhaseModel.getPlayerModel().setNextPlayer();
+             GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");   
+		}
+	}
+
+	 /**
+     * This method for re-rendering the listView
+     */
+    public void updateView()
+    {
+        countryId.setCellFactory(param -> new ListCell<Country>() {
+            @Override
+            protected void updateItem(Country country, boolean empty)
+            {
+                super.updateItem(country, empty);
+                if (empty || country == null || country.getName() == null)
+                {
+                    setText(null);
+                }
+                else
+                {
+                    setText(country.getName() + " (" + country.getArmyCount() + ")");
+                }
+            }
+        });
+
+        adjacentOwned.setCellFactory(param -> new ListCell<Country>() {
+            @Override
+            protected void updateItem(Country country, boolean empty)
+            {
+                super.updateItem(country, empty);
+                if (empty || country == null || country.getName() == null)
+                {
+                    setText(null);
+                }
+                else
+                {
+
+                    setText(country.getName() + " (" + country.getArmyCount() + ")");
+                }
+            }
+        });
+
+        adjacentEnemy.setCellFactory(param -> new ListCell<Country>() {
+            @Override
+            protected void updateItem(Country country, boolean empty)
+            {
+                super.updateItem(country, empty);
+                if (empty || country == null || country.getName() == null)
+                {
+                    setText(null);
+                }
+                else
+                {
+
+                    setText(country.getName() + " (" + country.getArmyCount() + ")");
+                }
+            }
+        });
+    }
+}
