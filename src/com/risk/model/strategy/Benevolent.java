@@ -41,11 +41,11 @@ public class Benevolent implements Strategy {
 			}
 		}
 	}
-
 	
 	@Override
 	public void fortify(Player p) {
 		ArrayList<Country> weakestCountries = p.getWeakestCountries();
+		
 		int Armyinput=0;
 		ArrayList<Country> fortify = new ArrayList<Country>();
 		if(p.isAnyCountriesConnected()) {
@@ -66,6 +66,7 @@ public class Benevolent implements Strategy {
 				
 			}
 			
+//			ActionModel.getActionModel().addAction("weakest country (" + weakestCountries + ")" + "("+ weakestCountries.getArmyCount()+")");
 			fortify.get(0).setArmyCount(Armyinput-1);	
 			fortify.get(1).reduceArmyCount(Armyinput-1);
 			

@@ -64,9 +64,9 @@ public class ComputerController implements Initializable {
 		}
 		else if (GamePhaseModel.getGamePhaseModel().getPhase().equals("attack"))
 		{
-			GamePhaseModel.getGamePhaseModel().setPhase("fortify");
+			GamePhaseModel.getGamePhaseModel().setPhase("fortification");
 		}
-		else if (GamePhaseModel.getGamePhaseModel().getPhase().equals("fortify"))
+		else if (GamePhaseModel.getGamePhaseModel().getPhase().equals("fortification"))
 		{
 			 PlayerPhaseModel.getPlayerModel().setNextPlayer();
              GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");   

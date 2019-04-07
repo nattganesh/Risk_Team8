@@ -6,6 +6,7 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 
+import com.risk.model.ActionModel;
 import com.risk.model.map.Country;
 import com.risk.model.player.Player;
 import com.risk.model.strategy.*;
@@ -16,21 +17,35 @@ public class Aggressive implements Strategy {
 	@Override
 	public void attack(Player p) {
 		Country strongestCountry = p.getStrongestCountry();
+		ActionModel.getActionModel().addAction("strongest country (" + strongestCountry + ")" + "("+ strongestCountry.getArmyCount()+")");
+
 		ArrayList<Country> neighboursOfStrongestCountry = strongestCountry.getConnectedEnemyArrayList();
 		while(!neighboursOfStrongestCountry.isEmpty() && strongestCountry.getArmyCount() > 1) {
 			Country defendingCountry = neighboursOfStrongestCountry.get(0);
+			ActionModel.getActionModel().addAction("defending country (" + defendingCountry + ")" + "("+defendingCountry.getArmyCount()+")");
 			int result[] = p.setRollLimit(strongestCountry, defendingCountry);
+			
 			int[] dattack = p.rollResult(result[0]);
 			int[] ddefend = p.rollResult(result[1]);
+			ActionModel.getActionModel().addAction("attacker rolled " + dattack[0] + " dice");
+			ActionModel.getActionModel().addAction("defender rolled " + ddefend[0] + " dice");
 			int rolltime = Integer.min(result[0], result[1]);
 			for (int i = 0; i < rolltime; i++) {
 				if (dattack[i] > ddefend[i]) {
 					defendingCountry.reduceArmyCount(1);
+					ActionModel.getActionModel().addAction("removed " + 1 + " from " + defendingCountry.getName());
 					if (defendingCountry.getArmyCount() == 0) {
+						ActionModel.getActionModel().addAction(defendingCountry.getRuler().getName() + " lost " + "("+ defendingCountry +")");
 						defendingCountry.getRuler().removeCountry(defendingCountry);
+						
 						if (defendingCountry.getRuler().isPlayerLost()) {
 							p.moveCards(defendingCountry.getRuler());
+							ActionModel.getActionModel().addAction("defender (" + defendingCountry.getRuler().getName() + ") lost");
+							ActionModel.getActionModel().addAction("moving cards");					
+							
 						}
+						
+						
 						defendingCountry.setRuler(p);
 						p.addCountry(defendingCountry);
 						strongestCountry.reduceArmyCount(result[0]);
@@ -39,6 +54,7 @@ public class Aggressive implements Strategy {
 						break;
 					}
 				} else {
+					ActionModel.getActionModel().addAction("attacker (" +strongestCountry + ") lost 1 army");
 					strongestCountry.reduceArmyCount(1);
 				}
 			}	
@@ -47,10 +63,14 @@ public class Aggressive implements Strategy {
 
 	@Override
 	public void reinforce(Player p) {
+		
 		Country strongestCountry = p.getStrongestCountry();
+		int initialArmy = strongestCountry.getArmyCount();
 		int Armyinput = p.getReinforcementArmy();
 		strongestCountry.setArmyCount(Armyinput);
+		ActionModel.getActionModel().addAction("added " + Armyinput + " to " + strongestCountry.getName() + "(" + initialArmy + ")");
 	}
+	
 
 	@Override
 	public void fortify(Player p) {

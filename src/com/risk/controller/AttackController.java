@@ -208,6 +208,7 @@ public class AttackController implements Initializable, Observer {
         }
     }
 
+    
     /**
      * this method initializes the number of dice roll available
      */
