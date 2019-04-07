@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.risk.model.player;
 
 import com.risk.controller.FortificationController;
@@ -54,8 +50,8 @@ public class PlayerTest {
     @Before
     public void setUp()
     {
-		p = new HumanPlayer("Green");
-		p2 = new HumanPlayer("Red");
+		p = new Player("Green");
+		p2 = new Player("Red");
 		occupiedCountries1 = new ArrayList<Country>();
 		occupiedCountries = new ArrayList<Country>();
 		continent = new Continent("Asia",10);

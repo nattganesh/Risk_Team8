@@ -6,7 +6,7 @@
 package com.risk.model.dice;
 
 import com.risk.model.map.Country;
-import com.risk.model.player.HumanPlayer;
+import com.risk.model.player.Player;
 import com.risk.model.player.Player;
 
 import org.junit.After;
@@ -45,8 +45,8 @@ public class DiceTest {
     @Before
     public void setUp()
     {
-    	p1 = new HumanPlayer("Green");
-    	p2 = new HumanPlayer("Red");
+    	p1 = new Player("Green");
+    	p2 = new Player("Red");
     	country1 = new Country("China");
     	country2 = new Country("Siam");
     	p1.addCountry(country1);

@@ -15,7 +15,7 @@ import org.junit.runners.Suite;
 /**
  * Suite of test cases for map
  * 
- * @author Natt
+ * @author dkm
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses(

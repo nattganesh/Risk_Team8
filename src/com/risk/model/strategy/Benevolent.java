@@ -43,6 +43,7 @@ public class Benevolent implements Strategy {
 		}
 	}
 
+	
 	@Override
 	public void fortify(Player p) {
 		ActionModel.getActionModel().addAction("Fortification Phase:");

@@ -1,12 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.risk.model.utilities;
 
 
 import com.risk.model.MapModel;
+import com.risk.model.PlayerPhaseModel;
 import com.risk.model.exceptions.CannotFindException;
 import com.risk.model.exceptions.CountLimitException;
 import com.risk.model.exceptions.DuplicatesException;
@@ -36,6 +33,12 @@ public class ValidateTest {
     	 Validate.countriesModelValidationList.clear();
     	 MapModel.getMapModel().getContinents().clear();
          MapModel.getMapModel().getCountries().clear();
+    }
+    
+    @After
+    public void tearDown() throws Exception
+    {
+    	PlayerPhaseModel.getPlayerModel().getPlayers().clear();
     }
     
 

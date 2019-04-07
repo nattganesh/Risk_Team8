@@ -5,7 +5,6 @@
  */
 package com.risk.model.card;
 
-import com.risk.model.player.HumanPlayer;
 import com.risk.model.player.Player;
 
 import javafx.collections.ObservableList;

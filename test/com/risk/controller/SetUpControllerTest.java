@@ -12,7 +12,6 @@ import com.risk.model.MapModel;
 import com.risk.model.PlayerPhaseModel;
 import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
-import com.risk.model.player.HumanPlayer;
 import com.risk.model.player.Player;
 
 import javafx.collections.FXCollections;
@@ -79,11 +78,11 @@ public class SetUpControllerTest {
     	 Country country4 = new Country("dummy");
     	 Country country5 = new Country("dummy");
     	 
-    	 country1.setRuler(new HumanPlayer("1"));
-    	 country2.setRuler(new HumanPlayer("2"));
-    	 country3.setRuler(new HumanPlayer("3"));
-    	 country4.setRuler(new HumanPlayer("4"));
-    	 country5.setRuler(new HumanPlayer("5"));
+    	 country1.setRuler(new Player("1"));
+    	 country2.setRuler(new Player("2"));
+    	 country3.setRuler(new Player("3"));
+    	 country4.setRuler(new Player("4"));
+    	 country5.setRuler(new Player("5"));
     	 
     	 
     	 country1.setArmyCount(1);
@@ -111,11 +110,11 @@ public class SetUpControllerTest {
     	 Country country4 = new Country("dummy");
     	 Country country5 = new Country("dummy");
     	 
-    	 country1.setRuler(new HumanPlayer("1"));
-    	 country2.setRuler(new HumanPlayer("2"));
-    	 country3.setRuler(new HumanPlayer("3"));
-    	 country4.setRuler(new HumanPlayer("4"));
-    	 country5.setRuler(new HumanPlayer("5"));
+    	 country1.setRuler(new Player("1"));
+    	 country2.setRuler(new Player("2"));
+    	 country3.setRuler(new Player("3"));
+    	 country4.setRuler(new Player("4"));
+    	 country5.setRuler(new Player("5"));
     	 
     	 
     	 country1.setArmyCount(1);

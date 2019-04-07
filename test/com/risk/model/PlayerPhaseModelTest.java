@@ -5,7 +5,7 @@
  */
 package com.risk.model;
 
-import com.risk.model.player.HumanPlayer;
+import com.risk.model.player.Player;
 import com.risk.model.player.Player;
 import java.util.ArrayList;
 import java.util.Observable;
@@ -43,6 +43,7 @@ public class PlayerPhaseModelTest {
     public void setUp()
     {
     	playerPhaseModel = PlayerPhaseModel.getPlayerModel();
+    	playerPhaseModel.setPlayerIndex(0);
     	
     }
     
@@ -60,8 +61,8 @@ public class PlayerPhaseModelTest {
     @Test
     public void testSetWinner()
     {
-    	p1 = new HumanPlayer("Green");
-    	p2 = new HumanPlayer("Red");
+    	p1 = new Player("Green");
+    	p2 = new Player("Red");
     	playerPhaseModel.addPlayer(p1);
     	Player result = playerPhaseModel.setWinner(p1);
     	assertEquals(p1 , result);
@@ -73,8 +74,8 @@ public class PlayerPhaseModelTest {
     @Test
     public void testSetPlayerIndex()
     {
-    	p1 = new HumanPlayer("Green");
-    	p2 = new HumanPlayer("Red");
+    	p1 = new Player("Green");
+    	p2 = new Player("Red");
     	playerPhaseModel.addPlayer(p1);
         int increment = 2;
         playerPhaseModel.setPlayerIndex(increment);
@@ -89,11 +90,12 @@ public class PlayerPhaseModelTest {
     @Test
     public void testGetPlayerIndex()
     {
-    	 p1 = new HumanPlayer("Green");
-    	 p2 = new HumanPlayer("Red");
+    	 p1 = new Player("Green");
+    	 p2 = new Player("Red");
     	 playerPhaseModel.addPlayer(p1);
     	 int expResult = 0;
          int result = playerPhaseModel.getPlayerIndex();
+         System.out.println("HERE : " + playerPhaseModel.getPlayers().size());
          assertEquals(expResult , result);
     }
 
@@ -103,8 +105,8 @@ public class PlayerPhaseModelTest {
     @Test
     public void testGetNumberOfPlayer()
     {
-    	p1 = new HumanPlayer("Green");
-    	p2 = new HumanPlayer("Red");
+    	p1 = new Player("Green");
+    	p2 = new Player("Red");
     	playerPhaseModel.addPlayer(p1);
     	int expResult = 1;
         int result = playerPhaseModel.getNumberOfPlayer();
@@ -117,8 +119,8 @@ public class PlayerPhaseModelTest {
     @Test
     public void testGetCurrentPlayer()
     {
-    	p1 = new HumanPlayer("Green");
-    	p2 = new HumanPlayer("Red");
+    	p1 = new Player("Green");
+    	p2 = new Player("Red");
     	playerPhaseModel.addPlayer(p1);
         Player result = playerPhaseModel.getCurrentPlayer();
         assertEquals(p1, result);
@@ -130,8 +132,8 @@ public class PlayerPhaseModelTest {
     @Test
     public void testAddPlayer()
     {
-    	p1 = new HumanPlayer("Green");
-    	p2 = new HumanPlayer("Red");
+    	p1 = new Player("Green");
+    	p2 = new Player("Red");
     	playerPhaseModel.addPlayer(p1);
     	playerPhaseModel.addPlayer(p2);
     	ArrayList<Player> expResult = new ArrayList<Player>();
@@ -147,8 +149,8 @@ public class PlayerPhaseModelTest {
     @Test
     public void testGetPlayers()
     {
-    	p1 = new HumanPlayer("Green");
-    	p2 = new HumanPlayer("Red");
+    	p1 = new Player("Green");
+    	p2 = new Player("Red");
     	playerPhaseModel.addPlayer(p1);
         ArrayList<Player> expResult = new ArrayList<Player>();
         expResult.add(p1);
@@ -163,12 +165,12 @@ public class PlayerPhaseModelTest {
     public void testSetNextPlayer()
     {
     	ArrayList<Player> players = playerPhaseModel.getPlayers();
-    	Player player1 = new HumanPlayer("1");
-    	Player player2 = new HumanPlayer("2");
-    	Player player3 = new HumanPlayer("3");
-    	Player player4 = new HumanPlayer("4");
-    	Player player5 = new HumanPlayer("5");
-    	Player player6 = new HumanPlayer("6");
+    	Player player1 = new Player("1");
+    	Player player2 = new Player("2");
+    	Player player3 = new Player("3");
+    	Player player4 = new Player("4");
+    	Player player5 = new Player("5");
+    	Player player6 = new Player("6");
     	players.add(player1);
     	players.add(player2);
     	players.add(player3);
@@ -209,12 +211,12 @@ public class PlayerPhaseModelTest {
     public void testSetNextPlayer2()
     {
     	ArrayList<Player> players = playerPhaseModel.getPlayers();
-    	Player player1 = new HumanPlayer("1");
-    	Player player2 = new HumanPlayer("2");
-    	Player player3 = new HumanPlayer("3");
-    	Player player4 = new HumanPlayer("4");
-    	Player player5 = new HumanPlayer("5");
-    	Player player6 = new HumanPlayer("6");
+    	Player player1 = new Player("1");
+    	Player player2 = new Player("2");
+    	Player player3 = new Player("3");
+    	Player player4 = new Player("4");
+    	Player player5 = new Player("5");
+    	Player player6 = new Player("6");
     	players.add(player1);
     	players.add(player2);
     	players.add(player3);
@@ -265,12 +267,12 @@ public class PlayerPhaseModelTest {
     public void testSetNextPlayer3()
     {
     	ArrayList<Player> players = playerPhaseModel.getPlayers();
-    	Player player1 = new HumanPlayer("1");
-    	Player player2 = new HumanPlayer("2");
-    	Player player3 = new HumanPlayer("3");
-    	Player player4 = new HumanPlayer("4");
-    	Player player5 = new HumanPlayer("5");
-    	Player player6 = new HumanPlayer("6");
+    	Player player1 = new Player("1");
+    	Player player2 = new Player("2");
+    	Player player3 = new Player("3");
+    	Player player4 = new Player("4");
+    	Player player5 = new Player("5");
+    	Player player6 = new Player("6");
     	players.add(player1);
     	players.add(player2);
     	players.add(player3);
