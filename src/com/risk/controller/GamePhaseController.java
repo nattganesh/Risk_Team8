@@ -258,6 +258,7 @@ public class GamePhaseController implements Observer, Initializable {
             phaseID.setText(view);
             winnerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName() + " is the winner");
             mainPane.getChildren().clear();
+            phaseDominationViewID.setVisible(false);
             saveID.setVisible(false);
             winnerPane.setVisible(true);
         }

@@ -43,8 +43,15 @@ public class SaveProgressController{
 		}
 	}
 	
+	@FXML
+	public void quitGame()
+	{
+		GamePhaseModel.getGamePhaseModel().setPhase("startup");
+	}
+	
 	public void showSaveProgress()
 	{
 		saveProgressID.setVisible(true);
 	}
+	
 }
