@@ -624,15 +624,18 @@ public class Player extends Observable {
 
     public Country getStrongestCountry()
     {
-        Country strongestCountry = getOccupiedCountries().get(0);
+    	ArrayList<Country> strongest = new ArrayList<Country>();
+    	int tmp = 0;
         for (int i = 1; i < getOccupiedCountries().size(); i++)
         {
-            if (getOccupiedCountries().get(i).getArmyCount() > strongestCountry.getArmyCount())
+            if (getOccupiedCountries().get(i).getArmyCount() > tmp)
             {
-                strongestCountry = getOccupiedCountries().get(i);
+            	tmp = getOccupiedCountries().get(i).getArmyCount();
+            	strongest.clear();
+            	strongest.add(getOccupiedCountries().get(i));
             }
         }
-        return strongestCountry;
+        return strongest.get(0);
     }
 
     public ArrayList<Country> getWeakestCountries()
@@ -710,24 +713,51 @@ public class Player extends Observable {
         to.setArmyCount(Armyinput);
     }
 
-    
+    /**
+     * This method is used to set strategy according to the type of player
+     * 
+     * @param strategy The strategy according to the type of player
+     */
     public void setStrategy(Strategy strategy) {
     	isComputerPlayer = true;
     	this.strategy = strategy;
     }
     
+    /**
+     * This method is used to invoke attack strategy according to the type of computer player
+     * 
+     * @param p The player who is going to attack
+     */
     public void attackStrategy(Player p) {
     	this.strategy.attack(p);
     }
     
+    /**
+     * This method is used to invoke reinforce strategy according to the type of computer player
+     * 
+     * @param p The player who is going to reinforce
+     */
     public void reinforceStrategy(Player p) {
     	this.strategy.reinforce(p);
     }
     
+    /**
+     * This method is used to invoke fortify strategy according to the type of computer player
+     * 
+     * @param p The player who is going to fortify
+     */
     public void fortifyStrategy(Player p) {
     	this.strategy.fortify(p);
     }
     
+    public void setupStrategy(Player p) {
+    	this.strategy.setup(p);
+    }
+    
+    /**
+     * This method is used to exchange cards automatically for computer players
+     * 
+     */
     public void exchangeCardForComputer() {
     	while(getCardList().size()>=5) {
     		ArrayList<Card> cards = getCardList();
@@ -772,6 +802,12 @@ public class Player extends Observable {
     	}
     }
     
+    /**
+     * This method is used to move cards from the player who lost the last country to the player
+     * who conquered that country
+     * 
+     * @param a The player who lost the last country of his own
+     */
     public void moveCards(Player a) {
     	ObservableList<Card> loserCard = a.getCards();
     	for(Card c: loserCard) {

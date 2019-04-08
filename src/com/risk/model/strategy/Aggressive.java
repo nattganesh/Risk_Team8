@@ -1,3 +1,9 @@
+/**
+ * Necessary for implement aggressive strategy for aggressive player
+ * Including the implementation of setup, reinforcement, attack and fortification.
+ * @author Tianyi
+ * @author Nat
+ */
 package com.risk.model.strategy;
 
 import java.io.File;
@@ -13,7 +19,13 @@ import com.risk.model.strategy.*;
 
 public class Aggressive implements Strategy {
 	
-
+	/**
+	 * This method is used to do the attack for aggressive player
+	 * The aggressive player uses his strongest country to do the attack
+	 * until it has no enough armies
+	 * 
+	 * @param p The player who is going to attack
+	 */
 	@Override
 	public void attack(Player p) {
 		ActionModel.getActionModel().addAction("Attack Phase:");
@@ -37,9 +49,12 @@ public class Aggressive implements Strategy {
 					ActionModel.getActionModel().addAction("removed " + 1 + " from " + defendingCountry.getName());
 					if (defendingCountry.getArmyCount() == 0) {
 						ActionModel.getActionModel().addAction(defendingCountry.getRuler().getName() + " lost " + "("+ defendingCountry +")");
+						System.out.println(p.getName()+" conquer "+defendingCountry.getRuler().getName()+" "+defendingCountry.getName());
 						defendingCountry.getRuler().removeCountry(defendingCountry);
 						
-						if (defendingCountry.getRuler().isPlayerLost()) {
+						if (defendingCountry.getRuler().getOccupiedCountries().size()==0) {
+							defendingCountry.getRuler().setPlayerLost(true);
+							System.out.println(defendingCountry.getRuler().getName() + " lost ");
 							p.moveCards(defendingCountry.getRuler());
 							ActionModel.getActionModel().addAction("defender (" + defendingCountry.getRuler().getName() + ") lost");
 							ActionModel.getActionModel().addAction("moving cards");					
@@ -63,6 +78,12 @@ public class Aggressive implements Strategy {
 		}
 	}
 
+	/**
+	 * This method is used to do the reinforcement for aggressive player
+	 * The aggressive player only reinforces his strongest country
+	 * 
+	 * @param p The player who is going to reinforce
+	 */
 	@Override
 	public void reinforce(Player p) {
 		ActionModel.getActionModel().addAction("Reinforcement Phase:");
@@ -71,9 +92,15 @@ public class Aggressive implements Strategy {
 		int Armyinput = p.getReinforcementArmy();
 		strongestCountry.setArmyCount(Armyinput);
 		ActionModel.getActionModel().addAction("added " + Armyinput + " to " + strongestCountry.getName() + "(" + initialArmy + ")");
+		System.out.println(p.getName()+":added " + Armyinput + " to " + strongestCountry.getName() + "(" + initialArmy + ")");
 	}
 	
-
+	/**
+	 * This method is used to do the fortification for aggressive player
+	 * The aggressive player only fortifies his strongest country
+	 * 
+	 * @param p The player who is going to fortify
+	 */
 	@Override
 	public void fortify(Player p) {
 		ActionModel.getActionModel().addAction("Fortification Phase:");
@@ -101,14 +128,27 @@ public class Aggressive implements Strategy {
 			c1.reduceArmyCount(armyinput);
 			c2.setArmyCount(armyinput);
 			ActionModel.getActionModel().addAction(" move " + armyinput+ " army from "+ c1.getName() + " to " + c2.getName());
+			System.out.println(p.getName()+": move " + armyinput+ " army from "+ c1.getName() + " to " + c2.getName());
 		}
 	}
 
+	/**
+	 * This method is used to get a random number within the given limit
+	 * 
+	 * @param limit The limit of numbers, like the amount of armies
+	 * @return The random number 
+	 */
 	public int getRandomNumber(int limit)
 	{ 
 		return (int) (Math.random() * limit);
 	}
 	 
+	/**
+	 * This method is used to do the set up for aggressive player
+	 * The aggressive player will choose one country randomly and put all his starting armies to that country
+	 * 
+	 * @param p The player who is going to set up
+	 */
 	@Override
 	public void setup(Player p) {
 		if (p.getStartingPoints() == 0)
