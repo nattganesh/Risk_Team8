@@ -125,7 +125,7 @@ public class GamePhaseController implements Observer, Initializable {
 
     /**
      * This is a constructor for GamePhaseController
-     *
+     * @param stage stage of our javafx scene
      */
     public GamePhaseController(Stage stage)
     {

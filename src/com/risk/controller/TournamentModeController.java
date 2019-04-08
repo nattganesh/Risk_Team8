@@ -125,9 +125,9 @@ public class TournamentModeController implements Initializable {
 	
 	/**
 	 * this method is necessary to start the game
-	 * @throws FileNotFoundException 
-	 * @throws DuplicatesException 
-	 * @throws CannotFindException 
+	 * @throws FileNotFoundException exception thrown when file not found
+	 * @throws DuplicatesException exception thrown when country is duplicated
+	 * @throws CannotFindException exception  thrown when number of country in a continent is different from fixed number
 	 */
 	@FXML
 	public void startTournament() throws FileNotFoundException, CannotFindException, DuplicatesException
@@ -285,12 +285,12 @@ public class TournamentModeController implements Initializable {
 		}
 	}
 
-	
 	/**
-     * This sets the strategy of the player
-     * 
-     * @param player this is the player without strategy
-     */
+	 * 
+	 * This method sets the strategy of players
+	 * @param player this is the player without strategy
+	 * @return returns player with strategy
+	 */
     public Player setStrategy(Player player)
     {
     	String behaviour = player.getName();

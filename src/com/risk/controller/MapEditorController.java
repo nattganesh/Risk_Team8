@@ -685,7 +685,7 @@ public class MapEditorController implements Initializable {
     /**
      * sets the number of players
      *
-     * @param numberOfPlayer the number of players
+     * @param players the number of players
      */
     public void setPlayers(ObservableList <Player> players)
     {     
@@ -700,6 +700,9 @@ public class MapEditorController implements Initializable {
     }
     
 
+    /**
+     * This method initializes the deck of our game
+     */
     public void setDeck()
     {
         DeckModel.getCardModel().initialize();
