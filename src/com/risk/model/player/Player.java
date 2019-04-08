@@ -625,13 +625,15 @@ public class Player extends Observable {
     {
     	ArrayList<Country> strongest = new ArrayList<Country>();
     	int tmp = 0;
-        for (int i = 1; i < getOccupiedCountries().size(); i++)
+    	int numOfNeighbor = 0;
+        for (int i = 0; i < occupiedCountries.size(); i++)
         {
-            if (getOccupiedCountries().get(i).getArmyCount() > tmp)
+            if (occupiedCountries.get(i).getArmyCount() > tmp&&(occupiedCountries.get(i).getConnectedEnemyArrayList().size()>=numOfNeighbor))
             {
-            	tmp = getOccupiedCountries().get(i).getArmyCount();
+            	numOfNeighbor=occupiedCountries.get(i).getConnectedEnemyArrayList().size();
+            	tmp = occupiedCountries.get(i).getArmyCount();
             	strongest.clear();
-            	strongest.add(getOccupiedCountries().get(i));
+            	strongest.add(occupiedCountries.get(i));
             }
         }
         return strongest.get(0);

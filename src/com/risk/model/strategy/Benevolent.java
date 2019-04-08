@@ -74,13 +74,14 @@ public class Benevolent implements Strategy {
 		
 		int Armyinput=0;
 		ArrayList<Country> fortify = new ArrayList<Country>();
+		System.out.println(p.isAnyCountriesConnected());
 		if(p.isAnyCountriesConnected()) {
 			for(Country c: weakestCountries) {
 				ArrayList<Country> connected = new ArrayList<Country>();
 				connected = p.getCountriesArrivedbyPath(c, c, connected);
 				if(!connected.isEmpty()) {
 					for(Country connect : connected) {
-						if(connect.getArmyCount()>Armyinput) {
+						if(connect.getArmyCount()>1&&connect.getArmyCount()>Armyinput) {
 							Armyinput = connect.getArmyCount();
 							fortify.clear();
 							fortify.add(c);
