@@ -219,6 +219,7 @@ public class MapEditorController implements Initializable {
                 Country country = new Country(TerritoryInput.getText());
                 country.setContinent(ContinentView.getSelectionModel().getSelectedItem());
                 ContinentView.getSelectionModel().getSelectedItem().setCountry(country);
+                MapModel.getMapModel().getCountries().add(country);
                 territoryObservableList.clear();
                 territoryObservableList.addAll(ContinentView.getSelectionModel().getSelectedItem().getCountries());
                 actions.addAction("added a territory to the continent");
@@ -299,7 +300,6 @@ public class MapEditorController implements Initializable {
      */
     public boolean existsInAdjacentList(Country selectedCountry, String addingCountry)
     {
-
         for (Country country : selectedCountry.getConnectedCountries())
         {
             if (country.getName().equals(addingCountry))
