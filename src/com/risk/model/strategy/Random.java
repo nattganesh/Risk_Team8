@@ -12,7 +12,6 @@ import com.risk.model.ActionModel;
 import com.risk.model.map.Country;
 import com.risk.model.player.Player;
 
-import javafx.collections.ObservableList;
 
 public class Random implements Strategy{
 	/**
@@ -37,8 +36,8 @@ public class Random implements Strategy{
 		if(!countryWithEnoughArmy.isEmpty()) {
 			Country attack = countryWithEnoughArmy.get(getRandomNumber(countryWithEnoughArmy.size()));
 			Country defend = attack.getConnectedEnemyArrayList().get(getRandomNumber(attack.getConnectedEnemyArrayList().size()));
-			ActionModel.getActionModel().addAction("Random country to attack: "+attack.getName());
-			ActionModel.getActionModel().addAction("Random country to defend: "+defend.getName());
+			ActionModel.getActionModel().addAction("Selected random attacker: "+attack.getName());
+			ActionModel.getActionModel().addAction("Selected random defender: "+defend.getName());
 			System.out.println("Random country to attack: "+attack.getName()+" "+attack.getArmyCount());
 			System.out.println("Random country to defend: "+defend.getName()+" "+defend.getArmyCount());
 			int limit = getRandomNumber(500);
@@ -61,7 +60,7 @@ public class Random implements Strategy{
 							defend.getRuler().removeCountry(defend);
 							if (defend.getRuler().getOccupiedCountries().size()==0) {
 								defend.getRuler().setPlayerLost(true);
-								ActionModel.getActionModel().addAction("defender "+(defend.getRuler()+" lost"));
+								ActionModel.getActionModel().addAction("defender ("+defend.getRuler()+") lost");
 								System.out.println(defend.getRuler()+" lost");
 								p.moveCards(defend.getRuler());
 							}
@@ -72,14 +71,14 @@ public class Random implements Strategy{
 							int armyinput = result[0] + getRandomNumber(army);
 							attack.reduceArmyCount(armyinput);
 							defend.setArmyCount(armyinput);
-							ActionModel.getActionModel().addAction("("+attack.getRuler().getName()+")" + attack.getName()+" conquers "+defend.getName());
+							ActionModel.getActionModel().addAction(attack.getName()+" conquers "+defend.getName());
 							System.out.println(p.getName()+": "+ attack.getName()+" conquers "+defend.getName());
 							break;
 						}
 					} else {
 						attack.reduceArmyCount(1);
-						System.out.println("attacker (" +attack.getName() + ") lost 1 army");
-						ActionModel.getActionModel().addAction("("+attack.getRuler().getName()+")" + attack.getName()+" lost 1 army");
+						System.out.println("attacker lost 1 army");
+						ActionModel.getActionModel().addAction( attack.getName()+" lost 1 army");
 						
 					}
 				}
@@ -115,7 +114,7 @@ public class Random implements Strategy{
 	public void fortify(Player p) {
 		
 		ActionModel.getActionModel().addAction("======= Rule =======");
-		ActionModel.getActionModel().addAction("Reinforces random a ");
+		ActionModel.getActionModel().addAction("Fortifies at random a ");
 		ActionModel.getActionModel().addAction(" 	random country");
 		ActionModel.getActionModel().addAction("==================");
 		ArrayList<Country> countriesHaveConnectedPath = new ArrayList<Country>();
@@ -154,6 +153,10 @@ public class Random implements Strategy{
 			return;
 		}
 		else {
+			ActionModel.getActionModel().addAction("");
+			ActionModel.getActionModel().addAction("======= Rule =======");
+			ActionModel.getActionModel().addAction("- Random adds army randomly");
+			ActionModel.getActionModel().addAction("==================");
 			int army = p.getStartingPoints();
 			for(int i=0; i<army; i++) {
 				Country random = p.getOccupiedCountries().get(getRandomNumber(p.getOccupiedCountries().size()));

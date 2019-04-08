@@ -27,22 +27,15 @@ import com.risk.model.exceptions.DuplicatesException;
 import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
 import com.risk.model.player.Player;
-import com.risk.model.strategy.Aggressive;
-import com.risk.model.strategy.Benevolent;
-import com.risk.model.strategy.Cheater;
-import com.risk.model.strategy.Random;
 import com.risk.model.utilities.FileParser;
 import com.risk.model.utilities.Validate;
 import com.risk.model.utilities.generateOutputFile.Output;
 import com.risk.model.utilities.loadGame.LoadGame;
 
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -541,7 +534,7 @@ public class MapEditorController implements Initializable {
                     {
                         startWithCards();
                     }
-                    GamePhaseModel.getGamePhaseModel().setPhase("setup complete");
+//                    GamePhaseModel.getGamePhaseModel().setPhase("setup complete");
                     GamePhaseModel.getGamePhaseModel().setPhase("setup");
                 }
             }

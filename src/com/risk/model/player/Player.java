@@ -46,11 +46,21 @@ public class Player extends Observable {
         this.name = name;
     }
     
+    /**
+     * This method returns boolean isComputerPlayer
+     * 
+     * @return true if player is CPU else false
+     */
     public boolean isComputerPlayer()
     {
         return isComputerPlayer;
     }
     
+    /**
+     * This method checks if there is any enemy around
+     * 
+     * @return returns true if there is enemey around 
+     */
     public boolean checkIfEnemyAround()
     {
     	for (Country c : occupiedCountries)
@@ -63,6 +73,11 @@ public class Player extends Observable {
     	return false;
     }
 
+    /**
+     * This method sets the player as computer
+     * 
+     * @param isComputerPlayer true if player is CPU, else false
+     */
     public void setIsComputerPlayer(boolean isComputerPlayer)
     {
         this.isComputerPlayer = isComputerPlayer;
@@ -281,6 +296,11 @@ public class Player extends Observable {
         this.playerLost = playerLost;
     }
 
+    /**
+     * This method gets the strategy fo the player 
+     * 
+     * @return returs the strategy
+     */
     public Strategy getStrategy()
     {
         return strategy;
@@ -633,6 +653,11 @@ public class Player extends Observable {
         }
     }
 
+    /**
+     * This method gets the strongest country
+     * 
+     * @return returns the country that is strongest
+     */
     public Country getStrongestCountry()
     {
     	ArrayList<Country> strongest = new ArrayList<Country>();
@@ -651,6 +676,11 @@ public class Player extends Observable {
         return strongest.get(0);
     }
 
+    /**
+     * This method gets the weakest country 
+     * 
+     * @return returns arraylist of weakest country
+     */
     public ArrayList<Country> getWeakestCountries()
     {
         Country weakestCountry = getOccupiedCountries().get(0);
@@ -763,6 +793,11 @@ public class Player extends Observable {
     	this.strategy.fortify(p);
     }
     
+    /**
+     * This method is used to invoke setup strategy according to the type of computer player
+     * 
+     * @param p The player who is going to setup
+     */
     public void setupStrategy(Player p) {
     	this.strategy.setup(p);
     }
