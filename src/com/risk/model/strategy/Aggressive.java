@@ -42,10 +42,10 @@ public class Aggressive implements Strategy {
 			
 			int[] dattack = p.rollResult(result[0]);
 			int[] ddefend = p.rollResult(result[1]);
-			ActionModel.getActionModel().addAction("attacker rolled " + dattack[0] + " dice");
-			ActionModel.getActionModel().addAction("defender rolled " + ddefend[0] + " dice");
-			System.out.println("attacker rolled " + dattack[0] + " dice");
-			System.out.println("defender rolled " + ddefend[0] + " dice");
+			ActionModel.getActionModel().addAction("attacker rolled " + result[0] + " dice");
+			ActionModel.getActionModel().addAction("defender rolled " + result[1] + " dice");
+			System.out.println("attacker rolled " + result[0] + " dice");
+			System.out.println("defender rolled " + result[1] + " dice");
 			int rolltime = Integer.min(result[0], result[1]);
 			for (int i = 0; i < rolltime; i++) {
 				if (dattack[i] > ddefend[i]) {
@@ -75,7 +75,6 @@ public class Aggressive implements Strategy {
 						strongestCountry.reduceArmyCount(result[0]);
 						defendingCountry.setArmyCount(result[0]);
 						ActionModel.getActionModel().addAction(strongestCountry.getName()+" conquers "+defendingCountry.getName());
-						System.out.println(strongestCountry.getName()+" conquers "+defendingCountry.getName());
 						
 						neighboursOfStrongestCountry = strongestCountry.getConnectedEnemyArrayList();
 						break;
@@ -121,7 +120,7 @@ public class Aggressive implements Strategy {
 			for(Country c: p.getOccupiedCountries() ) {
 				ArrayList<Country> connected = new ArrayList<Country>();
 				connected = p.getCountriesArrivedbyPath(c, c, connected);
-				if(!connected.isEmpty()) {
+				if(!connected.isEmpty()&&c.getArmyCount()>1) {
 					for(Country connect: connected) {
 						int armysum = c.getArmyCount()+connect.getArmyCount()-1;
 						if(armysum>tmp) {
@@ -135,11 +134,21 @@ public class Aggressive implements Strategy {
 			}
 			Country c1 = maximumArmy.get(0);
 			Country c2 = maximumArmy.get(1);
-			int armyinput = c1.getArmyCount()-1;
-			c1.reduceArmyCount(armyinput);
-			c2.setArmyCount(armyinput);
-			ActionModel.getActionModel().addAction(" move " + armyinput+ " army from "+ c1.getName() + " to " + c2.getName());
-			System.out.println(p.getName()+": move " + armyinput+ " army from "+ c1.getName() + " to " + c2.getName());
+			
+			if(c1.getConnectedEnemyArrayList().size()>c2.getConnectedEnemyArrayList().size()&&c2.getArmyCount()>1) {
+				int armyinput = c2.getArmyCount()-1;
+				c2.reduceArmyCount(armyinput);
+				c1.setArmyCount(armyinput);
+				ActionModel.getActionModel().addAction(" move " + armyinput+ " army from "+ c2.getName() + " to " + c1.getName());
+				System.out.println(p.getName()+": move " + armyinput+ " army from "+ c2.getName() + " to " + c1.getName());
+			}
+			else {
+				int armyinput = c1.getArmyCount()-1;
+				c1.reduceArmyCount(armyinput);
+				c2.setArmyCount(armyinput);
+				ActionModel.getActionModel().addAction(" move " + armyinput+ " army from "+ c1.getName() + " to " + c2.getName());
+				System.out.println(p.getName()+": move " + armyinput+ " army from "+ c1.getName() + " to " + c2.getName());
+			}
 		}
 	}
 

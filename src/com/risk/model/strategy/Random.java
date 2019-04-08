@@ -35,21 +35,25 @@ public class Random implements Strategy{
 			Country defend = attack.getConnectedEnemyArrayList().get(getRandomNumber(attack.getConnectedEnemyArrayList().size()));
 			ActionModel.getActionModel().addAction("Random country to attack: "+attack.getName());
 			ActionModel.getActionModel().addAction("Random country to defend: "+defend.getName());
-			int limit = Integer.max(attack.getArmyCount(), defend.getArmyCount());
-			limit = getRandomNumber(limit);
+			System.out.println("Random country to attack: "+attack.getName()+" "+attack.getArmyCount());
+			System.out.println("Random country to defend: "+defend.getName()+" "+defend.getArmyCount());
+			int limit = getRandomNumber(500);
 			int time = 0;
 			boolean occupy = false;
+			System.out.println("Roll time: "+limit);
 			while(time<limit&&attack.getArmyCount()>1&&!occupy) {
 				int result[] = p.setRollLimit(attack, defend);
-				int randomAttack = getRandomNumber(result[0]);
-				int randomDefend = getRandomNumber(result[1]);
+				int randomAttack = getRandomNumber(result[0])+1;
+				int randomDefend = getRandomNumber(result[1])+1;
 				int[] dattack = p.rollResult(randomAttack);
 				int[] ddefend = p.rollResult(randomDefend);
 				int rolltime = Integer.min(randomAttack, randomDefend);
 				for (int i = 0; i < rolltime; i++) {
 					if (dattack[i] > ddefend[i]) {
 						defend.reduceArmyCount(1);
+						System.out.println("removed " + 1 + " from " + defend.getName());
 						if (defend.getArmyCount() == 0) {
+							System.out.println(p.getName()+" conquer "+defend.getRuler().getName()+" "+defend.getName());
 							defend.getRuler().removeCountry(defend);
 							if (defend.getRuler().getOccupiedCountries().size()==0) {
 								defend.getRuler().setPlayerLost(true);
@@ -69,6 +73,7 @@ public class Random implements Strategy{
 						}
 					} else {
 						attack.reduceArmyCount(1);
+						System.out.println("attacker (" +attack.getName() + ") lost 1 army");
 					}
 				}
 				time++;
@@ -98,6 +103,7 @@ public class Random implements Strategy{
 		ActionModel.getActionModel().addAction("Fortification Phase:");
 		ArrayList<Country> countriesHaveConnectedPath = new ArrayList<Country>();
 		ArrayList<Country> fortify = new ArrayList<Country>();
+		System.out.println(p.isAnyCountriesConnected());
 		if(p.isAnyCountriesConnected()) {
 			for(Country c: p.getOccupiedCountries()) {
 				ArrayList<Country> connected = new ArrayList<Country>();
@@ -111,7 +117,7 @@ public class Random implements Strategy{
 			fortify = p.getCountriesArrivedbyPath(randomFrom, randomFrom, fortify);
 			Country randomTo = fortify.get(getRandomNumber(fortify.size()));
 			int armyInput = randomFrom.getArmyCount()-1;
-			armyInput = getRandomNumber(armyInput);
+			armyInput = getRandomNumber(armyInput)+1;
 			randomFrom.reduceArmyCount(armyInput);
 			randomTo.setArmyCount(armyInput);
 			ActionModel.getActionModel().addAction(" move " + armyInput + " army from "+ randomFrom + " to " + randomTo);

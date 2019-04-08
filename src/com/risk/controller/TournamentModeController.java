@@ -97,7 +97,7 @@ public class TournamentModeController implements Initializable {
 		numberPlayersID.getItems().addAll(2,3,4);
 		numberGamesID.getItems().addAll(1,2,3,4,5);
 		typeMapID.getItems().addAll("mapL1", "mapL2", "mapL3", "mapL4", "mapL5");
-//		typeMapID.getItems().addAll("map1", "map2", "map3", "map4", "map5");
+		//typeMapID.getItems().addAll("map1", "map2", "map3", "map4", "map5");
 		typePlayerID.getItems().addAll("AggressivePlayer", "BenevolentPlayer", "CheaterPlayer", "RandomPlayer");
 		
 		hiscoreView.setItems(hiscoreObservableList);
@@ -169,7 +169,7 @@ public class TournamentModeController implements Initializable {
 						mapEditor.setDeck();
 						mapEditor.calcStartingArmies();
 						mapEditor.autoAssignCountriesToPlayers();
-						
+						mapEditor.determinePlayersStartingOrder();
 						System.out.println ("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$SETUP DONE");
 						
 						
@@ -181,18 +181,19 @@ public class TournamentModeController implements Initializable {
 							for(Player p: PlayerPhaseModel.getPlayerModel().getPlayers()) {
 								
 								// this is to see the status at the beginning of each turn
-								System.out.println("=============================================================");
-								System.out.println(p.getName() + "'s turn");
-								for (Country c : p.getOccupiedCountries())
-								{
-									System.out.println(c.getName() + " (" + c.getArmyCount() + ")");
-								}
+								
 								// end
 								
 								
 								if(p.isPlayerLost())
 									continue;
 								else {
+									System.out.println("=============================================================");
+									System.out.println(p.getName() + "'s turn");
+									for (Country c : p.getOccupiedCountries())
+									{
+										System.out.println(c.getName() + " (" + c.getArmyCount() + ")");
+									}
 									System.out.println("===================");
 									p.reinforceStrategy(p);
 									

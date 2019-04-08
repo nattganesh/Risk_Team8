@@ -24,7 +24,7 @@ public class Cheater implements Strategy{
 	public void attack(Player p) {
 		ActionModel.getActionModel().addAction("Attack Phase:");
 		ArrayList<Country> occupy = p.getOccupiedCountries();
-		
+		ArrayList<Country> conquer = new ArrayList<Country>();
 		for (int i = 0; i< occupy.size(); i++)
         {
 			Country c = occupy.get(i);
@@ -36,14 +36,17 @@ public class Cheater implements Strategy{
 					p.moveCards(cNeighbors.getRuler());
 					System.out.println(cNeighbors.getRuler()+" lost");
 				}
+				cNeighbors.reduceArmyCount(cNeighbors.getArmyCount());
 				cNeighbors.setRuler(p);
-				p.addCountry(cNeighbors);
-				c.reduceArmyCount(1);
+				conquer.add(cNeighbors);
 				cNeighbors.setArmyCount(1);
 				ActionModel.getActionModel().addAction(c.getName()+" conquers "+cNeighbors.getName());
 				System.out.println(c.getName()+" conquers "+cNeighbors.getName());
             }
         }
+		for(Country c: conquer) {
+			p.addCountry(c);
+		}
 	}
 	
 	/**
@@ -58,7 +61,7 @@ public class Cheater implements Strategy{
 		for (Country c : p.getOccupiedCountries())
         {
 			int army = c.getArmyCount();
-			c.setArmyCount(army*2);
+			c.setArmyCount(army);
 			ActionModel.getActionModel().addAction("added " + (army) + " to " + c.getName() + "(" + army + ")");
 			System.out.println("added " + (army) + " to " + c.getName() + "(" + army + ")");
         }
@@ -78,7 +81,7 @@ public class Cheater implements Strategy{
         {
 			if(!c.getConnectedEnemyArrayList().isEmpty()) {
 				int army = c.getArmyCount();
-				c.setArmyCount(army*2);
+				c.setArmyCount(army);
 				ActionModel.getActionModel().addAction("added " + (army) + " to " + c.getName() + "(" + army + ")");
 				System.out.println(p.getName()+": added " + (army) + " to " + c.getName() + "(" + army + ")");
 			}
