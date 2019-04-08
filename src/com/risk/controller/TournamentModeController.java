@@ -96,7 +96,8 @@ public class TournamentModeController implements Initializable {
 		numberMapsID.getItems().addAll(1,2,3,4,5);
 		numberPlayersID.getItems().addAll(2,3,4);
 		numberGamesID.getItems().addAll(1,2,3,4,5);
-		typeMapID.getItems().addAll("map1", "map2", "map3", "map4", "map5");
+		typeMapID.getItems().addAll("mapL1", "mapL2", "mapL3", "mapL4", "mapL5");
+//		typeMapID.getItems().addAll("map1", "map2", "map3", "map4", "map5");
 		typePlayerID.getItems().addAll("AggressivePlayer", "BenevolentPlayer", "CheaterPlayer", "RandomPlayer");
 		
 		hiscoreView.setItems(hiscoreObservableList);
@@ -232,12 +233,21 @@ public class TournamentModeController implements Initializable {
 						}
 					}
 				}
+				boolean mapName = true;				
 				for(int i=0; i<mapObservableList.size()+1; i++) {
 					for(int j = 0; j< games+1; j++) {
-						System.out.printf("%10s", result[i][j]);
-//						hiscoreObservableList.add(result[i][j]);
+						if (mapName)
+						{
+							mapName = false;
+							hiscoreObservableList.add("map name");
+						}
+						System.out.printf("%20s", result[i][j]);
+						
+						hiscoreObservableList.add(result[i][j]);
 					}
+					
 					System.out.println();
+					hiscoreObservableList.add("              ");
 				}
 				            
 				// this is where you can start the game
