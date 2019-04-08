@@ -10,10 +10,12 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
+import com.risk.model.ActionModel;
 import com.risk.model.MapModel;
 import com.risk.model.PlayerPhaseModel;
 import com.risk.model.exceptions.CannotFindException;
 import com.risk.model.exceptions.DuplicatesException;
+import com.risk.model.map.Country;
 import com.risk.model.player.Player;
 import com.risk.model.strategy.Aggressive;
 import com.risk.model.strategy.Benevolent;
@@ -95,7 +97,7 @@ public class TournamentModeController implements Initializable {
 		numberPlayersID.getItems().addAll(2,3,4);
 		numberGamesID.getItems().addAll(1,2,3,4,5);
 		typeMapID.getItems().addAll("map1", "map2", "map3", "map4", "map5");
-		typePlayerID.getItems().addAll("Aggressive", "Benevolent", "Cheater", "Random");
+		typePlayerID.getItems().addAll("AggressivePlayer", "BenevolentPlayer", "CheaterPlayer", "RandomPlayer");
 		
 		hiscoreView.setItems(hiscoreObservableList);
 		mapView.setItems(mapObservableList);
@@ -111,6 +113,7 @@ public class TournamentModeController implements Initializable {
                     setText(null);
 
                 }
+                
                 else
                 {
                     setText(player.getName());
@@ -165,21 +168,57 @@ public class TournamentModeController implements Initializable {
 						mapEditor.setDeck();
 						mapEditor.calcStartingArmies();
 						mapEditor.autoAssignCountriesToPlayers();
+						
+						System.out.println ("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$SETUP DONE");
+						
+						
+						
 						String winner = "";
 						int turn=0;
 						boolean win = false;
 						while(turn<turns&&!win) {
 							for(Player p: PlayerPhaseModel.getPlayerModel().getPlayers()) {
+								
+								// this is to see the status at the beginning of each turn
+								System.out.println("=============================================================");
+								System.out.println(p.getName() + "'s turn");
+								for (Country c : p.getOccupiedCountries())
+								{
+									System.out.println(c.getName() + " (" + c.getArmyCount() + ")");
+								}
+								// end
+								
+								
 								if(p.isPlayerLost())
 									continue;
 								else {
+									System.out.println("===================");
 									p.reinforceStrategy(p);
+									
+									for (Country c : p.getOccupiedCountries())
+									{
+										System.out.println(c.getName() + " (" + c.getArmyCount() + ")");
+									}
+									System.out.println("===================");
 									p.attackStrategy(p);
 									if(checkWinner(p)) {
 										winner = p.getName();
 										win = true;
 									}
+//									System.out.println("===================" + p.getName() +  " made a move ============");
+									for (Country c : p.getOccupiedCountries())
+									{
+										System.out.println(c.getName() + " (" + c.getArmyCount() + ")");
+									}
+									System.out.println("===================");
 									p.fortifyStrategy(p);
+									
+									
+//									System.out.println("===================" + p.getName() +  " made a move ============");
+									for (Country c : p.getOccupiedCountries())
+									{
+										System.out.println(c.getName() + " (" + c.getArmyCount() + ")");
+									}
 								}
 									
 							}
@@ -196,6 +235,7 @@ public class TournamentModeController implements Initializable {
 				for(int i=0; i<mapObservableList.size()+1; i++) {
 					for(int j = 0; j< games+1; j++) {
 						System.out.printf("%10s", result[i][j]);
+//						hiscoreObservableList.add(result[i][j]);
 					}
 					System.out.println();
 				}
@@ -243,21 +283,21 @@ public class TournamentModeController implements Initializable {
      */
     public Player setStrategy(Player player)
     {
-    	String behaviour = player.getName().substring(0, player.getName().length());
+    	String behaviour = player.getName();
    
-    	if (behaviour.equals("Aggressive"))
+    	if (behaviour.equals("AggressivePlayer"))
     	{
     		player.setStrategy(new Aggressive());
     	}
-    	else if (behaviour.equals("Benevolent"))
+    	else if (behaviour.equals("BenevolentPlayer"))
     	{
     		player.setStrategy(new Benevolent());
     	}
-    	else if (behaviour.equals("Cheater"))
+    	else if (behaviour.equals("CheaterPlayer"))
     	{
     		player.setStrategy(new Cheater());
     	}
-    	else if (behaviour.equals("Random"))
+    	else if (behaviour.equals("RandomPlayer"))
     	{
     		player.setStrategy(new Random());
     	}
@@ -301,7 +341,7 @@ public class TournamentModeController implements Initializable {
 	}
 	
 	/**
-	 * this method is necessary to assign player with a behaviour
+	 * this method is necessary to assign different behaviours for a tournamnet
 	 */
 	@FXML
 	public void assignPlayer()
@@ -310,19 +350,46 @@ public class TournamentModeController implements Initializable {
 		{
 			String behaviour = typePlayerID.getSelectionModel().getSelectedItem();
 			int playerIndex = selectPlayerID.getSelectionModel().getSelectedItem();
-			if (!checkBehaviourAssigned(behaviour))
+			
+			if (!checkBehaviourAssigned(behaviour+playerIndex))
 			{
 				if (playerObservableList.size() < numberPlayersID.getSelectionModel().getSelectedItem())
 				{
-					Player player =  new Player(behaviour);
-					player = setStrategy(player);
-					playerObservableList.add(player);
+					boolean exists = false;
+					for (Player p : playerObservableList)
+					{
+						if (p.getName().substring(0, p.getName().length()-1).equals(behaviour))
+						{
+							exists = true;
+							break;
+						}
+					}
+					if (!exists)
+					{
+						Player player =  new Player(behaviour+playerIndex);
+						player = setStrategy(player);
+						playerObservableList.add(player);
+					}
+					
 				}
 				else 
 				{
-					Player player =  new Player(behaviour);
-					player = setStrategy(player);
-					playerObservableList.set(playerIndex-1, player);
+					boolean exists = false;
+					for (Player p : playerObservableList)
+					{
+						if (p.getName().substring(0, p.getName().length()-1).equals(behaviour))
+						{
+							exists = true;
+							break;
+						}
+					}
+					if (!exists)
+					{
+						Player player =  new Player(behaviour+playerIndex);
+						player = setStrategy(player);
+						playerObservableList.set(playerIndex-1, player);
+					}
+					
 				}	
 			}
 		}

@@ -689,9 +689,13 @@ public class MapEditorController implements Initializable {
      */
     public void setPlayers(ObservableList <Player> players)
     {     
+    	
     	for (Player player : players)
     	{	
-    		PlayerPhaseModel.getPlayerModel().addPlayer(player);
+    		
+    		Player p = new Player(player.getName());
+    	
+    		PlayerPhaseModel.getPlayerModel().addPlayer(p);
     	}
     }
     
@@ -750,7 +754,7 @@ public class MapEditorController implements Initializable {
      */
     public void assignCountriesToPlayers()
     {
-    	System.out.println("sdf");
+    	
         int totalCountrySize = MapModel.getMapModel().getCountries().size();
         System.out.println(totalCountrySize);
         boolean[] countryOccupied = new boolean[totalCountrySize];
