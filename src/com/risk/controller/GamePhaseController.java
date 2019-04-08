@@ -245,7 +245,6 @@ public class GamePhaseController implements Observer, Initializable {
         	        
         	        if (isAnyPlayerPlacedAllArmies)
         	        {
-//        	        	PlayerPhaseModel.getPlayerModel().setNextPlayer();
         	        	System.out.println("next player set after setup is : " + PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
                         GamePhaseModel.getGamePhaseModel().setPhase("setup complete");
                         GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
@@ -255,6 +254,7 @@ public class GamePhaseController implements Observer, Initializable {
         	        	
     	        		PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getStrategy().setup(PlayerPhaseModel.getPlayerModel().getCurrentPlayer());
     	        		PlayerPhaseModel.getPlayerModel().setNextPlayer();
+    	        		GamePhaseModel.getGamePhaseModel().setPhase("setup complete");
     	        		GamePhaseModel.getGamePhaseModel().setPhase("setup");
         	        }	        		
 	             } 
@@ -583,10 +583,10 @@ public class GamePhaseController implements Observer, Initializable {
                 serie.getData().get(index).setXValue(player.getName() + " (" + player.getTotalArmy() + ")");
                 serie.getData().get(index).setYValue((int) player.getTotalArmy());
             }
-//            if (!view.equals("setup"))
-//            {
+            if (!view.equals("setup"))
+            {
                 worldDomination2.getData().setAll(serie);
-//            }
+            }
         }
     }
 

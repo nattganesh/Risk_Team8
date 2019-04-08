@@ -534,7 +534,7 @@ public class MapEditorController implements Initializable {
                     {
                         startWithCards();
                     }
-                    GamePhaseModel.getGamePhaseModel().setPhase("setup complete");
+//                    GamePhaseModel.getGamePhaseModel().setPhase("setup complete");
                     GamePhaseModel.getGamePhaseModel().setPhase("setup");
                 }
             }
