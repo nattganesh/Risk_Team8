@@ -91,7 +91,6 @@ public class Random implements Strategy{
 	@Override
     public void reinforce(Player p)
     {
-		
 		ActionModel.getActionModel().addAction("======= Rule =======");
 		ActionModel.getActionModel().addAction("fortifies a random ");
 		ActionModel.getActionModel().addAction(" 	 country");

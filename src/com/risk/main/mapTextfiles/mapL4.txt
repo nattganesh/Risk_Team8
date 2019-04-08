@@ -1,23 +1,17 @@
 SET COUNTRIES IN CONTINENTS
 North America,Alaska
-North America,Northwest Territory
 North America,Greenland
 North America,Alberta
-North America,Ontario
-North America,Quebec
 North America,Western United States
 North America,Eastern United States
 North America,Central America
 South America,Venezuela
 South America,Peru
-South America,Brazil
 South America,Argentina
 Europe,Iceland
 Europe,Scandinavia
 Europe,Ukraine
-Europe,Great Britian
 Europe,Northern Europe
-Europe,Southern Europe
 Europe,Western Europe
 Africa,North Africa
 Africa,Egypt
@@ -39,90 +33,42 @@ Asia,Ural
 Asia,Middle East
 Australia,Indonesia
 Australia,New Guinea
-Australia,Western Australia
-Australia,Eastern Australia
 SET NEIGHBORS
 Alaska,Kamchatka
 Alaska,Alberta
-Alaska,Northwest Territory
-Northwest Territory,Alaska
-Northwest Territory,Greenland
-Northwest Territory,Ontario
-Northwest Territory,Alberta
-Greenland,Northwest Territory
-Greenland,Ontario
-Greenland,Quebec
 Greenland,Iceland
 Alberta,Alaska
-Alberta,Northwest Territory
-Alberta,Ontario
 Alberta,Western United States
-Ontario,Northwest Territory
-Ontario,Greenland
-Ontario,Alberta
-Ontario,Quebec
-Ontario,Western United States
-Ontario,Eastern United States
-Quebec,Greenland
-Quebec,Ontario
-Quebec,Eastern United States
 Western United States,Alberta
-Western United States,Ontario
 Western United States,Central America
-Eastern United States,Ontario
-Eastern United States,Quebec
 Eastern United States,Central America
 Central America,Western United States
 Central America,Eastern United States
 Central America,Venezuela
 Venezuela,Central America
 Venezuela,Peru
-Venezuela,Brazil
 Peru,Venezuela
-Peru,Brazil
 Peru,Argentina
-Brazil,Venezuela
-Brazil,Peru
-Brazil,North Africa
 Argentina,Peru
 Iceland,Greenland
 Iceland,Scandinavia
-Iceland,Great Britian
 Scandinavia,Iceland
-Scandinavia,Great Britian
 Scandinavia,Northern Europe
 Scandinavia,Ukraine
 Ukraine,Scandinavia
 Ukraine,Northern Europe
-Ukraine,Southern Europe
 Ukraine,Ural
 Ukraine,Afghanistan
 Ukraine,Middle East
-Great Britian,Iceland
-Great Britian,Scandinavia
-Great Britian,Western Europe
-Great Britian,Northern Europe
 Northern Europe,Scandinavia
 Northern Europe,Ukraine
-Northern Europe,Great Britian
-Northern Europe,Southern Europe
 Northern Europe,Western Europe
-Southern Europe,Ukraine
-Southern Europe,Northern Europe
-Southern Europe,North Africa
-Southern Europe,Egypt
-Southern Europe,Western Europe
-Western Europe,Great Britian
 Western Europe,Northern Europe
-Western Europe,Southern Europe
 Western Europe,North Africa
-North Africa,Brazil
-North Africa,Southern Europe
 North Africa,Western Europe
 North Africa,Congo
 North Africa,Egypt
 North Africa,East Africa
-Egypt,Southern Europe
 Egypt,North Africa
 Egypt,Middle East
 Egypt,East Africa
@@ -188,13 +134,5 @@ Middle East,East Africa
 Middle East,India
 Middle East,Afghanistan
 Indonesia,Siam
-Indonesia,Western Australia
 Indonesia,New Guinea
 New Guinea,Indonesia
-New Guinea,Eastern Australia
-New Guinea,Western Australia
-Western Australia,Indonesia
-Western Australia,New Guinea
-Western Australia,Eastern Australia
-Eastern Australia,New Guinea
-Eastern Australia,Western Australia

@@ -1,18 +1,68 @@
 SET COUNTRIES IN CONTINENTS
 North America,Alaska
+North America,Greenland
+North America,Alberta
+North America,Western United States
+North America,Eastern United States
+North America,Central America
+South America,Venezuela
+South America,Peru
 South America,Argentina
-Europe,Southern Europe
+Europe,Iceland
+Europe,Scandinavia
+Europe,Ukraine
+Europe,Northern Europe
+Europe,Western Europe
 Africa,North Africa
+Africa,Egypt
+Africa,South Africa
+Africa,Madagascar
 Asia,Siam
+Asia,Yakutsk
+Asia,Kamchatka
 Australia,Indonesia
 SET NEIGHBORS
-Alaska,Argentina
-Argentina,Alaska
-Argentina,Southern Europe
-Southern Europe,Argentina
-Southern Europe,North Africa
-North Africa,Southern Europe
-North Africa,Siam
-Siam,North Africa
+Alaska,Kamchatka
+Alaska,Alberta
+Greenland,Iceland
+Alberta,Alaska
+Alberta,Western United States
+Western United States,Alberta
+Western United States,Central America
+Eastern United States,Central America
+Central America,Western United States
+Central America,Eastern United States
+Central America,Venezuela
+Venezuela,Central America
+Venezuela,Peru
+Peru,Venezuela
+Peru,Argentina
+Argentina,Peru
+Iceland,Greenland
+Iceland,Scandinavia
+Scandinavia,Iceland
+Scandinavia,Northern Europe
+Scandinavia,Ukraine
+Ukraine,Scandinavia
+Ukraine,Northern Europe
+Ukraine,Kamchatka
+Northern Europe,Scandinavia
+Northern Europe,Ukraine
+Northern Europe,Western Europe
+Western Europe,Northern Europe
+Western Europe,North Africa
+North Africa,Western Europe
+North Africa,Egypt
+North Africa,South Africa
+Egypt,North Africa
+Egypt,Madagascar
+South Africa,North Africa
+Madagascar,Egypt
 Siam,Indonesia
+Siam,Yakutsk
+Yakutsk,Siam
+Yakutsk,Kamchatka
+Kamchatka,Alaska
+Kamchatka,Ukraine
+Kamchatka,Yakutsk
 Indonesia,Siam

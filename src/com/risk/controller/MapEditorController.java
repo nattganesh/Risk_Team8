@@ -319,7 +319,9 @@ public class MapEditorController implements Initializable {
     {
         if (TerritoryView.getSelectionModel().getSelectedItem() != null && ContinentView.getSelectionModel().getSelectedItem() != null)
         {
+        	
             Country removingTerritory = TerritoryView.getSelectionModel().getSelectedItem();
+           
             Continent continent = ContinentView.getSelectionModel().getSelectedItem();
             continent.getCountries().remove(removingTerritory);
 
@@ -327,6 +329,7 @@ public class MapEditorController implements Initializable {
             {
                 connected.getConnectedCountries().remove(removingTerritory);
             }
+            MapModel.getMapModel().getCountries().remove(removingTerritory);
 
             territoryObservableList.clear();
             adjacentObservableList.clear();
@@ -441,7 +444,8 @@ public class MapEditorController implements Initializable {
             Validate.getValidate().validateMap();
             if (Validate.getValidate().getValidateSize() == MapModel.getMapModel().getCountries().size())
             {
-
+            	System.out.println("validate getvalidate size() " + Validate.getValidate().getValidateSize());
+            	System.out.println("mapmodel.getsize() " + MapModel.getMapModel().getCountries().size());
                 actions.addAction("saved File");
                 Output.generate(ExistingFile.getText());
                 initializePlayers();
@@ -449,12 +453,16 @@ public class MapEditorController implements Initializable {
             }
             else
             {
+            	System.out.println("validate getvalidate size() " + Validate.getValidate().getValidateSize());
+            	System.out.println("mapmodel.getsize() " + MapModel.getMapModel().getCountries().size());
                 actions.addAction("Can't Save Map it's an invalid map");
                 validated = 0;
             }
         }
         else
         {
+        	System.out.println("validate getvalidate size() " + Validate.getValidate().getValidateSize());
+        	System.out.println("mapmodel.getsize() " + MapModel.getMapModel().getCountries().size());
             actions.addAction("Can't save - invalid map");
         }
     }
