@@ -31,14 +31,17 @@ public class Cheater implements Strategy{
             for (Country cNeighbors : c.getConnectedEnemyArrayList())
             {
             	cNeighbors.getRuler().removeCountry(cNeighbors);
-				if (cNeighbors.getRuler().isPlayerLost()) {
+				if (cNeighbors.getRuler().getOccupiedCountries().size()==0) {
+					cNeighbors.getRuler().setPlayerLost(true);
 					p.moveCards(cNeighbors.getRuler());
+					System.out.println(cNeighbors.getRuler()+" lost");
 				}
 				cNeighbors.setRuler(p);
 				p.addCountry(cNeighbors);
 				c.reduceArmyCount(1);
 				cNeighbors.setArmyCount(1);
 				ActionModel.getActionModel().addAction(c.getName()+" conquers "+cNeighbors.getName());
+				System.out.println(c.getName()+" conquers "+cNeighbors.getName());
             }
         }
 	}
@@ -57,6 +60,7 @@ public class Cheater implements Strategy{
 			int army = c.getArmyCount();
 			c.setArmyCount(army*2);
 			ActionModel.getActionModel().addAction("added " + (army) + " to " + c.getName() + "(" + army + ")");
+			System.out.println("added " + (army) + " to " + c.getName() + "(" + army + ")");
         }
 		
 	}
@@ -76,6 +80,7 @@ public class Cheater implements Strategy{
 				int army = c.getArmyCount();
 				c.setArmyCount(army*2);
 				ActionModel.getActionModel().addAction("added " + (army) + " to " + c.getName() + "(" + army + ")");
+				System.out.println(p.getName()+": added " + (army) + " to " + c.getName() + "(" + army + ")");
 			}
         }
 	}

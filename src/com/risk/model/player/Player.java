@@ -624,15 +624,18 @@ public class Player extends Observable {
 
     public Country getStrongestCountry()
     {
-        Country strongestCountry = getOccupiedCountries().get(0);
+    	ArrayList<Country> strongest = new ArrayList<Country>();
+    	int tmp = 0;
         for (int i = 1; i < getOccupiedCountries().size(); i++)
         {
-            if (getOccupiedCountries().get(i).getArmyCount() > strongestCountry.getArmyCount())
+            if (getOccupiedCountries().get(i).getArmyCount() > tmp)
             {
-                strongestCountry = getOccupiedCountries().get(i);
+            	tmp = getOccupiedCountries().get(i).getArmyCount();
+            	strongest.clear();
+            	strongest.add(getOccupiedCountries().get(i));
             }
         }
-        return strongestCountry;
+        return strongest.get(0);
     }
 
     public ArrayList<Country> getWeakestCountries()
@@ -745,6 +748,10 @@ public class Player extends Observable {
      */
     public void fortifyStrategy(Player p) {
     	this.strategy.fortify(p);
+    }
+    
+    public void setupStrategy(Player p) {
+    	this.strategy.setup(p);
     }
     
     /**

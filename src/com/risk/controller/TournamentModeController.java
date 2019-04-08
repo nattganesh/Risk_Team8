@@ -137,35 +137,69 @@ public class TournamentModeController implements Initializable {
 					&& Integer.parseInt(numberTurnsID.getText()) >= 10
 					&& Integer.parseInt(numberTurnsID.getText()) <= 50)
 			{
-				MapModel.getMapModel().getContinents().clear();
-	            MapModel.getMapModel().getCountries().clear();
-	            PlayerPhaseModel.getPlayerModel().getPlayers().clear();
-	            files.clear();
-	           
+				
 				
 				turns = Integer.parseInt(numberTurnsID.getText());
 				games = numberGamesID.getSelectionModel().getSelectedItem();
 				
-				
+				String[][] result = new String[mapObservableList.size()+1][games+1];
+				result[0][0] = ""; 
+				for(int i = 1; i<mapObservableList.size()+1; i++) {
+					result[i][0] = "Map "+i;
+				}
+				for(int i = 1; i<games+1; i++) {
+					result[0][i] = "Game "+i;
+				}
 				for (int i = 0 ; i < mapObservableList.size(); i++)
 				{
-					files.add(i, "src/com/risk/main/mapTextFiles/" + mapObservableList.get(i) + ".txt");
+					String path = "src/com/risk/main/mapTextFiles/"+ mapObservableList.get(i) + ".txt";
+					for(int j = 0; j< games; j++) {
+						MapModel.getMapModel().getContinents().clear();
+			            MapModel.getMapModel().getCountries().clear();
+			            PlayerPhaseModel.getPlayerModel().getPlayers().clear();
+						MapEditorController mapEditor = new MapEditorController();
+						Scanner scan = new Scanner (new File (path));
+						FileParser fileParser = new FileParser();
+						fileParser.init(scan);
+						mapEditor.setPlayers(playerObservableList);
+						mapEditor.setDeck();
+						mapEditor.calcStartingArmies();
+						mapEditor.autoAssignCountriesToPlayers();
+						String winner = "";
+						int turn=0;
+						boolean win = false;
+						while(turn<turns&&!win) {
+							for(Player p: PlayerPhaseModel.getPlayerModel().getPlayers()) {
+								if(p.isPlayerLost())
+									continue;
+								else {
+									p.reinforceStrategy(p);
+									p.attackStrategy(p);
+									if(checkWinner(p)) {
+										winner = p.getName();
+										win = true;
+									}
+									p.fortifyStrategy(p);
+								}
+									
+							}
+							turn++;
+						}
+						System.out.println("winner:"+winner+"11111111");
+						if(winner.equals("")) {
+							result[i+1][j+1] = "draw";
+						}else {
+							result[i+1][j+1] = winner;
+						}
+					}
+				}
+				for(int i=0; i<mapObservableList.size()+1; i++) {
+					for(int j = 0; j< games+1; j++) {
+						System.out.printf("%10s", result[i][j]);
+					}
+					System.out.println();
 				}
 				            
-				MapEditorController mapEditor = new MapEditorController();
-				
-				Scanner scan = new Scanner (new File (files.get(0)));
-				FileParser fileParser = new FileParser();
-
-				fileParser.init(scan);
-				mapEditor.setPlayers(playerObservableList);
-				mapEditor.setDeck();
-				mapEditor.autoAssignCountriesToPlayers();
-				mapEditor.determinePlayersStartingOrder();
-				
-				System.out.println("in here " + MapModel.getMapModel().getCountries().size());
-							    
-				
 				// this is where you can start the game
 			}
 		}
@@ -318,4 +352,8 @@ public class TournamentModeController implements Initializable {
 			}
 		}
 	}
+	
+	public boolean checkWinner(Player p) {
+		return p.getOccupiedCountries().size()==MapModel.getMapModel().getCountries().size();
+				}
 }

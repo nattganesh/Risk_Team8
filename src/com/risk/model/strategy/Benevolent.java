@@ -43,7 +43,7 @@ public class Benevolent implements Strategy {
 			int initialArmy = weakestCountries.get(0).getArmyCount();
 			weakestCountries.get(0).setArmyCount(Armyinput);
 			ActionModel.getActionModel().addAction("added " + Armyinput + " to " + weakestCountries.get(0).getName() + "(" + initialArmy + ")");
-		
+			System.out.println(p.getName()+":added " + Armyinput + " to " + weakestCountries.get(0).getName() + "(" + initialArmy + ")");
 			return;
 		}
 		int army = Armyinput;
@@ -52,6 +52,7 @@ public class Benevolent implements Strategy {
 				int initialArmy = c.getArmyCount();
 				c.setArmyCount(1);
 				ActionModel.getActionModel().addAction("added " + 1 + " to " + c.getName() + "(" + initialArmy + ")");
+				System.out.println(p.getName()+":added " + 1 + " to " + c.getName() + "(" + initialArmy + ")");
 				army--;
 				if (army == 0) {
 					return;
@@ -89,10 +90,15 @@ public class Benevolent implements Strategy {
 				}
 				
 			}
-			
-			ActionModel.getActionModel().addAction(" move " + (Armyinput-1) + " army from "+ fortify.get(1).getName() + "(" + fortify.get(1).getArmyCount() + ")"+ " to " + fortify.get(0).getName() + "(" + fortify.get(0).getArmyCount() + ")");
-			fortify.get(0).setArmyCount(Armyinput-1);	
-			fortify.get(1).reduceArmyCount(Armyinput-1);
+			if(fortify.size()==0) {
+				return;
+			}
+			else {
+				ActionModel.getActionModel().addAction(" move " + (Armyinput-1) + " army from "+ fortify.get(1).getName() + "(" + fortify.get(1).getArmyCount() + ")"+ " to " + fortify.get(0).getName() + "(" + fortify.get(0).getArmyCount() + ")");
+				System.out.println(p.getName()+": move " + (Armyinput-1) + " army from "+ fortify.get(1).getName() + "(" + fortify.get(1).getArmyCount() + ")"+ " to " + fortify.get(0).getName() + "(" + fortify.get(0).getArmyCount() + ")");
+				fortify.get(0).setArmyCount(Armyinput-1);	
+				fortify.get(1).reduceArmyCount(Armyinput-1);
+			}
 		}
 	}
 	

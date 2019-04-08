@@ -51,7 +51,9 @@ public class Random implements Strategy{
 						defend.reduceArmyCount(1);
 						if (defend.getArmyCount() == 0) {
 							defend.getRuler().removeCountry(defend);
-							if (defend.getRuler().isPlayerLost()) {
+							if (defend.getRuler().getOccupiedCountries().size()==0) {
+								defend.getRuler().setPlayerLost(true);
+								System.out.println(defend.getRuler()+" lost");
 								p.moveCards(defend.getRuler());
 							}
 							defend.setRuler(p);
@@ -62,6 +64,7 @@ public class Random implements Strategy{
 							attack.reduceArmyCount(armyinput);
 							defend.setArmyCount(armyinput);
 							ActionModel.getActionModel().addAction(attack.getName()+" conquers "+defend.getName());
+							System.out.println(p.getName()+": "+ attack.getName()+" conquers "+defend.getName());
 							break;
 						}
 					} else {
@@ -82,6 +85,7 @@ public class Random implements Strategy{
         int initialArmy = random.getArmyCount();
         random.setArmyCount(Armyinput);
         ActionModel.getActionModel().addAction("added " + Armyinput + " to " + random.getName() + "(" + initialArmy + ")");
+        System.out.println(p.getName()+": added " + Armyinput + " to " + random.getName() + "(" + initialArmy + ")");
     }
     
     public int getRandomNumber(int limit)
@@ -98,7 +102,7 @@ public class Random implements Strategy{
 			for(Country c: p.getOccupiedCountries()) {
 				ArrayList<Country> connected = new ArrayList<Country>();
 				connected = p.getCountriesArrivedbyPath(c, c, connected);
-				if(!connected.isEmpty()) {
+				if(!connected.isEmpty()&&c.getArmyCount()>1) {
 					countriesHaveConnectedPath.add(c);
 				}
 				
@@ -111,6 +115,7 @@ public class Random implements Strategy{
 			randomFrom.reduceArmyCount(armyInput);
 			randomTo.setArmyCount(armyInput);
 			ActionModel.getActionModel().addAction(" move " + armyInput + " army from "+ randomFrom + " to " + randomTo);
+			System.out.println(p.getName()+": move " + armyInput + " army from "+ randomFrom.getName() + " to " + randomTo.getName());
 		}
 		
 	}

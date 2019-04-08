@@ -49,9 +49,12 @@ public class Aggressive implements Strategy {
 					ActionModel.getActionModel().addAction("removed " + 1 + " from " + defendingCountry.getName());
 					if (defendingCountry.getArmyCount() == 0) {
 						ActionModel.getActionModel().addAction(defendingCountry.getRuler().getName() + " lost " + "("+ defendingCountry +")");
+						System.out.println(p.getName()+" conquer "+defendingCountry.getRuler().getName()+" "+defendingCountry.getName());
 						defendingCountry.getRuler().removeCountry(defendingCountry);
 						
-						if (defendingCountry.getRuler().isPlayerLost()) {
+						if (defendingCountry.getRuler().getOccupiedCountries().size()==0) {
+							defendingCountry.getRuler().setPlayerLost(true);
+							System.out.println(defendingCountry.getRuler().getName() + " lost ");
 							p.moveCards(defendingCountry.getRuler());
 							ActionModel.getActionModel().addAction("defender (" + defendingCountry.getRuler().getName() + ") lost");
 							ActionModel.getActionModel().addAction("moving cards");					
@@ -89,6 +92,7 @@ public class Aggressive implements Strategy {
 		int Armyinput = p.getReinforcementArmy();
 		strongestCountry.setArmyCount(Armyinput);
 		ActionModel.getActionModel().addAction("added " + Armyinput + " to " + strongestCountry.getName() + "(" + initialArmy + ")");
+		System.out.println(p.getName()+":added " + Armyinput + " to " + strongestCountry.getName() + "(" + initialArmy + ")");
 	}
 	
 	/**
@@ -124,6 +128,7 @@ public class Aggressive implements Strategy {
 			c1.reduceArmyCount(armyinput);
 			c2.setArmyCount(armyinput);
 			ActionModel.getActionModel().addAction(" move " + armyinput+ " army from "+ c1.getName() + " to " + c2.getName());
+			System.out.println(p.getName()+": move " + armyinput+ " army from "+ c1.getName() + " to " + c2.getName());
 		}
 	}
 
