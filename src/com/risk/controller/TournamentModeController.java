@@ -172,8 +172,6 @@ public class TournamentModeController implements Initializable {
 						mapEditor.determinePlayersStartingOrder();
 						System.out.println ("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$SETUP DONE");
 						
-						
-						
 						String winner = "";
 						int turn=0;
 						boolean win = false;
@@ -221,8 +219,7 @@ public class TournamentModeController implements Initializable {
 									{
 										System.out.println(c.getName() + " (" + c.getArmyCount() + ")");
 									}
-								}
-									
+								}		
 							}
 							turn++;
 						}
