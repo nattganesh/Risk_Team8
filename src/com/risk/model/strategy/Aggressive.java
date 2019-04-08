@@ -6,10 +6,7 @@
  */
 package com.risk.model.strategy;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -17,7 +14,6 @@ import java.util.Queue;
 import com.risk.model.ActionModel;
 import com.risk.model.map.Country;
 import com.risk.model.player.Player;
-import com.risk.model.strategy.*;
 
 public class Aggressive implements Strategy {
 	
@@ -196,6 +192,11 @@ public class Aggressive implements Strategy {
 			return;
 		} 
 		else {
+			ActionModel.getActionModel().addAction("");
+			ActionModel.getActionModel().addAction("======= Rule =======");
+			ActionModel.getActionModel().addAction("- Aggressive chooses 1 random");
+			ActionModel.getActionModel().addAction("     country to place all armies");
+			ActionModel.getActionModel().addAction("==================");
 			Country c = p.getOccupiedCountries().get(getRandomNumber(p.getOccupiedCountries().size()));
 			int armyimput = p.getStartingPoints();
 			c.setArmyCount(armyimput);

@@ -124,6 +124,10 @@ public class Cheater implements Strategy{
 		}
 		else
 		{
+			ActionModel.getActionModel().addAction("");
+			ActionModel.getActionModel().addAction("======= Rule =======");
+			ActionModel.getActionModel().addAction("- Cheater randomly assigns army");
+			ActionModel.getActionModel().addAction("==================");
 			int army = p.getStartingPoints();
 			for(int i=0; i<army; i++) {
 				Country random = p.getOccupiedCountries().get(getRandomNumber(p.getOccupiedCountries().size()));

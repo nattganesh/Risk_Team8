@@ -92,6 +92,11 @@ public class MapModel extends Observable implements Observer {
         return countriesModel;
     }
 
+    /**
+     * This method sets the countries to MapModel 
+     *
+     * @param countries ArrayList of countries
+     */
     public void setCountries(ArrayList<Country> countries)
     {
         countriesModel = countries;

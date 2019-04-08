@@ -13,8 +13,6 @@ import java.util.HashSet;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import com.risk.model.ActionModel;
 import com.risk.model.GamePhaseModel;
@@ -23,8 +21,6 @@ import com.risk.model.PlayerPhaseModel;
 import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
 import com.risk.model.player.Player;
-import com.risk.model.utilities.saveGame.SaveGame;
-
 import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -151,6 +147,9 @@ public class GamePhaseController implements Observer, Initializable {
     	saveController.showSaveProgress();
     }
     
+    /**
+     * This method creates a new game
+     */
     @FXML
     public void newGame()
     {
@@ -158,6 +157,11 @@ public class GamePhaseController implements Observer, Initializable {
     	newID.setVisible(false);
     }
 
+    /**
+     * This method sets a delay in the phase transition
+     * @param phase name of the phase
+     * @param second time delay
+     */
     public void delayNextPhase(String phase, int second)
     {
     	pause = new PauseTransition(Duration.seconds(second));
@@ -180,6 +184,11 @@ public class GamePhaseController implements Observer, Initializable {
         pause.play();
     }
     
+    /**
+     * This method sets a delay in player strategies
+     * @param phase name of the phase 
+     * @param second time delay
+     */
     public void delayPhaseAction(String phase, int second)
     {
     	pause = new PauseTransition(Duration.seconds(second));
@@ -236,13 +245,14 @@ public class GamePhaseController implements Observer, Initializable {
         	        
         	        if (isAnyPlayerPlacedAllArmies)
         	        {
-        	        	PlayerPhaseModel.getPlayerModel().setNextPlayer();
+//        	        	PlayerPhaseModel.getPlayerModel().setNextPlayer();
+        	        	System.out.println("next player set after setup is : " + PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
                         GamePhaseModel.getGamePhaseModel().setPhase("setup complete");
                         GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
         	        } 
         	        else
         	        {
-        	        	ActionModel.getActionModel().addAction("computer added army in setup");
+        	        	
     	        		PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getStrategy().setup(PlayerPhaseModel.getPlayerModel().getCurrentPlayer());
     	        		PlayerPhaseModel.getPlayerModel().setNextPlayer();
     	        		GamePhaseModel.getGamePhaseModel().setPhase("setup");
@@ -276,14 +286,7 @@ public class GamePhaseController implements Observer, Initializable {
         	saveController.closeSaveProgress();
         	saveID.setVisible(true);
         	phaseDominationViewID.setVisible(false);
-        	restartGame();
-        	
-            
-          	for (Player p : PlayerPhaseModel.getPlayerModel().getPlayers())
-          	{
-          		System.out.println(p.getCards().size());
-          	}
-            
+        	restartGame();            
         }
         else if (view.equals("winner"))
         {
@@ -323,10 +326,13 @@ public class GamePhaseController implements Observer, Initializable {
         {
             try
             {
+            	
                 if (PlayerPhaseModel.getPlayerModel().getCurrentPlayer().isComputerPlayer())
                 {
+                	
                 	ActionModel.getActionModel().addAction("  ");
-                	ActionModel.getActionModel().addAction(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName() + " is reinforcing");
+                	
+      			 	ActionModel.getActionModel().addAction("{{ CPU is reinforcing }}");
                 	phaseID.setText(view);
                     playerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
                     mainPane.getChildren().clear();
@@ -334,13 +340,12 @@ public class GamePhaseController implements Observer, Initializable {
                     mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/ComputerView.fxml")));
                      
                     delayPhaseAction("reinforced",2);
-//                    delayNextPhase("attack", 10);
-                  
+                 
                      
                 }  
                 else 
                 {
-                	  ActionModel.getActionModel().clearAction();
+                	  
                 	  ActionModel.getActionModel().addAction("  ");
                 	  ActionModel.getActionModel().addAction("Reinforce Start:");
             		  ActionModel.getActionModel().addAction("======= Rule =======");
@@ -376,7 +381,8 @@ public class GamePhaseController implements Observer, Initializable {
 	      		 else if (PlayerPhaseModel.getPlayerModel().getCurrentPlayer().isComputerPlayer())
                  {
 	      			      ActionModel.getActionModel().addAction("  ");
-	      			 	  ActionModel.getActionModel().addAction(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName() + " is attacking");
+	      			 
+	      			 	  ActionModel.getActionModel().addAction("{{ CPU is attacking }}");
             			  phaseID.setText(view);
                           playerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
                          
@@ -384,7 +390,6 @@ public class GamePhaseController implements Observer, Initializable {
                           
                           mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/ComputerView.fxml")));
                           delayPhaseAction("attacked",2);
-//                          delayNextPhase("fortification", 10);
  
                  }
             	 else {
@@ -426,7 +431,8 @@ public class GamePhaseController implements Observer, Initializable {
             	 else if (PlayerPhaseModel.getPlayerModel().getCurrentPlayer().isComputerPlayer())
                  {
             		  ActionModel.getActionModel().addAction("  ");
-     			 	  ActionModel.getActionModel().addAction(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName() + " is fortifying");
+     			 	  
+     			 	 ActionModel.getActionModel().addAction("{{ CPU is fortifying }}");
             		  phaseID.setText(view);
                       playerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
                       mainPane.getChildren().clear();
@@ -434,7 +440,7 @@ public class GamePhaseController implements Observer, Initializable {
                       mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/ComputerView.fxml")));
                       
                       delayPhaseAction("fortified",2);
-//                      delayNextPhase("next", 10);
+
                  }
             	 else {
             		  ActionModel.getActionModel().addAction("  ");
@@ -636,7 +642,9 @@ public class GamePhaseController implements Observer, Initializable {
     }
     
     
- 
+    /**
+     * This method restarts the game
+     */	
     public void restartGame()
     {
     	System.out.println("restarting game");
@@ -674,6 +682,8 @@ public class GamePhaseController implements Observer, Initializable {
 	     primaryStage.setHeight(bounds.getHeight() / 1.5);
 	     primaryStage.setScene(new Scene(root, 300, 275));
 	     primaryStage.show();
+	     
+
 	    }
 
 }

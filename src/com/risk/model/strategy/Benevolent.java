@@ -12,8 +12,6 @@ import com.risk.model.ActionModel;
 import com.risk.model.map.Country;
 import com.risk.model.player.Player;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 public class Benevolent implements Strategy {
 	/**
@@ -103,12 +101,16 @@ public class Benevolent implements Strategy {
 				
 			}
 			if(fortify.size()==0) {
-				
+				ActionModel.getActionModel().addAction("Weakest country doesn't ");
+				ActionModel.getActionModel().addAction("  have enough army");
+				ActionModel.getActionModel().addAction("  for fortification ");
 				return;
 			}
 			else {
 				
-				ActionModel.getActionModel().addAction(" move " + (Armyinput-1) + " army from "+ fortify.get(1).getName() + "(" + fortify.get(1).getArmyCount() + ")"+ " to " + fortify.get(0).getName() + "(" + fortify.get(0).getArmyCount() + ")");
+				ActionModel.getActionModel().addAction(" move " + (Armyinput-1) + " army from ");
+				ActionModel.getActionModel().addAction("       " +  fortify.get(1).getName() + "(" + fortify.get(1).getArmyCount() + ")"+ " to ");
+				ActionModel.getActionModel().addAction( "       " +  fortify.get(0).getName() + "(" + fortify.get(0).getArmyCount() + ")");
 				System.out.println(p.getName()+": move " + (Armyinput-1) + " army from "+ fortify.get(1).getName() + "(" + fortify.get(1).getArmyCount() + ")"+ " to " + fortify.get(0).getName() + "(" + fortify.get(0).getArmyCount() + ")");
 				fortify.get(0).setArmyCount(Armyinput-1);	
 				fortify.get(1).reduceArmyCount(Armyinput-1);
@@ -130,6 +132,10 @@ public class Benevolent implements Strategy {
 			
 		}
 		else {
+			ActionModel.getActionModel().addAction("");
+			ActionModel.getActionModel().addAction("======= Rule =======");
+			ActionModel.getActionModel().addAction("- Benevolent distributes army evenly");
+			ActionModel.getActionModel().addAction("==================");
 			int army = p.getStartingPoints();
 			while (army > 0) {
 				for (Country c : p.getOccupiedCountries()) {

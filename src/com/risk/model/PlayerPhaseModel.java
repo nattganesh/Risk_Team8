@@ -77,6 +77,9 @@ public class PlayerPhaseModel extends Observable implements Observer {
         return currentPlayerIndex;
     }
 
+    /**
+     * This method sets the next player. If lost then skips.
+     */
     public void setNextPlayer()
     {
 
@@ -129,7 +132,6 @@ public class PlayerPhaseModel extends Observable implements Observer {
     {
     	setStrategy(player);
         playerList.add(player);
-        System.out.println("number of observers before adding another one is:" + player.countObservers());
         player.addObserver(this);
         
     }
