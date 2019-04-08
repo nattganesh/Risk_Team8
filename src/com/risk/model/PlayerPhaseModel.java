@@ -129,7 +129,9 @@ public class PlayerPhaseModel extends Observable implements Observer {
     {
     	setStrategy(player);
         playerList.add(player);
+        System.out.println("number of observers before adding another one is:" + player.countObservers());
         player.addObserver(this);
+        
     }
 
     /**
@@ -168,8 +170,9 @@ public class PlayerPhaseModel extends Observable implements Observer {
      */
     public void setStrategy(Player player)
     {
+    	System.out.println("setting strategies for " + player.getName());
     	String behaviour = player.getName().substring(0, player.getName().length()-1);
-    	System.out.println(behaviour);
+    	
     	if (behaviour.equals("AggressivePlayer"))
     	{
     		player.setStrategy(new Aggressive());

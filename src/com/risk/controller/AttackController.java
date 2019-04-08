@@ -298,10 +298,18 @@ public class AttackController implements Initializable, Observer {
                 actions.addAction("defender has lost 1 army");
                 if (defendingCountry.getArmyCount() == 0)
                 {
-                    actions.addAction("You have already occupied this country!");
-                    actions.addAction("Please move armies to your new country!");
+                    actions.addAction("You have already occupied");
+                    actions.addAction("   this country!!");
+                    actions.addAction("Please move armies to");
+                    actions.addAction("   your new country!");
                     attackingCountry.getRuler().attack(attackingCountry, defendingCountry, 2);
                     occupy = true;
+                    GamePhaseModel.getGamePhaseModel().setPhase("Conquering");
+                    ActionModel.getActionModel().addAction("======= Rule =======");
+                	ActionModel.getActionModel().addAction("[1] You need to move as many");
+                	ActionModel.getActionModel().addAction("    army as last roll");
+                	ActionModel.getActionModel().addAction("[2] "+ diceattack + " was last rolled");
+                	ActionModel.getActionModel().addAction("==================");
                     child.setVisible(true);
                     conqueringController.setConquringArmy(defendingCountry);
                     conqueringController.setDiceRoll(diceattack);
@@ -317,6 +325,10 @@ public class AttackController implements Initializable, Observer {
             }
         }
         updateView(attackingCountry);
+        if (!PlayerPhaseModel.getPlayerModel().getCurrentPlayer().checkIfEnemyAround())
+        {
+        	GamePhaseModel.getGamePhaseModel().setPhase("fortification");
+        }
     }
 
     /**
@@ -384,6 +396,7 @@ public class AttackController implements Initializable, Observer {
     @Override
     public void update(Observable o, Object arg)
     {
+    	GamePhaseModel.getGamePhaseModel().setPhase("backToAttack");
         child.setVisible(false);
         adjacentOwned.getItems().clear();
         territoryOwnedObservableList.setAll(p.getOccupiedCountries());	

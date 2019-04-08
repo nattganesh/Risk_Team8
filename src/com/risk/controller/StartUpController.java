@@ -46,6 +46,8 @@ public class StartUpController implements Initializable {
             {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/risk/view/LayoutView.fxml"));
                 GamePhaseController gamephase = new GamePhaseController(stage);
+                
+                
                 loader.setController(gamephase);
 
                 try

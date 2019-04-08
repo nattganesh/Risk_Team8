@@ -129,7 +129,7 @@ public class GamePhaseController implements Observer, Initializable {
      */
     public GamePhaseController(Stage stage)
     {
-        GamePhaseModel.getGamePhaseModel().addObserver(this);
+        GamePhaseModel.getGamePhaseModel().addObserver(this);   
         primaryStage = stage;
     }
     
@@ -212,14 +212,11 @@ public class GamePhaseController implements Observer, Initializable {
     @Override
     public void update(Observable o, Object phase)
     {
-//      ActionModel.getActionModel().clearAction();
         view = (String) phase;
-        System.out.println("CURRENT PHASE : " + view);
         if (!view.equals("setup") && !view.equals("startup"))
         {	
         	saveID.setVisible(true);
         	phaseDominationViewID.setVisible(true);
-        	System.out.println("HERHRE");
         }	
         if (view.equals("setup"))
         {
@@ -265,6 +262,14 @@ public class GamePhaseController implements Observer, Initializable {
             {
                 e.printStackTrace();
             }
+        }
+        else if (view.equals("backToAttack"))
+        {
+        	phaseID.setText("attacking");
+        }
+        else if (view.equals("Conquering"))
+        {
+        	phaseID.setText(view);
         }
         else if (view.equals("startup"))
         {
@@ -320,8 +325,8 @@ public class GamePhaseController implements Observer, Initializable {
             {
                 if (PlayerPhaseModel.getPlayerModel().getCurrentPlayer().isComputerPlayer())
                 {
-                	
-                	ActionModel.getActionModel().addAction(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName() + "'s turn");
+                	ActionModel.getActionModel().addAction("  ");
+                	ActionModel.getActionModel().addAction(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName() + " is reinforcing");
                 	phaseID.setText(view);
                     playerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
                     mainPane.getChildren().clear();
@@ -335,7 +340,17 @@ public class GamePhaseController implements Observer, Initializable {
                 }  
                 else 
                 {
-                	System.out.println(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
+                	  ActionModel.getActionModel().clearAction();
+                	  ActionModel.getActionModel().addAction("  ");
+                	  ActionModel.getActionModel().addAction("Reinforce Start:");
+            		  ActionModel.getActionModel().addAction("======= Rule =======");
+            		  ActionModel.getActionModel().addAction("[1] Exchange card first");
+            		  ActionModel.getActionModel().addAction("[2] Select a country to");
+            		  
+            		  ActionModel.getActionModel().addAction("    reinforce");
+            		  ActionModel.getActionModel().addAction("[3] Put number of army");
+            		  ActionModel.getActionModel().addAction("[3] Click reinforce button");
+            		  ActionModel.getActionModel().addAction("==================");
                 	 phaseID.setText(view);
                      playerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
                      mainPane.getChildren().clear();
@@ -352,18 +367,39 @@ public class GamePhaseController implements Observer, Initializable {
         {
             try
             {
-            	 if (PlayerPhaseModel.getPlayerModel().getCurrentPlayer().isComputerPlayer())
+	      		 if (!PlayerPhaseModel.getPlayerModel().getCurrentPlayer().checkIfEnemyAround())
+	      		 {
+
+     			   ActionModel.getActionModel().addAction(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName() + " skipped attack (no enemey around)");
+	      		   GamePhaseModel.getGamePhaseModel().setPhase("fortification");
+	      		 }
+	      		 else if (PlayerPhaseModel.getPlayerModel().getCurrentPlayer().isComputerPlayer())
                  {
-            		  phaseID.setText(view);
-                      playerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
-                     
-                      mainPane.getChildren().clear();
-                      
-                      mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/ComputerView.fxml")));
-                      delayPhaseAction("attacked",2);
-//                      delayNextPhase("fortification", 10);
+	      			      ActionModel.getActionModel().addAction("  ");
+	      			 	  ActionModel.getActionModel().addAction(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName() + " is attacking");
+            			  phaseID.setText(view);
+                          playerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
+                         
+                          mainPane.getChildren().clear();
+                          
+                          mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/ComputerView.fxml")));
+                          delayPhaseAction("attacked",2);
+//                          delayNextPhase("fortification", 10);
+ 
                  }
             	 else {
+            	      ActionModel.getActionModel().addAction("  ");
+            		  ActionModel.getActionModel().addAction("Attack Start:");
+            		  ActionModel.getActionModel().addAction("======= Rule =======");
+            		  ActionModel.getActionModel().addAction("[1] Choose an attacking");
+            		  ActionModel.getActionModel().addAction("    country");
+            		  ActionModel.getActionModel().addAction("[2] Please choose a defending");
+            		  ActionModel.getActionModel().addAction("    country");
+            		  ActionModel.getActionModel().addAction("[3] to attack select:");
+            		  ActionModel.getActionModel().addAction("    Allout or Single Roll");
+            		  ActionModel.getActionModel().addAction("==================");
+            		
+            		  
             		  phaseID.setText(view);
                       playerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
 
@@ -382,8 +418,15 @@ public class GamePhaseController implements Observer, Initializable {
         {
             try
             {
-              	 if (PlayerPhaseModel.getPlayerModel().getCurrentPlayer().isComputerPlayer())
+	      		 if (!PlayerPhaseModel.getPlayerModel().getCurrentPlayer().isAnyCountriesConnected())
+	      		 {
+	      		   ActionModel.getActionModel().addAction(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName() + " skipped fortify (no ally around)");
+	      		   GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
+	      		 }
+            	 else if (PlayerPhaseModel.getPlayerModel().getCurrentPlayer().isComputerPlayer())
                  {
+            		  ActionModel.getActionModel().addAction("  ");
+     			 	  ActionModel.getActionModel().addAction(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName() + " is fortifying");
             		  phaseID.setText(view);
                       playerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
                       mainPane.getChildren().clear();
@@ -394,6 +437,16 @@ public class GamePhaseController implements Observer, Initializable {
 //                      delayNextPhase("next", 10);
                  }
             	 else {
+            		  ActionModel.getActionModel().addAction("  ");
+            	      ActionModel.getActionModel().addAction("Fortify Start:");
+            	      ActionModel.getActionModel().addAction("======= Rule =======");
+	           		  ActionModel.getActionModel().addAction("[1] Choose a fortify from");
+	           		  ActionModel.getActionModel().addAction("    country");
+	           		  ActionModel.getActionModel().addAction("[2] Choose a fortify to");
+	           		  ActionModel.getActionModel().addAction("    country");
+	           		  ActionModel.getActionModel().addAction("[3] Put number of army");
+	           		  ActionModel.getActionModel().addAction("    and move");
+	           		  ActionModel.getActionModel().addAction("==================");
             		  phaseID.setText(view);
                       playerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
                       mainPane.getChildren().clear();
@@ -586,7 +639,8 @@ public class GamePhaseController implements Observer, Initializable {
  
     public void restartGame()
     {
-    	
+    	System.out.println("restarting game");
+    	GamePhaseModel.getGamePhaseModel().deleteObserver(this);
     	ActionModel.getActionModel().getActions().clear();
         barData.clear();
         data.clear();
@@ -595,9 +649,11 @@ public class GamePhaseController implements Observer, Initializable {
         piePlayersList.clear();
         barPlayersList.clear();
         
-    	
-    	 MapModel.getMapModel().clear();
-    	 PlayerPhaseModel.getPlayerModel().clear();
+         
+         MapModel.getMapModel().getContinents().clear();
+         MapModel.getMapModel().getCountries().clear();
+   
+    	 PlayerPhaseModel.getPlayerModel().getPlayers().clear();
     	 
     	
 	   	 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/risk/view/StartUp.fxml"));
