@@ -96,6 +96,9 @@ public class Random implements Strategy{
 		ActionModel.getActionModel().addAction(" 	 country");
 		ActionModel.getActionModel().addAction("==================");
 		int Armyinput = p.getReinforcementArmy();
+		if(p.exchangeCardForComputer()) {
+			Armyinput+= p.calculateReinforcementFromCards();
+		}
         Country random = p.getOccupiedCountries().get(getRandomNumber(p.getOccupiedCountries().size()));
         int initialArmy = random.getArmyCount();
         random.setArmyCount(Armyinput);

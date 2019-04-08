@@ -771,7 +771,8 @@ public class Player extends Observable {
      * This method is used to exchange cards automatically for computer players
      * 
      */
-    public void exchangeCardForComputer() {
+    public boolean exchangeCardForComputer() {
+    	boolean exchange = false;
     	while(getCardList().size()>=5) {
     		ArrayList<Card> cards = getCardList();
     		ArrayList<String> exchangecards = new ArrayList<String>();
@@ -796,6 +797,7 @@ public class Player extends Observable {
         				}
         			}
     			}
+    			exchange = true;
     		}else {
     			int i =0;
         		for(String s: map.keySet()) {
@@ -805,6 +807,7 @@ public class Player extends Observable {
         						removeCard(card);
         						i++;
         						if(i==3) {
+        							exchange = true;
         							break;
         						}
         					}
@@ -813,6 +816,7 @@ public class Player extends Observable {
         		}
     		}
     	}
+    	return exchange;
     }
     
     /**
