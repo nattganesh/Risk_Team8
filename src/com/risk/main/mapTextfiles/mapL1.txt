@@ -5,6 +5,8 @@ Europe,Southern Europe
 Africa,North Africa
 Asia,Siam
 Australia,Indonesia
+North America,Iceland
+Europe,Northern Europe
 SET NEIGHBORS
 Alaska,Argentina
 Alaska,Iceland
@@ -12,8 +14,11 @@ Argentina,Alaska
 Argentina,Southern Europe
 Southern Europe,Argentina
 Southern Europe,North Africa
+Southern Europe,Northern Europe
 North Africa,Southern Europe
 North Africa,Siam
 Siam,North Africa
 Siam,Indonesia
 Indonesia,Siam
+Iceland,Alaska
+Northern Europe,Southern Europe
