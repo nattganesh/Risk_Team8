@@ -56,6 +56,8 @@ public class ConqueredController extends Observable implements Initializable {
     @Override
     public void initialize(URL arg0, ResourceBundle arg1)
     {
+    
+    	
         move = false;
         actions = ActionModel.getActionModel();
         countryOwnedID.setItems(territoryObservableList);
@@ -95,7 +97,7 @@ public class ConqueredController extends Observable implements Initializable {
         }
         else if (!validateTerritorySelections)
         {
-            actions.addAction("please choose countries first");
+            actions.addAction("Choose conquered country");
         }
         else if (armyCount.getText().trim().isEmpty())
         {
@@ -123,7 +125,7 @@ public class ConqueredController extends Observable implements Initializable {
         }
         else
         {
-            actions.addAction("please move enough army first");
+            actions.addAction(diceRolled - moved  + " move remaining");
         }
 
     }
@@ -150,7 +152,7 @@ public class ConqueredController extends Observable implements Initializable {
     public void setDiceRoll(int roll)
     {
         this.diceRolled = roll;
-        actions.addAction(diceRolled + " dice rolled");
+      
     }
 
     /**

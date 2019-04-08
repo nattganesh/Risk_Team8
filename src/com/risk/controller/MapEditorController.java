@@ -694,7 +694,6 @@ public class MapEditorController implements Initializable {
     	{	
     		
     		Player p = new Player(player.getName());
-    	
     		PlayerPhaseModel.getPlayerModel().addPlayer(p);
     	}
     }

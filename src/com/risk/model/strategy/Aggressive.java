@@ -28,7 +28,10 @@ public class Aggressive implements Strategy {
 	 */
 	@Override
 	public void attack(Player p) {
-		ActionModel.getActionModel().addAction("Attack Phase:");
+
+		ActionModel.getActionModel().addAction("======= Rule =======");
+		ActionModel.getActionModel().addAction("attacks with strongest");
+		ActionModel.getActionModel().addAction("==================");
 		System.out.println("Attack Phase");
 		Country strongestCountry = p.getStrongestCountry();
 		ActionModel.getActionModel().addAction("strongest country (" + strongestCountry.getName() + ")" + "("+ strongestCountry.getArmyCount()+")");
@@ -96,7 +99,9 @@ public class Aggressive implements Strategy {
 	 */
 	@Override
 	public void reinforce(Player p) {
-		ActionModel.getActionModel().addAction("Reinforcement Phase:");
+		ActionModel.getActionModel().addAction("======= Rule =======");
+		ActionModel.getActionModel().addAction("reinforcing strongest");
+		ActionModel.getActionModel().addAction("==================");
 		Country strongestCountry = p.getStrongestCountry();
 		int initialArmy = strongestCountry.getArmyCount();
 		int Armyinput = p.getReinforcementArmy();
@@ -113,7 +118,10 @@ public class Aggressive implements Strategy {
 	 */
 	@Override
 	public void fortify(Player p) {
-		ActionModel.getActionModel().addAction("Fortification Phase:");
+		
+		ActionModel.getActionModel().addAction("======= Rule =======");
+		ActionModel.getActionModel().addAction("fortifies strongest");
+		ActionModel.getActionModel().addAction("==================");
 		int tmp = 0;
 		ArrayList<Country> maximumArmy = new ArrayList<Country>();
 		if(p.isAnyCountriesConnected()) {

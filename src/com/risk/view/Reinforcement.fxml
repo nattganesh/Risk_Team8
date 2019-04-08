@@ -15,8 +15,7 @@
                 <TextField fx:id="inputArmy" layoutX="424.0" layoutY="397.0" prefHeight="31.0" prefWidth="132.0" />
                 <Label fx:id="armyAvailable" layoutX="441.0" layoutY="438.0" text="Army Available" />
                 <Button fx:id="addArmy" layoutX="441.0" layoutY="473.0" mnemonicParsing="false" onMouseClicked="#setArmy" text="Add Army" />
-                <Label fx:id="inputArmyError" layoutX="141.0" layoutY="215.0" />
-                <Button fx:id="AttackPhaseID" layoutX="566.0" layoutY="473.0" mnemonicParsing="false" onAction="#goToAttackPhase" text="Attack" />
+                <Label fx:id="inputArmyError" layoutX="141.0" layoutY="215.0" /> 
                 <ListView fx:id="adjacentOwned" layoutX="420.0" layoutY="36.0" prefHeight="200.0" prefWidth="200.0" />
                 <ListView fx:id="adjacentEnemy" layoutX="18.0" layoutY="36.0" prefHeight="200.0" prefWidth="200.0" />
                 <Text layoutX="53.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Surrounding Enemy" />

@@ -160,36 +160,16 @@ public class ReinforcementController implements Initializable {
             {
                 actions.addAction("you don't have that many reinforcements");
             }
+            
+            if (PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getCards().size() < 3 && TotalReinforcement == 0)
+            {
+            	 GamePhaseModel.getGamePhaseModel().setPhase("attack");
+            } 
         }
         armyAvailable.setText(
                 "Army: " + Integer.toString(TotalReinforcement));
     }
-
-    /**
-     * Method to set up the Attack.fxml view and set the controller
-     * (AttackController) for the view. Then, changes the scene on the stage to
-     * send user to the attack phase.
-     *
-     * @param event eventlistener for button clicked event
-     * @throws IOException Exception thrown when view is not found
-     */
-    @FXML
-    public void goToAttackPhase(ActionEvent event) throws IOException
-    {
-        if (TotalReinforcement > 0)
-        {
-            actions.addAction("place all your army");
-        }
-        else if (PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getCards().size() >= 5)
-        {
-            actions.addAction("your got 5+ cards");
-        }
-        else
-        {
-            GamePhaseModel.getGamePhaseModel().setPhase("attack");
-        }
-    }
-
+    
     /**
      * This class observes reinforcement calculated by trading card
      *
