@@ -50,6 +50,18 @@ public class Player extends Observable {
     {
         return isComputerPlayer;
     }
+    
+    public boolean checkIfEnemyAround()
+    {
+    	for (Country c : occupiedCountries)
+    	{
+    		if (c.getConnectedEnemy().size() > 0) 
+    		{
+    			return true;
+    		}
+    	}
+    	return false;
+    }
 
     public void setIsComputerPlayer(boolean isComputerPlayer)
     {

@@ -1,0 +1,12 @@
+NAME OF MAP FILE
+endgame2
+SET PLAYER ORDER AND CARDS
+AggressivePlayer1,AggressivePlayer
+HumanPlayer2,HumanPlayer
+SET PLAYERS AND ARMY IN COUNTRY
+Alaska,AggressivePlayer1,40
+Argentina,HumanPlayer2,4
+CURRENT PHASE
+setup
+CURRENT PLAYER
+HumanPlayer2

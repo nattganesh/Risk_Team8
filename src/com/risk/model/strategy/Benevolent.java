@@ -24,7 +24,9 @@ public class Benevolent implements Strategy {
 	 */
 	@Override
 	public void attack(Player p) {
+		ActionModel.getActionModel().addAction("======= Rule =======");
 		ActionModel.getActionModel().addAction("skips attack");
+		ActionModel.getActionModel().addAction("==================");
 	}
 
 	/**
@@ -35,7 +37,11 @@ public class Benevolent implements Strategy {
 	 */
 	@Override
 	public void reinforce(Player p) {
-		ActionModel.getActionModel().addAction("Reinforcement Phase:");
+		
+		ActionModel.getActionModel().addAction("======= Rule =======");
+		ActionModel.getActionModel().addAction("reinforce weakest");
+		ActionModel.getActionModel().addAction("==================");
+
 		ArrayList<Country> weakestCountries = p.getWeakestCountries();
 		int Armyinput = p.getReinforcementArmy();
 		if (weakestCountries.size() == 1) {
@@ -67,9 +73,14 @@ public class Benevolent implements Strategy {
 	 * 
 	 * @param p The player who is going to fortify
 	 */
+	
 	@Override
 	public void fortify(Player p) {
-		ActionModel.getActionModel().addAction("Fortification Phase:");
+		
+		ActionModel.getActionModel().addAction("======= Rule =======");
+		ActionModel.getActionModel().addAction("fortify weakest");
+		ActionModel.getActionModel().addAction("==================");
+
 		ArrayList<Country> weakestCountries = p.getWeakestCountries();
 		
 		int Armyinput=0;
@@ -91,9 +102,11 @@ public class Benevolent implements Strategy {
 				
 			}
 			if(fortify.size()==0) {
+				
 				return;
 			}
 			else {
+				
 				ActionModel.getActionModel().addAction(" move " + (Armyinput-1) + " army from "+ fortify.get(1).getName() + "(" + fortify.get(1).getArmyCount() + ")"+ " to " + fortify.get(0).getName() + "(" + fortify.get(0).getArmyCount() + ")");
 				System.out.println(p.getName()+": move " + (Armyinput-1) + " army from "+ fortify.get(1).getName() + "(" + fortify.get(1).getArmyCount() + ")"+ " to " + fortify.get(0).getName() + "(" + fortify.get(0).getArmyCount() + ")");
 				fortify.get(0).setArmyCount(Armyinput-1);	

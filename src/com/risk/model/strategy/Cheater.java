@@ -22,7 +22,11 @@ public class Cheater implements Strategy{
 	 */
 	@Override
 	public void attack(Player p) {
-		ActionModel.getActionModel().addAction("Attack Phase:");
+		
+		ActionModel.getActionModel().addAction("======= Rule =======");
+		ActionModel.getActionModel().addAction("conquers all neighbouring");
+		ActionModel.getActionModel().addAction("    enemies");
+		ActionModel.getActionModel().addAction("==================");
 		ArrayList<Country> occupy = p.getOccupiedCountries();
 		
 		for (int i = 0; i< occupy.size(); i++)
@@ -54,7 +58,10 @@ public class Cheater implements Strategy{
 	 */
 	@Override
 	public void reinforce(Player p) {
-		ActionModel.getActionModel().addAction("Reinforcement Phase:");
+		
+		ActionModel.getActionModel().addAction("======= Rule =======");
+		ActionModel.getActionModel().addAction("doubles all army");
+		ActionModel.getActionModel().addAction("==================");
 		for (Country c : p.getOccupiedCountries())
         {
 			int army = c.getArmyCount();
@@ -73,7 +80,11 @@ public class Cheater implements Strategy{
 	 */
 	@Override
 	public void fortify(Player p) {
-		ActionModel.getActionModel().addAction("Fortification Phase:");
+		
+		ActionModel.getActionModel().addAction("======= Rule =======");
+		ActionModel.getActionModel().addAction("Doubles army on country");
+		ActionModel.getActionModel().addAction(" that have enemies around");
+		ActionModel.getActionModel().addAction("==================");
 		for (Country c : p.getOccupiedCountries())
         {
 			if(!c.getConnectedEnemyArrayList().isEmpty()) {
