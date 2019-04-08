@@ -182,19 +182,14 @@ public class SetUpController implements Initializable {
             return false;
         }
     }
-
+    
     /**
      * Method to set up the Reinforcement.fxml or SetUp.fxml view and set the
      * controller for the view. Then, changes the scene on the stage to send
      * user to the reinforcement phase or setup phase.
-     *
-     * @param event eventlistener for button clicked event
-     * @throws IOException Exception thrown when view is not found
      */
     public void next()
     {
-    	
-        int currentIndex = PlayerPhaseModel.getPlayerModel().getPlayerIndex();
         boolean isAnyPlayerPlacedAllArmies = true;
         for (Player p : PlayerPhaseModel.getPlayerModel().getPlayers())
         {

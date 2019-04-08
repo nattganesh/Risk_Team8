@@ -6,5 +6,8 @@ com.risk.model.dice
 com.risk.model.exceptions
 com.risk.model.map
 com.risk.model.player
+com.risk.model.strategy
 com.risk.model.utilities
 com.risk.model.utilities.generateOutputFile
+com.risk.model.utilities.loadGame
+com.risk.model.utilities.saveGame
