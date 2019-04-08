@@ -17,7 +17,6 @@ import com.risk.model.card.Card;
 import com.risk.model.dice.Dice;
 import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
-import com.risk.model.strategy.Strategy;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.util.ArrayList;
