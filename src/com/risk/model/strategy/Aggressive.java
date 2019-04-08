@@ -105,6 +105,7 @@ public class Aggressive implements Strategy {
 		Country strongestCountry = p.getStrongestCountry();
 		int initialArmy = strongestCountry.getArmyCount();
 		int Armyinput = p.getReinforcementArmy();
+		
 		strongestCountry.setArmyCount(Armyinput);
 		ActionModel.getActionModel().addAction("added " + Armyinput + " to " + strongestCountry.getName() + "(" + initialArmy + ")");
 		System.out.println(p.getName()+":added " + Armyinput + " to " + strongestCountry.getName() + "(" + initialArmy + ")");
