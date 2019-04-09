@@ -31,10 +31,10 @@ public class Output {
     {
 
         ArrayList<Country> countries = MapModel.getMapModel().getCountries();
-
+        PrintStream printOut = System.out;
         try
         {
-            PrintStream printOut = System.out;
+           
             PrintStream fileOut = new PrintStream("src/com/risk/main/mapTextFiles/" + nameOfFile + ".txt");
             System.setOut(fileOut);
 
@@ -58,8 +58,8 @@ public class Output {
         catch (Exception e)
         {
             Logger.logMsg(0, e.getMessage());
+            System.setOut(printOut);
             return false;
         }
-
     }
 }

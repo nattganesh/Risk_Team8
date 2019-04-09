@@ -53,9 +53,6 @@ public class Run extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/risk/view/StartUp.fxml"));
         StartUpController sController = new StartUpController(primaryStage);
         loader.setController(sController);
-
-//        GamePhaseController gamephase = new GamePhaseController();
-//        loader.setController(gamephase);
         Parent root = loader.load();
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();

@@ -64,7 +64,6 @@ public class TournamentModeController implements Initializable {
     @FXML
     private ListView<Player> playerView;
 
-
     @FXML
     private ComboBox<Integer> numberMapsID;
 

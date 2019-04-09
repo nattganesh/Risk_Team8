@@ -1,0 +1,56 @@
+NAME OF MAP FILE
+valid1
+SET PLAYER ORDER AND CARDS
+Player6,Player
+Player5,Player,Artillery,Cavalry,Cavalry,Infantry,Artillery
+Player4,Player,Artillery,Artillery,Artillery,Cavalry,Cavalry
+Player3,Player,Cavalry,Cavalry,Artillery,Infantry,Cavalry
+Player2,Player,Wild,Artillery,Artillery,Infantry,Infantry
+Player1,Player,Infantry,Infantry,Cavalry,Cavalry,Infantry
+SET PLAYERS AND ARMY IN COUNTRY
+Alaska,Player5,3
+Northwest Territory,Player5,2
+Greenland,Player6,3
+Alberta,Player1,3
+Ontario,Player5,3
+Quebec,Player2,4
+Western United States,Player6,2
+Eastern United States,Player1,4
+Central America,Player6,12
+Venezuela,Player3,3
+Peru,Player2,2
+Brazil,Player6,3
+Argentina,Player3,3
+Iceland,Player2,4
+Scandinavia,Player5,3
+Ukraine,Player6,4
+Great Britian,Player2,2
+Northern Europe,Player4,3
+Southern Europe,Player1,5
+Western Europe,Player3,3
+North Africa,Player3,2
+Egypt,Player2,5
+East Africa,Player2,2
+Congo,Player2,1
+South Africa,Player5,2
+Madagascar,Player1,2
+Siam,Player3,2
+India,Player1,2
+China,Player4,2
+Mongolia,Player6,3
+Japan,Player4,2
+Irkutsk,Player3,2
+Yakutsk,Player1,1
+Kamchatka,Player4,3
+Siberia,Player1,3
+Afghanistan,Player3,5
+Ural,Player4,4
+Middle East,Player4,4
+Indonesia,Player5,5
+New Guinea,Player6,1
+Western Australia,Player5,1
+Eastern Australia,Player4,3
+CURRENT PHASE
+fortification
+CURRENT PLAYER
+Player6
