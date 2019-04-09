@@ -2,6 +2,7 @@
  * This class is a controller for the tournament mode view
  * 
  * @author DKM
+ * @author Tianyi
  * @version 3.0
  */
 
@@ -13,7 +14,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
-import com.risk.model.ActionModel;
 import com.risk.model.MapModel;
 import com.risk.model.PlayerPhaseModel;
 import com.risk.model.exceptions.CannotFindException;
@@ -150,23 +150,11 @@ public class TournamentModeController implements Initializable {
 				
 				String[][] result = new String[mapObservableList.size()+1][games+1];
 				result[0][0] = ""; 
-				hiscoreObservableList.add("===== SETUP ======");
-				hiscoreObservableList.add("M:");
 				for(int i = 1; i<mapObservableList.size()+1; i++) {
 					result[i][0] = "Map "+i;
-					hiscoreObservableList.add("    Map "+i);
 				}
-				hiscoreObservableList.add("P:");
-				for (Player p : playerObservableList)
-				{
-					hiscoreObservableList.add("   " + p.getName());
-				}
-				hiscoreObservableList.add("G: " + games);
-				hiscoreObservableList.add("D: " + turns);
-				hiscoreObservableList.add("==============");
 				for(int i = 1; i<games+1; i++) {
 					result[0][i] = "Game "+i;
-					
 				}
 				for (int i = 0 ; i < mapObservableList.size(); i++)
 				{
@@ -185,59 +173,9 @@ public class TournamentModeController implements Initializable {
 						mapEditor.autoAssignCountriesToPlayers();
 						mapEditor.determinePlayersStartingOrder();
 						System.out.println ("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$SETUP DONE");
-						
 						String winner = "";
-						int turn=0;
-						boolean win = false;
-						while(turn<turns&&!win) {
-							for(Player p: PlayerPhaseModel.getPlayerModel().getPlayers()) {
-								
-								// this is to see the status at the beginning of each turn
-								
-								// end
-								
-								
-								if(p.isPlayerLost())
-									continue;
-								else {
-									System.out.println("=============================================================");
-									System.out.println(p.getName() + "'s turn");
-									for (Country c : p.getOccupiedCountries())
-									{
-										System.out.println(c.getName() + " (" + c.getArmyCount() + ")");
-									}
-									System.out.println("===================");
-									p.reinforceStrategy(p);
-									
-									for (Country c : p.getOccupiedCountries())
-									{
-										System.out.println(c.getName() + " (" + c.getArmyCount() + ")");
-									}
-									System.out.println("===================");
-									p.attackStrategy(p);
-									if(checkWinner(p)) {
-										winner = p.getName();
-										win = true;
-									}
-//									System.out.println("===================" + p.getName() +  " made a move ============");
-									for (Country c : p.getOccupiedCountries())
-									{
-										System.out.println(c.getName() + " (" + c.getArmyCount() + ")");
-									}
-									System.out.println("===================");
-									p.fortifyStrategy(p);
-									
-									
-//									System.out.println("===================" + p.getName() +  " made a move ============");
-									for (Country c : p.getOccupiedCountries())
-									{
-										System.out.println(c.getName() + " (" + c.getArmyCount() + ")");
-									}
-								}		
-							}
-							turn++;
-						}
-						System.out.println("winner:"+winner+"11111111");
+						ArrayList<Player> playerList = PlayerPhaseModel.getPlayerModel().getPlayers();
+						winner = tournamentRound(playerList, turns);
 						if(winner.equals("")) {
 							result[i+1][j+1] = "draw";
 						}else {
@@ -251,8 +189,6 @@ public class TournamentModeController implements Initializable {
 						if (mapName)
 						{
 							mapName = false;
-							hiscoreObservableList.add("");
-							hiscoreObservableList.add("====== RESULT ====== ");
 							hiscoreObservableList.add("map name");
 						}
 						System.out.printf("%20s", result[i][j]);
@@ -298,7 +234,6 @@ public class TournamentModeController implements Initializable {
 			selectMapID.getItems().add(i);
 		}
 	}
-	
 
 	/**
 	 * 
@@ -446,6 +381,53 @@ public class TournamentModeController implements Initializable {
 	}
 	
 	public boolean checkWinner(Player p) {
-		return p.getOccupiedCountries().size()==MapModel.getMapModel().getCountries().size();
-				}
+		return p.getOccupiedCountries().size() == MapModel.getMapModel().getCountries().size();
+	}
+	
+	public String tournamentRound(ArrayList<Player> playerList, int turns)
+	{
+		String winner = "";
+		int turn=0;
+		boolean win = false;
+		while(turn<turns&&!win) {
+			for(Player p: playerList) {
+				if(p.isPlayerLost())
+					continue;
+				else {
+					System.out.println("=============================================================");
+					System.out.println(p.getName() + "'s turn");
+					for (Country c : p.getOccupiedCountries())
+					{
+						System.out.println(c.getName() + " (" + c.getArmyCount() + ")");
+					}
+					System.out.println("===================");
+					p.reinforceStrategy(p);
+					
+					for (Country c : p.getOccupiedCountries())
+					{
+						System.out.println(c.getName() + " (" + c.getArmyCount() + ")");
+					}
+					System.out.println("===================");
+					p.attackStrategy(p);
+					if(checkWinner(p)) {
+						winner = p.getName();
+						win = true;
+						break;
+					}
+					for (Country c : p.getOccupiedCountries())
+					{
+						System.out.println(c.getName() + " (" + c.getArmyCount() + ")");
+					}
+					System.out.println("===================");
+					p.fortifyStrategy(p);
+					for (Country c : p.getOccupiedCountries())
+					{
+						System.out.println(c.getName() + " (" + c.getArmyCount() + ")");
+					}
+				}		
+			}
+			turn++;
+		}
+		return winner;
+	}
 }
