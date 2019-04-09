@@ -1,4 +1,8 @@
 /**
+ * Necessary for handling startup view, allowing user to choose between single or tournament mode
+ * 
+ * @author DKM
+ * @version 3.0
  *
  */
 package com.risk.controller;
@@ -7,7 +11,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.risk.model.GamePhaseModel;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,6 +32,8 @@ public class StartUpController implements Initializable {
 
     /**
      * this method initializes combobox for different mode
+     * 
+     * @see javafx.fxml.Initializable
      */
     @Override
     public void initialize(URL arg0, ResourceBundle arg1)

@@ -2,6 +2,7 @@
  * This file is necessary for changing the phases of the RISK game
  *
  * @author DKM
+ * @version 3.0
  *
  */
 package com.risk.controller;
@@ -218,7 +219,8 @@ public class GamePhaseController implements Observer, Initializable {
      * This method receives notification from the changes in the state from the
      * GamePhaseModel, then changes the scene to the next phase.
      */
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public void update(Observable o, Object phase)
     {
         view = (String) phase;
@@ -553,7 +555,8 @@ public class GamePhaseController implements Observer, Initializable {
      */
     private class mapObserver implements Observer {
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         public void update(Observable o, Object arg)
         {
         	if (PlayerPhaseModel.getPlayerModel().getCurrentPlayer().isComputerPlayer())

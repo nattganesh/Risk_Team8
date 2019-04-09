@@ -2,7 +2,7 @@
  * Necessary to create a card.
  *
  * @author Natheepan
- * @version 1.0
+ * @version 3.0
  */
 package com.risk.model.card;
 

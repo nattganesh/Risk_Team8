@@ -5,6 +5,8 @@
  * @author Natheepan
  * @author Tianyi
  * @author DKM
+ * 
+ * @version 3.0
  */
 package com.risk.model;
 

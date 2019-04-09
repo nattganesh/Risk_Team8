@@ -5,13 +5,13 @@
  *
  * @author DKM
  * @author Tianyi
+ * @version 3.0
+ * 
  *
  */
 package com.risk.controller;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
@@ -19,16 +19,12 @@ import java.util.ResourceBundle;
 import com.risk.model.ActionModel;
 import com.risk.model.DeckModel;
 import com.risk.model.GamePhaseModel;
-import com.risk.model.MapModel;
 import com.risk.model.PlayerPhaseModel;
-import com.risk.model.card.Card;
-import com.risk.model.dice.Dice;
 import com.risk.model.map.Country;
 import com.risk.model.player.Player;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -36,7 +32,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
 public class AttackController implements Initializable, Observer {

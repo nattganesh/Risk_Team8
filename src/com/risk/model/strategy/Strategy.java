@@ -1,11 +1,13 @@
+/**
+ * This method is interface for different computer behaviour
+ * 
+ * @author Tianyi
+ * @version 3.0
+ */
 package com.risk.model.strategy;
 
-import java.util.ArrayList;
-
-import com.risk.model.map.Country;
 import com.risk.model.player.Player;
 
-import javafx.collections.ObservableList;
 
 public interface Strategy {
 	void setup(Player p);

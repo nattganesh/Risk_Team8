@@ -2,6 +2,7 @@
  * This class is necesary for keeping state of the actions during game play
  *
  * @author DKM
+ * @version 3.0
  *
  */
 package com.risk.model;

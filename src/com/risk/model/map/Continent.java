@@ -2,6 +2,9 @@
  * This class is necessary for creating the Continent
  *
  * @author Natheepan
+ * @author DKM
+ * @version 3.0
+ * 
  */
 package com.risk.model.map;
 

@@ -2,13 +2,14 @@
  * This class is necessary for moving army after conquer
  *
  * @author DKM
+ * @version 3.0
+ * 
  *
  */
 package com.risk.controller;
 
 import java.net.URL;
 import java.util.Observable;
-import java.util.Observer;
 import java.util.ResourceBundle;
 
 import com.risk.model.ActionModel;
@@ -20,10 +21,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TableView;
 
 import javafx.scene.control.TextField;
 

@@ -2,6 +2,7 @@
  * This class is necessary for creating country
  *
  * @author Natheepan
+ * @version 3.0
  */
 package com.risk.model.map;
 
