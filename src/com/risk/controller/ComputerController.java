@@ -1,3 +1,9 @@
+/**
+ * Necessary for handling computer view during computer turn
+ * @author DKM
+ * @version 3.0
+ * 
+ */
 
 package com.risk.controller;
 import java.net.URL;
@@ -48,6 +54,8 @@ public class ComputerController implements Initializable {
 
     /**
      * This is method for initializing ComputerController
+     * 
+     * @see javafx.fxml.Initializable
      */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {

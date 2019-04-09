@@ -2,6 +2,7 @@
  * Exception thrown when a country appears more than once in the map
  *
  * @author Natheepan
+ * @version 3.0
  */
 package com.risk.model.exceptions;
 

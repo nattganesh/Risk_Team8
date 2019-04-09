@@ -3,6 +3,7 @@
  * It's responsible for file parsing, validating map, and assigning countries to players
  *
  * @author DKM
+ * @version 3.0
  *
  */
 package com.risk.controller;
@@ -389,7 +390,6 @@ public class MapEditorController implements Initializable {
         validated = 0;
         clearMapEditor();
         String inputFile = "src/com/risk/main/mapTextFiles/" + ExistingFile.getText() + ".txt"; 
-        String savedGameFile = "src/com/risk/main/savedGameFiles/" + ExistingFile.getText() + ".txt";
        
         if (!ExistingFile.getText().trim().isEmpty() && LoadGame.generate(ExistingFile.getText())) {
         	 actions.addAction("Loaded save map");

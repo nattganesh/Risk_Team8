@@ -6,7 +6,9 @@
  *
  * @author Natheepan
  * @author Tianyi
- * @author dkm
+ * @author DKM
+ * 
+ * @version 3.0
  *
  *
  */
@@ -804,6 +806,7 @@ public class Player extends Observable {
     /**
      * This method is used to exchange cards automatically for computer players
      * 
+     * @return returns true if computer was able to exchange, else false
      */
     public boolean exchangeCardForComputer() {
     	boolean exchange = false;

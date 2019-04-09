@@ -1,9 +1,13 @@
 /**
  * 
+ * Necessary for handling save progress view during game play
+ * 
+ * @version 3.0
+ * @author DKM
+ * 
  */
 package com.risk.controller;
 
-import java.util.Observable;
 
 import com.risk.model.GamePhaseModel;
 import com.risk.model.utilities.saveGame.SaveGame;
@@ -12,10 +16,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
-/**
- * @author DKM
- *
- */
 public class SaveProgressController{
 
 	@FXML

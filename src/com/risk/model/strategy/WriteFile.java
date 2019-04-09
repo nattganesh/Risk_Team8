@@ -1,3 +1,10 @@
+/**
+ * This method is necessary to write to a file during save game
+ * 
+ * @author Nat
+ * @version 3.0
+ */
+
 package com.risk.model.strategy;
 
 import java.io.File;

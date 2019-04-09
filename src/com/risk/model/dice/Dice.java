@@ -2,6 +2,7 @@
  * Necessary to create a dice
  *
  * @author Natheepan
+ * @version 3.0
  *
  */
 package com.risk.model.dice;

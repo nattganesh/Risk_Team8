@@ -2,36 +2,29 @@
  * Necessary for handling business logic for Setup phase.
  *
  * @author Tianyi
+ * @version 3.0
  *
  */
 package com.risk.controller;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
 import com.risk.model.player.Player;
 import com.risk.model.ActionModel;
 import com.risk.model.GamePhaseModel;
-import com.risk.model.MapModel;
 import com.risk.model.PlayerPhaseModel;
-import com.risk.model.card.Card;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 
 /**

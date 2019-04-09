@@ -5,26 +5,12 @@
  */
 package com.risk.controller;
 
-import com.risk.model.ActionModel;
-import com.risk.model.DeckModel;
 import com.risk.model.GamePhaseModel;
 import com.risk.model.MapModel;
 import com.risk.model.PlayerPhaseModel;
 import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
 import com.risk.model.player.Player;
-
-import javafx.animation.PauseTransition;
-import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Screen;
-import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -33,10 +19,11 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+
 /**
  * Test cases for game phase controller
  * 
- * @author Natt
+ * @author DKM
  */
 public class GamePhaseControllerTest {
 	
@@ -236,5 +223,6 @@ public class GamePhaseControllerTest {
     	assertEquals(expResult, result);
     	
     }
-
+    
+    
 }

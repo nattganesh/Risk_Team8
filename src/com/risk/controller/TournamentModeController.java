@@ -1,5 +1,8 @@
 /**
  * This class is a controller for the tournament mode view
+ * 
+ * @author DKM
+ * @version 3.0
  */
 
 package com.risk.controller;
@@ -10,7 +13,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
-import com.risk.model.ActionModel;
 import com.risk.model.MapModel;
 import com.risk.model.PlayerPhaseModel;
 import com.risk.model.exceptions.CannotFindException;
@@ -22,8 +24,6 @@ import com.risk.model.strategy.Benevolent;
 import com.risk.model.strategy.Cheater;
 import com.risk.model.strategy.Random;
 import com.risk.model.utilities.FileParser;
-import com.risk.model.utilities.Validate;
-import com.risk.model.utilities.loadGame.LoadGame;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -90,6 +90,8 @@ public class TournamentModeController implements Initializable {
 
 	/**
 	 * This method is necessary for initialization of the necessary objects for the tournamentmode controller
+	 * 
+	 * @see javafx.fxml.Initializable
 	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {

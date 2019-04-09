@@ -1,8 +1,10 @@
 /**
  * Necessary for implement benevolent strategy for benevolent player
  * Including the implementation of setup, reinforcement, attack and fortification.
+ * 
  * @author Tianyi
  * @author Nat
+ * @version 3.0
  */
 package com.risk.model.strategy;
 

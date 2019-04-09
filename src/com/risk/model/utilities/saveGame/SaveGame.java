@@ -1,7 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * This class is necessary for saving a game to file
+ *
+ * @author Natheepan
+ * @version 3.0
  */
 package com.risk.model.utilities.saveGame;
 
@@ -15,11 +16,7 @@ import com.sun.media.jfxmedia.logging.Logger;
 import java.io.PrintStream;
 import java.util.ArrayList;
 
-/**
- * This class is necessary for saving a game to file
- *
- * @author Natheepan
- */
+
 public class SaveGame {
 
     /**

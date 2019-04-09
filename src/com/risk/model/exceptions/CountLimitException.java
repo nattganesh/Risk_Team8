@@ -2,6 +2,7 @@
  * Exception thrown when number of country in a continent is different from fixed number.
  *
  * @author Natheepan
+ * @version 3.0
  */
 package com.risk.model.exceptions;
 
