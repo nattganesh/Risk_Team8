@@ -39,6 +39,10 @@ public class AggressiveTest {
     {
     }
     
+    /**
+     * This is setup for test cases, where continent, country and player are initialized
+     * 
+     */
     @Before
     public void setUp()
     {
@@ -81,6 +85,11 @@ public class AggressiveTest {
     	
     }
     
+    /**
+     * This is used to test attack for aggressive player
+     * If it runs correctly, the defender player will lost after attack
+     * 
+     */
     @Test 
     public void testAttack()
     {
@@ -92,6 +101,11 @@ public class AggressiveTest {
     	assertTrue(result.size()==0);
     }
     
+    /**
+     * This is used to test reinforcement for aggressive player
+     * If it runs correctly, only the strongest country gets the reinforcement
+     * 
+     */
     @Test 
     public void testReinforce()
     {
@@ -104,6 +118,11 @@ public class AggressiveTest {
     	assertEquals(expectResult, result);
     }
     
+    /**
+     * This is used to test fortification for aggressive player
+     * If it runs correctly, only the strongest country with most enemy neighbors gets the fortification
+     * 
+     */
     @Test 
     public void testFortify1()
     {
@@ -126,6 +145,11 @@ public class AggressiveTest {
 		assertEquals(expectResult2,result2);
     }
     
+    /**
+     * This is used to test fortification for aggressive player
+     * If it runs correctly, only the country connected to the previous strongest country with most enemy neighbors gets the fortification
+     * 
+     */
     @Test 
     public void testFortify2()
     {
@@ -148,6 +172,11 @@ public class AggressiveTest {
 		assertEquals(expectResult2,result2);
     }
     
+    /**
+     * This is used to test setup for aggressive player
+     * If it runs correctly, only one country gets all the starting armies
+     * 
+     */
     @Test
     public void testSetup()
     {

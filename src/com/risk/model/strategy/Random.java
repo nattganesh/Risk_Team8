@@ -21,8 +21,7 @@ public class Random implements Strategy {
 	 * occupies all his neighbor enemies and put one army to each new occupied
 	 * country
 	 * 
-	 * @param p
-	 *            The player who is going to attack
+	 * @param p The player who is going to attack
 	 */
 	@Override
 	public void attack(Player p) {
@@ -47,46 +46,46 @@ public class Random implements Strategy {
 			System.out.println("Random country to defend: " + defend.getName() + " " + defend.getArmyCount());
 			boolean occupy = false;
 			boolean continues = (int) (Math.random() * 2 + 1) == 1 ? true : false;
-
-			if (continues) {
-				boolean toContinue = true;
-				do {
-					int result[] = p.setRollLimit(attack, defend);
-					int randomAttack = getRandomNumber(result[0]) + 1;
-					int randomDefend = getRandomNumber(result[1]) + 1;
-					int[] dattack = p.rollResult(randomAttack);
-					int[] ddefend = p.rollResult(randomDefend);
-					int rolltime = Integer.min(randomAttack, randomDefend);
-					for (int i = 0; i < rolltime; i++) {
-						if (dattack[i] > ddefend[i]) {
-							p.attack(attack, defend, 1);
-							System.out.println("removed " + 1 + " from " + defend.getName());
-							if (defend.getArmyCount() == 0) {
-								System.out.println(p.getName() + " conquer " + defend.getRuler().getName() + " "
-										+ defend.getName());
-								defend.getRuler().removeCountry(defend);
-								if (defend.getRuler().getOccupiedCountries().size() == 0) {
-									defend.getRuler().setPlayerLost(true);
-									ActionModel.getActionModel().addAction("defender (" + defend.getRuler() + ") lost");
-									System.out.println(defend.getRuler() + " lost");
-									p.moveCards(defend.getRuler());
-								}
-								defend.setRuler(p);
-								p.addCountry(defend);
-								occupy = true;
-								conquer(attack, defend, result[0]);
-								break;
+			int time = 0;
+			int attacktime = getRandomNumber(500);
+			
+			do {
+				int result[] = p.setRollLimit(attack, defend);
+				int randomAttack = getRandomNumber(result[0]) + 1;
+				int randomDefend = getRandomNumber(result[1]) + 1;
+				int[] dattack = p.rollResult(randomAttack);
+				int[] ddefend = p.rollResult(randomDefend);
+				int rolltime = Integer.min(randomAttack, randomDefend);
+				for (int i = 0; i < rolltime; i++) {
+					if (dattack[i] > ddefend[i]) {
+						p.attack(attack, defend, 1);
+						System.out.println("removed " + 1 + " from " + defend.getName());
+						if (defend.getArmyCount() == 0) {
+							System.out.println(
+									p.getName() + " conquer " + defend.getRuler().getName() + " " + defend.getName());
+							defend.getRuler().removeCountry(defend);
+							if (defend.getRuler().getOccupiedCountries().size() == 0) {
+								defend.getRuler().setPlayerLost(true);
+								ActionModel.getActionModel().addAction("defender (" + defend.getRuler() + ") lost");
+								System.out.println(defend.getRuler() + " lost");
+								p.moveCards(defend.getRuler());
 							}
-						} else {
-							p.attack(attack, defend, 3);
-							System.out.println("attacker lost 1 army");
-							ActionModel.getActionModel().addAction(attack.getName() + " lost 1 army");
-
+							defend.setRuler(p);
+							p.addCountry(defend);
+							occupy = true;
+							conquer(attack, defend, result[0]);
+							break;
 						}
+					} else {
+						p.attack(attack, defend, 3);
+						System.out.println("attacker lost 1 army");
+						ActionModel.getActionModel().addAction(attack.getName() + " lost 1 army");
+
 					}
-					toContinue = (int) (Math.random() * 2 + 1) == 1 ? true : false;
-				} while (toContinue && !occupy && attack.getArmyCount() > 1);
-			}
+				}
+
+			} while (time < attacktime && !occupy && attack.getArmyCount() > 1);
+
 			if(occupy)
 			{
 				DeckModel.getCardModel().sendCard(p);
@@ -94,6 +93,12 @@ public class Random implements Strategy {
 		}
 	}
 
+	/**
+	 * This method is used to do the reinforcement for random player
+	 * The random assigns a random number of armies to one of its countries randomly
+	 * 
+	 * @param p The player who is going to reinforce
+	 */
 	@Override
 	public void reinforce(Player p) {
 		ActionModel.getActionModel().addAction("======= Rule =======");
@@ -112,10 +117,23 @@ public class Random implements Strategy {
 		System.out.println(p.getName() + ": added " + Armyinput + " to " + random.getName() + "(" + initialArmy + ")");
 	}
 
+	/**
+	 * This method is used to get a random number within the given limit
+	 * 
+	 * @param limit The limit of numbers, like the amount of armies
+	 * @return The random number 
+	 */
 	public int getRandomNumber(int limit) {
 		return (int) (Math.random() * limit);
 	}
 
+	/**
+	 * This method is used to do the fortification for random player
+	 * The random player chooses two countries which are connected to each other and have enough armies
+	 * And moves random armies from one to another country
+	 * 
+	 * @param p The player who is going to fortify
+	 */
 	@Override
 	public void fortify(Player p) {
 
@@ -152,6 +170,12 @@ public class Random implements Strategy {
 
 	}
 
+	/**
+	 * This method is used to do the setup for random player
+	 * The random player puts one army to one of its countries randomly each time, until all its armies are put
+	 * 
+	 * @param p The player who is going to setup
+	 */
 	@Override
 	public void setup(Player p) {
 		if (p.getStartingPoints() == 0) {
@@ -172,6 +196,10 @@ public class Random implements Strategy {
 
 	/**
 	 * This method moves army between 2 country during conquer for random
+	 * 
+	 * @param c1 The country where the player moves army from
+	 * @param c2 The country where the player moves army to
+	 * @param armyInput The number of armies to move
 	 */
 	@Override
 	public void conquer(Country c1, Country c2, int armyInput) {

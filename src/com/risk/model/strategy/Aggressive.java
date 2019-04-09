@@ -135,7 +135,7 @@ public class Aggressive implements Strategy {
 	
 	/**
 	 * This method is used to do the fortification for aggressive player
-	 * The aggressive player only fortifies his strongest country
+	 * The aggressive player fortifies to maximize aggregation of forces in one country
 	 * 
 	 * @param p The player who is going to fortify
 	 */
@@ -222,6 +222,10 @@ public class Aggressive implements Strategy {
 
 	/**
 	 * This method moves army between 2 country during conquer for aggressive
+	 * 
+	 * @param c1 The country where the player moves army from
+	 * @param c2 The country where the player moves army to
+	 * @param armyInput The number of armies to move
 	 */
 	@Override
 	public void conquer(Country c1, Country c2, int armyInput) {

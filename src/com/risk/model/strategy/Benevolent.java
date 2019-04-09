@@ -125,7 +125,7 @@ public class Benevolent implements Strategy {
 	 * This method is used to do the set up for benevolent player
 	 * The benevolent player will put his starting armies to his countries one by one until all armies are put
 	 * 
-	 * @param p The player who is going to reinforce
+	 * @param p The player who is going to setup
 	 */
 	@Override
 	public void setup(Player p) {
@@ -155,6 +155,9 @@ public class Benevolent implements Strategy {
 
 	/**
 	 * Benevolent player does not conquer because it doesn't attack
+	 * @param c1 The country where the player moves army from
+	 * @param c2 The country where the player moves army to
+	 * @param armyInput The number of armies to move
 	 */
 	@Override
 	public void conquer(Country c1, Country c2, int armyInput) {

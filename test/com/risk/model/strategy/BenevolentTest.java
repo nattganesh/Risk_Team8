@@ -21,7 +21,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Test cases of Aggressive Player
+ * Test cases of Benevolent Player
  * 
  * @author DKM
  * @author Tianyi
@@ -40,6 +40,10 @@ public class BenevolentTest {
     {
     }
     
+    /**
+     * This is setup for test cases, where continent, country and player are initialized
+     * 
+     */
     @Before
     public void setUp()
     {
@@ -75,6 +79,11 @@ public class BenevolentTest {
     	
     }
     
+    /**
+     * This is used to test reinforcement for benevolent player
+     * If it runs correctly, all three weakest countries will get the reinforcement
+     * 
+     */
     @Test public void testReinforce1()
     {
 		c1.setRuler(p1);
@@ -100,6 +109,11 @@ public class BenevolentTest {
     	assertEquals(expectResult, result3);
     }
     
+    /**
+     * This is used to test reinforcement for benevolent player
+     * If it runs correctly, only the weakest country will get the reinforcement
+     * 
+     */
     @Test public void testReinforce2()
     {
 		c1.setRuler(p1);
@@ -121,6 +135,11 @@ public class BenevolentTest {
     	assertEquals(expectResult, result1);
     }
     
+    /**
+     * This is used to test fortification for benevolent player
+     * If it runs correctly, the weakest country gets armies from one of its connected countries, which has armies at most
+     * 
+     */
     @Test public void testFortify()
     {
     	c1.setRuler(p1);
@@ -145,6 +164,11 @@ public class BenevolentTest {
     	assertEquals(expectResult2, result2);
     }
     
+    /**
+     * This is used to test fortification for benevolent player
+     * If it runs correctly, no country gets armies because the weakest countries have not connected countries with enough armies
+     * 
+     */
     @Test public void testFortify1()
     {
     	c1.setRuler(p1);
@@ -186,6 +210,11 @@ public class BenevolentTest {
     	assertEquals(expectResult, result3);
     }
 
+    /**
+     * This is used to test setup for benevolent player
+     * If it runs correctly, each country gets the same armies from starting armies
+     * 
+     */
     @Test
     public void testSetup()
     {

@@ -23,7 +23,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Test cases of Aggressive Player
+ * Test cases of Random Player
  * 
  * @author DKM
  * @author Tianyi
@@ -38,6 +38,10 @@ public class RandomTest {
 	private ArrayList<Country> occupiedCountries2 = new ArrayList<Country>();
 	private Continent continent;
 	
+	 /**
+     * This is setup for test cases, where continent, country and player are initialized
+     * 
+     */
     public RandomTest()
     {
     	DeckModel.getCardModel().initialize();
@@ -72,6 +76,10 @@ public class RandomTest {
     	
     }
     
+    /**
+     * This is used to do attack for random player
+     * @return different true if the number of armies each country of the player changed or the number of countries owned by the player changed. Otherwise, return false
+     */
     public int[] attack() {
     	int[] different = new int[2];
     	different[0] = 0;
@@ -111,21 +119,26 @@ public class RandomTest {
 			countriesAfterFortify.put(c.getName(), c.getArmyCount());
 		}
 		if(expectResult!=result) {
+			if(countriesBeforeFortify.size()!=countriesAfterFortify.size()) {
+				different[1]=1;
+			}
 			for(String c: countriesAfterFortify.keySet()) 
 			{
 				if(countriesAfterFortify.get(c)!=countriesBeforeFortify.get(c))
 				{
 					different[0]=1;
 				}
-				if(!countriesBeforeFortify.containsKey(c))
-				{
-					different[1]=1;
-				}
 			}
 		}
 		return different;
     }
     
+    
+    /**
+     * This is used to test attack for random player
+     * If it runs correctly, the defender might lose the game, or the number of armies of each country of the random player might change
+     * 
+     */
     @Test public void testAttack1()
     {
     	boolean different= false;
@@ -144,7 +157,12 @@ public class RandomTest {
     	assertTrue(different);
     }
     
-   
+    
+    /**
+     * This is used to test reinforcement for random player
+     * If it runs correctly, the total number of armies will change
+     * 
+     */
     @Test public void testReinforce()
     {
     	c1.setRuler(p1);
@@ -164,6 +182,11 @@ public class RandomTest {
 		assertTrue(result>expectResult1);
     }
     
+    /**
+     * This is used to test fortification for random player
+     * If it runs correctly, the number of armies of two countries will change, but keeping the total number the same
+     * 
+     */
     @Test public void testFortify()
     {
     	c1.setRuler(p1);
@@ -201,6 +224,11 @@ public class RandomTest {
 		assertTrue(different);
     }
 
+    /**
+     * This is used to test setup for random player
+     * If it runs correctly, countries get all starting armies
+     * 
+     */
     @Test
     public void testSetup() {
     	c1.setRuler(p1);
@@ -217,6 +245,11 @@ public class RandomTest {
 		assertEquals(expectResult1, result);
     }
     
+    /**
+     * This is used to test conquer for random player
+     * If it runs correctly, the number of armies of attack and defend countries will be the same
+     * 
+     */
     @Test
     public void testConquer() {
     	c1.setRuler(p1);
