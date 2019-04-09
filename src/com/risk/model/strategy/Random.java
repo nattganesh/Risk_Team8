@@ -170,6 +170,9 @@ public class Random implements Strategy {
 		}
 	}
 
+	/**
+	 * This method moves army between 2 country during conquer for random
+	 */
 	@Override
 	public void conquer(Country c1, Country c2, int armyInput) {
 		// TODO Auto-generated method stub

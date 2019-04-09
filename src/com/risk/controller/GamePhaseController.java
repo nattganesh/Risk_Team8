@@ -503,12 +503,18 @@ public class GamePhaseController implements Observer, Initializable {
             }
         }
 
-        public boolean checkWinner(Player p)
-        {
 
-            return p.getOccupiedCountries().size() == MapModel.getMapModel().getCountries().size();
+    }
 
-        }
+    /**
+     * this method checks the winner 
+     * @param p player object
+     * @return returns true of p has won
+     */
+    public boolean checkWinner(Player p)
+    {
+
+        return p.getOccupiedCountries().size() == MapModel.getMapModel().getCountries().size();
 
     }
 

@@ -211,6 +211,9 @@ public class Aggressive implements Strategy {
 		}
 	}
 
+	/**
+	 * This method moves army between 2 country during conquer for aggressive
+	 */
 	@Override
 	public void conquer(Country c1, Country c2, int armyInput) {
 		c1.reduceArmyCount(armyInput);

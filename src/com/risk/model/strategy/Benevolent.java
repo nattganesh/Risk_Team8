@@ -153,6 +153,9 @@ public class Benevolent implements Strategy {
 		}
 	}
 
+	/**
+	 * Benevolent player does not conquer because it doesn't attack
+	 */
 	@Override
 	public void conquer(Country c1, Country c2, int armyInput) {
 		// TODO Auto-generated method stub
