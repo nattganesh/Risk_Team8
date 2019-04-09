@@ -45,7 +45,8 @@ public class Cheater implements Strategy{
 				cNeighbors.reduceArmyCount(cNeighbors.getArmyCount());
 				cNeighbors.setRuler(p);
 				conquer.add(cNeighbors);
-				cNeighbors.setArmyCount(1);
+				conquer(c,cNeighbors,1);
+				
 				ActionModel.getActionModel().addAction(c.getName()+" conquers "+cNeighbors.getName());
 				System.out.println(c.getName()+" conquers "+cNeighbors.getName());
             }
@@ -137,6 +138,12 @@ public class Cheater implements Strategy{
 			}
 			p.setStartingPoints(0);		
 		}
+	}
+
+	@Override
+	public void conquer(Country c1, Country c2, int armyInput) {
+		c2.setArmyCount(armyInput);
+		
 	}
 
 

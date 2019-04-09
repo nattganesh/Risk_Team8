@@ -85,8 +85,6 @@ public class Country extends Observable {
         ruler.setTotalArmy(armyCount);
         
         System.out.println("added an army in setArmyCount()");
-        System.out.println("number of observers for country is : " + countObservers());
-//        this.obs
         setChanged();
         notifyObservers(this);
     }

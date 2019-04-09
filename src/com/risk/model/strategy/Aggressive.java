@@ -15,6 +15,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import com.risk.model.ActionModel;
+import com.risk.model.DeckModel;
 import com.risk.model.map.Country;
 import com.risk.model.player.Player;
 
@@ -33,6 +34,7 @@ public class Aggressive implements Strategy {
 		ActionModel.getActionModel().addAction("======= Rule =======");
 		ActionModel.getActionModel().addAction("attacks with strongest");
 		ActionModel.getActionModel().addAction("==================");
+		boolean occupy = false;
 		System.out.println("Attack Phase");
 		Country strongestCountry = p.getStrongestCountry();
 		ActionModel.getActionModel().addAction("strongest country (" + strongestCountry.getName() + ")" + "("+ strongestCountry.getArmyCount()+")");
@@ -65,6 +67,7 @@ public class Aggressive implements Strategy {
 					if (defendingCountry.getArmyCount() == 0) {
 						ActionModel.getActionModel().addAction(defendingCountry.getRuler().getName() + " lost " + "("+ defendingCountry.getName() +")");
 						System.out.println(p.getName()+" conquer "+defendingCountry.getRuler().getName()+" "+defendingCountry.getName());
+						occupy = true;
 						defendingCountry.getRuler().removeCountry(defendingCountry);
 						enemies.remove();
 						if (defendingCountry.getRuler().getOccupiedCountries().size()==0) {
@@ -78,14 +81,11 @@ public class Aggressive implements Strategy {
 							System.out.println("moving cards");	
 							
 						}
-						
-						
 						defendingCountry.setRuler(p);
 						p.addCountry(defendingCountry);
-						strongestCountry.reduceArmyCount(result[0]);
-						defendingCountry.setArmyCount(result[0]);
-						ActionModel.getActionModel().addAction(strongestCountry.getName()+" conquers "+defendingCountry.getName());
+						conquer(strongestCountry,defendingCountry,result[0]);
 						
+						ActionModel.getActionModel().addAction(strongestCountry.getName()+" conquers "+defendingCountry.getName());
 						neighboursOfStrongestCountry = strongestCountry.getConnectedEnemyArrayList();
 						break;
 					}
@@ -95,6 +95,10 @@ public class Aggressive implements Strategy {
 					strongestCountry.reduceArmyCount(1);
 				}
 			}	
+		}
+		if(occupy)
+		{
+			DeckModel.getCardModel().sendCard(p);
 		}
 	}
 
@@ -207,6 +211,9 @@ public class Aggressive implements Strategy {
 		}
 	}
 
-
-
+	@Override
+	public void conquer(Country c1, Country c2, int armyInput) {
+		c1.reduceArmyCount(armyInput);
+		c2.setArmyCount(armyInput);
+	}
 }
