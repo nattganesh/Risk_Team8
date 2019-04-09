@@ -806,7 +806,9 @@ public class Player extends Observable {
     /**
      * This method is used to invoke conquer strategy according to the type of computer player
      * 
-     * @param p The player who is going to conquer
+     * @param c1 country to move army from
+     * @param c2 country to move army to
+     * @param i number of army
      */
     public void conquerStrategy(Country c1, Country c2, int i) {
     	this.strategy.conquer(c1, c2, i);

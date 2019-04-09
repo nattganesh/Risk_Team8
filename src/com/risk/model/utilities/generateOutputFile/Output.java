@@ -32,10 +32,12 @@ public class Output {
 
         ArrayList<Country> countries = MapModel.getMapModel().getCountries();
         PrintStream printOut = System.out;
+        PrintStream fileOut = null;
+        
         try
         {
            
-            PrintStream fileOut = new PrintStream("src/com/risk/main/mapTextFiles/" + nameOfFile + ".txt");
+            fileOut = new PrintStream("src/com/risk/main/mapTextFiles/" + nameOfFile + ".txt");
             System.setOut(fileOut);
 
             System.out.println("SET COUNTRIES IN CONTINENTS");
@@ -52,14 +54,18 @@ public class Output {
                 }
             }
             fileOut.close();
-            System.setOut(printOut);
+           
             return true;
         }
         catch (Exception e)
         {
             Logger.logMsg(0, e.getMessage());
-            System.setOut(printOut);
             return false;
+        }
+        finally 
+        {
+        	 fileOut.close();
+             System.setOut(printOut);
         }
     }
 }

@@ -64,6 +64,7 @@ public class GamePhaseControllerTest {
     @Test
     public void testCheckWinner()
     {
+    	GamePhaseController gController = new GamePhaseController();
     	Country country1 = new Country("c1");
     	Country country2 = new Country("c2");
     	MapModel.getMapModel().addCountry(country1);
@@ -72,7 +73,7 @@ public class GamePhaseControllerTest {
     	p.addCountry(country1);
       	p.addCountry(country2);
     	
-    	boolean result = p.getOccupiedCountries().size()  == MapModel.getMapModel().getCountries().size();
+    	boolean result = gController.checkWinner(p);
         assertTrue(result);
     }    
     
@@ -224,5 +225,6 @@ public class GamePhaseControllerTest {
     	
     }
     
+
     
 }

@@ -78,6 +78,7 @@ public class PlayerPhaseModel extends Observable implements Observer {
     {
         return currentPlayerIndex;
     }
+    
 
     /**
      * This method sets the next player. If lost then skips.

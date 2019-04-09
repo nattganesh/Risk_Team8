@@ -140,6 +140,9 @@ public class Cheater implements Strategy{
 		}
 	}
 
+	/**
+	 * This method moves army between 2 country during conquer for cheater
+	 */
 	@Override
 	public void conquer(Country c1, Country c2, int armyInput) {
 		c2.setArmyCount(armyInput);
