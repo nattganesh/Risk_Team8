@@ -21,12 +21,13 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Test cases of Aggressive Player
+ * Test cases of Cheater Player
  * 
  * @author DKM
  * @author Tianyi
  */
-public class CheaterTest {
+public class CheaterTest 
+{
 	private Player p1;
 	private Player p2;
 	private Country c1;
@@ -40,6 +41,10 @@ public class CheaterTest {
     {
     }
     
+    /**
+     * This is setup for test cases, where continent, country and player are initialized
+     * 
+     */
     @Before
     public void setUp()
     {
@@ -69,6 +74,11 @@ public class CheaterTest {
     	
     }
     
+    /**
+     * This is used to test attack for cheater player
+     * If it runs correctly, all enemy countries connected to the player's countries will be conquered
+     * 
+     */
     @Test 
     public void testAttack()
     {
@@ -87,6 +97,11 @@ public class CheaterTest {
 		assertTrue(p2.getOccupiedCountries().size()==0);
     }
     
+    /**
+     * This is used to test reinforcement for cheater player
+     * If it runs correctly, the number of armies of all countries gets doubled
+     * 
+     */
     @Test 
     public void testReinforce()
     {
@@ -112,6 +127,11 @@ public class CheaterTest {
 		assertEquals(expectResult3, result3);
     }
     
+    /**
+     * This is used to test fortification for cheater player
+     * If it runs correctly, the number of armies of countries which have enemy neighbors gets doubled
+     * 
+     */
     @Test 
     public void testFortify()
     {
@@ -144,8 +164,14 @@ public class CheaterTest {
 		assertEquals(expectResult3, result3);
     }
 
+    /**
+     * This is used to test setup for cheater player
+     * If it runs correctly, countries get all starting armies randomly
+     * 
+     */
     @Test
-    public void testSetup() {
+    public void testSetup() 
+    {
     	c1.setRuler(p1);
 		c2.setRuler(p1);
 		c3.setRuler(p1);

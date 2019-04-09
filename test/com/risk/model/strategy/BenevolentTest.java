@@ -1,45 +1,41 @@
 
 package com.risk.model.strategy;
 
-import com.risk.controller.FortificationController;
-import com.risk.controller.ReinforcementController;
-import com.risk.model.MapModel;
-import com.risk.model.card.Card;
 import com.risk.model.map.Continent;
 import com.risk.model.map.Country;
 import com.risk.model.player.Player;
 
 import java.util.ArrayList;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Test cases of Aggressive Player
+ * Test cases of Benevolent Player
  * 
  * @author DKM
  * @author Tianyi
  */
-public class BenevolentTest {
+public class BenevolentTest 
+{
 	private Player p1;
 	private Player p2;
 	private Country c1;
 	private Country c2;
 	private Country c3;
 	private ArrayList<Country> occupiedCountries1 = new ArrayList<Country>();
-	private ArrayList<Country> occupiedCountries2 = new ArrayList<Country>();
 	private Continent continent;
 	
     public BenevolentTest()
     {
     }
     
+    /**
+     * This is setup for test cases, where continent, country and player are initialized
+     * 
+     */
     @Before
     public void setUp()
     {
@@ -75,6 +71,11 @@ public class BenevolentTest {
     	
     }
     
+    /**
+     * This is used to test reinforcement for benevolent player
+     * If it runs correctly, all three weakest countries will get the reinforcement
+     * 
+     */
     @Test public void testReinforce1()
     {
 		c1.setRuler(p1);
@@ -100,6 +101,11 @@ public class BenevolentTest {
     	assertEquals(expectResult, result3);
     }
     
+    /**
+     * This is used to test reinforcement for benevolent player
+     * If it runs correctly, only the weakest country will get the reinforcement
+     * 
+     */
     @Test public void testReinforce2()
     {
 		c1.setRuler(p1);
@@ -121,6 +127,11 @@ public class BenevolentTest {
     	assertEquals(expectResult, result1);
     }
     
+    /**
+     * This is used to test fortification for benevolent player
+     * If it runs correctly, the weakest country gets armies from one of its connected countries, which has armies at most
+     * 
+     */
     @Test public void testFortify()
     {
     	c1.setRuler(p1);
@@ -145,6 +156,11 @@ public class BenevolentTest {
     	assertEquals(expectResult2, result2);
     }
     
+    /**
+     * This is used to test fortification for benevolent player
+     * If it runs correctly, no country gets armies because the weakest countries have not connected countries with enough armies
+     * 
+     */
     @Test public void testFortify1()
     {
     	c1.setRuler(p1);
@@ -186,6 +202,11 @@ public class BenevolentTest {
     	assertEquals(expectResult, result3);
     }
 
+    /**
+     * This is used to test setup for benevolent player
+     * If it runs correctly, each country gets the same armies from starting armies
+     * 
+     */
     @Test
     public void testSetup()
     {
