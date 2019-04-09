@@ -107,15 +107,15 @@ public class AggressiveTest {
     @Test 
     public void testFortify1()
     {
-    	c1.setArmyCount(50);
-    	c2.setArmyCount(2);
-		c3.setArmyCount(2);
     	Country c4 = new Country("Korean");
     	c1.getConnectedCountries().add(c4);
 		c4.getConnectedCountries().add(c1);
 		c4.setRuler(p1);
 		occupiedCountries1.add(c4);
 		p1.setOccupiedCountries(occupiedCountries1);
+		c1.setArmyCount(50);
+    	c2.setArmyCount(2);
+		c3.setArmyCount(2);
 		c4.setArmyCount(4);
 		int expectResult1= 1;
 		int expectResult2= 53;
@@ -129,15 +129,15 @@ public class AggressiveTest {
     @Test 
     public void testFortify2()
     {
-    	c1.setArmyCount(12);
-    	c2.setArmyCount(2);
-		c3.setArmyCount(2);
     	Country c4 = new Country("Korean");
     	c1.getConnectedCountries().add(c4);
 		c4.getConnectedCountries().add(c1);
 		c4.setRuler(p1);
 		occupiedCountries1.add(c4);
 		p1.setOccupiedCountries(occupiedCountries1);
+		c1.setArmyCount(12);
+    	c2.setArmyCount(2);
+		c3.setArmyCount(2);
 		c4.setArmyCount(1);
 		int expectResult1= 1;
 		int expectResult2= 12;

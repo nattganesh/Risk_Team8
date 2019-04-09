@@ -42,6 +42,7 @@ public class Benevolent implements Strategy {
 
 		ArrayList<Country> weakestCountries = p.getWeakestCountries();
 		int Armyinput = p.getReinforcementArmy();
+
 		if (weakestCountries.size() == 1) {
 			
 			int initialArmy = weakestCountries.get(0).getArmyCount();

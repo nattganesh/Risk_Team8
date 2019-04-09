@@ -683,18 +683,17 @@ public class Player extends Observable {
      */
     public ArrayList<Country> getWeakestCountries()
     {
-        Country weakestCountry = getOccupiedCountries().get(0);
+    	int tmp = Integer.MAX_VALUE;
         ArrayList<Country> weakCountries = new ArrayList<>();
-        weakCountries.add(weakestCountry);
-        for (int i = 1; i < getOccupiedCountries().size(); i++)
+        for (int i = 0; i < getOccupiedCountries().size(); i++)
         {
-            if (getOccupiedCountries().get(i).getArmyCount() < weakestCountry.getArmyCount())
+            if (getOccupiedCountries().get(i).getArmyCount() < tmp)
             {
                 weakCountries.clear();
-                weakestCountry = getOccupiedCountries().get(i);
-                weakCountries.add(weakestCountry);
+                tmp = getOccupiedCountries().get(i).getArmyCount();
+                weakCountries.add(getOccupiedCountries().get(i));
             }
-            else if (getOccupiedCountries().get(i).getArmyCount() == weakestCountry.getArmyCount())
+            else if (getOccupiedCountries().get(i).getArmyCount() == tmp)
             {
                 weakCountries.add(getOccupiedCountries().get(i));
             }
