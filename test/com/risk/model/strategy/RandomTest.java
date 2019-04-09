@@ -28,7 +28,8 @@ import static org.junit.Assert.*;
  * @author DKM
  * @author Tianyi
  */
-public class RandomTest {
+public class RandomTest 
+{
 	private Player p1;
 	private Player p2;
 	private Country c1;
@@ -38,11 +39,17 @@ public class RandomTest {
 	private ArrayList<Country> occupiedCountries2 = new ArrayList<Country>();
 	private Continent continent;
 	
-	 /**
+	
+    public RandomTest()
+    {
+    }
+    
+    /**
      * This is setup for test cases, where continent, country and player are initialized
      * 
      */
-    public RandomTest()
+    @Before
+    public void setUp()
     {
     	DeckModel.getCardModel().initialize();
     	continent = new Continent("Asia",0);
@@ -65,11 +72,6 @@ public class RandomTest {
 		c3.getConnectedCountries().add(c1);
     }
     
-    @Before
-    public void setUp()
-    {
-    }
-    
     @After
     public void tearDown()
     {
@@ -80,7 +82,8 @@ public class RandomTest {
      * This is used to do attack for random player
      * @return different true if the number of armies each country of the player changed or the number of countries owned by the player changed. Otherwise, return false
      */
-    public int[] attack() {
+    public int[] attack() 
+    {
     	int[] different = new int[2];
     	different[0] = 0;
     	different[1] = 0;
@@ -118,8 +121,10 @@ public class RandomTest {
 		{
 			countriesAfterFortify.put(c.getName(), c.getArmyCount());
 		}
-		if(expectResult!=result) {
-			if(countriesBeforeFortify.size()!=countriesAfterFortify.size()) {
+		if(expectResult!=result) 
+		{
+			if(countriesBeforeFortify.size()!=countriesAfterFortify.size()) 
+			{
 				different[1]=1;
 			}
 			for(String c: countriesAfterFortify.keySet()) 
@@ -145,9 +150,11 @@ public class RandomTest {
     	for(int i =0 ; i<200; i++)
     	{
     		int[] attack = attack();
-    		if(attack[0]==1||attack[1]==1) {
+    		if(attack[0]==1||attack[1]==1) 
+    		{
     			different = true;
-    			if(attack[1]==1) {
+    			if(attack[1]==1) 
+    			{
         			assertTrue(p2.isPlayerLost());
         			
         		}
@@ -230,7 +237,8 @@ public class RandomTest {
      * 
      */
     @Test
-    public void testSetup() {
+    public void testSetup() 
+    {
     	c1.setRuler(p1);
 		c2.setRuler(p1);
 		c3.setRuler(p1);
@@ -251,7 +259,8 @@ public class RandomTest {
      * 
      */
     @Test
-    public void testConquer() {
+    public void testConquer() 
+    {
     	c1.setRuler(p1);
 		occupiedCountries1.add(c1);
 		p1.setOccupiedCountries(occupiedCountries1);

@@ -26,7 +26,8 @@ import static org.junit.Assert.*;
  * @author DKM
  * @author Tianyi
  */
-public class BenevolentTest {
+public class BenevolentTest 
+{
 	private Player p1;
 	private Player p2;
 	private Country c1;
