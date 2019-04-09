@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
+import com.risk.model.ActionModel;
 import com.risk.model.MapModel;
 import com.risk.model.PlayerPhaseModel;
 import com.risk.model.exceptions.CannotFindException;
@@ -149,11 +150,23 @@ public class TournamentModeController implements Initializable {
 				
 				String[][] result = new String[mapObservableList.size()+1][games+1];
 				result[0][0] = ""; 
+				hiscoreObservableList.add("===== SETUP ======");
+				hiscoreObservableList.add("M:");
 				for(int i = 1; i<mapObservableList.size()+1; i++) {
 					result[i][0] = "Map "+i;
+					hiscoreObservableList.add("    Map "+i);
 				}
+				hiscoreObservableList.add("P:");
+				for (Player p : playerObservableList)
+				{
+					hiscoreObservableList.add("   " + p.getName());
+				}
+				hiscoreObservableList.add("G: " + games);
+				hiscoreObservableList.add("D: " + turns);
+				hiscoreObservableList.add("==============");
 				for(int i = 1; i<games+1; i++) {
 					result[0][i] = "Game "+i;
+					
 				}
 				for (int i = 0 ; i < mapObservableList.size(); i++)
 				{
@@ -238,6 +251,8 @@ public class TournamentModeController implements Initializable {
 						if (mapName)
 						{
 							mapName = false;
+							hiscoreObservableList.add("");
+							hiscoreObservableList.add("====== RESULT ====== ");
 							hiscoreObservableList.add("map name");
 						}
 						System.out.printf("%20s", result[i][j]);
@@ -283,6 +298,7 @@ public class TournamentModeController implements Initializable {
 			selectMapID.getItems().add(i);
 		}
 	}
+	
 
 	/**
 	 * 

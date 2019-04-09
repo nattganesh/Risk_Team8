@@ -22,6 +22,7 @@ public class MapModel extends Observable implements Observer {
     private ObservableList<Continent> continentsModel = FXCollections.observableArrayList();
     private ArrayList<Country> countriesModel = new ArrayList<>();
     private int exchangeTime = 0;
+    private String mapType;
     private static MapModel mapModel;
 
     /**
@@ -40,6 +41,24 @@ public class MapModel extends Observable implements Observer {
         continentsModel.clear();
         countriesModel.clear();
         exchangeTime = 0;
+    }
+    
+    /**
+     * this sets the map type
+     * @param map map name in string
+     */
+    public void setMapType(String map)
+    {
+    	mapType = map;
+    }
+    
+    /**
+     * this gets the map type
+     * @return the map type
+     */
+    public String getMapType()
+    {
+    	return mapType;
     }
     
     /**

@@ -390,6 +390,7 @@ public class MapEditorController implements Initializable {
         validated = 0;
         clearMapEditor();
         String inputFile = "src/com/risk/main/mapTextFiles/" + ExistingFile.getText() + ".txt"; 
+        String inputFileName = ExistingFile.getText();
        
         if (!ExistingFile.getText().trim().isEmpty() && LoadGame.generate(ExistingFile.getText())) {
         	 actions.addAction("Loaded save map");
@@ -406,6 +407,7 @@ public class MapEditorController implements Initializable {
                 Validate.getValidate().validateMap();
                 if (Validate.getValidate().getValidateSize() == MapModel.getMapModel().getCountries().size())
                 {
+                	MapModel.getMapModel().setMapType(inputFileName);
                     actions.addAction("Connected map");
                 }
                 else

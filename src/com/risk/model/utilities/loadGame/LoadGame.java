@@ -49,7 +49,10 @@ public class LoadGame {
                 if (text.equalsIgnoreCase("NAME OF MAP FILE") && inputGame.hasNextLine())
                 {
                     text = inputGame.nextLine();
+                  
+                    MapModel.getMapModel().setMapType(text);
                     String mapFile = "src/com/risk/main/mapTextFiles/" + text + ".txt";
+               
                     try (Scanner inputMap = new Scanner(new File(mapFile)))
                     {
                         FileParser mapFileParser = new FileParser();
@@ -57,7 +60,7 @@ public class LoadGame {
                     }
                 }
                 ArrayList<Country> countries = MapModel.getMapModel().getCountries();
-                System.out.println("here "  + countries.size());
+    
                 if (countries.isEmpty())
                 {
                     return false;
@@ -92,6 +95,7 @@ public class LoadGame {
                         PlayerPhaseModel.getPlayerModel().addPlayer(p);
                         if (!text.trim().isEmpty() && !text.contains(","))
                         {
+                        	System.out.println("WTF");
                             p.addCard(new Card(text, p));
                         }
                         else if (!text.trim().isEmpty())
