@@ -263,10 +263,16 @@ public class GamePhaseController implements Observer, Initializable {
 	        	 
 	        	 else 
 	        	 {
+	        		 ActionModel.getActionModel().addAction("==== RULE =====");
+	        		 ActionModel.getActionModel().addAction("place 1 army");
+	        		 ActionModel.getActionModel().addAction("=============");
 	        		 phaseID.setText(view);
 	                 playerID.setText(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName());
 	                 mainPane.getChildren().clear();
 	                 mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/SetUp.fxml")));
+	                 GamePhaseModel.getGamePhaseModel().setPhase("setup complete");
+	                 phaseDominationViewID.setVisible(true);
+	                 
 	        	 }
                
             }
