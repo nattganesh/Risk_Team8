@@ -550,7 +550,7 @@ public class MapEditorController implements Initializable {
                      calcStartingArmies();
                      
                      autoAssignCountriesToPlayers();
-                     
+            
                     
                      determinePlayersStartingOrder();
                      
