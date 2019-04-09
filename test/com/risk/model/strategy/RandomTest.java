@@ -3,6 +3,7 @@ package com.risk.model.strategy;
 
 import com.risk.controller.FortificationController;
 import com.risk.controller.ReinforcementController;
+import com.risk.model.DeckModel;
 import com.risk.model.MapModel;
 import com.risk.model.card.Card;
 import com.risk.model.map.Continent;
@@ -39,6 +40,7 @@ public class RandomTest {
 	
     public RandomTest()
     {
+    	DeckModel.getCardModel().initialize();
     	continent = new Continent("Asia",0);
     	p1 = new Player("Green");
     	p1.setStrategy(new Random());
@@ -70,8 +72,10 @@ public class RandomTest {
     	
     }
     
-    @Test public void testAttack()
-    {
+    public int[] attack() {
+    	int[] different = new int[2];
+    	different[0] = 0;
+    	different[1] = 0;
     	c1.setRuler(p1);
 		c2.setRuler(p1);
 		c3.setRuler(p1);
@@ -92,7 +96,7 @@ public class RandomTest {
 		c4.setRuler(p2);
 		occupiedCountries2.add(c4);
 		p2.setOccupiedCountries(occupiedCountries2);
-		c4.setArmyCount(2);
+		c4.setArmyCount(1);
 		int expectResult = c1.getArmyCount()+c2.getArmyCount()+c3.getArmyCount();
 		HashMap<String,Integer> countriesBeforeFortify = new HashMap<String,Integer>();
 		for(Country c: p1.getOccupiedCountries()) 
@@ -106,18 +110,41 @@ public class RandomTest {
 		{
 			countriesAfterFortify.put(c.getName(), c.getArmyCount());
 		}
-		assertTrue(expectResult!=result);
-		boolean different = false;
-		for(String c: countriesAfterFortify.keySet()) 
-		{
-			if(countriesAfterFortify.get(c)!=countriesBeforeFortify.get(c)||!countriesBeforeFortify.containsKey(c))
+		if(expectResult!=result) {
+			for(String c: countriesAfterFortify.keySet()) 
 			{
-				different = true;
+				if(countriesAfterFortify.get(c)!=countriesBeforeFortify.get(c))
+				{
+					different[0]=1;
+				}
+				if(!countriesBeforeFortify.containsKey(c))
+				{
+					different[1]=1;
+				}
 			}
 		}
-		assertTrue(different);
+		return different;
     }
     
+    @Test public void testAttack1()
+    {
+    	boolean different= false;
+    	for(int i =0 ; i<200; i++)
+    	{
+    		int[] attack = attack();
+    		if(attack[0]==1||attack[1]==1) {
+    			different = true;
+    			if(attack[1]==1) {
+        			assertTrue(p2.isPlayerLost());
+        			
+        		}
+    			break;
+    		}
+    	}
+    	assertTrue(different);
+    }
+    
+   
     @Test public void testReinforce()
     {
     	c1.setRuler(p1);
@@ -189,5 +216,23 @@ public class RandomTest {
 		int result = c1.getArmyCount()+ c2.getArmyCount()+c3.getArmyCount();
 		assertEquals(expectResult1, result);
     }
- 
+    
+    @Test
+    public void testConquer() {
+    	c1.setRuler(p1);
+		occupiedCountries1.add(c1);
+		p1.setOccupiedCountries(occupiedCountries1);
+		c1.setArmyCount(20);
+		Country c4 = new Country("Korean");
+    	c1.getConnectedCountries().add(c4);
+		c4.getConnectedCountries().add(c1);
+		c4.setRuler(p2);
+		occupiedCountries2.add(c4);
+		p2.setOccupiedCountries(occupiedCountries2);
+		c4.setArmyCount(0);
+		int expectResult = c1.getArmyCount()+c4.getArmyCount();
+		p1.conquerStrategy(c1,c4,3);
+		int result = c1.getArmyCount()+c4.getArmyCount();
+		assertEquals(expectResult, result);
+    }
 }

@@ -152,4 +152,10 @@ public class Benevolent implements Strategy {
 			}	
 		}
 	}
+
+	@Override
+	public void conquer(Country c1, Country c2, int armyInput) {
+		// TODO Auto-generated method stub
+		
+	}
 }
