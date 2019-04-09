@@ -20,6 +20,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.AnchorPane;
 
 public class ComputerController implements Initializable {
 
@@ -39,6 +40,9 @@ public class ComputerController implements Initializable {
     
     @FXML
     private ListView<Card> cardView;
+    
+    @FXML
+    private AnchorPane computerCardViewID;
 
     @FXML
     void territoryHandler() {
@@ -59,6 +63,17 @@ public class ComputerController implements Initializable {
      */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		String name = PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName();
+		String behaviour = name.substring(0, name.length()-1);
+		System.out.println(behaviour);
+		if (GamePhaseModel.getGamePhaseModel().getPhase().equals("reinforcement") && behaviour.equals("AggressivePlayer"))
+		{
+			computerCardViewID.setVisible(true);
+		}
+		else 
+		{
+			computerCardViewID.setVisible(false);
+		}
         territoryObservableList.addAll(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
         cardOwnedObservableList.addAll(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getCards());
         

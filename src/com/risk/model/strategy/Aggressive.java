@@ -16,6 +16,7 @@ import java.util.Queue;
 
 import com.risk.model.ActionModel;
 import com.risk.model.DeckModel;
+import com.risk.model.card.Card;
 import com.risk.model.map.Country;
 import com.risk.model.player.Player;
 
@@ -89,7 +90,9 @@ public class Aggressive implements Strategy {
 						neighboursOfStrongestCountry = strongestCountry.getConnectedEnemyArrayList();
 						break;
 					}
-				} else {
+				}
+				else 
+				{
 					ActionModel.getActionModel().addAction("attacker (" +strongestCountry.getName() + ") lost 1 army");
 					System.out.println("attacker (" +strongestCountry.getName() + ") lost 1 army");
 					strongestCountry.reduceArmyCount(1);
@@ -98,7 +101,9 @@ public class Aggressive implements Strategy {
 		}
 		if(occupy)
 		{
-			DeckModel.getCardModel().sendCard(p);
+			Card card = DeckModel.getCardModel().sendCard(p);
+			ActionModel.getActionModel().addAction("received " + card.getCatagory());
+			
 		}
 	}
 
@@ -116,7 +121,10 @@ public class Aggressive implements Strategy {
 		Country strongestCountry = p.getStrongestCountry();
 		int Armyinput = p.getReinforcementArmy();
 		if(p.exchangeCardForComputer()) {
-			Armyinput+= p.calculateReinforcementFromCards();
+			int cardReinforcement =  p.calculateReinforcementFromCards();
+			Armyinput+= cardReinforcement;
+			ActionModel.getActionModel().addAction("exchanged cards:");
+			ActionModel.getActionModel().addAction(" received " + cardReinforcement + " army");
 		}
 		
 		int initialArmy = strongestCountry.getArmyCount();
@@ -198,7 +206,8 @@ public class Aggressive implements Strategy {
 		{
 			return;
 		} 
-		else {
+		else 
+		{
 			ActionModel.getActionModel().addAction("");
 			ActionModel.getActionModel().addAction("======= Rule =======");
 			ActionModel.getActionModel().addAction("- Aggressive chooses 1 random");

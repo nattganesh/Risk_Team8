@@ -391,6 +391,7 @@ public class GamePhaseController implements Observer, Initializable {
                           mainPane.getChildren().clear();
                           
                           mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/ComputerView.fxml")));
+                       
                           delayPhaseAction("attacked",2);
  
                  }
