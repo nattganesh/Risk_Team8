@@ -24,11 +24,19 @@ public class StartUpController implements Initializable {
     private ComboBox<String> modeID;
 
     private Stage stage;
-
+    
+    
+    /**
+     * This is the constructor for startup
+     * 
+     * @param primaryStage stage used for the scene
+     */
     public StartUpController(Stage primaryStage)
     {
         stage = primaryStage;
     }
+        
+    
 
     /**
      * this method initializes combobox for different mode

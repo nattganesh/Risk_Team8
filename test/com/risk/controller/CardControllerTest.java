@@ -1,6 +1,12 @@
+/**
+ * This is test for card controller
+ * 
+ * @author DKM
+ */
 package com.risk.controller;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,6 +15,7 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.risk.model.PlayerPhaseModel;
 import com.risk.model.card.Card;
 import com.risk.model.player.Player;
 
@@ -22,6 +29,14 @@ public class CardControllerTest {
 	@Before
 	public void setUp() {
 		p = new Player("Green");
+	}
+	
+	@Test
+	public void testCardControllerConstructor()
+	{
+		PlayerPhaseModel.getPlayerModel().addPlayer(new Player("dummy1"));
+    	CardController cardController = new CardController();
+    	assertNotNull(cardController);
 	}
 
 	@Test

@@ -78,7 +78,9 @@ public class ValidateTest {
          fileParser.init(scan);
          assertThrows(CountLimitException.class,
                  () -> Validate.getValidate().continentChecks());
+             
     }
+
 
     
     /**
@@ -156,7 +158,30 @@ public class ValidateTest {
         fileParser.init(scan);
         assertThrows(CountLimitException.class,
                 () -> Validate.getValidate().continentChecks());
+        
     }
+    
+
+    /**
+     * Tests for file that has valid number countries in continents
+     *
+     * @throws FileNotFoundException exception thrown when file does not exist 
+     * @throws DuplicatesException exception thrown when duplicate country in continent
+     * @throws CannotFindException exception thrown when input file is different standard file format
+     * @throws CountLimitException exception thrown when count limit is exceeded for each continent
+     */
+    @Test
+    public void testExceedsContinentLimitFile1() throws FileNotFoundException, CannotFindException, DuplicatesException, CountLimitException
+    {
+    	
+    	String ExceedsContinentLimitFile = "src/com/risk/main/mapTextfiles/valid1.txt";
+        Scanner scan = new Scanner(new File(ExceedsContinentLimitFile));
+        FileParser fileParser = new FileParser();
+        fileParser.init(scan);
+        Validate.getValidate().continentChecks();
+        
+    }
+   
 
     /**
      * Tests for file that has no connectivity
