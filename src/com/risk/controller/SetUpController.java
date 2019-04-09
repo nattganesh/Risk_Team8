@@ -32,7 +32,6 @@ import javafx.scene.layout.FlowPane;
  */
 public class SetUpController implements Initializable 
 {
-
     public int TotalArmies;
     public ArrayList<String> cards = new ArrayList<>();
     private boolean setUp = false;
