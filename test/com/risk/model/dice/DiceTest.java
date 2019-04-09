@@ -70,4 +70,14 @@ public class DiceTest {
         assertTrue(0<result&&result<=6);
     }
     
+    /**
+     * Test the dice constructor
+     */
+    @Test
+    public void testDiceConstructor()
+    {
+    	Dice dice = new Dice();
+    	assertNotNull(dice);
+    }
+    
 }

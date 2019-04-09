@@ -262,6 +262,17 @@ public class CountryTest {
         Country result = c1.getConnectedCountry("Siam");
         assertEquals(c3, result);
     }
+    
+    /**
+     * Test of getConnectedCountry method. Country given is not connected
+     */
+    @Test
+    public void testGetConnectedCountry2()
+    {
+        Country result = c1.getConnectedCountry("Siam2");
+        assertNotEquals(c3, result);
+    }
+
 
     /**
      * Test of getConnectedOwned method, of class Country.
@@ -283,6 +294,27 @@ public class CountryTest {
     	ObservableList<Country> expResult = FXCollections.observableArrayList(c5);
         ObservableList<Country> result = c1.getConnectedEnemy();
         assertEquals(expResult, result);
+    }
+    
+    /**
+     * Test of getConnected owned
+     */
+    @Test
+    public void testGetConnectedEnemyArrayList()
+    {
+    	int expResult = 0;
+    	ArrayList <Country> country = c3.getConnectedEnemyArrayList();
+    	assertEquals(expResult, country.size());
+    	
+    	
+    }
+    
+    @Test
+    public void testGetConnectedOwnedArrayList()
+    {
+    	int expResult = 1;
+    	ArrayList <Country> country = c3.getConnectedOwnedArrayList();
+    	assertEquals(expResult, country.size());
     }
     
 }
