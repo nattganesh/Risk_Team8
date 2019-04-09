@@ -10,16 +10,20 @@
    <children>
       <AnchorPane prefHeight="550.0" prefWidth="700.0">
          <children>
-            <ListView fx:id="adjacentEnemy" layoutX="9.0" layoutY="182.0" prefHeight="200.0" prefWidth="200.0" />
-            <ListView fx:id="countryId" layoutX="224.0" layoutY="182.0" onMouseClicked="#territoryHandler" prefHeight="200.0" prefWidth="230.0" />
-            <ListView fx:id="adjacentOwned" layoutX="464.0" layoutY="182.0" prefHeight="200.0" prefWidth="200.0" />
+            <ListView fx:id="adjacentEnemy" layoutX="9.0" layoutY="175.0" prefHeight="200.0" prefWidth="200.0" />
+            <ListView fx:id="countryId" layoutX="224.0" layoutY="175.0" onMouseClicked="#territoryHandler" prefHeight="200.0" prefWidth="230.0" />
+            <ListView fx:id="adjacentOwned" layoutX="460.0" layoutY="175.0" prefHeight="200.0" prefWidth="200.0" />
             <Label layoutX="270.0" layoutY="85.0" text="COMPUTER TURN" />
-            <Text layoutX="78.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Surrounding Enemy" />
-            <Text layoutX="281.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Territory Occupied" />
-            <Text layoutX="451.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Surrounding Reinforcement" />
+            <Text layoutX="78.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Surrounding Enemy" />
+            <Text layoutX="277.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Territory Occupied" />
+            <Text layoutX="454.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Surrounding Reinforcement" />
             <Button layoutX="608.0" layoutY="486.0" mnemonicParsing="false" onAction="#nextComputerPhase" text="Next" />
-            <ListView fx:id="cardView" layoutX="9.0" layoutY="419.0" prefHeight="110.0" prefWidth="200.0" />
-            <Text layoutX="97.0" layoutY="414.0" strokeType="OUTSIDE" strokeWidth="0.0" text="card View" />
+            <AnchorPane fx:id="computerCardViewID" layoutX="9.0" layoutY="393.0" prefHeight="136.0" prefWidth="200.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="card View" />
+                  <ListView fx:id="cardView" layoutY="14.0" prefHeight="129.0" prefWidth="200.0" />
+               </children>
+            </AnchorPane>
          </children>
       </AnchorPane>
    </children>

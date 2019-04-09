@@ -107,7 +107,6 @@ public class DeckModel extends Observable {
         	
             if (card[i].getOwner() == null)
             {
-            	
                 card[i].setOwner(player);
                 player.addCard(card[i]);
                 return card[i];
