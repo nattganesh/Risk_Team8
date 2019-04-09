@@ -44,6 +44,9 @@ public class ComputerController implements Initializable {
     @FXML
     private AnchorPane computerCardViewID;
 
+    /**
+     * This method adds computer's occupied territory
+     */
     @FXML
     void territoryHandler() {
     	  if (countryId.getSelectionModel().getSelectedItem() != null)

@@ -10,6 +10,7 @@ package com.risk.controller;
 
 
 import com.risk.model.GamePhaseModel;
+import com.risk.model.MapModel;
 import com.risk.model.utilities.saveGame.SaveGame;
 
 import javafx.fxml.FXML;
@@ -33,24 +34,35 @@ public class SaveProgressController{
 		saveProgressID.setVisible(false);
 	}
 	
+	/**
+	 * This method save the game progress
+	 */
 	@FXML
 	public void saveProgress()
 	{
-		if (!fileID.getText().trim().isEmpty() && !mapID.getText().trim().isEmpty())
+		mapID.setText(MapModel.getMapModel().getMapType());
+		if (!fileID.getText().trim().isEmpty())
 		{
-			System.out.println(SaveGame.generate(fileID.getText(), mapID.getText())); 
+			System.out.println(SaveGame.generate(fileID.getText(), MapModel.getMapModel().getMapType()));
 			GamePhaseModel.getGamePhaseModel().setPhase("startup");
 		}
 	}
 	
+	/**
+	 * This method send game back to startup
+	 */
 	@FXML
 	public void quitGame()
 	{
 		GamePhaseModel.getGamePhaseModel().setPhase("startup");
 	}
 	
+	/**
+	 * This method controls showing save progress UI
+	 */
 	public void showSaveProgress()
 	{
+		mapID.setText(MapModel.getMapModel().getMapType());
 		saveProgressID.setVisible(true);
 	}
 	

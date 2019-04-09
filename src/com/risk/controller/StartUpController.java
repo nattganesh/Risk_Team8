@@ -37,7 +37,6 @@ public class StartUpController implements Initializable {
     }
         
     
-
     /**
      * this method initializes combobox for different mode
      * 
