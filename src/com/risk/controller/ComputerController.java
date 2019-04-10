@@ -94,7 +94,6 @@ public class ComputerController implements Initializable
 	/**
 	 * This method is responsible for going to next phase
 	 */
-	@FXML
 	public void nextComputerPhase()
 	{
 		if (GamePhaseModel.getGamePhaseModel().getPhase().equals("reinforcement"))

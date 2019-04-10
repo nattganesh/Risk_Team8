@@ -1,5 +1,7 @@
 /**
- * 
+ * This method a test for loading game
+ * @author DKM
+ *
  */
 package com.risk.model.utilities.loadGame;
 
@@ -20,10 +22,7 @@ import com.risk.model.MapModel;
 import com.risk.model.PlayerPhaseModel;
 import com.risk.model.player.Player;
 
-/**
- * @author DKM
- *
- */
+
 public class LoadGameTest {
     @BeforeClass
     public static void setUpClass()
@@ -35,6 +34,9 @@ public class LoadGameTest {
     {
     }
     
+    /**
+     * this method clears theh MapModel and PlayerPhaseModel
+     */
     @Before
     public void setUp()
     {
@@ -50,6 +52,10 @@ public class LoadGameTest {
 
     }
     
+    /**
+     * This method test the load game with savegame.txt
+     * If method runs properly fortification phase should be set and method should return true
+     */
     @Test
     public void testGenerateCorrectFile()
     {
@@ -60,6 +66,9 @@ public class LoadGameTest {
    
     }
     
+    /**
+     * This method test that load fails if given empty file
+     */
     @Test
     public void testGenerateEmptyFile()
     {
@@ -68,6 +77,10 @@ public class LoadGameTest {
    
     }
     
+    /**
+     * This method test the load game savegame2.txt (varying card number)
+     * If method runs properly fortification phase should be set and should return true
+     */
     @Test
     public void testGenerateOneCard()
     {

@@ -17,7 +17,6 @@
             <Text layoutX="78.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Surrounding Enemy" />
             <Text layoutX="277.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Territory Occupied" />
             <Text layoutX="454.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Surrounding Reinforcement" />
-            <Button layoutX="608.0" layoutY="486.0" mnemonicParsing="false" onAction="#nextComputerPhase" text="Next" />
             <AnchorPane fx:id="computerCardViewID" layoutX="9.0" layoutY="393.0" prefHeight="136.0" prefWidth="200.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="card View" />

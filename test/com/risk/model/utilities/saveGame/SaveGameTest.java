@@ -1,5 +1,7 @@
 /**
- * 
+ * This method a test for saving game
+ * @author DKM
+ *
  */
 package com.risk.model.utilities.saveGame;
 
@@ -18,10 +20,7 @@ import com.risk.model.PlayerPhaseModel;
 import com.risk.model.player.Player;
 import com.risk.model.utilities.loadGame.LoadGame;
 
-/**
- * @author DKM
- *
- */
+
 public class SaveGameTest {
     @BeforeClass
     public static void setUpClass()
@@ -33,6 +32,9 @@ public class SaveGameTest {
     {
     }
     
+    /**
+     * This method clears the mapmodel and playerphasemodel before each test
+     */
     @Before
     public void setUp()
     {
@@ -48,6 +50,10 @@ public class SaveGameTest {
 
     }
     
+    /**
+     * This method test for SaveGame.generate() with correct models
+     * If method runs correctly it should return true
+     */
     @Test
     public void testGenerate()
     {	

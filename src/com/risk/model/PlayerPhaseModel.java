@@ -89,6 +89,7 @@ public class PlayerPhaseModel extends Observable implements Observer
 
         while (true)
         {
+        	System.out.println(playerList.get(currentPlayerIndex % playerList.size()).getName() + " isLost? = " + playerList.get(currentPlayerIndex % playerList.size()).isPlayerLost());
             if (!playerList.get(++currentPlayerIndex % playerList.size()).isPlayerLost())
             {
                 playerList.get(currentPlayerIndex % playerList.size());

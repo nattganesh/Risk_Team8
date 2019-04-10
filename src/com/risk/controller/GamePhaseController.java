@@ -201,17 +201,20 @@ public class GamePhaseController implements Observer, Initializable
            if (phase.equals("reinforced"))
            {
         	   PlayerPhaseModel.getPlayerModel().getCurrentPlayer().reinforceStrategy(PlayerPhaseModel.getPlayerModel().getCurrentPlayer());
+        	 
         	
            }        
            else if (phase.equals("attacked"))
            {
         	   PlayerPhaseModel.getPlayerModel().getCurrentPlayer().attackStrategy(PlayerPhaseModel.getPlayerModel().getCurrentPlayer());
+
+        	  
                
            } 
            else if (phase.equals("fortified"))
            {
         	   PlayerPhaseModel.getPlayerModel().getCurrentPlayer().fortifyStrategy(PlayerPhaseModel.getPlayerModel().getCurrentPlayer());
-              
+        	
            } 
         });
         pause.play();
@@ -226,6 +229,7 @@ public class GamePhaseController implements Observer, Initializable
 	@Override
     public void update(Observable o, Object phase)
     {
+    
         view = (String) phase;
         if (!view.equals("setup") && !view.equals("startup"))
         {	
@@ -337,7 +341,6 @@ public class GamePhaseController implements Observer, Initializable
         {
             try
             {
-            	
                 if (PlayerPhaseModel.getPlayerModel().getCurrentPlayer().isComputerPlayer())
                 {
                 	
@@ -351,7 +354,8 @@ public class GamePhaseController implements Observer, Initializable
                     mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/ComputerView.fxml")));
                      
                     delayPhaseAction("reinforced",2);
-                 
+                    delayNextPhase("attack", 5);
+
                      
                 }  
                 else 
@@ -388,6 +392,7 @@ public class GamePhaseController implements Observer, Initializable
 
      			   ActionModel.getActionModel().addAction(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName() + " skipped attack (no enemey around)");
 	      		   GamePhaseModel.getGamePhaseModel().setPhase("fortification");
+	      		   
 	      		 }
 	      		 else if (PlayerPhaseModel.getPlayerModel().getCurrentPlayer().isComputerPlayer())
                  {
@@ -402,7 +407,8 @@ public class GamePhaseController implements Observer, Initializable
                           mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/ComputerView.fxml")));
                        
                           delayPhaseAction("attacked",2);
- 
+                          delayNextPhase("fortification", 5);
+
                  }
             	 else 
             	 {
@@ -424,7 +430,6 @@ public class GamePhaseController implements Observer, Initializable
                       mainPane.getChildren().clear();
                       mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/Attack.fxml")));
             	 }
-              
             }
             catch (IOException e)
             {
@@ -439,6 +444,7 @@ public class GamePhaseController implements Observer, Initializable
 	      		 if (!PlayerPhaseModel.getPlayerModel().getCurrentPlayer().isAnyCountriesConnected())
 	      		 {
 	      		   ActionModel.getActionModel().addAction(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName() + " skipped fortify (no ally around)");
+	      		   PlayerPhaseModel.getPlayerModel().setNextPlayer();
 	      		   GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
 	      		 }
             	 else if (PlayerPhaseModel.getPlayerModel().getCurrentPlayer().isComputerPlayer())
@@ -453,6 +459,9 @@ public class GamePhaseController implements Observer, Initializable
                       mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/ComputerView.fxml")));
                       
                       delayPhaseAction("fortified",2);
+                      delayNextPhase("next",5);
+
+
 
                  }
             	 else 
@@ -500,6 +509,7 @@ public class GamePhaseController implements Observer, Initializable
             if (checkWinner(player))
             {
                 GamePhaseModel.getGamePhaseModel().setPhase("winner");
+                return;
             }
 
             if (index == -1)
