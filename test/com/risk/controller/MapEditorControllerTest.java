@@ -29,7 +29,8 @@ import static org.junit.Assert.*;
  * 
  * @author Natt
  */
-public class MapEditorControllerTest {
+public class MapEditorControllerTest 
+{
     
     public MapEditorControllerTest()
     {

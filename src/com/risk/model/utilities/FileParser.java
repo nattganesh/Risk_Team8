@@ -17,7 +17,8 @@ import com.risk.model.map.Country;
 import com.risk.model.ActionModel;
 import com.risk.model.MapModel;
 
-public class FileParser {
+public class FileParser 
+{
 
     static MapModel maps = MapModel.getMapModel();
     private String text = "";

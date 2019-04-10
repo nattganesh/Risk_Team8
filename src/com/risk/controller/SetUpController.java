@@ -30,7 +30,8 @@ import javafx.scene.layout.FlowPane;
 /**
  * @see javafx.fxml.Initializable
  */
-public class SetUpController implements Initializable {
+public class SetUpController implements Initializable 
+{
 
     public int TotalArmies;
     public ArrayList<String> cards = new ArrayList<>();
@@ -76,7 +77,8 @@ public class SetUpController implements Initializable {
         armyAvailable.setText("Army: " + Integer.toString(getArmies()));
         territoryObservableList.addAll(PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getOccupiedCountries());
         countryId.setItems(territoryObservableList);
-        countryId.setCellFactory(param -> new ListCell<Country>() {
+        countryId.setCellFactory(param -> new ListCell<Country>() 
+        {
             @Override
             protected void updateItem(Country country, boolean empty)
             {

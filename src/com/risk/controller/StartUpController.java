@@ -18,7 +18,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 
-public class StartUpController implements Initializable {
+public class StartUpController implements Initializable 
+{
 
     @FXML
     private ComboBox<String> modeID;

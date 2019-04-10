@@ -20,7 +20,8 @@ import com.risk.model.strategy.Benevolent;
 import com.risk.model.strategy.Cheater;
 import com.risk.model.strategy.Random;
 
-public class PlayerPhaseModel extends Observable implements Observer {
+public class PlayerPhaseModel extends Observable implements Observer 
+{
 
     private ArrayList<Player> playerList = new ArrayList<Player>();
     public static final String[] playerName =
@@ -194,7 +195,8 @@ public class PlayerPhaseModel extends Observable implements Observer {
     	{
     		player.setStrategy(new Random());
     	}
-    	else {
+    	else 
+    	{
     		return;
     	}
     }

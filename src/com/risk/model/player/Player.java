@@ -28,7 +28,8 @@ import java.util.Map;
 import java.util.Observable;
 import com.risk.model.strategy.Strategy;
 
-public class Player extends Observable {
+public class Player extends Observable 
+{
 
     private String name;
     private ArrayList<Country> occupiedCountries = new ArrayList<>();
@@ -231,9 +232,11 @@ public class Player extends Observable {
         return cards;
     }
     
-    public ArrayList<Card> getCardList(){
+    public ArrayList<Card> getCardList()
+    {
     	ArrayList<Card> card = new ArrayList<Card>();
-    	for(Card c: cards) {
+    	for(Card c: cards) 
+    	{
     		card.add(c);
     	}
     	return card;
@@ -762,7 +765,8 @@ public class Player extends Observable {
      * 
      * @param strategy The strategy according to the type of player
      */
-    public void setStrategy(Strategy strategy) {
+    public void setStrategy(Strategy strategy) 
+    {
     	isComputerPlayer = true;
     	this.strategy = strategy;
     }
@@ -772,7 +776,8 @@ public class Player extends Observable {
      * 
      * @param p The player who is going to attack
      */
-    public void attackStrategy(Player p) {
+    public void attackStrategy(Player p) 
+    {
     	this.strategy.attack(p);
     }
     
@@ -781,7 +786,8 @@ public class Player extends Observable {
      * 
      * @param p The player who is going to reinforce
      */
-    public void reinforceStrategy(Player p) {
+    public void reinforceStrategy(Player p) 
+    {
     	this.strategy.reinforce(p);
     }
     
@@ -790,7 +796,8 @@ public class Player extends Observable {
      * 
      * @param p The player who is going to fortify
      */
-    public void fortifyStrategy(Player p) {
+    public void fortifyStrategy(Player p) 
+    {
     	this.strategy.fortify(p);
     }
     
@@ -799,7 +806,8 @@ public class Player extends Observable {
      * 
      * @param p The player who is going to setup
      */
-    public void setupStrategy(Player p) {
+    public void setupStrategy(Player p) 
+    {
     	this.strategy.setup(p);
     }
     
@@ -810,7 +818,8 @@ public class Player extends Observable {
      * @param c2 country to move army to
      * @param i number of army
      */
-    public void conquerStrategy(Country c1, Country c2, int i) {
+    public void conquerStrategy(Country c1, Country c2, int i) 
+    {
     	this.strategy.conquer(c1, c2, i);
     }
     
@@ -819,42 +828,57 @@ public class Player extends Observable {
      * 
      * @return returns true if computer was able to exchange, else false
      */
-    public boolean exchangeCardForComputer() {
+    public boolean exchangeCardForComputer() 
+    {
     	boolean exchange = false;
-    	while(getCardList().size()>=5) {
+    	while(getCardList().size()>=5) 
+    	{
     		ArrayList<Card> cards = getCardList();
     		ArrayList<String> exchangecards = new ArrayList<String>();
     		Map<String, Integer> map = new HashMap<>();
-    		for(Card c: cards) {
+    		for(Card c: cards) 
+    		{
     			String s = c.getCatagory();
-                if (map.containsKey(s)) {
+                if (map.containsKey(s)) 
+                {
                     map.put(s, map.get(s) + 1);
-                } else {
+                } else 
+                {
                     map.put(s, 1);
                 }
     		}
-    		if(map.size()>=3) {
-    			while(exchangecards.size()<3) {
-    				for(Card card: cards) {
+    		if(map.size()>=3) 
+    		{
+    			while(exchangecards.size()<3) 
+    			{
+    				for(Card card: cards) 
+    				{
     					String s = card.getCatagory();
         				if(exchangecards.contains(s)) 
         					continue;
-        				else {
+        				else 
+        				{
         					exchangecards.add(s);
         					removeCard(card);
         				}
         			}
     			}
     			exchange = true;
-    		}else {
+    		}else 
+    		{
     			int i =0;
-        		for(String s: map.keySet()) {
-        			if(map.get(s)>=3) {
-        				for(Card card: cards) {
-        					if(card.getCatagory().equals(s)) {
+        		for(String s: map.keySet()) 
+        		{
+        			if(map.get(s)>=3) 
+        			{
+        				for(Card card: cards) 
+        				{
+        					if(card.getCatagory().equals(s)) 
+        					{
         						removeCard(card);
         						i++;
-        						if(i==3) {
+        						if(i==3) 
+        						{
         							exchange = true;
         							break;
         						}
@@ -873,9 +897,11 @@ public class Player extends Observable {
      * 
      * @param a The player who lost the last country of his own
      */
-    public void moveCards(Player a) {
+    public void moveCards(Player a) 
+    {
     	ObservableList<Card> loserCard = a.getCards();
-    	for(Card c: loserCard) {
+    	for(Card c: loserCard) 
+    	{
     		addCard(c);
     		c.setOwner(this);
     	}

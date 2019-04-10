@@ -8,7 +8,8 @@ package com.risk.model.card;
 
 import com.risk.model.player.Player;
 
-public class Card {
+public class Card 
+{
 
     private String category;
     private Player owner;

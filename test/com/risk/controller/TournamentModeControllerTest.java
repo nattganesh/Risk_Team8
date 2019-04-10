@@ -29,7 +29,8 @@ import static org.junit.Assert.*;
  * 
  * @author Tianyi
  */
-public class TournamentModeControllerTest {
+public class TournamentModeControllerTest 
+{
 	private Player p1;
 	private Player p2;
 	private ArrayList<Player> playerList = new ArrayList<Player>();

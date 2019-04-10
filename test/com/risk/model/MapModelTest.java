@@ -25,7 +25,8 @@ import static org.junit.Assert.*;
  * @author Natt
  * @author Tianyi
  */
-public class MapModelTest {
+public class MapModelTest 
+{
     private MapModel mapModel;
     private Country country1;
     private Continent continent1;

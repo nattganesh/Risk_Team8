@@ -23,7 +23,8 @@ import static org.junit.Assert.*;
  * @author Natt
  * @author Tianyi
  */
-public class DeckModelTest {
+public class DeckModelTest 
+{
     private DeckModel deckModel;
 	private Card cards[];
 	private Player p;

@@ -48,7 +48,8 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class GamePhaseController implements Observer, Initializable {
+public class GamePhaseController implements Observer, Initializable 
+{
 
     ReinforcementController rController;
     AttackController aController;
@@ -166,7 +167,8 @@ public class GamePhaseController implements Observer, Initializable {
     public void delayNextPhase(String phase, int second)
     {
     	pause = new PauseTransition(Duration.seconds(second));
-        pause.setOnFinished(event -> {
+        pause.setOnFinished(event -> 
+        {
            if (phase.equals("attack"))
            {
         	   GamePhaseModel.getGamePhaseModel().setPhase("attack"); 
@@ -193,7 +195,8 @@ public class GamePhaseController implements Observer, Initializable {
     public void delayPhaseAction(String phase, int second)
     {
     	pause = new PauseTransition(Duration.seconds(second));
-        pause.setOnFinished(event -> {
+        pause.setOnFinished(event -> 
+        {
        	
            if (phase.equals("reinforced"))
            {
@@ -401,7 +404,8 @@ public class GamePhaseController implements Observer, Initializable {
                           delayPhaseAction("attacked",2);
  
                  }
-            	 else {
+            	 else 
+            	 {
             	      ActionModel.getActionModel().addAction("  ");
             		  ActionModel.getActionModel().addAction("Attack Start:");
             		  ActionModel.getActionModel().addAction("======= Rule =======");
@@ -451,7 +455,8 @@ public class GamePhaseController implements Observer, Initializable {
                       delayPhaseAction("fortified",2);
 
                  }
-            	 else {
+            	 else 
+            	 {
             		  ActionModel.getActionModel().addAction("  ");
             	      ActionModel.getActionModel().addAction("Fortify Start:");
             	      ActionModel.getActionModel().addAction("======= Rule =======");
@@ -480,7 +485,8 @@ public class GamePhaseController implements Observer, Initializable {
      * This method observes the PlayerPhaseModel when a country has been
      * occupied
      */
-    private class playerObserver implements Observer {
+    private class playerObserver implements Observer 
+    {
         
         @Override
         public void update(Observable o, Object arg)
@@ -531,7 +537,8 @@ public class GamePhaseController implements Observer, Initializable {
      * occupied
      *
      */
-    private class continentObserver implements Observer {
+    private class continentObserver implements Observer 
+    {
 
         @Override
         public void update(Observable arg0, Object arg)
@@ -566,7 +573,8 @@ public class GamePhaseController implements Observer, Initializable {
      * @author DKM
      *
      */
-    private class mapObserver implements Observer {
+    private class mapObserver implements Observer 
+    {
 
         @SuppressWarnings("unchecked")
 		@Override
@@ -576,11 +584,13 @@ public class GamePhaseController implements Observer, Initializable {
         	{
         		 mainPane.getChildren().clear();
                  
-                 try {
+                 try 
+                 {
 					mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/com/risk/view/ComputerView.fxml")));
-				} catch (IOException e) {
+                 } catch (IOException e) 
+                 {
 					e.printStackTrace();
-				}
+                 }
         	}
             Country country = (Country) arg;
 
@@ -613,7 +623,8 @@ public class GamePhaseController implements Observer, Initializable {
      */
     public void updateContinentDominationView()
     {
-        worldDomination3.setCellFactory(param -> new ListCell<Continent>() {
+        worldDomination3.setCellFactory(param -> new ListCell<Continent>() 
+        {
             @Override
             protected void updateItem(Continent continent, boolean empty)
             {
@@ -684,9 +695,11 @@ public class GamePhaseController implements Observer, Initializable {
 	     StartUpController sController = new StartUpController(primaryStage);
 	     loader.setController(sController);
 	     Parent root = null;
-			try {
+			try 
+			{
 				root = loader.load();
-			} catch (IOException e) {
+			} catch (IOException e)
+			{
 				e.printStackTrace();
 			}
 			

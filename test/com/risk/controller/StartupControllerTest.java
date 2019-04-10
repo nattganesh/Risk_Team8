@@ -23,7 +23,8 @@ import static org.junit.Assert.*;
 
 
 
-public class StartupControllerTest {
+public class StartupControllerTest 
+{
 	
 
     

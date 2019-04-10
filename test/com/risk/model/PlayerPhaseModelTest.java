@@ -21,7 +21,8 @@ import static org.junit.Assert.*;
  * @author Natt
  * @author Tianyi
  */
-public class PlayerPhaseModelTest {
+public class PlayerPhaseModelTest 
+{
     private PlayerPhaseModel playerPhaseModel;
     private Player p1;
     private Player p2;

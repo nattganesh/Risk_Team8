@@ -7,7 +7,8 @@
  */
 package com.risk.model.dice;
 
-public class Dice {
+public class Dice 
+{
 
     /**
      * This method calculates the random number between 1-6 representing the

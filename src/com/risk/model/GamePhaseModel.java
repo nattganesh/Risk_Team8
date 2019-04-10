@@ -9,7 +9,8 @@ package com.risk.model;
 
 import java.util.Observable;
 
-public class GamePhaseModel extends Observable {
+public class GamePhaseModel extends Observable 
+{
 
     public String phase = "setup";
     private static GamePhaseModel gamePhaseModel;

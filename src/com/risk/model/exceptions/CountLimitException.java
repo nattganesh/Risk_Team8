@@ -6,7 +6,8 @@
  */
 package com.risk.model.exceptions;
 
-public class CountLimitException extends Exception {
+public class CountLimitException extends Exception 
+{
 
     public CountLimitException(String name, int count, int maxCount)
     {

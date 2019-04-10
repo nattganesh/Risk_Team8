@@ -26,7 +26,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class Run extends Application {
+public class Run extends Application 
+{
 
     @FXML
     Pane content;

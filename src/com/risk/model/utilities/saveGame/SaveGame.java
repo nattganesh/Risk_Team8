@@ -17,7 +17,8 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 
 
-public class SaveGame {
+public class SaveGame 
+{
 
     /**
      * This is a constructor for the Output class
