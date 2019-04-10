@@ -26,7 +26,8 @@ import static org.junit.Assert.*;
  * @author DKM
  * @author Tianyi
  */
-public class CheaterTest {
+public class CheaterTest 
+{
 	private Player p1;
 	private Player p2;
 	private Country c1;
@@ -169,7 +170,8 @@ public class CheaterTest {
      * 
      */
     @Test
-    public void testSetup() {
+    public void testSetup() 
+    {
     	c1.setRuler(p1);
 		c2.setRuler(p1);
 		c3.setRuler(p1);

@@ -25,7 +25,8 @@ import static org.junit.Assert.*;
  * 
  * @author DKM
  */
-public class GamePhaseControllerTest {
+public class GamePhaseControllerTest 
+{
 	
 
     

@@ -12,7 +12,8 @@ import javafx.collections.ObservableList;
 import java.util.ArrayList;
 import java.util.Observable;
 
-public class Country extends Observable {
+public class Country extends Observable 
+{
 
     private String name;
     private boolean isOccupied;

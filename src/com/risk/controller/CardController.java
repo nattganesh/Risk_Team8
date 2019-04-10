@@ -27,7 +27,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 
-public class CardController extends Observable implements Initializable {
+public class CardController extends Observable implements Initializable 
+{
 
     @FXML
     ListView<Card> yourCard;
@@ -45,7 +46,8 @@ public class CardController extends Observable implements Initializable {
 
     public void renderView()
     {
-        yourCard.setCellFactory(param -> new ListCell<Card>() {
+        yourCard.setCellFactory(param -> new ListCell<Card>() 
+        {
             @Override
             protected void updateItem(Card card, boolean empty)
             {
@@ -60,7 +62,8 @@ public class CardController extends Observable implements Initializable {
                 }
             }
         });
-        tradeCard.setCellFactory(param -> new ListCell<Card>() {
+        tradeCard.setCellFactory(param -> new ListCell<Card>() 
+        {
             @Override
             protected void updateItem(Card card, boolean empty)
             {

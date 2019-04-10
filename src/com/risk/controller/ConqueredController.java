@@ -26,7 +26,8 @@ import javafx.scene.control.ListView;
 
 import javafx.scene.control.TextField;
 
-public class ConqueredController extends Observable implements Initializable {
+public class ConqueredController extends Observable implements Initializable 
+{
 
     ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
     ObservableList<Country> conqueredObservableList = FXCollections.observableArrayList();
@@ -159,7 +160,8 @@ public class ConqueredController extends Observable implements Initializable {
      */
     public void renderView()
     {
-        countryOwnedID.setCellFactory(param -> new ListCell<Country>() {
+        countryOwnedID.setCellFactory(param -> new ListCell<Country>() 
+        {
             @Override
             protected void updateItem(Country country, boolean empty)
             {
@@ -174,7 +176,8 @@ public class ConqueredController extends Observable implements Initializable {
                 }
             }
         });
-        conqueredID.setCellFactory(param -> new ListCell<Country>() {
+        conqueredID.setCellFactory(param -> new ListCell<Country>() 
+        {
             @Override
             protected void updateItem(Country country, boolean empty)
             {

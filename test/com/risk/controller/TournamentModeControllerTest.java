@@ -29,7 +29,8 @@ import static org.junit.Assert.*;
  * 
  * @author Tianyi
  */
-public class TournamentModeControllerTest {
+public class TournamentModeControllerTest 
+{
 	private Player p1;
 	private Player p2;
 	private ArrayList<Player> playerList = new ArrayList<Player>();
@@ -45,6 +46,9 @@ public class TournamentModeControllerTest {
 	/**
 	 * This is used to test tournament round where the player does the reinforcement, attack and fortification automatically
 	 * 
+	 * @throws CannotFindException file format is invalid
+     * @throws DuplicatesException country is duplicated
+     * @throws FileNotFoundException file is not found
 	 */
 	@Test
 	public void testTournamentRound() throws FileNotFoundException, CannotFindException, DuplicatesException

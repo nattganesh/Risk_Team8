@@ -6,7 +6,8 @@
  */
 package com.risk.model.exceptions;
 
-public class CannotFindException extends Exception {
+public class CannotFindException extends Exception 
+{
 
     public CannotFindException(String msg)
     {

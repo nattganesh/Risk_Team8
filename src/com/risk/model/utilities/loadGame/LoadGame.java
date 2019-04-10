@@ -21,7 +21,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 
-public class LoadGame {
+public class LoadGame 
+{
 
 	static String currentPhase;
     /**

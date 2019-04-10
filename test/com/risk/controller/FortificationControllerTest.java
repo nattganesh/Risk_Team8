@@ -21,7 +21,8 @@ import static org.junit.Assert.*;
  * 
  * @author DKM
  */
-public class FortificationControllerTest {
+public class FortificationControllerTest 
+{
 	
 
     

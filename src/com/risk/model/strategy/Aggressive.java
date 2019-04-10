@@ -30,7 +30,8 @@ public class Aggressive implements Strategy {
 	 * @param p The player who is going to attack
 	 */
 	@Override
-	public void attack(Player p) {
+	public void attack(Player p) 
+	{
 
 		ActionModel.getActionModel().addAction("======= Rule =======");
 		ActionModel.getActionModel().addAction("attacks with strongest");

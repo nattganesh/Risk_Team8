@@ -13,7 +13,8 @@ import java.util.Random;
 import com.risk.model.card.Card;
 import com.risk.model.player.Player;
 
-public class DeckModel extends Observable {
+public class DeckModel extends Observable 
+{
 
     private static DeckModel deckModel;
     Card card[];

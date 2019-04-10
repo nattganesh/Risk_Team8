@@ -3,6 +3,7 @@ package com.risk.model.strategy;
 
 import com.risk.controller.FortificationController;
 import com.risk.controller.ReinforcementController;
+import com.risk.model.DeckModel;
 import com.risk.model.MapModel;
 import com.risk.model.card.Card;
 import com.risk.model.map.Continent;
@@ -26,7 +27,8 @@ import static org.junit.Assert.*;
  * @author DKM
  * @author Tianyi
  */
-public class AggressiveTest {
+public class AggressiveTest 
+{
 	private Player p1;
 	private Player p2;
 	private Country c1;
@@ -46,6 +48,7 @@ public class AggressiveTest {
     @Before
     public void setUp()
     {
+    	DeckModel.getCardModel().initialize();
     	continent = new Continent("Asia",10);
     	p1 = new Player("Green");
     	p1.setStrategy(new Aggressive());
@@ -96,7 +99,8 @@ public class AggressiveTest {
     	c1.setArmyCount(50);
     	c2.setArmyCount(2);
 		c3.setArmyCount(2);
-    	p1.attackStrategy(p1);
+		p1.attackStrategy(p1);
+    	
     	ArrayList<Country> result = p1.getStrongestCountry().getConnectedEnemyArrayList();
     	assertTrue(result.size()==0);
     }

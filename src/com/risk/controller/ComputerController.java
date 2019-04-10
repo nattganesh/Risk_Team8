@@ -22,7 +22,8 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 
-public class ComputerController implements Initializable {
+public class ComputerController implements Initializable 
+{
 
 	ObservableList<Country> territoryObservableList = FXCollections.observableArrayList();
     ObservableList<Country> adjacentEnemyObservableList = FXCollections.observableArrayList();
@@ -48,7 +49,8 @@ public class ComputerController implements Initializable {
      * This method adds computer's occupied territory
      */
     @FXML
-    void territoryHandler() {
+    void territoryHandler() 
+    {
     	  if (countryId.getSelectionModel().getSelectedItem() != null)
           {
               adjacentEnemyObservableList.clear();
@@ -65,7 +67,8 @@ public class ComputerController implements Initializable {
      * @see javafx.fxml.Initializable
      */
 	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
+	public void initialize(URL arg0, ResourceBundle arg1) 
+	{
 		String name = PlayerPhaseModel.getPlayerModel().getCurrentPlayer().getName();
 		String behaviour = name.substring(0, name.length()-1);
 		System.out.println(behaviour);
@@ -113,7 +116,8 @@ public class ComputerController implements Initializable {
      */
     public void updateView()
     {
-        countryId.setCellFactory(param -> new ListCell<Country>() {
+        countryId.setCellFactory(param -> new ListCell<Country>() 
+        {
             @Override
             protected void updateItem(Country country, boolean empty)
             {
@@ -129,7 +133,8 @@ public class ComputerController implements Initializable {
             }
         });
 
-        adjacentOwned.setCellFactory(param -> new ListCell<Country>() {
+        adjacentOwned.setCellFactory(param -> new ListCell<Country>() 
+        {
             @Override
             protected void updateItem(Country country, boolean empty)
             {
@@ -146,7 +151,8 @@ public class ComputerController implements Initializable {
             }
         });
 
-        adjacentEnemy.setCellFactory(param -> new ListCell<Country>() {
+        adjacentEnemy.setCellFactory(param -> new ListCell<Country>() 
+        {
             @Override
             protected void updateItem(Country country, boolean empty)
             {

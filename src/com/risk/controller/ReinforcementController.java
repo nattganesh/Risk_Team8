@@ -35,7 +35,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 
-public class ReinforcementController implements Initializable {
+public class ReinforcementController implements Initializable 
+{
 
     public int TotalReinforcement;
     public ArrayList<String> cards = new ArrayList<>();
@@ -175,7 +176,8 @@ public class ReinforcementController implements Initializable {
      * @author DKM
      *
      */
-    private class cardObserver implements Observer {
+    private class cardObserver implements Observer 
+    {
 
         @Override
         public void update(Observable o, Object arg)
@@ -205,7 +207,8 @@ public class ReinforcementController implements Initializable {
      */
     public void updateView()
     {
-        countryId.setCellFactory(param -> new ListCell<Country>() {
+        countryId.setCellFactory(param -> new ListCell<Country>() 
+        {
             @Override
             protected void updateItem(Country country, boolean empty)
             {
@@ -221,7 +224,8 @@ public class ReinforcementController implements Initializable {
             }
         });
 
-        adjacentOwned.setCellFactory(param -> new ListCell<Country>() {
+        adjacentOwned.setCellFactory(param -> new ListCell<Country>() 
+        {
             @Override
             protected void updateItem(Country country, boolean empty)
             {
@@ -238,7 +242,8 @@ public class ReinforcementController implements Initializable {
             }
         });
 
-        adjacentEnemy.setCellFactory(param -> new ListCell<Country>() {
+        adjacentEnemy.setCellFactory(param -> new ListCell<Country>() 
+        {
             @Override
             protected void updateItem(Country country, boolean empty)
             {

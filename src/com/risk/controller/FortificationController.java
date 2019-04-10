@@ -26,7 +26,8 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
-public class FortificationController implements Initializable {
+public class FortificationController implements Initializable 
+{
 
     @FXML
     ListView<Country> Territory;
@@ -81,7 +82,8 @@ public class FortificationController implements Initializable {
      */
     public void updateView()
     {
-        Territory.setCellFactory(param -> new ListCell<Country>() {
+        Territory.setCellFactory(param -> new ListCell<Country>() 
+        {
             @Override
             protected void updateItem(Country country, boolean empty)
             {
@@ -97,7 +99,8 @@ public class FortificationController implements Initializable {
             }
         });
 
-        Adjacent.setCellFactory(param -> new ListCell<Country>() {
+        Adjacent.setCellFactory(param -> new ListCell<Country>() 
+        {
             @Override
             protected void updateItem(Country country, boolean empty)
             {

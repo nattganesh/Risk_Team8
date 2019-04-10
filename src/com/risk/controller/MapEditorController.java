@@ -45,7 +45,8 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
-public class MapEditorController implements Initializable {
+public class MapEditorController implements Initializable 
+{
 
     @FXML
     ListView<Continent> ContinentView;
@@ -582,7 +583,8 @@ public class MapEditorController implements Initializable {
      */
     public void renderView()
     {
-        ContinentView.setCellFactory(param -> new ListCell<Continent>() {
+        ContinentView.setCellFactory(param -> new ListCell<Continent>() 
+        {
             @Override
             protected void updateItem(Continent continent, boolean empty)
             {
@@ -597,7 +599,8 @@ public class MapEditorController implements Initializable {
                 }
             }
         });
-        behaviourViewID.setCellFactory(param -> new ListCell<Player>() {
+        behaviourViewID.setCellFactory(param -> new ListCell<Player>() 
+        {
             @Override
             protected void updateItem(Player player, boolean empty)
             {
@@ -612,7 +615,8 @@ public class MapEditorController implements Initializable {
                 }
             }
         });
-        TerritoryView.setCellFactory(param -> new ListCell<Country>() {
+        TerritoryView.setCellFactory(param -> new ListCell<Country>() 
+        {
             @Override
             protected void updateItem(Country country, boolean empty)
             {
@@ -627,7 +631,8 @@ public class MapEditorController implements Initializable {
                 }
             }
         });
-        AdjacentView.setCellFactory(param -> new ListCell<Country>() {
+        AdjacentView.setCellFactory(param -> new ListCell<Country>() 
+        {
             @Override
             protected void updateItem(Country country, boolean empty)
             {
@@ -880,7 +885,7 @@ public class MapEditorController implements Initializable {
 
     /**
      * This is a helper method for setStartingPoints. Based on the number of
-     * players it returns inital army count.
+     * players it returns initial army count.
      *
      * @param getPlayerSize number of players
      * @return startingP initial army count

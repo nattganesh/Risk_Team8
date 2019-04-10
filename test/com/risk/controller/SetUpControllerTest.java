@@ -34,7 +34,8 @@ import static org.junit.Assert.*;
  * 
  * @author Natt
  */
-public class SetUpControllerTest {
+public class SetUpControllerTest 
+{
     
     public SetUpControllerTest()
     {

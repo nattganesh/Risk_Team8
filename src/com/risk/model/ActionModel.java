@@ -11,7 +11,8 @@ import java.util.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class ActionModel extends Observable {
+public class ActionModel extends Observable 
+{
 
     private ObservableList<String> actions = FXCollections.observableArrayList();
     private static ActionModel actionModel;

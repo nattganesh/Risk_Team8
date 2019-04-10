@@ -6,7 +6,8 @@
  */
 package com.risk.model.exceptions;
 
-public class DuplicatesException extends Exception {
+public class DuplicatesException extends Exception 
+{
 
     public DuplicatesException(String duplicateName)
     {

@@ -34,7 +34,8 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 
-public class AttackController implements Initializable, Observer {
+public class AttackController implements Initializable, Observer 
+{
 
     @FXML
     ListView<Country> countryId;
@@ -97,7 +98,8 @@ public class AttackController implements Initializable, Observer {
         adjacentEnemy.setItems(adjacentEnemyObservableList);
         adjacentOwned.setItems(adjacentOwnedObservableList);
         
-        countryId.setCellFactory(param -> new ListCell<Country>() {
+        countryId.setCellFactory(param -> new ListCell<Country>() 
+        {
             @Override
             protected void updateItem(Country country, boolean empty)
             {
@@ -112,7 +114,8 @@ public class AttackController implements Initializable, Observer {
                 }
             }
         });
-        adjacentEnemy.setCellFactory(param -> new ListCell<Country>() {
+        adjacentEnemy.setCellFactory(param -> new ListCell<Country>() 
+        {
             @Override
             protected void updateItem(Country country, boolean empty)
             {
@@ -127,7 +130,8 @@ public class AttackController implements Initializable, Observer {
                 }
             }
         });
-        adjacentOwned.setCellFactory(param -> new ListCell<Country>() {
+        adjacentOwned.setCellFactory(param -> new ListCell<Country>() 
+        {
             @Override
             protected void updateItem(Country country, boolean empty)
             {
@@ -380,7 +384,8 @@ public class AttackController implements Initializable, Observer {
         	 PlayerPhaseModel.getPlayerModel().setNextPlayer();
              GamePhaseModel.getGamePhaseModel().setPhase("reinforcement");
         }
-        else {
+        else 
+        {
              GamePhaseModel.getGamePhaseModel().setPhase("fortification");
         }  
     }

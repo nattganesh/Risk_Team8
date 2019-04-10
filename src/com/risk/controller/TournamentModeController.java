@@ -36,7 +36,8 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
-public class TournamentModeController implements Initializable {
+public class TournamentModeController implements Initializable 
+{
 
     @FXML
     private ComboBox<String> typePlayerID;
@@ -94,18 +95,19 @@ public class TournamentModeController implements Initializable {
 	 * @see javafx.fxml.Initializable
 	 */
 	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
+	public void initialize(URL arg0, ResourceBundle arg1) 
+	{
 		numberMapsID.getItems().addAll(1,2,3,4,5);
 		numberPlayersID.getItems().addAll(2,3,4);
 		numberGamesID.getItems().addAll(1,2,3,4,5);
 		typeMapID.getItems().addAll("mapL1", "mapL2", "mapL3", "mapL4", "mapL5");
-		//typeMapID.getItems().addAll("map1", "map2", "map3", "map4", "map5");
 		typePlayerID.getItems().addAll("AggressivePlayer", "BenevolentPlayer", "CheaterPlayer", "RandomPlayer");
 		
 		hiscoreView.setItems(hiscoreObservableList);
 		mapView.setItems(mapObservableList);
 		playerView.setItems(playerObservableList);
-        playerView.setCellFactory(param -> new ListCell<Player>() {
+        playerView.setCellFactory(param -> new ListCell<Player>() 
+        {
             @Override
             protected void updateItem(Player player, boolean empty)
             {
@@ -150,16 +152,19 @@ public class TournamentModeController implements Initializable {
 				
 				String[][] result = new String[mapObservableList.size()+1][games+1];
 				result[0][0] = ""; 
-				for(int i = 1; i<mapObservableList.size()+1; i++) {
+				for(int i = 1; i<mapObservableList.size()+1; i++) 
+				{
 					result[i][0] = "Map "+i;
 				}
-				for(int i = 1; i<games+1; i++) {
+				for(int i = 1; i<games+1; i++) 
+				{
 					result[0][i] = "Game "+i;
 				}
 				for (int i = 0 ; i < mapObservableList.size(); i++)
 				{
 					String path = "src/com/risk/main/mapTextFiles/"+ mapObservableList.get(i) + ".txt";
-					for(int j = 0; j< games; j++) {
+					for(int j = 0; j< games; j++) 
+					{
 						MapModel.getMapModel().getContinents().clear();
 			            MapModel.getMapModel().getCountries().clear();
 			            PlayerPhaseModel.getPlayerModel().getPlayers().clear();
@@ -176,16 +181,20 @@ public class TournamentModeController implements Initializable {
 						String winner = "";
 						ArrayList<Player> playerList = PlayerPhaseModel.getPlayerModel().getPlayers();
 						winner = tournamentRound(playerList, turns);
-						if(winner.equals("")) {
+						if(winner.equals("")) 
+						{
 							result[i+1][j+1] = "draw";
-						}else {
+						}else 
+						{
 							result[i+1][j+1] = winner;
 						}
 					}
 				}
 				boolean mapName = true;				
-				for(int i=0; i<mapObservableList.size()+1; i++) {
-					for(int j = 0; j< games+1; j++) {
+				for(int i=0; i<mapObservableList.size()+1; i++) 
+				{
+					for(int j = 0; j< games+1; j++) 
+					{
 						if (mapName)
 						{
 							mapName = false;
@@ -199,8 +208,6 @@ public class TournamentModeController implements Initializable {
 					System.out.println();
 					hiscoreObservableList.add("              ");
 				}
-				            
-				// this is where you can start the game
 			}
 		}
 	}
@@ -265,8 +272,8 @@ public class TournamentModeController implements Initializable {
     }
 	
     /**
-     * this method checks whether the behaviour has already been assigned
-     * @param computerName name of the behaviour
+     * this method checks whether the behavior has already been assigned
+     * @param computerName name of the behavior
      * @return returns true if already assigned, else false
      */
 	public boolean checkBehaviourAssigned(String computerName)
@@ -301,7 +308,7 @@ public class TournamentModeController implements Initializable {
 	}
 	
 	/**
-	 * this method is necessary to assign different behaviours for a tournamnet
+	 * this method is necessary to assign different behaviors for a tournament
 	 */
 	@FXML
 	public void assignPlayer()
@@ -380,7 +387,8 @@ public class TournamentModeController implements Initializable {
 		}
 	}
 	
-	public boolean checkWinner(Player p) {
+	public boolean checkWinner(Player p) 
+	{
 		return p.getOccupiedCountries().size() == MapModel.getMapModel().getCountries().size();
 	}
 	
@@ -389,11 +397,14 @@ public class TournamentModeController implements Initializable {
 		String winner = "";
 		int turn=0;
 		boolean win = false;
-		while(turn<turns&&!win) {
-			for(Player p: playerList) {
+		while(turn<turns&&!win) 
+		{
+			for(Player p: playerList) 
+			{
 				if(p.isPlayerLost())
 					continue;
-				else {
+				else 
+				{
 					System.out.println("=============================================================");
 					System.out.println(p.getName() + "'s turn");
 					for (Country c : p.getOccupiedCountries())
@@ -409,7 +420,8 @@ public class TournamentModeController implements Initializable {
 					}
 					System.out.println("===================");
 					p.attackStrategy(p);
-					if(checkWinner(p)) {
+					if(checkWinner(p)) 
+					{
 						winner = p.getName();
 						win = true;
 						break;

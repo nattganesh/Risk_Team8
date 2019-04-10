@@ -12,7 +12,8 @@ import com.sun.media.jfxmedia.logging.Logger;
 import java.io.PrintStream;
 import java.util.ArrayList;
 
-public class Output {
+public class Output 
+{
 
     /**
      * This is a constructor for the Output class

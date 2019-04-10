@@ -14,7 +14,8 @@ import com.risk.model.ActionModel;
 import com.risk.model.MapModel;
 import java.util.ArrayList;
 
-public class Validate {
+public class Validate 
+{
 
     static int counter = 0;
     static ArrayList<Country> countriesModelValidationList = new ArrayList<>();
@@ -100,21 +101,17 @@ public class Validate {
      */
     public void mapConnected(Country origin)
     {
-        // if ever this method enters an infinite recussion
-        // All precautions have been taken, but just incase
         if (counter == 1000)
         {
             return;
         }
         counter++;
 
-        //if all countries have been added
         if (countriesModelValidationList.size() == map.getCountries().size())
         {
             return;
         }
 
-        //if country is already checked before
         for (Country a : countriesModelValidationList)
         {
             if (a.getName().equalsIgnoreCase(origin.getName()))
@@ -124,7 +121,6 @@ public class Validate {
         }
         countriesModelValidationList.add(origin);
 
-        //Recursively call next connected country
         for (Country a : origin.getConnectedCountries())
         {
             mapConnected(a);

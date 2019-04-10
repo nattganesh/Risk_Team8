@@ -22,12 +22,14 @@ import com.risk.model.player.Player;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class CardControllerTest {
+public class CardControllerTest 
+{
 	private Player p;
 	private ObservableList<Card> cards = FXCollections.observableArrayList();
 
 	@Before
-	public void setUp() {
+	public void setUp() 
+	{
 		p = new Player("Green");
 	}
 	
@@ -40,7 +42,8 @@ public class CardControllerTest {
 	}
 
 	@Test
-	public void testExchangeCardForComputer() {
+	public void testExchangeCardForComputer() 
+	{
 		Card c1 = new Card("Infantry");
 		Card c2 = new Card("Wild");
 		Card c3 = new Card("Infantry");
@@ -70,7 +73,8 @@ public class CardControllerTest {
 	}
 	
 	@Test
-	public void testExchangeCardForComputer1() {
+	public void testExchangeCardForComputer1() 
+	{
 		Card c1 = new Card("Infantry");
 		Card c2 = new Card("Cavalry");
 		Card c3 = new Card("Infantry");
