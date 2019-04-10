@@ -214,5 +214,4 @@ public class Random implements Strategy {
 		System.out.println(
 				p.getName() + ": " + c1.getName() + " conquers " + c2.getName());
 	}
-
 }
