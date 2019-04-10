@@ -43,7 +43,7 @@
               <PieChart fx:id="worldDomination1" animated="false" layoutX="313.0" layoutY="304.0" prefHeight="272.0" prefWidth="326.0" title="Percentage" />
          </children>
       </AnchorPane> 
-      <AnchorPane fx:id="savePane" layoutX="692.0" layoutY="106.0" prefHeight="294.0" prefWidth="230.0" visible="false">
+      <AnchorPane fx:id="savePane" layoutX="1029.0" layoutY="103.0" prefHeight="294.0" prefWidth="230.0" visible="false">
           <children>
               <fx:include fx:id="save" source="SaveProgress.fxml" />
           </children>

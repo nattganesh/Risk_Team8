@@ -1,5 +1,8 @@
+
 /**
- * 
+ * This method is a test for output file
+ * @author DKM
+ *
  */
 package com.risk.model.utilities.generateOutputFile;
 
@@ -24,10 +27,7 @@ import com.risk.model.player.Player;
 
 import javafx.collections.ObservableList;
 
-/**
- * @author DKM
- *
- */
+
 public class OutputTest {
     @BeforeClass
     public static void setUpClass()
@@ -39,6 +39,9 @@ public class OutputTest {
     {
     }
     
+    /**
+     * this method clears the MapModel and PlayerPhaseModel before each test
+     */
     @Before
     public void setUp()
     {
@@ -54,6 +57,9 @@ public class OutputTest {
 
     }
     
+    /**
+     * This method test that output method correctly runs
+     */
     @Test
     public void testGenerate1()
     {
@@ -61,6 +67,10 @@ public class OutputTest {
     	assertTrue(Output.generate("OutPutTestFile"));
     }
     
+    /**
+     * this method test the Output.generate() with correct MapModel
+     * If this method runs correctly it should return true
+     */
     @Test
     public void testGenerate2()
     {
@@ -91,6 +101,10 @@ public class OutputTest {
     	assertTrue(Output.generate("OutPutTestFile"));
     }
     
+    /**
+     * this method test the Output.generate with incorrect MapModel
+     * If this method runs correctly it should return false
+     */
     @Test
     public void testGenerate3()
     {

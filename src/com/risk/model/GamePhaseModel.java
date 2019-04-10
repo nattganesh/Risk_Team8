@@ -28,7 +28,14 @@ public class GamePhaseModel extends Observable {
      */
     public void setPhase(String p)
     {
-        phase = p;
+    	if (p.equals("startup"))
+    	{
+    		phase = p;
+    	}
+    	else if (!phase.equals("winner"))
+        {
+        	phase = p;
+        } 
         setChanged();
         notifyObservers(phase);
     }
