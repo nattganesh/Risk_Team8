@@ -2,11 +2,11 @@ SOEN 6441 Team 8 Winter 2019
 
 Members: 
 		
-		Dong Jae Kim Id# 40103110
+		Dong Jae Kim
 		
-		Tianyi Liu Id# 40093667 
+		Tianyi Liu
 		
-		Natheepan Ganeshamoorthy Id# 29335838
+		Natheepan Ganeshamoorthy
 		
 GENERAL DESCRIPTION
 
